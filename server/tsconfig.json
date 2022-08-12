@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowJs": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "esModuleInterop": true,                             
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "incremental": true
+  },
+  "inclue": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

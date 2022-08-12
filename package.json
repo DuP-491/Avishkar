@@ -1,0 +1,44 @@
+{
+  "name": "avishkar2022",
+  "version": "1.0.0",
+  "description": "Website for Avishkar 2022 - Techno Management Festival of MNNIT",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "lint:server": "cd server && npm run lint",
+    "lint:client": "cd client && npm run lint",
+    "lint": "npm run lint:server && npm run lint:client",
+    "prettier:server": "cd server && npm run prettier",
+    "prettier:client": "cd client && npm run prettier",
+    "prettier": "npm run prettier:server && npm run prettier:client",
+    "checks": "npm run lint && npm run prettier"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DuP-491/Avishkar.git"
+  },
+  "keywords": [],
+  "contributors": [
+    {
+      "name": "MojoAlpha",
+      "email": "pandeymohit26032002@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DuP-491/Avishkar/issues"
+  },
+  "homepage": "https://github.com/DuP-491/Avishkar#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.21.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "engines": {
+    "node": ">= 10.0.0",
+    "npm": ">= 6.0.0"
+  }
+}
