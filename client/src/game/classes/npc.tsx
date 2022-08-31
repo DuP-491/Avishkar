@@ -45,6 +45,15 @@ export class NPC extends Actor {
 
     // EVENTS
     this.scene.game.events.on(EVENTS_NAME.attack, this.attackHandler, this);
+    // this.on('pointerup', (pointer: any) => {
+    //   console.log(pointer);
+    // });
+    this.setInteractive();
+    this.scene.input.on('gameobjectup', (pointer: any, gameObject: any) => {
+      // console.log('pointer');
+      this.scene.game.events.emit(EVENTS_NAME.infoPopup, pointer, gameObject);
+    });
+
     // this.on('destroy', () => {
     //   this.scene.game.events.removeListener(EVENTS_NAME.attackNPC, this.attackHandler);
     // });

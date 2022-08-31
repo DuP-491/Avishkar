@@ -14,7 +14,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-canvas {
+canvas,
+#canvas-div {
   display: block;
   position: absolute;
   width: 100%;

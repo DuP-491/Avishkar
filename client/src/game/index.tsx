@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 // import Phaser from 'phaser';
-import { IonPhaser } from '@ion-phaser/react';
+import { GameInstance, IonPhaser } from '@ion-phaser/react';
 import { gameConfig } from './config';
+import { EVENTS_NAME } from './consts';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -18,13 +19,12 @@ interface Props {
   viewport: string;
 }
 
-const game = gameConfig;
-
 function GameComponent(props: Props) {
   const { viewport } = props;
   const gameRef = useRef(null);
   // Call `setInitialize` when you want to initialize your game! :)
   const [initialize, setInitialize] = useState(false);
+  const [game, setGame] = useState<GameInstance>();
   const [dimensions, setDimensions] = React.useState({
     height: window.innerHeight,
     width: window.innerWidth
@@ -34,12 +34,27 @@ function GameComponent(props: Props) {
       (gameRef.current as any).destroy();
     }
     setInitialize(false);
+    setGame(undefined);
   };
 
   // Auto Initialize the game when the component is mounted
   useEffect(() => {
     setInitialize(true);
   }, []);
+
+  useEffect(() => {
+    if (game) {
+      game.instance?.events.on(EVENTS_NAME.infoPopup, (pointer: any, gameObject: any) => {
+        console.log(pointer, gameObject);
+      });
+    }
+  }, [game]);
+
+  useEffect(() => {
+    if (initialize) {
+      setGame(Object.assign({}, gameConfig));
+    }
+  }, [initialize]);
 
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
@@ -58,8 +73,8 @@ function GameComponent(props: Props) {
   });
 
   useEffect(() => {
-    game.scale!.width = window.innerWidth;
-    game.scale!.height = window.innerHeight;
+    gameConfig.scale!.width = window.innerWidth;
+    gameConfig.scale!.height = window.innerHeight;
     setInitialize(true);
   }, [dimensions]);
 

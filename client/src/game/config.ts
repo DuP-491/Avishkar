@@ -16,6 +16,9 @@ export const gameConfig: GameConfigExtended = {
     width: window.innerWidth,
     height: window.innerHeight
   },
+  dom: {
+    createContainer: true
+  },
   physics: {
     default: 'arcade',
     arcade: {
@@ -27,9 +30,11 @@ export const gameConfig: GameConfigExtended = {
     pixelArt: true
   },
   callbacks: {
-    // postBoot: () => {
-    //   window.sizeChanged();
-    // },
+    postBoot: () => {
+      const divElem = document.body.children[2];
+      divElem.className = 'canvas-div';
+      divElem.id = 'canvas-div';
+    }
   },
   canvasStyle: `display: block; width: 100%; height: 100%;`,
   autoFocus: true,
