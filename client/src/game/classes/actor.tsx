@@ -30,6 +30,21 @@ export class Actor extends Physics.Arcade.Sprite {
     });
   }
 
+  public getAngry(): void {
+    console.log('angry');
+    this.scene.cameras.main.shake(100, 0.01);
+  }
+
+  public askInteract(): void {
+    // this.scene.game.events.emit(EVENTS_NAME.interact, this);
+    console.log('askInteract');
+  }
+
+  public resetInteract(): void {
+    // this.scene.game.events.emit(EVENTS_NAME.resetInteract, this);
+    console.log('resetInteract');
+  }
+
   public getHPValue(): number {
     return this.hp;
   }

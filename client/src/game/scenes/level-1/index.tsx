@@ -6,6 +6,7 @@ import { Enemy } from '../../classes/enemy';
 import { gameObjectsToObjectPoints } from '../../helpers/gameobject-to-object-point';
 
 import { EVENTS_NAME } from '../../consts';
+import { NPC } from '../../classes/npc';
 
 export class Level1 extends Scene {
   private player!: Player;
@@ -15,6 +16,7 @@ export class Level1 extends Scene {
   private groundLayer!: Tilemaps.TilemapLayer;
   private chests!: GameObjects.Sprite[];
   private enemies!: Enemy[];
+  private npcs!: NPC[];
 
   constructor() {
     super('level-1-scene');
@@ -25,6 +27,7 @@ export class Level1 extends Scene {
     this.player = new Player(this, 100, 100);
     this.initChests();
     this.initEnemies();
+    this.initNPCs();
     this.initCamera();
 
     this.physics.add.collider(this.player, this.wallsLayer);
@@ -42,7 +45,7 @@ export class Level1 extends Scene {
     this.wallsLayer.setCollisionByProperty({ collides: true });
 
     this.physics.world.setBounds(0, 0, this.wallsLayer.width, this.wallsLayer.height);
-    // this.showDebugWalls();
+    this.showDebug();
   }
 
   private initChests(): void {
@@ -87,17 +90,43 @@ export class Level1 extends Scene {
     );
   }
 
+  private initNPCs(): void {
+    const npcsPoints = gameObjectsToObjectPoints(
+      this.map.filterObjects('NPCs', (obj) => obj.name === 'NPCPoint')
+    );
+
+    this.npcs = npcsPoints.map((npcPoint) =>
+      new NPC(
+        this,
+        npcPoint.x,
+        npcPoint.y,
+        'tiles_spr',
+        this.player,
+        360,
+        npcPoint.properties.filter((prop) => prop.name === 'left')[0].value
+      )
+        .setName(npcPoint.id.toString())
+        .setScale(1.5)
+    );
+
+    this.physics.add.collider(this.npcs, this.npcs);
+    this.physics.add.collider(this.npcs, this.wallsLayer);
+    this.physics.add.collider(this.player, this.npcs, (_obj1, obj2) => {
+      (obj2 as NPC).askInteract();
+    });
+  }
+
   private initCamera(): void {
     this.cameras.main.setSize(this.game.scale.width, this.game.scale.height);
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);
     this.cameras.main.setZoom(2);
   }
 
-  private showDebugWalls(): void {
+  private showDebug(): void {
     const debugGraphics = this.add.graphics().setAlpha(0.7);
-    this.wallsLayer.renderDebug(debugGraphics, {
-      tileColor: null,
-      collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255)
-    });
+    // this.wallsLayer.renderDebug(debugGraphics, {
+    //   tileColor: null,
+    //   collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255)
+    // });
   }
 }

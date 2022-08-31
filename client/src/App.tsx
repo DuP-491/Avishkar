@@ -4,10 +4,10 @@ import GameComponent from './game';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="w-screen h-screen overflow-hidden">
+      <div className="w-full h-full flex">
         <GameComponent viewport="desktop" />
-      </header>
+      </div>
     </div>
   );
 }

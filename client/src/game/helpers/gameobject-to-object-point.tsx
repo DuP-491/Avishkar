@@ -9,6 +9,11 @@ type ObjectPoint = {
   width: number;
   x: number;
   y: number;
+  properties: {
+    name: string;
+    value: any;
+    type: string;
+  }[];
 };
 export const gameObjectsToObjectPoints = (gameObjects: unknown[]): ObjectPoint[] => {
   return gameObjects.map((gameObject) => gameObject as ObjectPoint);

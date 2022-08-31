@@ -2,7 +2,9 @@
 export enum EVENTS_NAME {
   gameEnd = 'game-end',
   chestLoot = 'chest-loot',
-  attack = 'attack'
+  attack = 'attack',
+  interact = 'interact',
+  resetInteract = 'reset-interact'
 }
 
 export enum GameStatus {

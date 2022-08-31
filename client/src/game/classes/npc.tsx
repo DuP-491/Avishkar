@@ -4,9 +4,9 @@ import { EVENTS_NAME } from '../consts';
 import { Actor } from './actor';
 import { Player } from './player';
 
-export class Enemy extends Actor {
+export class NPC extends Actor {
   private target: Player;
-  private AGRESSOR_RADIUS = 100;
+  private INTERACT_RADIUS = 100;
   private attackHandler: () => void;
 
   constructor(
@@ -15,10 +15,12 @@ export class Enemy extends Actor {
     y: number,
     texture: string,
     target: Player,
-    frame?: string | number
+    frame?: string | number,
+    left?: boolean
   ) {
     super(scene, x, y, texture, frame);
     this.target = target;
+    this.flipX = left ?? false;
 
     this.attackHandler = () => {
       if (
@@ -27,44 +29,35 @@ export class Enemy extends Actor {
           { x: this.target.x, y: this.target.y }
         ) < this.target.width
       ) {
-        this.getDamage();
-        this.disableBody(true, false);
-
-        this.scene.time.delayedCall(300, () => {
-          this.destroy();
-        });
+        this.getAngry();
       }
     };
 
     // ADD TO SCENE
     scene.add.existing(this);
-    scene.physics.add.existing(this);
+    // scene.physics.add.existing(this);
 
     // PHYSICS MODEL
     this.getBody().setSize(16, 16);
     this.getBody().setOffset(0, 0);
+    this.getBody().setImmovable(true);
 
     // EVENTS
     this.scene.game.events.on(EVENTS_NAME.attack, this.attackHandler, this);
-    this.on('destroy', () => {
-      this.scene.game.events.removeListener(EVENTS_NAME.attack, this.attackHandler);
-    });
+    // this.on('destroy', () => {
+    //   this.scene.game.events.removeListener(EVENTS_NAME.attackNPC, this.attackHandler);
+    // });
   }
 
   preUpdate(): void {
-    if (
-      Math.Distance.BetweenPoints(
-        { x: this.x, y: this.y },
-        { x: this.target.x, y: this.target.y }
-      ) < this.AGRESSOR_RADIUS
-    ) {
-      this.getBody().setVelocityX(this.target.x - this.x);
-      this.getBody().setVelocityY(this.target.y - this.y);
-      if (this.body.velocity.x < 0) this.flipX = true;
-      else this.flipX = false;
-    } else {
-      this.getBody().setVelocity(0);
-    }
+    // if (
+    //   Math.Distance.BetweenPoints(
+    //     { x: this.x, y: this.y },
+    //     { x: this.target.x, y: this.target.y }
+    //   ) < this.INTERACT_RADIUS
+    // ) {
+    //   this.askInteract();
+    // }
   }
 
   public setTarget(target: Player): void {
