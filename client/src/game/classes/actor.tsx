@@ -1,4 +1,5 @@
 import Phaser, { Physics } from 'phaser';
+import { EVENTS_NAME } from '../consts';
 
 export class Actor extends Physics.Arcade.Sprite {
   protected hp = 100;
@@ -32,17 +33,17 @@ export class Actor extends Physics.Arcade.Sprite {
 
   public getAngry(): void {
     console.log('angry');
-    this.scene.cameras.main.shake(100, 0.01);
+    this.scene.cameras.main.shake(50, 0.01);
   }
 
-  public askInteract(): void {
-    // this.scene.game.events.emit(EVENTS_NAME.interact, this);
-    console.log('askInteract');
+  public askInteract(name: string): void {
+    this.scene.game.events.emit(EVENTS_NAME.interact, name);
+    // console.log('askInteract');
   }
 
-  public resetInteract(): void {
-    // this.scene.game.events.emit(EVENTS_NAME.resetInteract, this);
-    console.log('resetInteract');
+  public resetInteract(name: string): void {
+    this.scene.game.events.emit(EVENTS_NAME.resetInteract, name);
+    // console.log('resetInteract');
   }
 
   public getHPValue(): number {

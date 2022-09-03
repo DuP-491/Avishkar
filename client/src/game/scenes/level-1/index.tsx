@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import Phaser, { GameObjects, Scene, Tilemaps } from 'phaser';
+import Phaser, { GameObjects, Scene, Tilemaps, Physics } from 'phaser';
 
 import { Player } from '../../classes/player';
 import { Enemy } from '../../classes/enemy';
@@ -17,6 +17,7 @@ export class Level1 extends Scene {
   private chests!: GameObjects.Sprite[];
   private enemies!: Enemy[];
   private npcs!: NPC[];
+  private npcChatSprites!: Physics.Arcade.Sprite[];
 
   constructor() {
     super('level-1-scene');
@@ -108,12 +109,39 @@ export class Level1 extends Scene {
         .setName(npcPoint.id.toString())
         .setScale(1.5)
     );
+    this.npcChatSprites = npcsPoints.map((npcsPoint) => {
+      const sprite = new Physics.Arcade.Sprite(
+        this,
+        npcsPoint.x - 16,
+        npcsPoint.y - 16,
+        'tiles_spr',
+        765
+      )
+        .setName(npcsPoint.id.toString())
+        .setScale(1)
+        .setVisible(false);
+      this.add.existing(sprite);
+      return sprite;
+    });
+    // console.log(this.npcChatSprites, this.npcs);
 
     this.physics.add.collider(this.npcs, this.npcs);
     this.physics.add.collider(this.npcs, this.wallsLayer);
-    this.physics.add.collider(this.player, this.npcs, (_obj1, obj2) => {
-      (obj2 as NPC).askInteract();
-    });
+    this.physics.add.collider(this.player, this.npcs);
+    this.game.events.on(
+      EVENTS_NAME.interact,
+      (name: string) => {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+      },
+      this
+    );
+    this.game.events.on(
+      EVENTS_NAME.resetInteract,
+      (name: string) => {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+      },
+      this
+    );
   }
 
   private initCamera(): void {
