@@ -1,3 +1,6 @@
 {
-	"files.autoSave": "onWindowChange"
+	"files.autoSave": "onWindowChange",
+	"editor.formatOnSave": true,
+	"todo-tree.tree.showBadges": true,
+	"todo-tree.tree.showCountsInTree": true
 }

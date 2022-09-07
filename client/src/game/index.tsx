@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from 'react';
-// import Phaser from 'phaser';
+import Phaser from 'phaser';
 import { GameInstance, IonPhaser } from '@ion-phaser/react';
 import { gameConfig } from './config';
 import { EVENTS_NAME } from './consts';
+import InfoPrompt from '../components/InfoPrompt';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -53,6 +55,7 @@ function GameComponent(props: Props) {
   useEffect(() => {
     if (initialize) {
       setGame(Object.assign({}, gameConfig));
+      // document.getElementById("canvas-div")?.appendChild(React.createElement(InfoPrompt));
     }
   }, [initialize]);
 
@@ -81,20 +84,21 @@ function GameComponent(props: Props) {
   return (
     <>
       <IonPhaser ref={gameRef} game={game} initialize={initialize} />
-      <div className="flex flex-col absolute bottom-0 left-0 m-16 space-y-3 z-20">
+      <div className="absolute bottom-0 left-0 z-20 flex flex-col m-16 space-y-3">
         <div className="text-white">
           Dimensions : {dimensions.width} x {dimensions.height}
         </div>
         <button
-          className="text-xl p-3 bg-gray-300 hover:bg-gray-400"
+          className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
           onClick={() => setInitialize(true)}
         >
           Initialize game for {viewport}
         </button>
-        <button className="text-xl p-3 bg-gray-300 hover:bg-gray-400" onClick={destroy}>
+        <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={destroy}>
           Destroy
         </button>
       </div>
+      <InfoPrompt text="Jenny Darling youre my best friend and i would love to kill you for a million rupees but i can not. I wanna ruin our friendship. We should be lovers instead"></InfoPrompt>
     </>
   );
 }
