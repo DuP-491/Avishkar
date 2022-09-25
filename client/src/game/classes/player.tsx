@@ -11,9 +11,13 @@ export class Player extends Actor {
   private keyD: Input.Keyboard.Key;
   private keySpace: Input.Keyboard.Key;
   private hpValue: Text;
+  private speed: number;
 
   constructor(scene: Scene, x: number, y: number) {
     super(scene, x, y, 'king');
+
+    // CONFIGS
+    this.speed = 500;
 
     // KEYS
     this.keyW = this.scene.input.keyboard.addKey('W');
@@ -47,24 +51,24 @@ export class Player extends Actor {
     this.getBody().setVelocity(0);
 
     if (this.keyW?.isDown) {
-      this.body.velocity.y = -110;
+      this.body.velocity.y = -this.speed;
       !this.anims.isPlaying && this.anims.play('run', true);
     }
 
     if (this.keyA?.isDown) {
-      this.body.velocity.x = -110;
+      this.body.velocity.x = -this.speed;
       this.checkFlip();
       this.getBody().setOffset(48, 15);
       !this.anims.isPlaying && this.anims.play('run', true);
     }
 
     if (this.keyS?.isDown) {
-      this.body.velocity.y = 110;
+      this.body.velocity.y = this.speed;
       !this.anims.isPlaying && this.anims.play('run', true);
     }
 
     if (this.keyD?.isDown) {
-      this.body.velocity.x = 110;
+      this.body.velocity.x = this.speed;
       this.checkFlip();
       this.getBody().setOffset(15, 15);
       !this.anims.isPlaying && this.anims.play('run', true);

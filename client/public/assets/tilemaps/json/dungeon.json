@@ -369,7 +369,7 @@
         {
          "columns":32,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/webgl-phaser\/src\/assets\/tilemaps\/tiles\/dungeon-16-16.png",
+         "image":"..\/tiles\/dungeon-16-16.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,

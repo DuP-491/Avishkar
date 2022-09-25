@@ -12,8 +12,15 @@ export class Level1 extends Scene {
   private player!: Player;
   private map!: Tilemaps.Tilemap;
   private tileset!: Tilemaps.Tileset;
+  private tileset2!: Tilemaps.Tileset;
   private wallsLayer!: Tilemaps.TilemapLayer;
-  private groundLayer!: Tilemaps.TilemapLayer;
+  private layer!: Tilemaps.TilemapLayer;
+  private layer2!: Tilemaps.TilemapLayer;
+  private layer3!: Tilemaps.TilemapLayer;
+  private layer4!: Tilemaps.TilemapLayer;
+  private layer5!: Tilemaps.TilemapLayer;
+  private layer6!: Tilemaps.TilemapLayer;
+  private layer7!: Tilemaps.TilemapLayer;
   private chests!: GameObjects.Sprite[];
   private enemies!: Enemy[];
   private npcs!: NPC[];
@@ -26,9 +33,9 @@ export class Level1 extends Scene {
   create(): void {
     this.initMap();
     this.player = new Player(this, 100, 100);
-    this.initChests();
-    this.initEnemies();
-    this.initNPCs();
+    // this.initChests();
+    // this.initEnemies();
+    // this.initNPCs();
     this.initCamera();
 
     this.physics.add.collider(this.player, this.wallsLayer);
@@ -39,13 +46,26 @@ export class Level1 extends Scene {
   }
 
   private initMap(): void {
-    this.map = this.make.tilemap({ key: 'dungeon', tileWidth: 16, tileHeight: 16 });
-    this.tileset = this.map.addTilesetImage('dungeon', 'tiles');
-    this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
-    this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
-    this.wallsLayer.setCollisionByProperty({ collides: true });
+    // this.map = this.make.tilemap({ key: 'dungeon', tileWidth: 16, tileHeight: 16 });
+    this.map = this.make.tilemap({ key: 'try5', tileWidth: 16, tileHeight: 16 });
+    // this.tileset = this.map.addTilesetImage('dungeon', 'tiles');
+    this.tileset = this.map.addTilesetImage('SpriteChan', 'tileSpriteChan', 16, 16, 0, 0);
+    this.tileset2 = this.map.addTilesetImage('Interior', 'tileInterior', 16, 16, 0, 0);
 
-    this.physics.world.setBounds(0, 0, this.wallsLayer.width, this.wallsLayer.height);
+    this.layer = this.map.createLayer('Base Tiles Layer', [this.tileset, this.tileset2], 0, 0);
+    this.layer2 = this.map.createLayer(' Floor Layer', [this.tileset, this.tileset2], 0, 0);
+    this.layer3 = this.map.createLayer('Interior Layer 1', [this.tileset, this.tileset2], 0, 0);
+    this.layer4 = this.map.createLayer('Interior Layer 2', [this.tileset, this.tileset2], 0, 0);
+    this.layer5 = this.map.createLayer('Walls Layer', [this.tileset, this.tileset2], 0, 0);
+    this.layer6 = this.map.createLayer('WallSides Layer', [this.tileset, this.tileset2], 0, 0);
+    this.layer7 = this.map.createLayer(' Roof Layer', [this.tileset, this.tileset2], 0, 0);
+
+    // const layer2 = this.map.createLayer(1, this.tileset2, 0, 0);
+    // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
+    // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
+    // this.wallsLayer.setCollisionByProperty({ collides: true });
+
+    this.physics.world.setBounds(0, 0, this.layer.width, this.layer.height);
     this.showDebug();
   }
 
@@ -78,7 +98,7 @@ export class Level1 extends Scene {
         .setScale(1.5)
     );
 
-    this.physics.add.collider(this.enemies, this.wallsLayer);
+    // this.physics.add.collider(this.enemies, this.wallsLayer);
     this.physics.add.collider(this.enemies, this.enemies);
     this.physics.add.collider(
       this.player,
@@ -126,7 +146,7 @@ export class Level1 extends Scene {
     // console.log(this.npcChatSprites, this.npcs);
 
     this.physics.add.collider(this.npcs, this.npcs);
-    this.physics.add.collider(this.npcs, this.wallsLayer);
+    // this.physics.add.collider(this.npcs, this.wallsLayer);
     this.physics.add.collider(this.player, this.npcs);
     this.game.events.on(
       EVENTS_NAME.interact,
