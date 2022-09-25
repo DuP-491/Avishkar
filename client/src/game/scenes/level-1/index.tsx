@@ -13,6 +13,7 @@ export class Level1 extends Scene {
   private map!: Tilemaps.Tilemap;
   private tileset!: Tilemaps.Tileset;
   private tileset2!: Tilemaps.Tileset;
+  private tileset3!: Tilemaps.Tileset;
   private layer!: Tilemaps.TilemapLayer;
   private layer2!: Tilemaps.TilemapLayer;
   private layer3!: Tilemaps.TilemapLayer;
@@ -20,6 +21,8 @@ export class Level1 extends Scene {
   private layer5!: Tilemaps.TilemapLayer;
   private layer6!: Tilemaps.TilemapLayer;
   private layer7!: Tilemaps.TilemapLayer;
+  private layer8!: Tilemaps.TilemapLayer;
+  private layer9!: Tilemaps.TilemapLayer;
   private chests!: GameObjects.Sprite[];
   private enemies!: Enemy[];
   private npcs!: NPC[];
@@ -33,12 +36,13 @@ export class Level1 extends Scene {
 
   create(): void {
     this.initMap();
-    this.player = new Player(this, 100, 100);
+    this.player = new Player(this, 600, 600);
     // this.initChests();
     // this.initEnemies();
     // this.initNPCs();
     this.initCamera();
 
+    this.physics.add.collider(this.player, this.layer, this.player.onGrass);
     this.physics.add.collider(this.player, this.layer5);
     this.physics.add.collider(this.player, this.layer6);
 
@@ -59,18 +63,67 @@ export class Level1 extends Scene {
     // this.tileset = this.map.addTilesetImage('dungeon', 'tiles');
     this.tileset = this.map.addTilesetImage('SpriteChan', 'tileSpriteChan', 16, 16, 0, 0);
     this.tileset2 = this.map.addTilesetImage('Interior', 'tileInterior', 16, 16, 0, 0);
+    this.tileset3 = this.map.addTilesetImage('Sports', 'tileSports', 16, 16, 0, 0);
 
-    this.layer = this.map.createLayer('Base Tiles Layer', [this.tileset, this.tileset2], 0, 0);
-    this.layer2 = this.map.createLayer(' Floor Layer', [this.tileset, this.tileset2], 0, 0);
-    this.layer3 = this.map.createLayer('Interior Layer 1', [this.tileset, this.tileset2], 0, 0);
-    this.layer4 = this.map.createLayer('Interior Layer 2', [this.tileset, this.tileset2], 0, 0);
-    this.layer5 = this.map.createLayer('Walls Layer', [this.tileset, this.tileset2], 0, 0);
-    this.layer6 = this.map.createLayer('WallSides Layer', [this.tileset, this.tileset2], 0, 0);
-    this.layer7 = this.map.createLayer(' Roof Layer', [this.tileset, this.tileset2], 0, 0);
+    this.layer = this.map.createLayer(
+      'Base Tiles Layer',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer2 = this.map.createLayer(
+      'Floor Layer',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer3 = this.map.createLayer(
+      'Interior Layer 1',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer4 = this.map.createLayer(
+      'Interior Layer 2',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer5 = this.map.createLayer(
+      'Walls Layer',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer6 = this.map.createLayer(
+      'WallSides Layer',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer7 = this.map.createLayer(
+      'Roof Layer',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer8 = this.map.createLayer(
+      'Trees Layer',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
+    this.layer9 = this.map.createLayer(
+      'Stadium Layer',
+      [this.tileset, this.tileset2, this.tileset3],
+      0,
+      0
+    );
 
     // const layer2 = this.map.createLayer(1, this.tileset2, 0, 0);
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
     // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
+    this.layer.setCollisionByProperty({ collides: true }, false);
     this.layer5.setCollisionByProperty({ collides: true }, true);
     this.layer6.setCollisionByProperty({ collides: true }, true);
 
@@ -181,6 +234,10 @@ export class Level1 extends Scene {
 
   private showDebug(): void {
     const debugGraphics = this.add.graphics().setAlpha(0.7);
+    this.layer.renderDebug(debugGraphics, {
+      tileColor: null, // Color of colliding tiles
+      collidingTileColor: new Phaser.Display.Color(0, 0, 0, 255)
+    });
     this.layer5.renderDebug(debugGraphics, {
       tileColor: null, // Color of colliding tiles
       collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255)

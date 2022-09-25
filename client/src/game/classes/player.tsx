@@ -17,7 +17,7 @@ export class Player extends Actor {
     super(scene, x, y, 'king');
 
     // CONFIGS
-    this.speed = 200;
+    this.speed = 420;
 
     // KEYS
     this.keyW = this.scene.input.keyboard.addKey('W');
@@ -108,5 +108,11 @@ export class Player extends Actor {
     if (this.hp <= 0) {
       this.scene.game.events.emit(EVENTS_NAME.gameEnd, GameStatus.LOSE);
     }
+  }
+
+  public onGrass(props: any): void {
+    console.log('onGrass', props);
+
+    this.speed = 300;
   }
 }
