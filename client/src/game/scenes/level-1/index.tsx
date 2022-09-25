@@ -13,7 +13,6 @@ export class Level1 extends Scene {
   private map!: Tilemaps.Tilemap;
   private tileset!: Tilemaps.Tileset;
   private tileset2!: Tilemaps.Tileset;
-  private wallsLayer!: Tilemaps.TilemapLayer;
   private layer!: Tilemaps.TilemapLayer;
   private layer2!: Tilemaps.TilemapLayer;
   private layer3!: Tilemaps.TilemapLayer;
@@ -25,6 +24,8 @@ export class Level1 extends Scene {
   private enemies!: Enemy[];
   private npcs!: NPC[];
   private npcChatSprites!: Physics.Arcade.Sprite[];
+
+  private debugText!: GameObjects.Text;
 
   constructor() {
     super('level-1-scene');
@@ -38,11 +39,18 @@ export class Level1 extends Scene {
     // this.initNPCs();
     this.initCamera();
 
-    this.physics.add.collider(this.player, this.wallsLayer);
+    this.physics.add.collider(this.player, this.layer5);
+    this.physics.add.collider(this.player, this.layer6);
+
+    // this.layer5.renderDebug(this.debug);
+    // this.layer6.renderDebug(this.debug);
+    // this.layer7.renderDebug(this.debug);
+    this.showDebug();
   }
 
   update(): void {
     this.player.update();
+    this.getTileProperties();
   }
 
   private initMap(): void {
@@ -63,10 +71,11 @@ export class Level1 extends Scene {
     // const layer2 = this.map.createLayer(1, this.tileset2, 0, 0);
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
     // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
-    // this.wallsLayer.setCollisionByProperty({ collides: true });
+    this.layer5.setCollisionByProperty({ collides: true }, true);
+    this.layer6.setCollisionByProperty({ collides: true }, true);
 
     this.physics.world.setBounds(0, 0, this.layer.width, this.layer.height);
-    this.showDebug();
+    // this.showDebug();
   }
 
   private initChests(): void {
@@ -167,14 +176,36 @@ export class Level1 extends Scene {
   private initCamera(): void {
     this.cameras.main.setSize(this.game.scale.width, this.game.scale.height);
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);
-    this.cameras.main.setZoom(2);
+    this.cameras.main.setZoom(1.5);
   }
 
   private showDebug(): void {
     const debugGraphics = this.add.graphics().setAlpha(0.7);
-    // this.wallsLayer.renderDebug(debugGraphics, {
-    //   tileColor: null,
-    //   collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255)
-    // });
+    this.layer5.renderDebug(debugGraphics, {
+      tileColor: null, // Color of colliding tiles
+      collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255)
+    });
+    this.layer6.renderDebug(debugGraphics, {
+      tileColor: null, // Color of colliding tiles
+      collidingTileColor: new Phaser.Display.Color(150, 234, 234, 255)
+    });
+    this.player.setDebug(true, true, 250);
+
+    this.debugText = this.add.text(10, 10, '', { font: '16px Courier', color: '#00ff00' });
+    this.debugText.text = 'Debug text';
+  }
+
+  private getTileProperties(): void {
+    var tile = this.layer5.getTileAtWorldXY(
+      this.game.input.activePointer.worldX,
+      this.game.input.activePointer.worldY
+    );
+
+    if (!tile) return;
+
+    // Note: JSON.stringify will convert the object tile properties to a string
+    let currentDataString = JSON.stringify(tile.properties);
+
+    console.log(currentDataString);
   }
 }

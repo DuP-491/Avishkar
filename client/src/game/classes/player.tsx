@@ -17,7 +17,7 @@ export class Player extends Actor {
     super(scene, x, y, 'king');
 
     // CONFIGS
-    this.speed = 500;
+    this.speed = 200;
 
     // KEYS
     this.keyW = this.scene.input.keyboard.addKey('W');
@@ -45,6 +45,9 @@ export class Player extends Actor {
     this.on('destroy', () => {
       this.keySpace.removeAllListeners();
     });
+
+    // this.setDebug(true, true, 2);
+    // this.debugShowBody = true;
   }
 
   update(): void {
