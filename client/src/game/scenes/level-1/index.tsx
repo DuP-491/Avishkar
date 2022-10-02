@@ -3,7 +3,10 @@ import Phaser, { GameObjects, Scene, Tilemaps, Physics } from 'phaser';
 
 import { Player } from '../../classes/player';
 import { Enemy } from '../../classes/enemy';
-import { gameObjectsToObjectPoints } from '../../helpers/gameobject-to-object-point';
+import {
+  gameObjectsToObjectPoints,
+  gameObjectToObjectPoint
+} from '../../helpers/gameobject-to-object-point';
 
 import { EVENTS_NAME } from '../../consts';
 import { NPC } from '../../classes/npc';
@@ -14,6 +17,7 @@ export class Level1 extends Scene {
   private tileset!: Tilemaps.Tileset;
   private tileset2!: Tilemaps.Tileset;
   private tileset3!: Tilemaps.Tileset;
+  private tileset4!: Tilemaps.Tileset;
   private layer!: Tilemaps.TilemapLayer;
   private layer2!: Tilemaps.TilemapLayer;
   private layer3!: Tilemaps.TilemapLayer;
@@ -26,6 +30,7 @@ export class Level1 extends Scene {
   private chests!: GameObjects.Sprite[];
   private enemies!: Enemy[];
   private npcs!: NPC[];
+  private interactables!: (GameObjects.Sprite | GameObjects.Group)[];
   private npcChatSprites!: Physics.Arcade.Sprite[];
 
   private debugText!: GameObjects.Text;
@@ -36,7 +41,8 @@ export class Level1 extends Scene {
 
   create(): void {
     this.initMap();
-    this.player = new Player(this, 600, 600);
+    this.initPlayer();
+    this.initInteractables();
     // this.initChests();
     // this.initEnemies();
     // this.initNPCs();
@@ -64,6 +70,7 @@ export class Level1 extends Scene {
     this.tileset = this.map.addTilesetImage('SpriteChan', 'tileSpriteChan', 16, 16, 0, 0);
     this.tileset2 = this.map.addTilesetImage('Interior', 'tileInterior', 16, 16, 0, 0);
     this.tileset3 = this.map.addTilesetImage('Sports', 'tileSports', 16, 16, 0, 0);
+    // this.tileset4 = this.map.addTilesetImage('UI', 'tileUI', 16, 16, 0, 0);
 
     this.layer = this.map.createLayer(
       'Base Tiles Layer',
@@ -129,6 +136,42 @@ export class Level1 extends Scene {
 
     this.physics.world.setBounds(0, 0, this.layer.width, this.layer.height);
     // this.showDebug();
+  }
+
+  private initInteractables(): void {
+    this.interactables = [];
+    const authPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'auth')
+    );
+
+    this.interactables.push(
+      this.physics.add.group([
+        this.physics.add
+          .sprite(authPoint.x, authPoint.y, 'tiles_ui', 0)
+          .setOrigin(0.5, 0.5)
+          .setScale(1.5)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .on('pointerdown', (e: any) => {
+            // console.log('auth', e);
+            this.game.events.emit(EVENTS_NAME.showAuth);
+          })
+        // this.physics.add
+        //   .sprite(authPoint.x, authPoint.y, 'tiles_ui', 1)
+        //   .setOrigin(0, 0.5)
+        // .setScale(1.5)
+      ])
+    );
+  }
+
+  private initPlayer(): void {
+    this.player = new Player(this, 600, 600);
+    this.game.events.on(EVENTS_NAME.authSuccess, () => {
+      // teleport player 200 pixels to the right
+      console.log('authSuccess');
+      this.player.x += 200;
+    });
   }
 
   private initChests(): void {
@@ -261,8 +304,8 @@ export class Level1 extends Scene {
     if (!tile) return;
 
     // Note: JSON.stringify will convert the object tile properties to a string
-    let currentDataString = JSON.stringify(tile.properties);
+    // let currentDataString = JSON.stringify(tile.properties);
 
-    console.log(currentDataString);
+    // console.log(currentDataString);
   }
 }

@@ -5,7 +5,9 @@ export enum EVENTS_NAME {
   attack = 'attack',
   interact = 'interact',
   resetInteract = 'reset-interact',
-  infoPopup = 'info-popup'
+  infoPopup = 'info-popup',
+  showAuth = 'show-auth',
+  authSuccess = 'auth-success'
 }
 
 export enum GameStatus {

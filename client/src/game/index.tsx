@@ -5,6 +5,7 @@ import { GameInstance, IonPhaser } from '@ion-phaser/react';
 import { gameConfig } from './config';
 import { EVENTS_NAME } from './consts';
 import InfoPrompt from '../components/InfoPrompt';
+import AuthPrompt from '../components/AuthPrompt';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -39,15 +40,24 @@ function GameComponent(props: Props) {
     setGame(undefined);
   };
 
+  // Game States
+  const [showInfoPrompt, setShowInfoPrompt] = useState(false);
+  const [infoPromptText, setInfoPromptText] = useState('');
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+
   // Auto Initialize the game when the component is mounted
-  useEffect(() => {
-    setInitialize(true);
-  }, []);
+  // useEffect(() => {
+  //   setInitialize(true);
+  // }, []);
 
   useEffect(() => {
     if (game) {
       game.instance?.events.on(EVENTS_NAME.infoPopup, (pointer: any, gameObject: any) => {
         console.log(pointer, gameObject);
+      });
+      game.instance?.events.on(EVENTS_NAME.showAuth, () => {
+        console.log('show auth');
+        setShowAuthPrompt(true);
       });
     }
   }, [game]);
@@ -81,6 +91,15 @@ function GameComponent(props: Props) {
     setInitialize(true);
   }, [dimensions]);
 
+  const onAuthSuccess = () => {
+    if (game) {
+      game?.instance?.events.emit(EVENTS_NAME.authSuccess);
+      setTimeout(() => {
+        setShowAuthPrompt(false);
+      }, 1000);
+    }
+  };
+
   return (
     <>
       <IonPhaser ref={gameRef} game={game} initialize={initialize} />
@@ -98,6 +117,9 @@ function GameComponent(props: Props) {
           Destroy
         </button>
       </div>
+      {showAuthPrompt && (
+        <AuthPrompt closePopup={setShowAuthPrompt} authSuccessCallback={onAuthSuccess} />
+      )}
       {/* <InfoPrompt text="Jenny Darling youre my best friend and i would love to kill you for a million rupees but i can not. I wanna ruin our friendship. We should be lovers instead"></InfoPrompt> */}
     </>
   );

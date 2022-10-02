@@ -29,12 +29,20 @@ export class LoadingScene extends Scene {
       key: 'tileSports',
       url: 'tilemaps/tiles/Sports.png'
     });
+    // this.load.image({
+    //   key: 'tileUI',
+    //   url: 'spritesheets/UI.png'
+    // });
     // this.load.tilemapTiledJSON('dungeon', 'tilemaps/json/dungeon.json');
     this.load.tilemapTiledJSON('try5', 'tilemaps/json/try5.json');
 
     // CHEST LOADING
     this.load.spritesheet('tiles_spr', 'tilemaps/tiles/dungeon-16-16.png', {
       frameWidth: 16,
+      frameHeight: 16
+    });
+    this.load.spritesheet('tiles_ui', 'spritesheets/UI.png', {
+      frameWidth: 32,
       frameHeight: 16
     });
     // this.load.spritesheet('tiles_Interior', 'tilemaps/tiles/Interior.png', {
