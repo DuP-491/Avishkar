@@ -109,8 +109,7 @@ function GameComponent(props: Props) {
         </div>
         <button
           className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
-          onClick={() => setInitialize(true)}
-        >
+          onClick={() => setInitialize(true)}>
           Initialize game for {viewport}
         </button>
         <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={destroy}>

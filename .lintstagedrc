@@ -1,3 +1,10 @@
 {
-    "*.{ts,tsx}": ["eslint", "prettier --write"]
+	"client/src/**/*.{ts,tsx}": [
+		"eslint",
+		"prettier --write"
+	],
+	"server/**/*.{ts,tsx}": [
+		"eslint",
+		"prettier --write"
+	]
 }
