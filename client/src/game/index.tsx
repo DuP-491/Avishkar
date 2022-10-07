@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Phaser from 'phaser';
 import { GameInstance, IonPhaser } from '@ion-phaser/react';
 import { gameConfig } from './config';
-import { EVENTS_NAME } from './consts';
+import { EVENTS_NAME, TELEPORT_LOCATIONS } from './consts';
 import InfoPrompt from '../components/InfoPrompt';
 import AuthPrompt from '../components/AuthPrompt';
 
@@ -55,10 +55,12 @@ function GameComponent(props: Props) {
       game.instance?.events.on(EVENTS_NAME.infoPopup, (pointer: any, gameObject: any) => {
         console.log(pointer, gameObject);
       });
-      game.instance?.events.on(EVENTS_NAME.showAuth, () => {
-        console.log('show auth');
-        setShowAuthPrompt(true);
-      });
+      setTimeout(() => {
+        game.instance?.events.on(EVENTS_NAME.showAuth, () => {
+          console.log('show auth');
+          setShowAuthPrompt(true);
+        });
+      }, 2000);
     }
   }, [game]);
 
@@ -100,6 +102,12 @@ function GameComponent(props: Props) {
     }
   };
 
+  const teleport = () => {
+    if (game) {
+      game?.instance?.events.emit(EVENTS_NAME.teleport, TELEPORT_LOCATIONS.cafe96);
+    }
+  };
+
   return (
     <>
       <IonPhaser ref={gameRef} game={game} initialize={initialize} />
@@ -111,6 +119,9 @@ function GameComponent(props: Props) {
           className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
           onClick={() => setInitialize(true)}>
           Initialize game for {viewport}
+        </button>
+        <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={teleport}>
+          Teleport to Cafe96
         </button>
         <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={destroy}>
           Destroy

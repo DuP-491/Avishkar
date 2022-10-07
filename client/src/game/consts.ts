@@ -7,8 +7,22 @@ export enum EVENTS_NAME {
   resetInteract = 'reset-interact',
   infoPopup = 'info-popup',
   showAuth = 'show-auth',
-  authSuccess = 'auth-success'
+  authSuccess = 'auth-success',
+  teleport = 'teleport'
 }
+
+export enum TELEPORT_LOCATIONS {
+  cafe96 = 'cafe96'
+}
+
+export const TELEPORT_LOCATIONS_DATA: {
+  [key: string]: { x: number; y: number };
+} = {
+  cafe96: {
+    x: 4300,
+    y: 3000
+  }
+};
 
 export enum GameStatus {
   WIN,
