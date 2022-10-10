@@ -11,7 +11,7 @@ import {
 import { EVENTS_NAME, TELEPORT_LOCATIONS_DATA } from '../../consts';
 import { NPC } from '../../classes/npc';
 
-export class Level1 extends Scene {
+export class Campus extends Scene {
   private player!: Player;
   private map!: Tilemaps.Tilemap;
   private tileset!: Tilemaps.Tileset;
@@ -36,7 +36,7 @@ export class Level1 extends Scene {
   private debugText!: GameObjects.Text;
 
   constructor() {
-    super('level-1-scene');
+    super('campus');
   }
 
   create(): void {
@@ -186,8 +186,8 @@ export class Level1 extends Scene {
             useHandCursor: true
           })
           .on('pointerdown', (e: any) => {
-            console.log('enter');
-            this.scene.start('cafe96-scene');
+            // console.log('enter');
+            this.scene.switch('cafe96');
           })
       ])
     );
@@ -262,7 +262,8 @@ export class Level1 extends Scene {
         'tiles_spr',
         this.player,
         360,
-        npcPoint.properties.filter((prop) => prop.name === 'left')[0].value
+        npcPoint.properties.filter((prop) => prop.name === 'left')[0].value,
+        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value
       )
         .setName(npcPoint.id.toString())
         .setScale(1.5)

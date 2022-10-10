@@ -1,6 +1,11 @@
-import Phaser, { GameObjects, Scene, Tilemaps } from 'phaser';
+import Phaser, { GameObjects, Physics, Scene, Tilemaps } from 'phaser';
 import { NPC } from '../../classes/npc';
 import { Player } from '../../classes/player';
+import { EVENTS_NAME } from '../../consts';
+import {
+  gameObjectsToObjectPoints,
+  gameObjectToObjectPoint
+} from '../../helpers/gameobject-to-object-point';
 
 export class Cafe96Scene extends Scene {
   private player!: Player;
@@ -21,9 +26,10 @@ export class Cafe96Scene extends Scene {
   private chests!: GameObjects.Sprite[];
   private npcs!: NPC[];
   private interactables!: (GameObjects.Sprite | GameObjects.Group)[];
+  private npcChatSprites!: Physics.Arcade.Sprite[];
 
   constructor() {
-    super('cafe96-scene');
+    super('cafe96');
   }
 
   preload(): void {
@@ -64,7 +70,7 @@ export class Cafe96Scene extends Scene {
     this.initInteractables();
     // this.initChests();
     // this.initEnemies();
-    // this.initNPCs();
+    this.initNPCs();
     this.initCamera();
     this.showDebug();
   }
@@ -96,30 +102,21 @@ export class Cafe96Scene extends Scene {
       0,
       0
     );
-    this.layer4 = this.map.createLayer(
-      'Furniture 2',
-      [this.tileset, this.tileset2, this.tileset3],
-      0,
-      0
-    );
-    this.layer5 = this.map.createLayer(
-      'Walls V',
-      [this.tileset, this.tileset2, this.tileset3],
-      0,
-      0
-    );
+    this.layer4 = this.map
+      .createLayer('Furniture 2', [this.tileset, this.tileset2, this.tileset3], 0, 0)
+      .setDepth(1);
+    this.layer5 = this.map
+      .createLayer('Walls V', [this.tileset, this.tileset2, this.tileset3], 0, 0)
+      .setDepth(1);
     this.layer6 = this.map.createLayer(
       'Walls V2',
       [this.tileset, this.tileset2, this.tileset3],
       0,
       0
     );
-    this.layer7 = this.map.createLayer(
-      'Wall H',
-      [this.tileset, this.tileset2, this.tileset3],
-      0,
-      0
-    );
+    this.layer7 = this.map
+      .createLayer('Wall H', [this.tileset, this.tileset2, this.tileset3], 0, 0)
+      .setDepth(1);
 
     // const layer2 = this.map.createLayer(1, this.tileset2, 0, 0);
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
@@ -130,37 +127,34 @@ export class Cafe96Scene extends Scene {
     this.layer3.setCollisionByProperty({ collides: true }, true);
 
     this.physics.world.setBounds(0, 0, this.layer.width, this.layer.height);
-    // this.showDebug();
   }
 
   private initInteractables(): void {
     this.interactables = [];
-    // const authPoint = gameObjectToObjectPoint(
-    //   this.map.findObject('Interactables', (obj) => obj.name === 'auth')
-    // );
-    // const enterPoint = gameObjectToObjectPoint(
-    //   this.map.findObject('Interactables', (obj) => obj.name === 'cafe')
-    // );
+    const exitPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'exit')
+    );
 
-    // this.interactables.push(
-    //   this.physics.add.group([
-    //     this.physics.add
-    //       .sprite(authPoint.x, authPoint.y, 'tiles_ui', 0)
-    //       .setOrigin(0.5, 0.5)
-    //       .setScale(1.5)
-    //       .setInteractive({
-    //         useHandCursor: true
-    //       })
-    //       .on('pointerdown', (e: any) => {
-    //         console.log('auth');
-    //         this.game.events.emit(EVENTS_NAME.showAuth);
-    //       })
-    //   ])
-    // );
+    this.interactables.push(
+      this.physics.add.group([
+        this.physics.add
+          .sprite(exitPoint.x, exitPoint.y, 'tiles_ui', 3)
+          .setOrigin(0.5, 0.5)
+          .setScale(1)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .setDepth(2)
+          .on('pointerdown', () => {
+            this.scene.switch('campus');
+          })
+      ])
+    );
   }
 
   private initPlayer(): void {
     this.player = new Player(this, 100, 250);
+    this.player.setScale(0.6);
 
     this.physics.add.collider(this.player, this.layer7);
     this.physics.add.collider(this.player, this.layer6);
@@ -171,7 +165,61 @@ export class Cafe96Scene extends Scene {
   private initCamera(): void {
     this.cameras.main.setSize(this.game.scale.width, this.game.scale.height);
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);
-    this.cameras.main.setZoom(4);
+    this.cameras.main.setZoom(2.5);
+  }
+
+  private initNPCs(): void {
+    const npcsPoints = gameObjectsToObjectPoints(
+      this.map.filterObjects('NPCs', (obj) => obj.name === 'NPCPoint')
+    );
+
+    this.npcs = npcsPoints.map((npcPoint) =>
+      new NPC(
+        this,
+        npcPoint.x,
+        npcPoint.y,
+        'tiles_spr',
+        this.player,
+        360,
+        npcPoint.properties.filter((prop) => prop.name === 'left')[0].value,
+        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value
+      )
+        .setName(npcPoint.id.toString())
+        .setScale(1)
+    );
+    this.npcChatSprites = npcsPoints.map((npcsPoint) => {
+      const sprite = new Physics.Arcade.Sprite(
+        this,
+        npcsPoint.x - 12,
+        npcsPoint.y - 12,
+        'tiles_spr',
+        765
+      )
+        .setName(npcsPoint.id.toString())
+        .setScale(0.8)
+        .setVisible(false);
+      this.add.existing(sprite);
+      return sprite;
+    });
+    // console.log(this.npcChatSprites, this.npcs);
+
+    this.physics.add.collider(this.npcs, this.npcs);
+    // this.physics.add.collider(this.npcs, this.wallsLayer);
+    this.physics.add.collider(this.player, this.npcs);
+    this.game.events.on(
+      EVENTS_NAME.interact,
+      (name: string) => {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+      },
+      this
+    );
+    this.game.events.on(
+      EVENTS_NAME.resetInteract,
+      (name: string) => {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+      },
+      this
+    );
   }
 
   private showDebug(): void {

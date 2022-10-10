@@ -9,8 +9,8 @@ export class LoadingScene extends Scene {
     this.load.baseURL = 'assets/';
 
     // PLAYER LOADING
-    this.load.image('king', 'sprites/king.png');
-    this.load.atlas('a-king', 'spritesheets/a-king.png', 'spritesheets/a-king_atlas.json');
+    this.load.image('player', 'sprites/player.png');
+    this.load.atlas('a-player', 'spritesheets/PlayerChan-0.png', 'spritesheets/PlayerChan.json');
 
     // MAP LOADING
     // this.load.image({
@@ -52,7 +52,7 @@ export class LoadingScene extends Scene {
   }
 
   create(): void {
-    this.scene.start('level-1-scene');
+    this.scene.start('campus');
     this.scene.start('ui-scene');
   }
 }

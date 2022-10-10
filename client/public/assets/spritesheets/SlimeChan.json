@@ -1,0 +1,545 @@
+{
+	"textures": [
+		{
+			"image": "SlimeChan.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 63,
+				"h": 182
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "die/0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 14,
+						"w": 20,
+						"h": 11
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 20,
+						"h": 11
+					}
+				},
+				{
+					"filename": "die/1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 9,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 23,
+						"y": 1,
+						"w": 16,
+						"h": 16
+					}
+				},
+				{
+					"filename": "die/2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 5,
+						"w": 15,
+						"h": 20
+					},
+					"frame": {
+						"x": 41,
+						"y": 1,
+						"w": 15,
+						"h": 20
+					}
+				},
+				{
+					"filename": "die/3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 11,
+						"w": 18,
+						"h": 14
+					},
+					"frame": {
+						"x": 1,
+						"y": 23,
+						"w": 18,
+						"h": 14
+					}
+				},
+				{
+					"filename": "die/4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 9,
+						"w": 16,
+						"h": 16
+					},
+					"frame": {
+						"x": 21,
+						"y": 23,
+						"w": 16,
+						"h": 16
+					}
+				},
+				{
+					"filename": "die/5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 4,
+						"w": 15,
+						"h": 21
+					},
+					"frame": {
+						"x": 39,
+						"y": 23,
+						"w": 15,
+						"h": 21
+					}
+				},
+				{
+					"filename": "die/6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 2,
+						"w": 16,
+						"h": 22
+					},
+					"frame": {
+						"x": 1,
+						"y": 46,
+						"w": 16,
+						"h": 22
+					}
+				},
+				{
+					"filename": "die/7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 5,
+						"w": 19,
+						"h": 20
+					},
+					"frame": {
+						"x": 19,
+						"y": 46,
+						"w": 19,
+						"h": 20
+					}
+				},
+				{
+					"filename": "die/8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 17,
+						"w": 20,
+						"h": 8
+					},
+					"frame": {
+						"x": 40,
+						"y": 46,
+						"w": 20,
+						"h": 8
+					}
+				},
+				{
+					"filename": "idle/0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 11,
+						"w": 18,
+						"h": 14
+					},
+					"frame": {
+						"x": 1,
+						"y": 70,
+						"w": 18,
+						"h": 14
+					}
+				},
+				{
+					"filename": "idle/1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 11,
+						"w": 18,
+						"h": 14
+					},
+					"frame": {
+						"x": 21,
+						"y": 70,
+						"w": 18,
+						"h": 14
+					}
+				},
+				{
+					"filename": "idle/2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 12,
+						"w": 18,
+						"h": 13
+					},
+					"frame": {
+						"x": 41,
+						"y": 70,
+						"w": 18,
+						"h": 13
+					}
+				},
+				{
+					"filename": "idle/3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 12,
+						"w": 18,
+						"h": 13
+					},
+					"frame": {
+						"x": 1,
+						"y": 86,
+						"w": 18,
+						"h": 13
+					}
+				},
+				{
+					"filename": "idle/4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 13,
+						"w": 22,
+						"h": 12
+					},
+					"frame": {
+						"x": 21,
+						"y": 86,
+						"w": 22,
+						"h": 12
+					}
+				},
+				{
+					"filename": "idle/5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 7,
+						"w": 14,
+						"h": 18
+					},
+					"frame": {
+						"x": 45,
+						"y": 86,
+						"w": 14,
+						"h": 18
+					}
+				},
+				{
+					"filename": "idle/6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 5,
+						"w": 14,
+						"h": 20
+					},
+					"frame": {
+						"x": 1,
+						"y": 106,
+						"w": 14,
+						"h": 20
+					}
+				},
+				{
+					"filename": "idle/7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 8,
+						"w": 18,
+						"h": 17
+					},
+					"frame": {
+						"x": 17,
+						"y": 106,
+						"w": 18,
+						"h": 17
+					}
+				},
+				{
+					"filename": "idle/8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 11,
+						"w": 18,
+						"h": 14
+					},
+					"frame": {
+						"x": 37,
+						"y": 106,
+						"w": 18,
+						"h": 14
+					}
+				},
+				{
+					"filename": "idle/9.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 12,
+						"w": 18,
+						"h": 13
+					},
+					"frame": {
+						"x": 1,
+						"y": 128,
+						"w": 18,
+						"h": 13
+					}
+				},
+				{
+					"filename": "idle/10.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 13,
+						"w": 20,
+						"h": 12
+					},
+					"frame": {
+						"x": 21,
+						"y": 128,
+						"w": 20,
+						"h": 12
+					}
+				},
+				{
+					"filename": "idle/11.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 12,
+						"w": 19,
+						"h": 13
+					},
+					"frame": {
+						"x": 43,
+						"y": 128,
+						"w": 19,
+						"h": 13
+					}
+				},
+				{
+					"filename": "idle/12.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 3,
+						"w": 14,
+						"h": 22
+					},
+					"frame": {
+						"x": 1,
+						"y": 143,
+						"w": 14,
+						"h": 22
+					}
+				},
+				{
+					"filename": "idle/13.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 1,
+						"w": 14,
+						"h": 24
+					},
+					"frame": {
+						"x": 17,
+						"y": 143,
+						"w": 14,
+						"h": 24
+					}
+				},
+				{
+					"filename": "idle/14.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 5,
+						"w": 15,
+						"h": 20
+					},
+					"frame": {
+						"x": 33,
+						"y": 143,
+						"w": 15,
+						"h": 20
+					}
+				},
+				{
+					"filename": "idle/15.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 13,
+						"w": 18,
+						"h": 12
+					},
+					"frame": {
+						"x": 1,
+						"y": 169,
+						"w": 18,
+						"h": 12
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:c5d8e7a737b70cb8c4075453e0c5de20:957229253a3fdf0d1f59ac338416d566:71ed1a38dc73543c15835bd8b1c62ea8$"
+	}
+}

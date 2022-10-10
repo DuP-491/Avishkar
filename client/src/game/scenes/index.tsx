@@ -1,4 +1,4 @@
 export * from './loading';
-export * from './level-1';
+export * from './campus';
 export * from './ui';
 export * from './cafe96';
