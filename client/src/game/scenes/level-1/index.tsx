@@ -8,7 +8,7 @@ import {
   gameObjectToObjectPoint
 } from '../../helpers/gameobject-to-object-point';
 
-import { EVENTS_NAME } from '../../consts';
+import { EVENTS_NAME, TELEPORT_LOCATIONS_DATA } from '../../consts';
 import { NPC } from '../../classes/npc';
 
 export class Level1 extends Scene {
@@ -60,7 +60,7 @@ export class Level1 extends Scene {
 
   update(): void {
     this.player.update();
-    this.getTileProperties();
+    // this.getTileProperties();
   }
 
   private initMap(): void {
@@ -143,6 +143,9 @@ export class Level1 extends Scene {
     const authPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'auth')
     );
+    const enterPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'cafe')
+    );
 
     this.interactables.push(
       this.physics.add.group([
@@ -154,13 +157,28 @@ export class Level1 extends Scene {
             useHandCursor: true
           })
           .on('pointerdown', (e: any) => {
-            // console.log('auth', e);
+            console.log('auth');
             this.game.events.emit(EVENTS_NAME.showAuth);
           })
         // this.physics.add
         //   .sprite(authPoint.x, authPoint.y, 'tiles_ui', 1)
         //   .setOrigin(0, 0.5)
         // .setScale(1.5)
+      ])
+    );
+    this.interactables.push(
+      this.physics.add.group([
+        this.physics.add
+          .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2)
+          .setOrigin(0.5, 0.5)
+          .setScale(1.5)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .on('pointerdown', (e: any) => {
+            console.log('enter');
+            this.scene.start('cafe96-scene');
+          })
       ])
     );
   }
@@ -171,6 +189,11 @@ export class Level1 extends Scene {
       // teleport player 200 pixels to the right
       console.log('authSuccess');
       this.player.x += 200;
+    });
+    this.game.events.on(EVENTS_NAME.teleport, (location: string) => {
+      const { x, y } = TELEPORT_LOCATIONS_DATA[location];
+      this.player.x = x;
+      this.player.y = y;
     });
   }
 
