@@ -45,6 +45,7 @@ function GameComponent(props: Props) {
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
   // Auto Initialize the game when the component is mounted
   // useEffect(() => {
@@ -61,7 +62,20 @@ function GameComponent(props: Props) {
           console.log('show auth');
           setShowAuthPrompt(true);
         });
-      }, 2000);
+        game.instance?.events.on(
+          EVENTS_NAME.sendPlayerPosition,
+          (playerX: any, playerY: any, worldWidth: any, worldHeight: any) => {
+            console.log(playerX, playerY, worldWidth, worldHeight);
+            const relativeX = (playerX / worldWidth) * 100;
+            const relativeY = (playerY / worldHeight) * 100;
+            setPlayerPosition({ x: relativeX, y: relativeY });
+            // console.log(relativeX, relativeY);
+          }
+        );
+        setInterval(() => {
+          game.instance?.events.emit(EVENTS_NAME.getPlayerPosition);
+        }, 1000);
+      }, 5000);
     }
   }, [game]);
 
@@ -132,7 +146,7 @@ function GameComponent(props: Props) {
         <AuthPrompt closePopup={setShowAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
       {/* <InfoPrompt text="Jenny Darling youre my best friend and i would love to kill you for a million rupees but i can not. I wanna ruin our friendship. We should be lovers instead"></InfoPrompt> */}
-      <MiniMap />
+      <MiniMap playerPosition={playerPosition} />
     </>
   );
 }

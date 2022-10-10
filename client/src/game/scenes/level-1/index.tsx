@@ -52,6 +52,16 @@ export class Level1 extends Scene {
     this.physics.add.collider(this.player, this.layer5);
     this.physics.add.collider(this.player, this.layer6);
 
+    this.game.events.on(EVENTS_NAME.getPlayerPosition, () => {
+      this.game.events.emit(
+        EVENTS_NAME.sendPlayerPosition,
+        this.player.x,
+        this.player.y,
+        this.layer.width,
+        this.layer.height
+      );
+    });
+
     // this.layer5.renderDebug(this.debug);
     // this.layer6.renderDebug(this.debug);
     // this.layer7.renderDebug(this.debug);
