@@ -5,7 +5,7 @@ import GameComponent from './game';
 function App() {
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <div className="w-full h-full flex">
+      <div className="flex w-full h-full">
         <GameComponent viewport="desktop" />
       </div>
     </div>
