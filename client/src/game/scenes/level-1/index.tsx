@@ -60,7 +60,7 @@ export class Level1 extends Scene {
 
   update(): void {
     this.player.update();
-    this.getTileProperties();
+    // this.getTileProperties();
   }
 
   private initMap(): void {
@@ -177,7 +177,7 @@ export class Level1 extends Scene {
           })
           .on('pointerdown', (e: any) => {
             console.log('enter');
-            this.scene.start('Cafe');
+            this.scene.start('cafe96-scene');
           })
       ])
     );
