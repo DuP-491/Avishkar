@@ -2,7 +2,7 @@ import { Input, Scene } from 'phaser';
 
 import { EVENTS_NAME, GameStatus } from '../consts';
 import { Actor } from './actor';
-import { Text } from './text';
+// import { Text } from './text';
 
 export class Player extends Actor {
   private keyW: Input.Keyboard.Key;
@@ -10,11 +10,11 @@ export class Player extends Actor {
   private keyS: Input.Keyboard.Key;
   private keyD: Input.Keyboard.Key;
   private keySpace: Input.Keyboard.Key;
-  private hpValue: Text;
+  // private hpValue: Text;
   private speed: number;
 
   constructor(scene: Scene, x: number, y: number) {
-    super(scene, x, y, 'king');
+    super(scene, x, y, 'player');
 
     // CONFIGS
     this.speed = 420;
@@ -25,19 +25,21 @@ export class Player extends Actor {
     this.keyS = this.scene.input.keyboard.addKey('S');
     this.keyD = this.scene.input.keyboard.addKey('D');
     this.keySpace = this.scene.input.keyboard.addKey(32);
+
     // eslint-disable-next-line no-unused-vars
     this.keySpace.on('down', (_event: KeyboardEvent) => {
-      this.anims.play('attack', true);
+      this.anims.play('attack');
       this.scene.game.events.emit(EVENTS_NAME.attack);
     });
 
-    this.hpValue = new Text(this.scene, this.x, this.y - this.height, this.hp.toString())
-      .setFontSize(12)
-      .setOrigin(0.8, 0.5);
+    // this.hpValue = new Text(this.scene, this.x, this.y - this.height, this.hp.toString())
+    //   .setFontSize(12)
+    //   .setOrigin(0.8, 0.5);
 
     // PHYSICS
-    this.getBody().setSize(30, 30);
-    this.getBody().setOffset(8, 0);
+    this.getBody().setSize(18, 18);
+    this.getBody().setOffset(0, 1);
+    this.setScale(2);
 
     // ANIMATIONS
     this.initAnimations();
@@ -55,55 +57,87 @@ export class Player extends Actor {
 
     if (this.keyW?.isDown) {
       this.body.velocity.y = -this.speed;
-      !this.anims.isPlaying && this.anims.play('run', true);
+      !this.anims.isPlaying && this.anims.play('walk', true);
     }
 
     if (this.keyA?.isDown) {
       this.body.velocity.x = -this.speed;
-      this.checkFlip();
-      this.getBody().setOffset(48, 15);
-      !this.anims.isPlaying && this.anims.play('run', true);
+      // this.checkFlip();
+      this.flipX = true;
+      this.getBody().setOffset(0, 0);
+      !this.anims.isPlaying && this.anims.play('walk', true);
     }
 
     if (this.keyS?.isDown) {
       this.body.velocity.y = this.speed;
-      !this.anims.isPlaying && this.anims.play('run', true);
+      !this.anims.isPlaying && this.anims.play('walk', true);
     }
 
     if (this.keyD?.isDown) {
       this.body.velocity.x = this.speed;
-      this.checkFlip();
-      this.getBody().setOffset(15, 15);
-      !this.anims.isPlaying && this.anims.play('run', true);
+      // this.checkFlip();
+      this.flipX = false;
+      this.getBody().setOffset(0, 0);
+      !this.anims.isPlaying && this.anims.play('walk', true);
     }
 
-    this.hpValue.setPosition(this.x, this.y - this.height * 0.4);
-    this.hpValue.setOrigin(0.8, 0.5);
+    if (
+      !this.keyW?.isDown &&
+      !this.keyA?.isDown &&
+      !this.keyS?.isDown &&
+      !this.keyD?.isDown &&
+      !this.anims.isPlaying
+    ) {
+      this.anims.play('idle', true);
+    }
+
+    // this.hpValue.setPosition(this.x, this.y - this.height * 0.4);
+    // this.hpValue.setOrigin(0.8, 0.5);
   }
 
   private initAnimations(): void {
     this.scene.anims.create({
-      key: 'run',
-      frames: this.scene.anims.generateFrameNames('a-king', {
-        prefix: 'run-',
-        end: 7
+      key: 'idle',
+      frames: this.scene.anims.generateFrameNames('a-player', {
+        prefix: 'idle/player-idle-',
+        end: 5
+      }),
+      frameRate: 8
+    });
+
+    this.scene.anims.create({
+      key: 'walk',
+      frames: this.scene.anims.generateFrameNames('a-player', {
+        prefix: 'walk/player-walk-',
+        end: 5
       }),
       frameRate: 8
     });
 
     this.scene.anims.create({
       key: 'attack',
-      frames: this.scene.anims.generateFrameNames('a-king', {
-        prefix: 'attack-',
+      frames: this.scene.anims.generateFrameNames('a-player', {
+        prefix: 'attack/player-attack-',
         end: 2
       }),
       frameRate: 8
     });
+
+    this.scene.anims.create({
+      key: 'die',
+      frames: this.scene.anims.generateFrameNames('a-player', {
+        prefix: 'die/player-die-',
+        end: 3
+      }),
+      frameRate: 8
+    });
+
+    this.anims.play('idle', true);
   }
 
   public getDamage(value?: number): void {
     super.getDamage(value);
-    this.hpValue.setText(this.hp.toString());
+    // this.hpValue.setText(this.hp.toString());
 
     if (this.hp <= 0) {
       this.scene.game.events.emit(EVENTS_NAME.gameEnd, GameStatus.LOSE);

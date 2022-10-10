@@ -17,10 +17,12 @@ export class NPC extends Actor {
     texture: string,
     target: Player,
     frame?: string | number,
-    left?: boolean
+    left?: boolean,
+    interact_radius?: number
   ) {
     super(scene, x, y, texture, frame);
     this.target = target;
+    if (interact_radius) this.INTERACT_RADIUS = interact_radius;
     this.flipX = left ?? false;
 
     this.attackHandler = () => {

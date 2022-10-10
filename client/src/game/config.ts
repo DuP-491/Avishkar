@@ -1,6 +1,6 @@
 import { Scale, Types, WEBGL } from 'phaser';
 
-import { Level1, LoadingScene, UIScene, Cafe96Scene } from './scenes';
+import { Campus, LoadingScene, UIScene, Cafe96Scene } from './scenes';
 
 type GameConfigExtended = Types.Core.GameConfig & {
   winScore: number;
@@ -41,7 +41,7 @@ export const gameConfig: GameConfigExtended = {
   audio: {
     disableWebAudio: false
   },
-  scene: [LoadingScene, Level1, UIScene, Cafe96Scene],
+  scene: [LoadingScene, Campus, UIScene, Cafe96Scene],
   winScore: 40
 };
 
