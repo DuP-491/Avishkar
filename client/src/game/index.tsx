@@ -45,7 +45,7 @@ function GameComponent(props: Props) {
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
-  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
+  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
 
   // Auto Initialize the game when the component is mounted
   // useEffect(() => {
@@ -64,18 +64,27 @@ function GameComponent(props: Props) {
         });
         game.instance?.events.on(
           EVENTS_NAME.sendPlayerPosition,
-          (playerX: any, playerY: any, worldWidth: any, worldHeight: any) => {
-            console.log(playerX, playerY, worldWidth, worldHeight);
+          (
+            playerX: any,
+            playerY: any,
+            worldWidth: any,
+            worldHeight: any,
+            velocityX: any,
+            velocityY: any
+          ) => {
+            // console.log(playerX, playerY, worldWidth, worldHeight)
             const relativeX = (playerX / worldWidth) * 100;
             const relativeY = (playerY / worldHeight) * 100;
-            setPlayerPosition({ x: relativeX, y: relativeY });
+            const rotation = Math.atan2(velocityY, velocityX);
+            // console.log(rotation, velocityX, velocityY);
+            setPlayerPosition({ x: relativeX, y: relativeY, rot: rotation });
             // console.log(relativeX, relativeY);
           }
         );
         setInterval(() => {
           game.instance?.events.emit(EVENTS_NAME.getPlayerPosition);
-        }, 1000);
-      }, 5000);
+        }, 100);
+      }, 2500);
     }
   }, [game]);
 

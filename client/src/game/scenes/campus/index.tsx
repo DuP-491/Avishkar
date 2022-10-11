@@ -61,7 +61,9 @@ export class Campus extends Scene {
         this.player.x,
         this.player.y,
         this.layer.width,
-        this.layer.height
+        this.layer.height,
+        this.player.body.velocity.x,
+        this.player.body.velocity.y
       );
     });
 

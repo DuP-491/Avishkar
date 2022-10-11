@@ -21,7 +21,7 @@ export class Player extends Actor {
     super(scene, x, y, 'player');
 
     // CONFIGS
-    this.speed = 500;
+    this.speed = 197;
 
     // KEYS
     this.keyW = this.scene.input.keyboard.addKey('W');
