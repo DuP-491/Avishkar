@@ -45,7 +45,7 @@ function GameComponent(props: Props) {
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
-  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
+  const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
 
   // Auto Initialize the game when the component is mounted
   // useEffect(() => {
@@ -64,18 +64,27 @@ function GameComponent(props: Props) {
         });
         game.instance?.events.on(
           EVENTS_NAME.sendPlayerPosition,
-          (playerX: any, playerY: any, worldWidth: any, worldHeight: any) => {
-            console.log(playerX, playerY, worldWidth, worldHeight);
+          (
+            playerX: any,
+            playerY: any,
+            worldWidth: any,
+            worldHeight: any,
+            velocityX: any,
+            velocityY: any
+          ) => {
+            // console.log(playerX, playerY, worldWidth, worldHeight)
             const relativeX = (playerX / worldWidth) * 100;
             const relativeY = (playerY / worldHeight) * 100;
-            setPlayerPosition({ x: relativeX, y: relativeY });
+            const rotation = Math.atan2(velocityY, velocityX);
+            // console.log(rotation, velocityX, velocityY);
+            setPlayerPosition({ x: relativeX, y: relativeY, rot: rotation });
             // console.log(relativeX, relativeY);
           }
         );
         setInterval(() => {
           game.instance?.events.emit(EVENTS_NAME.getPlayerPosition);
-        }, 1000);
-      }, 5000);
+        }, 100);
+      }, 2500);
     }
   }, [game]);
 
@@ -117,9 +126,9 @@ function GameComponent(props: Props) {
     }
   };
 
-  const teleport = () => {
+  const teleport = (location: TELEPORT_LOCATIONS) => {
     if (game) {
-      game?.instance?.events.emit(EVENTS_NAME.teleport, TELEPORT_LOCATIONS.cafe96);
+      game?.instance?.events.emit(EVENTS_NAME.teleport, location);
     }
   };
 
@@ -135,7 +144,9 @@ function GameComponent(props: Props) {
           onClick={() => setInitialize(true)}>
           Initialize game for {viewport}
         </button>
-        <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={teleport}>
+        <button
+          className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
+          onClick={() => teleport(TELEPORT_LOCATIONS.cafe96)}>
           Teleport to Cafe96
         </button>
         <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={destroy}>
@@ -146,7 +157,7 @@ function GameComponent(props: Props) {
         <AuthPrompt closePopup={setShowAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
       {/* <InfoPrompt text="Jenny Darling youre my best friend and i would love to kill you for a million rupees but i can not. I wanna ruin our friendship. We should be lovers instead"></InfoPrompt> */}
-      <MiniMap playerPosition={playerPosition} />
+      <MiniMap playerPosition={playerPosition} teleport={teleport} />
     </>
   );
 }

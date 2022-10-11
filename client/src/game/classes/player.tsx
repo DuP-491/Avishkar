@@ -21,7 +21,7 @@ export class Player extends Actor {
     super(scene, x, y, 'player');
 
     // CONFIGS
-    this.speed = 420;
+    this.speed = 197;
 
     // KEYS
     this.keyW = this.scene.input.keyboard.addKey('W');
@@ -47,7 +47,7 @@ export class Player extends Actor {
     // PHYSICS
     this.getBody().setSize(18, 18);
     this.getBody().setOffset(0, 1);
-    this.setScale(2);
+    this.setScale(1.5);
 
     // ANIMATIONS
     this.initAnimations();
