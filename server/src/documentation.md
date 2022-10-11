@@ -283,7 +283,7 @@
    **API Extras :** only department coordinator can create event
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { name (string), details (string), maxTeamSize (number), minTeamSize (number), deptEventId (string) }
+    > { name (string), tagline (string), details (string), criteria (string), rules (string), psLink (string), maxTeamSize (number), minTeamSize (number), deptEventId (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response

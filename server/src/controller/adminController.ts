@@ -73,10 +73,10 @@ const removeDepartmentCoordinator = async (req: Request, res: Response, next) =>
 };
 
 const addEvent = async (req: Request, res: Response, next) => {
-    const { name, details, maxTeamSize, minTeamSize, deptEventId } = req.body;
+    const { name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, deptEventId } = req.body;
     try {
         await prisma.event.create({
-            data: { name, details, maxTeamSize, minTeamSize, deptEventId },
+            data: { name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, deptEventId },
         });
 
         res.statusCode = 200;
