@@ -68,7 +68,11 @@ model Event {
   deptEvent        DepartmentEvent    @relation(fields: [deptEventId], references: [id])
   deptEventId      String
   name             String             @unique
+  tagline          String
   details          String
+  criteria         String
+  rules            String
+  psLink           String
   maxTeamSize      Int                @default(1)
   minTeamSize      Int                @default(1)
   createdAt        DateTime           @default(now())
@@ -87,7 +91,7 @@ model EventCoordinator {
 }
 
 model Team {
-  id            String          @id @default(uuid())
+  id            Int          @id @default(autoincrement())
   user          User            @relation(fields: [leader], references: [id])
   leader        String
   size          Int             @default(1)
@@ -101,7 +105,7 @@ model TeamMember {
   user       User          @relation(fields: [userId], references: [id])
   userId     String
   team       Team          @relation(fields: [teamId], references: [id])
-  teamId     String
+  teamId     Int
   status     RequestStatus @default(PENDING)
   requestAt  DateTime      @default(now())
   acceptedAt DateTime      @updatedAt
@@ -111,7 +115,7 @@ model TeamMember {
 
 model Participation {
   team    Team   @relation(fields: [teamId], references: [id])
-  teamId  String
+  teamId  Int
   event   Event  @relation(fields: [eventId], references: [id])
   eventId String
 

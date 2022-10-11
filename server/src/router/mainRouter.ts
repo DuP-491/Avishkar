@@ -1,4 +1,10 @@
 import express, { Request, Response } from "express";
+import {
+    getAllDepartmentEvents,
+    getDepartmentCoordinators,
+    getDepartmentEvents,
+    getEventCoordinators,
+} from "../controller/mainController";
 
 const router = express.Router();
 
@@ -8,8 +14,12 @@ router.use((req: Request, res: Response, next) => {
     next();
 });
 
-router.get("/", (req: Request, res: Response) => {
-    res.send("About Main!!");
-});
+router.get("/dept-event", getAllDepartmentEvents);
+
+router.post("/event", getDepartmentEvents);
+
+router.post("/dept-coordie", getDepartmentCoordinators);
+
+router.post("/event-coordie", getEventCoordinators);
 
 export default router;

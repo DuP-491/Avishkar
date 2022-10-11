@@ -8,6 +8,8 @@ import {
     respondToTeamInvite,
     eventParticipate,
     eventUnparticipate,
+    deleteUserTeamInvite,
+    getTeamInvite,
 } from "../controller/userController";
 import { checkUserAuthorization } from "../middleware/authHandler";
 
@@ -25,8 +27,10 @@ router.route("/team").post(checkUserAuthorization, createTeam).delete(checkUserA
 
 router
     .route("/team-invite")
+    .get(checkUserAuthorization, getTeamInvite)
     .post(checkUserAuthorization, sendInviteToUser)
-    .put(checkUserAuthorization, respondToTeamInvite);
+    .put(checkUserAuthorization, respondToTeamInvite)
+    .delete(checkUserAuthorization, deleteUserTeamInvite);
 
 router
     .route("/participate")
