@@ -27,6 +27,9 @@ export class Campus extends Scene {
   private layer7!: Tilemaps.TilemapLayer;
   private layer8!: Tilemaps.TilemapLayer;
   private layer9!: Tilemaps.TilemapLayer;
+  private layer10!: Tilemaps.TilemapLayer;
+  private layer11!: Tilemaps.TilemapLayer;
+  private layer12!: Tilemaps.TilemapLayer;
   private chests!: GameObjects.Sprite[];
   private enemies!: Enemy[];
   private npcs!: NPC[];
@@ -49,13 +52,13 @@ export class Campus extends Scene {
     this.initCamera();
 
     this.physics.add.collider(this.player, this.layer, this.player.onGrass);
-    this.physics.add.collider(this.player, this.layer5);
     this.physics.add.collider(this.player, this.layer6);
+    this.physics.add.collider(this.player, this.layer9);
 
     // this.layer5.renderDebug(this.debug);
     // this.layer6.renderDebug(this.debug);
     // this.layer7.renderDebug(this.debug);
-    this.showDebug();
+    // this.showDebug();
   }
 
   update(): void {
@@ -70,59 +73,77 @@ export class Campus extends Scene {
     this.tileset = this.map.addTilesetImage('SpriteChan', 'tileSpriteChan', 16, 16, 0, 0);
     this.tileset2 = this.map.addTilesetImage('Interior', 'tileInterior', 16, 16, 0, 0);
     this.tileset3 = this.map.addTilesetImage('Sports', 'tileSports', 16, 16, 0, 0);
-    // this.tileset4 = this.map.addTilesetImage('UI', 'tileUI', 16, 16, 0, 0);
+    this.tileset4 = this.map.addTilesetImage('InteriorChan', 'tileInteriorChan', 16, 16, 0, 0);
 
     this.layer = this.map.createLayer(
       'Base Tiles Layer',
-      [this.tileset, this.tileset2, this.tileset3],
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer2 = this.map.createLayer(
       'Floor Layer',
-      [this.tileset, this.tileset2, this.tileset3],
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer3 = this.map.createLayer(
       'Interior Layer 1',
-      [this.tileset, this.tileset2, this.tileset3],
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer4 = this.map.createLayer(
       'Interior Layer 2',
-      [this.tileset, this.tileset2, this.tileset3],
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer5 = this.map.createLayer(
-      'Walls Layer',
-      [this.tileset, this.tileset2, this.tileset3],
+      'Hidden Trees Layer',
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer6 = this.map.createLayer(
-      'WallSides Layer',
-      [this.tileset, this.tileset2, this.tileset3],
+      'Walls Layer',
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer7 = this.map.createLayer(
-      'Roof Layer',
-      [this.tileset, this.tileset2, this.tileset3],
+      'Interior Layer 3',
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer8 = this.map.createLayer(
-      'Trees Layer',
-      [this.tileset, this.tileset2, this.tileset3],
+      'Interior Layer 4',
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
     this.layer9 = this.map.createLayer(
+      'WallSides Layer',
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
+      0,
+      0
+    );
+    this.layer10 = this.map.createLayer(
       'Stadium Layer',
-      [this.tileset, this.tileset2, this.tileset3],
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
+      0,
+      0
+    );
+    this.layer11 = this.map.createLayer(
+      'Trees Layer',
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
+      0,
+      0
+    );
+    this.layer12 = this.map.createLayer(
+      'Roof Layer',
+      [this.tileset, this.tileset2, this.tileset3, this.tileset4],
       0,
       0
     );
@@ -131,8 +152,8 @@ export class Campus extends Scene {
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
     // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
     this.layer.setCollisionByProperty({ collides: true }, false);
-    this.layer5.setCollisionByProperty({ collides: true }, true);
     this.layer6.setCollisionByProperty({ collides: true }, true);
+    this.layer9.setCollisionByProperty({ collides: true }, true);
 
     this.physics.world.setBounds(0, 0, this.layer.width, this.layer.height);
     // this.showDebug();
@@ -305,11 +326,11 @@ export class Campus extends Scene {
       tileColor: null, // Color of colliding tiles
       collidingTileColor: new Phaser.Display.Color(0, 0, 0, 255)
     });
-    this.layer5.renderDebug(debugGraphics, {
+    this.layer6.renderDebug(debugGraphics, {
       tileColor: null, // Color of colliding tiles
       collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255)
     });
-    this.layer6.renderDebug(debugGraphics, {
+    this.layer9.renderDebug(debugGraphics, {
       tileColor: null, // Color of colliding tiles
       collidingTileColor: new Phaser.Display.Color(150, 234, 234, 255)
     });
@@ -320,7 +341,7 @@ export class Campus extends Scene {
   }
 
   private getTileProperties(): void {
-    var tile = this.layer5.getTileAtWorldXY(
+    var tile = this.layer6.getTileAtWorldXY(
       this.game.input.activePointer.worldX,
       this.game.input.activePointer.worldY
     );

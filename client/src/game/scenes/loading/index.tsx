@@ -26,6 +26,10 @@ export class LoadingScene extends Scene {
       url: 'tilemaps/tiles/Interior.png'
     });
     this.load.image({
+      key: 'tileInteriorChan',
+      url: 'tilemaps/tiles/InteriorChan.png'
+    });
+    this.load.image({
       key: 'tileSports',
       url: 'tilemaps/tiles/Sports.png'
     });
