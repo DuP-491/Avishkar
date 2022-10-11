@@ -327,7 +327,7 @@ export class Campus extends Scene {
   private initCamera(): void {
     this.cameras.main.setSize(this.game.scale.width, this.game.scale.height);
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);
-    this.cameras.main.setZoom(1.5);
+    this.cameras.main.setZoom(3);
   }
 
   private showDebug(): void {
