@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import EventsTab from './Components/EventsTab';
-import HomePage from './Components/HomePage';
+import EventsTab from './components/EventsTab';
+import HomePage from './components/HomePage';
 
 function Simplistic() {
   const [WhatToDisplay, setWhatToDisplay] = useState('Events');

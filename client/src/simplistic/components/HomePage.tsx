@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import wallpaper from './../Assets/w4.jpg';
+import wallpaper1 from './../Assets/w4-1.jpg';
+import wallpaper2 from './../Assets/w4-2.jpg';
 
 function HomePage() {
   const [navbar, setNavbar] = useState(false);
   return (
     <>
-      <div
-        style={{ backgroundImage: `url(${wallpaper})` }}
-        className="h-screen w-screen bg-cover bg-bottom bg-bottom ">
+      <div className="h-screen w-screen bg-cover bg-bottom bg-bottom Home-Page-Wallpaper">
         <nav className="w-full">
           <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
             <div>
