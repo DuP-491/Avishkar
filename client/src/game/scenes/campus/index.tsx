@@ -294,10 +294,10 @@ export class Campus extends Scene {
     this.npcChatSprites = npcsPoints.map((npcsPoint) => {
       const sprite = new Physics.Arcade.Sprite(
         this,
-        npcsPoint.x - 16,
-        npcsPoint.y - 16,
-        'tiles_spr',
-        765
+        npcsPoint.x + 18,
+        npcsPoint.y - 14,
+        'tiles_ui',
+        5
       )
         .setName(npcsPoint.id.toString())
         .setScale(1)
@@ -324,6 +324,11 @@ export class Campus extends Scene {
       },
       this
     );
+    this.input.on('gameobjectup', (pointer: any, gameObject: any) => {
+      // console.log('pointer');
+      if (gameObject?.interacting)
+        this.game.events.emit(EVENTS_NAME.infoPopup, 'campus', gameObject);
+    });
   }
 
   private initCamera(): void {

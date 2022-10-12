@@ -7,12 +7,12 @@ import Simplistic from './simplistic';
 
 function App() {
   return (
-    <Simplistic />
-    // <div className="w-screen h-screen overflow-hidden">
-    //   <div className="flex w-full h-full">
-    //     <GameComponent viewport="desktop" />
-    //   </div>
-    // </div>
+    // <Simplistic />
+    <div className="w-screen h-screen overflow-hidden">
+      <div className="flex w-full h-full">
+        <GameComponent viewport="desktop" />
+      </div>
+    </div>
   );
 }
 

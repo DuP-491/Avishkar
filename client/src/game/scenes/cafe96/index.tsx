@@ -153,8 +153,8 @@ export class Cafe96Scene extends Scene {
   }
 
   private initPlayer(): void {
-    this.player = new Player(this, 100, 250);
-    this.player.setScale(0.6);
+    this.player = new Player(this, 100, 240);
+    this.player.setScale(0.95);
 
     this.physics.add.collider(this.player, this.layer7);
     this.physics.add.collider(this.player, this.layer6);
@@ -190,13 +190,13 @@ export class Cafe96Scene extends Scene {
     this.npcChatSprites = npcsPoints.map((npcsPoint) => {
       const sprite = new Physics.Arcade.Sprite(
         this,
-        npcsPoint.x - 12,
-        npcsPoint.y - 12,
-        'tiles_spr',
-        765
+        npcsPoint.x + 18,
+        npcsPoint.y - 14,
+        'tiles_ui',
+        5
       )
         .setName(npcsPoint.id.toString())
-        .setScale(0.8)
+        .setScale(1)
         .setVisible(false);
       this.add.existing(sprite);
       return sprite;
@@ -220,6 +220,12 @@ export class Cafe96Scene extends Scene {
       },
       this
     );
+
+    this.input.on('gameobjectup', (pointer: any, gameObject: any) => {
+      // console.log('pointer');
+      if (gameObject?.interacting)
+        this.game.events.emit(EVENTS_NAME.infoPopup, 'cafe96', gameObject);
+    });
   }
 
   private showDebug(): void {

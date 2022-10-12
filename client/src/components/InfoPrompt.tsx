@@ -15,7 +15,16 @@ import PromptButton from './PromptButton';
 import Typewriter from 'typewriter-effect';
 
 function InfoPrompt(props: Props) {
-  const { text, isChoice, isCustom, yesCallback, noCallback, customText, customFunction } = props;
+  const {
+    text,
+    isChoice,
+    isCustom,
+    yesCallback,
+    noCallback,
+    customText,
+    customFunction,
+    setShowInfoPrompt
+  } = props;
   const [displayIndex, setDisplayIndex] = useState(0);
   let sentences = text.split('.');
   let textSize = sentences.length;
@@ -66,7 +75,12 @@ function InfoPrompt(props: Props) {
                 <PromptButton
                   btnText={customText ?? ''}
                   btnClass="mr-4 hover:text-green-600"
-                  customFunction={customFunction ?? (() => {})}
+                  customFunction={
+                    customFunction ??
+                    (() => {
+                      setShowInfoPrompt(false);
+                    })
+                  }
                 />
               ) : isChoice ? (
                 <>
@@ -85,7 +99,12 @@ function InfoPrompt(props: Props) {
                 <PromptButton
                   btnText="OK"
                   btnClass="mr-4 hover:text-green-600"
-                  customFunction={() => {}}
+                  customFunction={
+                    customFunction ??
+                    (() => {
+                      setShowInfoPrompt(false);
+                    })
+                  }
                 />
               ))}
           </div>
@@ -97,6 +116,7 @@ function InfoPrompt(props: Props) {
 
 InfoPrompt.propTypes = {
   text: PropTypes.string.isRequired,
+  setShowInfoPrompt: PropTypes.func.isRequired,
   isChoice: PropTypes.bool,
   isCustom: PropTypes.bool,
   yesCallback: PropTypes.func,

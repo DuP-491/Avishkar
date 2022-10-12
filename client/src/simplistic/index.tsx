@@ -1,3 +1,5 @@
+/* eslist-ignore */
+
 import React, { useState } from 'react';
 import EventsTab from './components/EventsTab';
 import FAQ from './components/FAQ';
@@ -12,6 +14,7 @@ function Simplistic() {
     setWhatToDisplay('Home');
   }
 
+  // eslint-disable-next-line default-case
   function onRedirectPress(event: any) {
     console.log(event);
     setWhatToDisplay(event.target.id);
