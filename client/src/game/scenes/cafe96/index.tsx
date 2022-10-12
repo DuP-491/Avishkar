@@ -190,8 +190,8 @@ export class Cafe96Scene extends Scene {
     this.npcChatSprites = npcsPoints.map((npcsPoint) => {
       const sprite = new Physics.Arcade.Sprite(
         this,
-        npcsPoint.x + 15,
-        npcsPoint.y - 15,
+        npcsPoint.x + 18,
+        npcsPoint.y - 14,
         'tiles_ui',
         5
       )
@@ -223,7 +223,8 @@ export class Cafe96Scene extends Scene {
 
     this.input.on('gameobjectup', (pointer: any, gameObject: any) => {
       // console.log('pointer');
-      if (gameObject?.interacting) this.game.events.emit(EVENTS_NAME.infoPopup, gameObject);
+      if (gameObject?.interacting)
+        this.game.events.emit(EVENTS_NAME.infoPopup, 'cafe96', gameObject);
     });
   }
 

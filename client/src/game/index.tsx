@@ -7,6 +7,7 @@ import { EVENTS_NAME, TELEPORT_LOCATIONS } from './consts';
 import InfoPrompt from '../components/InfoPrompt';
 import AuthPrompt from '../components/AuthPrompt';
 import MiniMap from '../components/MiniMap';
+import { npcData } from './npcData';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -55,8 +56,18 @@ function GameComponent(props: Props) {
   useEffect(() => {
     if (game) {
       setTimeout(() => {
-        game.instance?.events.on(EVENTS_NAME.infoPopup, (gameObject: any) => {
-          console.log(gameObject.name);
+        game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
+          // console.log(gameObject.name);
+          const key = scene + '-' + gameObject.name;
+          // GET NPC DATA
+          console.log(key);
+          const data = npcData[key];
+          if (!data) {
+            console.log('No data found for ' + key);
+            return;
+          }
+          setInfoPromptText(data.text);
+          setShowInfoPrompt(true);
         });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
           console.log('show auth');
@@ -156,7 +167,9 @@ function GameComponent(props: Props) {
       {showAuthPrompt && (
         <AuthPrompt closePopup={setShowAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
-      {/* <InfoPrompt text="Jenny Darling youre my best friend and i would love to kill you for a million rupees but i can not. I wanna ruin our friendship. We should be lovers instead"></InfoPrompt> */}
+      {showInfoPrompt && (
+        <InfoPrompt text={infoPromptText} setShowInfoPrompt={setShowInfoPrompt}></InfoPrompt>
+      )}
       <MiniMap playerPosition={playerPosition} teleport={teleport} />
     </>
   );
