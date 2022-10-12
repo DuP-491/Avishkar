@@ -4,10 +4,11 @@ import React, { useRef, useState } from 'react';
 interface LoginBoxPropType {
   onLogin: (e: any) => void;
   onCrossPress: (e: any) => void;
+  onToggle: (e: any) => void;
 }
 /* eslint-enable */
 
-function LoginBox({ onCrossPress, onLogin }: LoginBoxPropType) {
+function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
   function LoggingIn(e: any) {
     console.log(NameRef.current.value, PasswordRef.current.value);
     onLogin(e);
@@ -72,10 +73,16 @@ function LoginBox({ onCrossPress, onLogin }: LoginBoxPropType) {
             <div className="md:w-1/3"></div>
             <div className="md:w-2/3">
               <button
-                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-10"
                 type="button"
                 onClick={LoggingIn}>
-                Sign Up
+                Log In
+              </button>
+              <button
+                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
+                onClick={onToggle}>
+                Register?
               </button>
             </div>
           </div>

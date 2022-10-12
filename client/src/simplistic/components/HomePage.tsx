@@ -19,6 +19,10 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
   function LoggingOut() {
     setIsLogin(false);
   }
+  function SignUpToggle() {
+    if (status == 'Login') setStatus('Signup');
+    else setStatus('Login');
+  }
 
   function navbarRender() {
     return (
@@ -206,8 +210,10 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
           </div>
         </>
       );
-    else if (status == 'Login') return <LoginBox onCrossPress={LogInPopUp} onLogin={LoggingIn} />;
-    else return <SignupBox />;
+    else if (status == 'Login')
+      return <LoginBox onCrossPress={LogInPopUp} onLogin={LoggingIn} onToggle={SignUpToggle} />;
+    else
+      return <SignupBox onCrossPress={LogInPopUp} onSignup={LoggingIn} onToggle={SignUpToggle} />;
   }
 
   const [isLogin, setIsLogin] = useState(false);

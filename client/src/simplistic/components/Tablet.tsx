@@ -20,8 +20,8 @@ function Tablet({ children, bgrd, onBackPress, onCrossPress, onHomePress }: Requ
           style={{ backgroundImage: `url(${bgrd})` }}>
           <header style={{ height: '4%' }} className="flex justify-center">
             <div className="bg-zinc-900 w-32 rounded-b-3xl flex justify-center items-center">
-              <div className="rounded-full bg-zinc-900 w-4 h-4 mr-2 flex justify-center items-center">
-                <div className="rounded-full bg-black w-2 h-2"></div>
+              <div className="rounded-full bg-neutral-800 w-5 h-5 mr-2 flex justify-center items-center">
+                <div className="rounded-full bg-black w-3 h-3"></div>
               </div>
               <div className="rounded-full bg-white w-2 h-2"></div>
             </div>
