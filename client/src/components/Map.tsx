@@ -6,7 +6,7 @@ function MiniMap(props: Props) {
   const { playerPosition, teleport } = props;
 
   return (
-    <div className="fixed bottom-0 right-0 z-30 mx-auto bg-white border-4 border-green-900 rounded-lg">
+    <div className="fixed z-40 w-auto mx-auto bg-white border-8 border-green-900 rounded-lg shadow-2xl top-16 left-96 h-5/6">
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +43,8 @@ function MiniMap(props: Props) {
         fill="currentColor"
         className="absolute w-4 h-4 cursor-pointer animate-pulse text-amber-400"
         style={{
-          top: 40 + '%',
-          left: 56 + '%'
+          top: 42 + '%',
+          left: 57 + '%'
         }}
         onClick={() => teleport(TELEPORT_LOCATIONS.library)}>
         <path
@@ -59,8 +59,8 @@ function MiniMap(props: Props) {
         fill="currentColor"
         className="absolute w-4 h-4 cursor-pointer animate-pulse text-amber-400"
         style={{
-          top: 73 + '%',
-          left: 43 + '%'
+          top: 76 + '%',
+          left: 46 + '%'
         }}
         onClick={() => teleport(TELEPORT_LOCATIONS.csed)}>
         <path
@@ -75,8 +75,8 @@ function MiniMap(props: Props) {
         fill="currentColor"
         className="absolute w-4 h-4 cursor-pointer animate-pulse text-amber-400"
         style={{
-          top: 60 + '%',
-          left: 80 + '%'
+          top: 63 + '%',
+          left: 83 + '%'
         }}
         onClick={() => teleport(TELEPORT_LOCATIONS.mpHall)}>
         <path
@@ -91,8 +91,8 @@ function MiniMap(props: Props) {
         fill="currentColor"
         className="absolute w-4 h-4 cursor-pointer animate-pulse text-amber-400"
         style={{
-          top: 12 + '%',
-          left: 28 + '%'
+          top: 13 + '%',
+          left: 30 + '%'
         }}
         onClick={() => teleport(TELEPORT_LOCATIONS.yamunaCanteen)}>
         <path
@@ -102,7 +102,7 @@ function MiniMap(props: Props) {
         />
       </svg>
 
-      <img src={require('../images/try5.png')} width={300} />
+      <img src={require('../images/map.png')} className="h-full mx-auto" />
     </div>
   );
 }
