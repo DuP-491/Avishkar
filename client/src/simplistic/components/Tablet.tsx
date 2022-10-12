@@ -1,6 +1,7 @@
 import React, { ReactChildren, ReactElement, ReactNode } from 'react';
 import './common.css';
 
+/* eslint-disable */
 interface RequireType {
   children: ReactChildren | ReactNode | ReactElement;
   bgrd: string;
@@ -8,16 +9,17 @@ interface RequireType {
   onHomePress: (e: any) => void;
   onCrossPress: (e: any) => void;
 }
+/* eslint-enable */
 
 function Tablet({ children, bgrd, onBackPress, onCrossPress, onHomePress }: RequireType) {
   return (
     <>
-      <div className="bg-zinc-800 w-screen h-screen p-6">
+      <div className="bg-zinc-900 w-screen h-screen p-6">
         <div
           className="bg-cover bg-no-repeat bg-bottom w-full h-full rounded-lg"
           style={{ backgroundImage: `url(${bgrd})` }}>
           <header style={{ height: '4%' }} className="flex justify-center">
-            <div className="bg-zinc-800 w-32 rounded-b-3xl flex justify-center items-center">
+            <div className="bg-zinc-900 w-32 rounded-b-3xl flex justify-center items-center">
               <div className="rounded-full bg-zinc-900 w-4 h-4 mr-2 flex justify-center items-center">
                 <div className="rounded-full bg-black w-2 h-2"></div>
               </div>
@@ -28,7 +30,7 @@ function Tablet({ children, bgrd, onBackPress, onCrossPress, onHomePress }: Requ
             <>{children}</>
           </main>
           <header style={{ height: '6%' }} className="flex justify-center">
-            <div className="bg-zinc-800 w-3/4 rounded-t-3xl flex justify-around items-center max-w-md">
+            <div className="bg-zinc-900 w-3/4 rounded-t-3xl flex justify-around items-center max-w-md">
               <button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

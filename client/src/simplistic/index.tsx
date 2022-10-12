@@ -1,11 +1,11 @@
 /* eslist-ignore */
 
 import React, { useState } from 'react';
-import EventsTab from './Components/EventsTab';
-import HomePage from './Components/HomePage';
+import EventsTab from './components/EventsTab';
+import HomePage from './components/HomePage';
 
 function Simplistic() {
-  const [WhatToDisplay, setWhatToDisplay] = useState('Events');
+  const [WhatToDisplay, setWhatToDisplay] = useState('Home');
 
   function onCrossPress() {
     setWhatToDisplay('Home');
@@ -14,13 +14,13 @@ function Simplistic() {
   // eslint-disable-next-line default-case
   function onRedirectPress(event: any) {
     console.log(event);
-    setWhatToDisplay(event.tagret.id);
+    setWhatToDisplay(event.target.id);
   }
 
   function decide(s: string) {
     switch (s) {
       case 'Home':
-        return <HomePage />;
+        return <HomePage onRedirectPress={onRedirectPress} />;
       case 'Events':
         return <EventsTab defaultDepartment="null" onCrossPress={onCrossPress} />;
       default:

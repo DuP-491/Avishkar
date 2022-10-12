@@ -1,4 +1,4 @@
-import { Math, Scene } from 'phaser';
+import { Input, Math, Scene } from 'phaser';
 
 import { EVENTS_NAME } from '../consts';
 import { Actor } from './actor';
@@ -9,6 +9,7 @@ export class NPC extends Actor {
   private INTERACT_RADIUS = 100;
   private interacting = false;
   private attackHandler: () => void;
+  private keyE: Input.Keyboard.Key;
 
   constructor(
     scene: Scene,
@@ -24,6 +25,7 @@ export class NPC extends Actor {
     this.target = target;
     if (interact_radius) this.INTERACT_RADIUS = interact_radius;
     this.flipX = left ?? false;
+    this.keyE = this.scene.input.keyboard.addKey('E');
 
     this.attackHandler = () => {
       if (
@@ -51,9 +53,8 @@ export class NPC extends Actor {
     //   console.log(pointer);
     // });
     this.setInteractive();
-    this.scene.input.on('gameobjectup', (pointer: any, gameObject: any) => {
-      // console.log('pointer');
-      this.scene.game.events.emit(EVENTS_NAME.infoPopup, pointer, gameObject);
+    this.keyE.on('down', () => {
+      if (this.interacting) this.scene.game.events.emit(EVENTS_NAME.infoPopup, this);
     });
 
     // this.on('destroy', () => {

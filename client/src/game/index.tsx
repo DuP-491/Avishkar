@@ -56,10 +56,10 @@ function GameComponent(props: Props) {
 
   useEffect(() => {
     if (game) {
-      game.instance?.events.on(EVENTS_NAME.infoPopup, (pointer: any, gameObject: any) => {
-        console.log(pointer, gameObject);
-      });
       setTimeout(() => {
+        game.instance?.events.on(EVENTS_NAME.infoPopup, (gameObject: any) => {
+          console.log(gameObject.name);
+        });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
           console.log('show auth');
           setShowAuthPrompt(true);

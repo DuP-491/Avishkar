@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Finger+Paint');
 .no-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -5,4 +6,73 @@
 .no-scroll {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.animating-event-title {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: max(6vw, 40px);
+  font-family: 'Finger Paint', monospace, sans-serif;
+  text-shadow: 0 0 2px #000;
+  opacity: 0;
+  transform: translate(-300px, 0) scale(0);
+  animation: sideSlide 0.5s forwards;
+}
+
+@keyframes sideSlide {
+  60% {
+    transform: translate(20px, 0) scale(1);
+    color: #ffffff;
+  }
+
+  80% {
+    transform: translate(20px, 0) scale(1);
+    color: #ffffff;
+  }
+
+  99% {
+    transform: translate(0) scale(1.2);
+    color: #0eeeee;
+  }
+
+  100% {
+    transform: translate(0) scale(1);
+    opacity: 1;
+    color: #ffffff;
+  }
+}
+
+.animating-event-title:nth-of-type(2) {
+  animation-delay: 0.05s;
+}
+.animating-event-title:nth-of-type(3) {
+  animation-delay: 0.1s;
+}
+.animating-event-title:nth-of-type(4) {
+  animation-delay: 0.15s;
+}
+.animating-event-title:nth-of-type(5) {
+  animation-delay: 0.2s;
+}
+.animating-event-title:nth-of-type(6) {
+  animation-delay: 0.25s;
+}
+
+.department-cards {
+  text-shadow: 0 0 2px #000;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.department-title {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: max(4vw, 40px);
+  font-family: 'Finger Paint', monospace, sans-serif;
+  text-shadow: 0 0 2px #000;
+}
+
+.participate-btn {
+  width: max(16vw, 10rem);
+  height: max(5vw, 3rem);
 }
