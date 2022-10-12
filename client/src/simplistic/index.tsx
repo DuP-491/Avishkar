@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import EventsTab from './components/EventsTab';
+import FAQ from './components/FAQ';
 import HomePage from './components/HomePage';
+import Sponsors from './components/Sponsors';
+import TeamAvishkar from './components/TeamAvishkar';
 
 function Simplistic() {
   const [WhatToDisplay, setWhatToDisplay] = useState('Home');
@@ -20,6 +23,12 @@ function Simplistic() {
         return <HomePage onRedirectPress={onRedirectPress} />;
       case 'Events':
         return <EventsTab defaultDepartment="null" onCrossPress={onCrossPress} />;
+      case 'Sponsors':
+        return <Sponsors />;
+      case 'TeamAvishkar':
+        return <TeamAvishkar />;
+      case 'FAQ':
+        return <FAQ />;
       default:
         break;
     }

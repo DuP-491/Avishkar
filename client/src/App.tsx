@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
+/* eslint-disable */
 import GameComponent from './game';
+/* eslint-enable */
 import Simplistic from './simplistic';
 
 function App() {
