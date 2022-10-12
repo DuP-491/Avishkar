@@ -1,37 +1,46 @@
 import React from 'react';
 import DepartmentCard from './DepartmentCard';
+import '../common.css';
 
+/* eslint-disable */
 interface DepartmentSelectPropType {
   onDepartmentSelect: (e: any) => void;
 }
 
 function Dept({ onDepartmentSelect }: DepartmentSelectPropType) {
   const DepartmentList = [
-    { IMG: 'https://via.placeholder.com/150', NAME: 'CYBERQUEST' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'ELECTROMANIA' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'POWERSURGE' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'RASAYANS' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'MECHROCOSM' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'NIRMAAN' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'GENESIS' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'OLIGOPOLY' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'MONOPOLY' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'ROBOMANIA' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'AERODYNAMIX' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'ASTROWING' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'KREEDOMANIA' },
-    { IMG: 'https://via.placeholder.com/150', NAME: 'GNOSIOMANIA' }
+    'CYBERQUEST',
+    'ELECTROMANIA',
+    'POWERSURGE',
+    'RASAYANS',
+    'MECHROCOSM',
+    'NIRMAAN',
+    'GENESIS',
+    'OLIGOPOLY',
+    'MONOPOLY',
+    'ROBOMANIA',
+    'AERODYNAMIX',
+    'ASTROWING',
+    'KREEDOMANIA',
+    'GNOSIOMANIA'
   ];
 
   return (
     <>
+      <div className="flex justify-center pt-3">
+        <span className="animating-event-title">E</span>
+        <span className="animating-event-title">V</span>
+        <span className="animating-event-title">E</span>
+        <span className="animating-event-title">N</span>
+        <span className="animating-event-title">T</span>
+        <span className="animating-event-title">S</span>
+      </div>
       <div className="flex justify-evenly flex-wrap">
         {DepartmentList.map((Department: typeof DepartmentList[0]) => (
           <DepartmentCard
             onDepartmentSelect={onDepartmentSelect}
-            key={Department.NAME}
-            IMG={Department.IMG}
-            NAME={Department.NAME}
+            key={Department}
+            NAME={Department}
           />
         ))}
       </div>
