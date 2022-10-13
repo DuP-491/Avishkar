@@ -2,10 +2,26 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TELEPORT_LOCATIONS } from '../game/consts';
 import * as Tooltip from '@radix-ui/react-tooltip';
-function MiniMap(props: Props) {
+function Map(props: Props) {
   const { playerPosition, teleport, showMap, setShowMap } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const [showMarks, setShowMarks] = useState(false);
+  const eventQuotes = [
+    'A quest for top notch programmers and hackers.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.'
+  ];
 
   const handleClick = () => {
     setShowMarks(!showMarks);
@@ -154,8 +170,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  CYBERQUEST
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">CYBERQUEST</div>
+                    <div className="text-blue-900">{eventQuotes[0]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -170,8 +189,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  ELECTROMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ELECTROMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[1]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -186,8 +208,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  POWERSURGE
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">POWERSURGE</div>
+                    <div className="text-blue-900">{eventQuotes[2]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -202,8 +227,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  RASAYANS
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">RASAYANS</div>
+                    <div className="text-blue-900">{eventQuotes[3]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -218,8 +246,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  MECHROCOSM
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">MECHROCOSM</div>
+                    <div className="text-blue-900">{eventQuotes[4]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -234,8 +265,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  NIRMAAN
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">NIRMAAN</div>
+                    <div className="text-blue-900">{eventQuotes[5]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -250,8 +284,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  GENESIS
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">GENESIS</div>
+                    <div className="text-blue-900">{eventQuotes[6]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -266,8 +303,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  OLIGOPOLY
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">OLIGOPOLY</div>
+                    <div className="text-blue-900">{eventQuotes[7]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -282,8 +322,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  MONOPOLY
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">MONOPOLY</div>
+                    <div className="text-blue-900">{eventQuotes[8]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -298,8 +341,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  ROBOMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ROBOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[9]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -314,8 +360,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  AERODYNAMIX
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">AERODYNAMIX</div>
+                    <div className="text-blue-900">{eventQuotes[10]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -325,13 +374,35 @@ function MiniMap(props: Props) {
                     className="absolute w-4 h-4 cursor-help"
                     style={{
                       left: 67.18 + '%',
+                      top: 72.97 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ASTROWING</div>
+                    <div className="text-blue-900">{eventQuotes[11]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
+                </Tooltip.Content>
+              </Tooltip.Root>
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 57.4 + '%',
                       top: 3.59 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  KREEDOMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">KREEDOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[12]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
               <Tooltip.Root>
@@ -346,8 +417,11 @@ function MiniMap(props: Props) {
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  GNOSIOMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">GNOSIOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[13]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
             </Tooltip.Provider>
@@ -363,7 +437,7 @@ function MiniMap(props: Props) {
   );
 }
 
-MiniMap.propTypes = {
+Map.propTypes = {
   playerPosition: {
     x: PropTypes.number,
     y: PropTypes.number,
@@ -374,6 +448,6 @@ MiniMap.propTypes = {
   setShowMap: PropTypes.func.isRequired
 };
 
-type Props = PropTypes.InferProps<typeof MiniMap.propTypes>;
+type Props = PropTypes.InferProps<typeof Map.propTypes>;
 
-export default MiniMap;
+export default Map;

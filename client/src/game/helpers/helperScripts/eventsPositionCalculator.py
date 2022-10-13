@@ -190,9 +190,16 @@ output3 = """ + '%'
                     }}
                   />
                 </Tooltip.Trigger>
-                <Tooltip.Content>"""
+                <Tooltip.Content>
+                <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">"""
 # eventList[0][name] = "cyberquest".toUpperCase()
-output4 = """<Tooltip.Arrow offset={10} height={6} width={10} />
+output4 = """</div>
+                    <div className="text-blue-900">"""
+# eventQuotes[i]
+output5 = """</div>
+                  </div>
+                  <Tooltip.Arrow height={6} width={10} />
                 </Tooltip.Content>
               </Tooltip.Root>"""
 
@@ -205,12 +212,16 @@ for i in range(len(eventList)):
 
     output = (
         output1
-        + str(round(eventList[i]["x"], 2) - 0.88)
+        + str(round(eventList[i]["x"] - 0.88, 2))
         + output2
-        + str(round(eventList[i]["y"], 2) - 1.84)
+        + str(round(eventList[i]["y"] - 1.84, 2))
         + output3
         + eventList[i]["name"]
         + output4
+        + "{eventQuotes["
+        + str(i)
+        + "]}"
+        + output5
     )
     counter += 1
     print(output)
