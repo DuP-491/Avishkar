@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Tablet from '../Tablet';
-import img from '../../Assets/w1.jpg';
+import img from '../../Assets/p2.jpg';
 import Dept from './DepartmentList';
 import EventList from './EventList';
 import EventDetails from './EventDetails';
+import EventDisplayBGIMG from './../../Assets/p4.jpg';
 
 /* eslint-disable */
 interface EventTabPropType {
@@ -30,7 +31,7 @@ function EventsTab({ onCrossPress, defaultDepartment }: EventTabPropType) {
 
   function onEventSelect(event: any) {
     setDisplay('Event');
-    setBGIMG('https://i.imgur.com/Llda7Cr.jpg');
+    setBGIMG(EventDisplayBGIMG);
     setEventDisplayValue(event.target.id);
     // console.log(event.target.id);
   }
