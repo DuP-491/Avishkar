@@ -54,6 +54,7 @@ export class Campus extends Scene {
     this.physics.add.collider(this.player, this.layer, this.player.onGrass);
     this.physics.add.collider(this.player, this.layer6);
     this.physics.add.collider(this.player, this.layer9);
+    this.physics.add.collider(this.player, this.layer3);
 
     this.game.events.on(EVENTS_NAME.getPlayerPosition, () => {
       this.game.events.emit(
@@ -164,6 +165,7 @@ export class Campus extends Scene {
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
     // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
     this.layer.setCollisionByProperty({ collides: true }, false);
+    this.layer3.setCollisionByProperty({ collides: true }, true);
     this.layer6.setCollisionByProperty({ collides: true }, true);
     this.layer9.setCollisionByProperty({ collides: true }, true);
 
@@ -178,6 +180,11 @@ export class Campus extends Scene {
     );
     const enterPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'cafe')
+    );
+    const computers = gameObjectsToObjectPoints(
+      this.map.filterObjects('Events', () => {
+        return true;
+      })
     );
 
     this.interactables.push(
@@ -214,6 +221,23 @@ export class Campus extends Scene {
           })
       ])
     );
+    computers.forEach((computer) => {
+      this.interactables.push(
+        this.physics.add.group([
+          this.physics.add
+            .sprite(computer.x, computer.y, 'tiles_sports', 43)
+            .setOrigin(0.5, 0.5)
+            .setScale(1)
+            .setInteractive({
+              useHandCursor: true
+            })
+            .setDepth(2)
+            .on('pointerdown', () => {
+              this.game.events.emit(EVENTS_NAME.openComputer);
+            })
+        ])
+      );
+    });
   }
 
   private initPlayer(): void {
