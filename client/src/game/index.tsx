@@ -9,6 +9,7 @@ import AuthPrompt from '../components/AuthPrompt';
 import MiniMap from '../components/MiniMap';
 import { npcData } from './npcData';
 import Map from '../components/Map';
+import Info from '../components/Info';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -49,6 +50,7 @@ function GameComponent(props: Props) {
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
   const [showMap, setShowMap] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
 
   // Auto Initialize the game when the component is mounted
@@ -152,6 +154,9 @@ function GameComponent(props: Props) {
   const handleOnMapIconClick = () => {
     setShowMap(true);
   };
+  const handleOnInfoIconClick = () => {
+    setShowInfo(true);
+  };
 
   return (
     <>
@@ -197,6 +202,7 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
+      {showInfo && <Info showInfo={showInfo} setShowInfo={setShowInfo} />}
       <img
         // eslint-disable-next-line no-undef
         src={require('../images/map-icon.png')}
@@ -205,6 +211,15 @@ function GameComponent(props: Props) {
         }`}
         width={64}
         onClick={handleOnMapIconClick}
+      />
+      <img
+        // eslint-disable-next-line no-undef
+        src={require('../images/info-icon.png')}
+        className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-20 bottom-[17.5rem] ${
+          !showInfo ? `cursor-zoom-in` : `cursor-zoom-out`
+        }`}
+        width={64}
+        onClick={handleOnInfoIconClick}
       />
     </>
   );

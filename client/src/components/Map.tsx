@@ -2,10 +2,26 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TELEPORT_LOCATIONS } from '../game/consts';
 import * as Tooltip from '@radix-ui/react-tooltip';
-function MiniMap(props: Props) {
+function Map(props: Props) {
   const { playerPosition, teleport, showMap, setShowMap } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const [showMarks, setShowMarks] = useState(false);
+  const eventQuotes = [
+    'A quest for top notch programmers and hackers.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.',
+    'lorem ipsum dolor sit amet.'
+  ];
 
   const handleClick = () => {
     setShowMarks(!showMarks);
@@ -140,7 +156,7 @@ function MiniMap(props: Props) {
                 clipRule="evenodd"
               />
             </svg>
-            {/* CYBERQUEST */}
+
             <Tooltip.Provider delayDuration={500} skipDelayDuration={400}>
               <Tooltip.Root>
                 <Tooltip.Trigger>
@@ -148,248 +164,264 @@ function MiniMap(props: Props) {
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 41.2 + '%',
-                      top: 70.2 + '%'
+                      left: 40.15 + '%',
+                      top: 66.13 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  CYBERQUEST
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">CYBERQUEST</div>
+                    <div className="text-blue-900">{eventQuotes[0]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* ELECTROMANIA */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 55.6 + '%',
-                      top: 35.6 + '%'
+                      left: 55.779999999999994 + '%',
+                      top: 34.41 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  ELECTROMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ELECTROMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[1]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* POWERSURGE */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 45.9 + '%',
-                      top: 24.5 + '%'
+                      left: 45.489999999999995 + '%',
+                      top: 22.6 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  POWERSURGE
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">POWERSURGE</div>
+                    <div className="text-blue-900">{eventQuotes[2]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* RASAYANS */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 40.4 + '%',
-                      top: 32.8 + '%'
+                      left: 41.01 + '%',
+                      top: 30.849999999999998 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  RASAYANS
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">RASAYANS</div>
+                    <div className="text-blue-900">{eventQuotes[3]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* MECHROCOSM */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 53.82 + '%',
-                      top: 60.62 + '%'
+                      left: 53.51 + '%',
+                      top: 58.769999999999996 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  MECHROCOSM
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">MECHROCOSM</div>
+                    <div className="text-blue-900">{eventQuotes[4]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* NIRMAAN */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 53.72 + '%',
-                      top: 61.38 + '%'
+                      left: 61.089999999999996 + '%',
+                      top: 26.67 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  NIRMAAN
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">NIRMAAN</div>
+                    <div className="text-blue-900">{eventQuotes[5]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* GENESIS */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 36.59 + '%',
-                      top: 29.81 + '%'
+                      left: 35.5 + '%',
+                      top: 7.5 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  GENESIS
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">GENESIS</div>
+                    <div className="text-blue-900">{eventQuotes[6]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* OLIGOPOLY */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 50.06 + '%',
-                      top: 86.3 + '%'
+                      left: 54.419999999999995 + '%',
+                      top: 81.59 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  OLIGOPOLY
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">OLIGOPOLY</div>
+                    <div className="text-blue-900">{eventQuotes[7]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* MONOPOLY */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 56.19 + '%',
-                      top: 86.33 + '%'
+                      left: 50.26 + '%',
+                      top: 84.08 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  MONOPOLY
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">MONOPOLY</div>
+                    <div className="text-blue-900">{eventQuotes[8]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* ROBOMANIA */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 64.54 + '%',
-                      top: 27.06 + '%'
+                      left: 69.11 + '%',
+                      top: 63.959999999999994 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  ROBOMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ROBOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[9]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* AERODYNAMIX */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 80.19 + '%',
-                      top: 46.85 + '%'
+                      left: 81.65 + '%',
+                      top: 45.839999999999996 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  AERODYNAMIX
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">AERODYNAMIX</div>
+                    <div className="text-blue-900">{eventQuotes[10]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* ASTROWING */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 71.57 + '%',
-                      top: 29.81 + '%'
+                      left: 67.18 + '%',
+                      top: 72.97 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  ASTROWING
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ASTROWING</div>
+                    <div className="text-blue-900">{eventQuotes[11]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* KREEDOMANIA */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 58.6 + '%',
-                      top: 12.34 + '%'
+                      left: 57.4 + '%',
+                      top: 3.59 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  KREEDOMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">KREEDOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[12]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
-
-              {/* GNOSIOMANIA */}
               <Tooltip.Root>
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help"
                     style={{
-                      left: 25.88 + '%',
-                      top: 50.81 + '%'
+                      left: 22.61 + '%',
+                      top: 48.91 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
                 <Tooltip.Content>
-                  GNOSIOMANIA
-                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">GNOSIOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[13]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
               </Tooltip.Root>
             </Tooltip.Provider>
@@ -405,7 +437,7 @@ function MiniMap(props: Props) {
   );
 }
 
-MiniMap.propTypes = {
+Map.propTypes = {
   playerPosition: {
     x: PropTypes.number,
     y: PropTypes.number,
@@ -416,6 +448,6 @@ MiniMap.propTypes = {
   setShowMap: PropTypes.func.isRequired
 };
 
-type Props = PropTypes.InferProps<typeof MiniMap.propTypes>;
+type Props = PropTypes.InferProps<typeof Map.propTypes>;
 
-export default MiniMap;
+export default Map;
