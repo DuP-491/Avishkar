@@ -2,6 +2,7 @@ type ObjectPoint = {
   height: number;
   id: number;
   name: string;
+  class: string;
   point: boolean;
   rotation: number;
   type: string;

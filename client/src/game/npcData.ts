@@ -40,5 +40,5 @@ export const npcData: {
     text: 'Are you sure you want to register?',
     success: 'Function will be imported in this file and called',
     failure: 'Function will be imported in this file and called'
-  },
+  }
 };

@@ -1,5 +1,3 @@
-/* eslist-ignore */
-
 import React, { useState } from 'react';
 import EventsTab from './components/EventsTab';
 import FAQ from './components/FAQ';
