@@ -6,7 +6,7 @@ function MiniMap(props: Props) {
   const { playerPosition, teleport } = props;
 
   return (
-    <div className="fixed bottom-0 right-0 z-30 mx-auto bg-white border-4 border-green-900 rounded-lg">
+    <div className="fixed z-10 mx-auto bg-white border-4 border-green-900 rounded-lg resize right-2 bottom-2">
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"

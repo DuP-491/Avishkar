@@ -135,7 +135,7 @@ function GameComponent(props: Props) {
   };
 
   const handleOnMapIconClick = () => {
-    setShowMap(!showMap);
+    setShowMap(true);
   };
 
   return (
@@ -164,14 +164,19 @@ function GameComponent(props: Props) {
       )}
       {/* <InfoPrompt text="Jenny Darling youre my best friend and i would love to kill you for a million rupees but i can not. I wanna ruin our friendship. We should be lovers instead"></InfoPrompt> */}
       <MiniMap playerPosition={playerPosition} teleport={teleport} />
-      {showMap && <Map playerPosition={playerPosition} teleport={teleport} />}
+      {showMap && (
+        <Map
+          playerPosition={playerPosition}
+          teleport={teleport}
+          showMap={showMap}
+          setShowMap={setShowMap}
+        />
+      )}
       <img
         src={require('../images/map-icon.png')}
-        className="absolute z-30 cursor-pointer"
-        style={{
-          top: 65 + '%',
-          left: 96 + '%'
-        }}
+        className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-2 bottom-[17.5rem] ${
+          !showMap ? `cursor-zoom-in` : `cursor-zoom-out`
+        }`}
         width={64}
         onClick={handleOnMapIconClick}
       />
