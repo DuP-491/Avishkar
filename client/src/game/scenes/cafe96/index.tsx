@@ -134,6 +134,9 @@ export class Cafe96Scene extends Scene {
     const exitPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'exit')
     );
+    const computerPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'computer')
+    );
 
     this.interactables.push(
       this.physics.add.group([
@@ -147,6 +150,21 @@ export class Cafe96Scene extends Scene {
           .setDepth(2)
           .on('pointerdown', () => {
             this.scene.switch('campus');
+          })
+      ])
+    );
+    this.interactables.push(
+      this.physics.add.group([
+        this.physics.add
+          .sprite(computerPoint.x, computerPoint.y, 'tiles_sports', 43)
+          .setOrigin(0.5, 0.5)
+          .setScale(1)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .setDepth(2)
+          .on('pointerdown', () => {
+            this.game.events.emit(EVENTS_NAME.openComputer);
           })
       ])
     );

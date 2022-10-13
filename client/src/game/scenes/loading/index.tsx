@@ -49,6 +49,10 @@ export class LoadingScene extends Scene {
       frameWidth: 32,
       frameHeight: 16
     });
+    this.load.spritesheet('tiles_sports', 'tilemaps/tiles/Sports.png', {
+      frameWidth: 16,
+      frameHeight: 16
+    });
     // this.load.spritesheet('tiles_Interior', 'tilemaps/tiles/Interior.png', {
     //   frameWidth: 16,
     //   frameHeight: 16

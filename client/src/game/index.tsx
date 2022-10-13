@@ -47,6 +47,7 @@ function GameComponent(props: Props) {
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+  const [showComputer, setShowComputer] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
 
@@ -70,6 +71,9 @@ function GameComponent(props: Props) {
           }
           setInfoPromptText(data.text);
           setShowInfoPrompt(true);
+        });
+        game.instance?.events.on(EVENTS_NAME.openComputer, () => {
+          setShowComputer(true);
         });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
           console.log('show auth');
@@ -173,12 +177,21 @@ function GameComponent(props: Props) {
       {showAuthPrompt && (
         <AuthPrompt closePopup={setShowAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
+      {showComputer && (
+        <AuthPrompt
+          closePopup={setShowComputer}
+          authSuccessCallback={() => {
+            setShowComputer(false);
+          }}
+        />
+      )}
       {showInfoPrompt && (
         <InfoPrompt text={infoPromptText} setShowInfoPrompt={setShowInfoPrompt}></InfoPrompt>
       )}
       <MiniMap playerPosition={playerPosition} teleport={teleport} />
       {showMap && <Map playerPosition={playerPosition} teleport={teleport} />}
       <img
+        // eslint-disable-next-line no-undef
         src={require('../images/map-icon.png')}
         className="absolute z-30 cursor-pointer"
         style={{
