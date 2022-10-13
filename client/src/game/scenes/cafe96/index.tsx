@@ -135,10 +135,7 @@ export class Cafe96Scene extends Scene {
       this.map.findObject('Interactables', (obj) => obj.name === 'exit')
     );
     const computerPoint = gameObjectToObjectPoint(
-      this.map.findObject('Interactables', (obj) => {
-        console.log(obj.data);
-        obj.name === 'computer';
-      })
+      this.map.findObject('Interactables', (obj) => obj.name === 'cafe96')
     );
 
     this.interactables.push(
