@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import LoginBox from './Authentication/LoginBox';
 import SignupBox from './Authentication/SignupBox';
+import AvishkarTitle from './../Assets/p6.png';
+import AvishkarLogo from './../Assets/p5.png';
 
 /* eslint-disable */
 interface HomePagePropType {
@@ -138,7 +140,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
       return (
         <>
           <img
-            src="https://i.imgur.com/47LmWSp.png"
+            src={AvishkarTitle}
             style={{
               height: '5vw',
               width: '20vw',
@@ -147,7 +149,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
             }}
           />
           <img
-            src="https://i.imgur.com/cHH4xIh.png"
+            src={AvishkarLogo}
             style={{
               height: '20vw',
               width: '20vw',

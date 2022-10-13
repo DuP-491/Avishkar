@@ -29,7 +29,7 @@ function Simplistic() {
       case 'Sponsors':
         return <Sponsors />;
       case 'TeamAvishkar':
-        return <TeamAvishkar />;
+        return <TeamAvishkar onCrossPress={onCrossPress} />;
       case 'FAQ':
         return <FAQ />;
       default:
