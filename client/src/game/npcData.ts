@@ -41,4 +41,11 @@ export const npcData: {
     success: 'Function will be imported in this file and called',
     failure: 'Function will be imported in this file and called'
   },
+  'gangaGate-3': {
+    name: 'Ramlal',
+    location: 'gangaGate-top-left',
+    type: 'text',
+    character: 'guard',
+    text: 'Hey, I am Ramlal. I am a guard at Ganga Gate.'
+  }
 };

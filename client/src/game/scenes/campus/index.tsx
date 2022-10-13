@@ -217,7 +217,7 @@ export class Campus extends Scene {
   }
 
   private initPlayer(): void {
-    this.player = new Player(this, 600, 600);
+    this.player = new Player(this, 672, 704);
     this.game.events.on(EVENTS_NAME.authSuccess, () => {
       // teleport player 200 pixels to the right
       console.log('authSuccess');

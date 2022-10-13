@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TELEPORT_LOCATIONS } from '../game/consts';
+import * as Tooltip from '@radix-ui/react-tooltip';
 function MiniMap(props: Props) {
   const { playerPosition, teleport, showMap, setShowMap } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
@@ -139,6 +140,259 @@ function MiniMap(props: Props) {
                 clipRule="evenodd"
               />
             </svg>
+            {/* CYBERQUEST */}
+            <Tooltip.Provider delayDuration={500} skipDelayDuration={400}>
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 41.2 + '%',
+                      top: 70.2 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  CYBERQUEST
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* ELECTROMANIA */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 55.6 + '%',
+                      top: 35.6 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  ELECTROMANIA
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* POWERSURGE */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 45.9 + '%',
+                      top: 24.5 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  POWERSURGE
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* RASAYANS */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 40.4 + '%',
+                      top: 32.8 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  RASAYANS
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* MECHROCOSM */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 53.82 + '%',
+                      top: 60.62 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  MECHROCOSM
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* NIRMAAN */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 53.72 + '%',
+                      top: 61.38 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  NIRMAAN
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* GENESIS */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 36.59 + '%',
+                      top: 29.81 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  GENESIS
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* OLIGOPOLY */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 50.06 + '%',
+                      top: 86.3 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  OLIGOPOLY
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* MONOPOLY */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 56.19 + '%',
+                      top: 86.33 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  MONOPOLY
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* ROBOMANIA */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 64.54 + '%',
+                      top: 27.06 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  ROBOMANIA
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* AERODYNAMIX */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 80.19 + '%',
+                      top: 46.85 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  AERODYNAMIX
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* ASTROWING */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 71.57 + '%',
+                      top: 29.81 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  ASTROWING
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* KREEDOMANIA */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 58.6 + '%',
+                      top: 12.34 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  KREEDOMANIA
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+
+              {/* GNOSIOMANIA */}
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help"
+                    style={{
+                      left: 25.88 + '%',
+                      top: 50.81 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  GNOSIOMANIA
+                  <Tooltip.Arrow offset={10} height={6} width={10} />
+                </Tooltip.Content>
+              </Tooltip.Root>
+            </Tooltip.Provider>
           </>
         )}
         <img
