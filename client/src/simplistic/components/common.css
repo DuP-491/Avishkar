@@ -60,6 +60,24 @@
 .animating-event-title:nth-of-type(6) {
   animation-delay: 2.25s;
 }
+.animating-event-title:nth-of-type(7) {
+  animation-delay: 2.3s;
+}
+.animating-event-title:nth-of-type(8) {
+  animation-delay: 2.35s;
+}
+.animating-event-title:nth-of-type(9) {
+  animation-delay: 2.4s;
+}
+.animating-event-title:nth-of-type(10) {
+  animation-delay: 2.45s;
+}
+.animating-event-title:nth-of-type(11) {
+  animation-delay: 2.5s;
+}
+.animating-event-title:nth-of-type(12) {
+  animation-delay: 2.55s;
+}
 
 .department-cards {
   text-shadow: 0 0 2px #000;

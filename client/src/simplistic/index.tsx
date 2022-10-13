@@ -6,6 +6,7 @@ import FAQ from './components/FAQ';
 import HomePage from './components/HomePage';
 import Sponsors from './components/Sponsors';
 import TeamAvishkar from './components/TeamAvishkar';
+import ProfilePage from './components/Teams';
 
 function Simplistic() {
   const [WhatToDisplay, setWhatToDisplay] = useState('Home');
@@ -27,11 +28,13 @@ function Simplistic() {
       case 'Events':
         return <EventsTab defaultDepartment="null" onCrossPress={onCrossPress} />;
       case 'Sponsors':
-        return <Sponsors />;
+        return <Sponsors onCrossPress={onCrossPress} />;
       case 'TeamAvishkar':
         return <TeamAvishkar onCrossPress={onCrossPress} />;
       case 'FAQ':
         return <FAQ />;
+      case 'Profile':
+        return <ProfilePage onCrossPress={onCrossPress} />;
       default:
         break;
     }

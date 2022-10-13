@@ -1,7 +1,23 @@
 import React from 'react';
+import Tablet from '../Tablet';
+import Profile from './Profile';
+import TeamAvishkarBGIMG from './../../Assets/p4.jpg';
 
-function Teams() {
-  return <></>;
+/* eslint-disable */
+interface ProfilePageProps {
+  onCrossPress: (e: any) => void;
 }
+/* eslint-enable */
 
-export default Teams;
+function ProfilePage({ onCrossPress }: ProfilePageProps) {
+  return (
+    <Tablet
+      bgrd={TeamAvishkarBGIMG}
+      onBackPress={() => {}}
+      onCrossPress={onCrossPress}
+      onHomePress={() => {}}>
+      <Profile />
+    </Tablet>
+  );
+}
+export default ProfilePage;
