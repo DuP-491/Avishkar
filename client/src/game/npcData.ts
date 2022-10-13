@@ -1,12 +1,22 @@
-export const npcData = {
-  'cafe-1': {
+export const npcData: {
+  [key: string]: {
+    name: string;
+    location: string;
+    type: string;
+    character: string;
+    text: string;
+    success?: any;
+    failure?: any;
+  };
+} = {
+  'cafe96-2': {
     name: 'Parth',
     location: 'cafe-top-right',
     type: 'text',
     character: 'boy',
     text: "Hey, I'm Parth. I'm a software engineer and I love to code."
   },
-  'cafe-2': {
+  'cafe96-3': {
     name: 'Parth',
     location: 'cafe-top-left',
     type: 'ask',

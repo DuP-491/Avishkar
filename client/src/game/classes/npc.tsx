@@ -54,7 +54,8 @@ export class NPC extends Actor {
     // });
     this.setInteractive();
     this.keyE.on('down', () => {
-      if (this.interacting) this.scene.game.events.emit(EVENTS_NAME.infoPopup, this);
+      if (this.interacting)
+        this.scene.game.events.emit(EVENTS_NAME.infoPopup, this.scene.scene.key, this);
     });
 
     // this.on('destroy', () => {

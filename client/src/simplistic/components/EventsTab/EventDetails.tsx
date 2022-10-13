@@ -45,14 +45,14 @@ function EventDetails({ eventName }: EventDetailPropType) {
               onClick={() => {
                 setSelectedTab(1);
               }}
-              className="w-1/2 text-center border-b-4 border-gray-300 pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
               Event Details
             </div>
             <div
               onClick={() => {
                 setSelectedTab(2);
               }}
-              className="w-1/2 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Participation Criteria
             </div>
           </>
@@ -64,14 +64,14 @@ function EventDetails({ eventName }: EventDetailPropType) {
               onClick={() => {
                 setSelectedTab(1);
               }}
-              className="w-1/2 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Event Details
             </div>
             <div
               onClick={() => {
                 setSelectedTab(2);
               }}
-              className="w-1/2 text-center border-b-4 border-gray-300 pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
               Participation Criteria
             </div>
           </>
@@ -84,21 +84,21 @@ function EventDetails({ eventName }: EventDetailPropType) {
               onClick={() => {
                 setSelectedTab(1);
               }}
-              className="w-1/3 text-center border-b-4 border-gray-300 pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
               Event Details
             </div>
             <div
               onClick={() => {
                 setSelectedTab(2);
               }}
-              className="w-1/3 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Participation Criteria
             </div>
             <div
               onClick={() => {
                 setSelectedTab(3);
               }}
-              className="w-1/3 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Sponsors
             </div>
           </>
@@ -110,21 +110,21 @@ function EventDetails({ eventName }: EventDetailPropType) {
               onClick={() => {
                 setSelectedTab(1);
               }}
-              className="w-1/3 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Event Details
             </div>
             <div
               onClick={() => {
                 setSelectedTab(2);
               }}
-              className="w-1/3 text-center border-b-4 border-gray-300 pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
               Participation Criteria
             </div>
             <div
               onClick={() => {
                 setSelectedTab(3);
               }}
-              className="w-1/3 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Sponsors
             </div>
           </>
@@ -136,21 +136,21 @@ function EventDetails({ eventName }: EventDetailPropType) {
               onClick={() => {
                 setSelectedTab(1);
               }}
-              className="w-1/3 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Event Details
             </div>
             <div
               onClick={() => {
                 setSelectedTab(2);
               }}
-              className="w-1/3 text-center pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5">
               Participation Criteria
             </div>
             <div
               onClick={() => {
                 setSelectedTab(3);
               }}
-              className="w-1/3 text-center border-b-4 border-gray-300 pt-5 pb-5 hover:bg-gradient-to-t from-gray-900">
+              className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
               Sponsors
             </div>
           </>
@@ -188,7 +188,7 @@ function EventDetails({ eventName }: EventDetailPropType) {
   }
   return (
     <div>
-      <div className="text-neutral-400 text-3xl font-bold pl-10 font-mono">{Details.Name}</div>
+      <div className="text-neutral-400 text-3xl font-bold pl-10 font-mono mb-3">{Details.Name}</div>
       <div className="flex w-full">{Tabrender()}</div>
       <div className="bg-gray-900 p-10" style={{ height: '80vh' }}>
         {bodyRender()}

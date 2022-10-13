@@ -10,7 +10,8 @@ export enum EVENTS_NAME {
   authSuccess = 'auth-success',
   teleport = 'teleport',
   getPlayerPosition = 'get-player-position',
-  sendPlayerPosition = 'send-player-position'
+  sendPlayerPosition = 'send-player-position',
+  openComputer = 'open-computer'
 }
 
 export enum TELEPORT_LOCATIONS {
