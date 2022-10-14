@@ -10,6 +10,7 @@ import {
     eventUnparticipate,
     deleteUserTeamInvite,
     getTeamInvite,
+    getTeamMembers,
 } from "../controller/userController";
 import { checkUserAuthorization } from "../middleware/authHandler";
 
@@ -24,6 +25,7 @@ router.use((req: Request, res: Response, next) => {
 router.route("/").get(checkUserAuthorization, getUserDetails).put(checkUserAuthorization, updateUserDetails);
 
 router.route("/team").post(checkUserAuthorization, createTeam).delete(checkUserAuthorization, removeTeam);
+router.route("/team/:id").get(checkUserAuthorization, getTeamMembers);
 
 router
     .route("/team-invite")

@@ -122,18 +122,17 @@ const getTeamInvite = async (req: Request, res: Response, next) => {
 };
 
 const getTeamMembers = async (req: Request, res: Response, next) => {
-    const { teamId } = req.body;
-    const { id } = req.app.locals;
+    const { id } = req.query;
     try {
         const team = await prisma.team.findFirst({
-            where: { id: teamId },
+            where: { id: Number(id) },
         });
         if (team === null) {
             res.statusCode = 404;
             res.json({ error: "team not found!", success: false });
         } else {
             const members = await prisma.teamMember.findMany({
-                where: { teamId },
+                where: { teamId: team.id },
                 include: { user: true },
             });
             res.statusCode = 200;
@@ -322,6 +321,7 @@ export {
     createTeam,
     removeTeam,
     getTeamInvite,
+    getTeamMembers,
     sendInviteToUser,
     respondToTeamInvite,
     deleteUserTeamInvite,

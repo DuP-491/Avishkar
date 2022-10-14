@@ -161,7 +161,23 @@
 
     ***
 
-5. **Send Invite To User**
+5. **Get Team Details with Members**
+   **API Path :** /team/:id
+   **API Method :** GET
+
+    > REQUEST QUERY PARAMS &nbsp;&nbsp;:
+    > { id (int) }
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { }
+
+    > RESPONSE BODY :
+    > { teams, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+6. **Send Invite To User**
    **API Path :** /team-invite
    **API Method :** POST
    **API Extras :** only team leader can send invite; team shouldn't be part of any event
@@ -175,7 +191,7 @@
 
     ***
 
-6. **Respond To Team Invite**
+7. **Respond To Team Invite**
    **API Path :** /team-invite
    **API Method :** PUT
    **API Extras :** request gets deleted in case the user declines the request
@@ -189,7 +205,7 @@
 
     ***
 
-7. **Participate In Event**
+8. **Participate In Event**
    **API Path :** /participate
    **API Method :** POST
    **API Extras :** only team leader can participate in event; team shouldn't have any pending invite
@@ -203,7 +219,7 @@
 
     ***
 
-8. **Unparticipate In Event**
+9. **Unparticipate In Event**
    **API Path :** /participate
    **API Method :** DELETE
    **API Extras :** only team leader can unparticipate in any event
