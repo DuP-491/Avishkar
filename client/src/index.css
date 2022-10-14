@@ -33,3 +33,12 @@ canvas,
 .font-pfeffer {
   font-family: "PfefferMediaeval";
 }
+
+.noscroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.noscroll {
+  -ms-overflow-style: 10px;
+  scrollbar-width: 10px;
+}
