@@ -64,8 +64,11 @@ function GameComponent(props: Props) {
   useEffect(() => {
     if (game) {
       setTimeout(() => {
-        // console.log('game', game);
-
+        // TODO: CHECK AUTH STATUS HERE
+        const authenticated = false;
+        if (authenticated) {
+          game.instance?.events.emit(EVENTS_NAME.login);
+        }
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
@@ -94,6 +97,7 @@ function GameComponent(props: Props) {
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
           // console.log('show auth');
           setShowAuthPrompt(true);
+          game.instance?.scene.pause('campus');
         });
         game.instance?.events.on(
           EVENTS_NAME.sendPlayerPosition,
@@ -152,11 +156,17 @@ function GameComponent(props: Props) {
 
   const onAuthSuccess = () => {
     if (game) {
-      game?.instance?.events.emit(EVENTS_NAME.authSuccess);
+      game?.instance?.events.emit(EVENTS_NAME.login);
+      game.instance?.scene.resume('campus');
       setTimeout(() => {
         setShowAuthPrompt(false);
       }, 1000);
     }
+  };
+
+  const closeAuthPrompt = () => {
+    setShowAuthPrompt(false);
+    if (game) game.instance?.scene.resume('campus');
   };
 
   const teleport = (location: TELEPORT_LOCATIONS) => {
@@ -194,7 +204,7 @@ function GameComponent(props: Props) {
         </button>
       </div>
       {showAuthPrompt && (
-        <AuthPrompt closePopup={setShowAuthPrompt} authSuccessCallback={onAuthSuccess} />
+        <AuthPrompt closePopup={closeAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
       {showComputer && (
         <AuthPrompt
@@ -216,7 +226,7 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
-      {showInfo && <Info showInfo={showInfo} setShowInfo={setShowInfo} />}
+      {showInfo && <Info setShowInfo={setShowInfo} />}
       {showInteractPrompt && (
         <InteractPrompt
           stopInteract={stopInteract}

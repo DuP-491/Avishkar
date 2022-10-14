@@ -10,8 +10,10 @@ import {
 
 import { EVENTS_NAME, TELEPORT_LOCATIONS_DATA } from '../../consts';
 import { NPC } from '../../classes/npc';
+import { GameConfigExtended } from '../../config';
 
 export class Campus extends Scene {
+  // private loggedIn = false;
   private player!: Player;
   private map!: Tilemaps.Tilemap;
   private tileset!: Tilemaps.Tileset;
@@ -36,8 +38,9 @@ export class Campus extends Scene {
   private chests!: GameObjects.Sprite[];
   private enemies!: Enemy[];
   private npcs!: NPC[];
-  private interactables!: (GameObjects.Sprite | GameObjects.Group)[];
+  private interactables!: GameObjects.Sprite[];
   private npcChatSprites!: Physics.Arcade.Sprite[];
+  private loginYamunaGate!: boolean;
 
   private debugText!: GameObjects.Text;
 
@@ -271,14 +274,19 @@ export class Campus extends Scene {
     this.layer6.setCollisionByProperty({ collides: true }, true);
     this.layer9.setCollisionByProperty({ collides: true }, true);
 
+    this.loginYamunaGate = true;
+
     this.physics.world.setBounds(0, 0, this.layer.width, this.layer.height);
     // this.showDebug();
   }
 
   private initInteractables(): void {
     this.interactables = [];
-    const authPoint = gameObjectToObjectPoint(
+    const authGanga = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'auth')
+    );
+    const authYamuna = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'auth2')
     );
     const enterPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'cafe')
@@ -290,64 +298,101 @@ export class Campus extends Scene {
     );
 
     this.interactables.push(
-      this.physics.add.group([
-        this.physics.add
-          .sprite(authPoint.x, authPoint.y, 'tiles_ui', 0)
-          .setOrigin(0.5, 0.5)
-          .setScale(1.5)
-          .setInteractive({
-            useHandCursor: true
-          })
-          .on('pointerdown', (e: any) => {
-            console.log('auth');
+      this.physics.add
+        .sprite(authGanga.x, authGanga.y, 'tiles_ui', 0)
+        .setOrigin(0.5, 0.5)
+        .setScale(1.5)
+        .setInteractive({
+          useHandCursor: true
+        })
+        .on('pointerdown', (e: any) => {
+          // console.log('auth');
+          console.log(this.interactables[0].frame);
+
+          if (this.interactables[0].frame.name == '0') {
+            this.loginYamunaGate = false;
             this.game.events.emit(EVENTS_NAME.showAuth);
-          })
-        // this.physics.add
-        //   .sprite(authPoint.x, authPoint.y, 'tiles_ui', 1)
-        //   .setOrigin(0, 0.5)
-        // .setScale(1.5)
-      ])
+          } else {
+            // LOGOUT
+            this.game.events.emit(EVENTS_NAME.logout);
+          }
+        })
+        .on(EVENTS_NAME.login, () => {
+          this.interactables[0].setFrame(1);
+        })
+        .on(EVENTS_NAME.logout, () => {
+          this.interactables[0].setFrame(0);
+        })
     );
     this.interactables.push(
-      this.physics.add.group([
-        this.physics.add
-          .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2)
-          .setOrigin(0.5, 0.5)
-          .setScale(1.5)
-          .setInteractive({
-            useHandCursor: true
-          })
-          .on('pointerdown', (e: any) => {
-            // console.log('enter');
-            this.scene.switch('cafe96');
-          })
-      ])
+      this.physics.add
+        .sprite(authYamuna.x, authYamuna.y, 'tiles_ui', 0)
+        .setOrigin(0.5, 0.5)
+        .setScale(1.5)
+        .setInteractive({
+          useHandCursor: true
+        })
+        .on('pointerdown', (e: any) => {
+          // console.log('auth');
+          if (this.interactables[0].frame.name == '0') {
+            this.loginYamunaGate = true;
+            this.game.events.emit(EVENTS_NAME.showAuth);
+          } else {
+            // LOGOUT
+            this.game.events.emit(EVENTS_NAME.logout);
+          }
+        })
+        .on(EVENTS_NAME.login, () => {
+          this.interactables[0].setFrame(1);
+        })
+        .on(EVENTS_NAME.logout, () => {
+          this.interactables[0].setFrame(0);
+        })
+    );
+    this.interactables.push(
+      this.physics.add
+        .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2)
+        .setOrigin(0.5, 0.5)
+        .setScale(1.5)
+        .setInteractive({
+          useHandCursor: true
+        })
+        .on('pointerdown', (e: any) => {
+          // console.log('enter');
+          this.scene.switch('cafe96');
+        })
     );
     computers.forEach((computer) => {
       this.interactables.push(
-        this.physics.add.group([
-          this.physics.add
-            .sprite(computer.x, computer.y, 'tiles_sports', 43)
-            .setOrigin(0.5, 0.5)
-            .setScale(1)
-            .setInteractive({
-              useHandCursor: true
-            })
-            .setDepth(2)
-            .on('pointerdown', () => {
-              this.game.events.emit(EVENTS_NAME.openComputer);
-            })
-        ])
+        this.physics.add
+          .sprite(computer.x, computer.y, 'tiles_sports', 43)
+          .setOrigin(0.5, 0.5)
+          .setScale(1)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .setDepth(2)
+          .on('pointerdown', () => {
+            this.game.events.emit(EVENTS_NAME.openComputer);
+          })
       );
     });
   }
 
   private initPlayer(): void {
     this.player = new Player(this, 672, 689);
-    this.game.events.on(EVENTS_NAME.authSuccess, () => {
+    this.game.events.on(EVENTS_NAME.login, () => {
       // teleport player 200 pixels to the right
-      console.log('authSuccess');
-      this.player.x += 200;
+      // console.log('login');
+      // SET PLAYER POSITION ACCORDING TO GATE
+      if (this.loginYamunaGate) {
+        // console.log('Logged in from yamuna gate');
+        this.player.x = 972;
+        this.player.y = 889;
+      } else {
+        this.player.x = 722;
+        this.player.y = 2689;
+      }
     });
     this.game.events.on(EVENTS_NAME.teleport, (location: string) => {
       const { x, y } = TELEPORT_LOCATIONS_DATA[location];

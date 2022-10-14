@@ -240,7 +240,6 @@ function Info(props: Props) {
 }
 
 Info.propTypes = {
-  showInfo: PropTypes.bool.isRequired,
   setShowInfo: PropTypes.func.isRequired
 };
 
