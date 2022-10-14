@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+enum Role {
+  USER
+  COORDIE
+  ADMIN
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+}
+
+model User {
+  id                    String                  @id @default(uuid())
+  name                  String                  @default("John Doe")
+  email                 String                  @unique
+  username              String                  @unique
+  mobile                String                  @unique
+  collegeName           String                  @default("Motilal Nehru National Institute Of Technology, Prayagraj")
+  gender                String                  @default("None")
+  resumeLink            String?
+  salt                  String?
+  password              String?
+  token                 String?
+  role                  Role                    @default(USER)
+  isFeePaid             Boolean                 @default(false)
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  DepartmentCoordinator DepartmentCoordinator[]
+  EventCoordinator      EventCoordinator[]
+  Team                  Team[]
+  TeamMember            TeamMember[]
+}
+
+model DepartmentEvent {
+  id                    String                  @id @default(uuid())
+  name                  String
+  organizer             String                  @default("MNNIT, Prayagraj")
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  DepartmentCoordinator DepartmentCoordinator[]
+  Event                 Event[]
+}
+
+model DepartmentCoordinator {
+  user        User            @relation(fields: [userId], references: [id])
+  userId      String
+  deptEvent   DepartmentEvent @relation(fields: [deptEventId], references: [id])
+  deptEventId String
+  @@id([userId, deptEventId])
+}
+
+model Event {
+  id               String             @id @default(uuid())
+  deptEvent        DepartmentEvent    @relation(fields: [deptEventId], references: [id])
+  deptEventId      String
+  name             String             @unique
+  tagline          String
+  details          String
+  criteria         String
+  rules            String
+  psLink           String
+  maxTeamSize      Int                @default(1)
+  minTeamSize      Int                @default(1)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  EventCoordinator EventCoordinator[]
+  Participation    Participation[]
+}
+
+model EventCoordinator {
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId String
+
+  @@id([userId, eventId])
+}
+
+model Team {
+  id            Int          @id @default(autoincrement())
+  user          User            @relation(fields: [leader], references: [id])
+  leader        String
+  size          Int             @default(1)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  TeamMember    TeamMember[]
+  Participation Participation[]
+}
+
+model TeamMember {
+  user       User          @relation(fields: [userId], references: [id])
+  userId     String
+  team       Team          @relation(fields: [teamId], references: [id])
+  teamId     Int
+  status     RequestStatus @default(PENDING)
+  requestAt  DateTime      @default(now())
+  acceptedAt DateTime      @updatedAt
+
+  @@id([userId, teamId])
+}
+
+model Participation {
+  team    Team   @relation(fields: [teamId], references: [id])
+  teamId  Int
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId String
+
+  @@id([teamId, eventId])
+}
