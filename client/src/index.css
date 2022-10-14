@@ -29,3 +29,7 @@ canvas,
   font-family: "PfefferMediaeval";
   src: url("../public/PfefferMediaeval.otf");
 }
+
+.font-pfeffer {
+  font-family: "PfefferMediaeval";
+}
