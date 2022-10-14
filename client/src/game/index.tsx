@@ -66,6 +66,7 @@ function GameComponent(props: Props) {
           const key = scene + '-' + gameObject.name;
           // GET NPC DATA
           console.log(key);
+          /* NICE 😈🥵6️⃣9️⃣ */
           const data = npcData[key];
           if (!data) {
             console.log('No data found for ' + key);
