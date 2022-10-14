@@ -30,8 +30,9 @@ function Profile({ onInvalidToken }: ProfileProps) {
   });
 
   useEffect(() => {
-    fetchUserDetails();
-  }, []);
+    if (selectedtab === 1) fetchUserDetails();
+    else if (selectedtab === 2) fetchTeamInvites();
+  }, [selectedtab]);
 
   const fetchUserDetails = () => {
     const token = Cookies.get('token');
@@ -51,6 +52,28 @@ function Profile({ onInvalidToken }: ProfileProps) {
             collegeName: data['details']['collegeName'],
             resumeLink: data['details']['resumeLink']
           });
+        } else if (data['message'] === 'Invalid token!') {
+          onInvalidToken();
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  const fetchTeamInvites = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      onInvalidToken();
+      return;
+    }
+    UserService.getTeamInvites(token)
+      .then((data) => {
+        if (data['success']) {
+          setTeams(data['teams']);
+          setInviteUsernames(
+            Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
+          );
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -97,6 +120,66 @@ function Profile({ onInvalidToken }: ProfileProps) {
       .then((data) => {
         if (data['success']) {
           console.log('Created Team Successfully');
+        } else if (data['message'] === 'Invalid token!') {
+          onInvalidToken();
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  const handleDeleteTeam = (teamId: number) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      onInvalidToken();
+      return;
+    }
+    UserService.removeTeam(token, teamId)
+      .then((data) => {
+        if (data['success']) {
+          console.log('Deleted Team Successfully');
+          fetchTeamInvites();
+        } else if (data['message'] === 'Invalid token!') {
+          onInvalidToken();
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  const handleRespondTeamInvite = (teamId: number, status: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      onInvalidToken();
+      return;
+    }
+    UserService.responseToTeamInvite(token, teamId, status)
+      .then((data) => {
+        if (data['success']) {
+          console.log('Responded to Team Invite Successfully');
+          fetchTeamInvites();
+        } else if (data['message'] === 'Invalid token!') {
+          onInvalidToken();
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  const handleInviteUser = (teamId: number, username: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      onInvalidToken();
+      return;
+    }
+    UserService.inviteUser(token, teamId, username)
+      .then((data) => {
+        if (data['success']) {
+          console.log('Invited User Successfully');
+          fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -189,6 +272,24 @@ function Profile({ onInvalidToken }: ProfileProps) {
   }
 
   const [editDetails, setEditDetails] = useState(false);
+  const [teams, setTeams] = useState([]);
+  const [inviteUsernames, setInviteUsernames] = useState({});
+  // [
+  //   {
+  //       "userId": "371999e0-92d5-4c9a-bbf9-8d51f8e926cf",
+  //       "teamId": 1,
+  //       "status": "ACCEPTED",
+  //       "requestAt": "2022-10-14T09:43:16.484Z",
+  //       "acceptedAt": "2022-10-14T09:43:16.484Z",
+  //       "team": {
+  //           "id": 1,
+  //           "leader": "371999e0-92d5-4c9a-bbf9-8d51f8e926cf",
+  //           "size": 1,
+  //           "createdAt": "2022-10-14T09:43:16.265Z",
+  //           "updatedAt": "2022-10-14T09:43:16.265Z"
+  //       }
+  //   },
+  // ]
 
   return (
     <div>
@@ -304,25 +405,135 @@ function Profile({ onInvalidToken }: ProfileProps) {
         )}
         {selectedtab === 2 && (
           <>
-            <span
-              className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-              id="Profile"
-              onClick={() => handleCreateTeam()}>
-              <span
-                className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                id="Profile"></span>
-              <span
-                className="absolute inset-0 w-full h-full bg-white rounded-md "
-                id="Profile"></span>
-              <span
-                className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                id="Profile"></span>
-              <span
-                className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                id="Profile">
-                Create Team
-              </span>
-            </span>
+            <div className="flex">
+              <div className="w-1/2">
+                <span
+                  className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                  id="Profile"
+                  onClick={() => handleCreateTeam()}>
+                  <span
+                    className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                    id="Profile"></span>
+                  <span
+                    className="absolute inset-0 w-full h-full bg-white rounded-md "
+                    id="Profile"></span>
+                  <span
+                    className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                    id="Profile"></span>
+                  <span
+                    className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                    id="Profile">
+                    Create Team
+                  </span>
+                </span>
+                <br />
+                <br />
+                Teams
+                <br />
+                <br />
+                {teams
+                  .filter((team) => team['status'] === 'ACCEPTED')
+                  .map((team) => (
+                    <div key={team['teamId']} className="mb-5">
+                      <p>Team ID: {team['teamId']}</p>
+                      <p>Team Size: {team['team']['size']}</p>
+                      {team['userId'] === team['team']['leader'] && (
+                        <>
+                          <span
+                            className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                            id="Profile"
+                            onClick={() => handleDeleteTeam(team['teamId'])}>
+                            <span
+                              className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full bg-white rounded-md "
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                              id="Profile"></span>
+                            <span
+                              className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                              id="Profile">
+                              Delete Team
+                            </span>
+                          </span>
+                          <br />
+                          <input
+                            className="mr-4"
+                            value={inviteUsernames[team['teamId']]}
+                            onChange={(e) =>
+                              setInviteUsernames({
+                                ...inviteUsernames,
+                                [team['teamId']]: e.target.value
+                              })
+                            }
+                          />
+                          <span
+                            className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                            id="Profile"
+                            onClick={() =>
+                              handleInviteUser(team['teamId'], inviteUsernames[team['teamId']])
+                            }>
+                            <span
+                              className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full bg-white rounded-md "
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                              id="Profile"></span>
+                            <span
+                              className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                              id="Profile">
+                              Invite Member
+                            </span>
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  ))}
+              </div>
+              <div className="w-1/2">
+                Team Invites
+                <br />
+                <br />
+                {teams
+                  .filter((team) => team['status'] !== 'ACCEPTED')
+                  .map((team) => (
+                    <div key={team['teamId']} className="mb-5">
+                      <p>Team ID: {team['teamId']}</p>
+                      <p>Team Size: {team['team']['size']}</p>
+                      {[
+                        ['Accept', 'ACCEPTED'],
+                        ['Decline', 'DECLINED']
+                      ].map(([button_text, response_text], i) => (
+                        <span
+                          key={i}
+                          className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                          id="Profile"
+                          onClick={() => handleRespondTeamInvite(team['teamId'], response_text)}>
+                          <span
+                            className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                            id="Profile"></span>
+                          <span
+                            className="absolute inset-0 w-full h-full bg-white rounded-md "
+                            id="Profile"></span>
+                          <span
+                            className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                            id="Profile"></span>
+                          <span
+                            className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                            id="Profile">
+                            {button_text}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  ))}
+              </div>
+            </div>
           </>
         )}
         {selectedtab === 3 && <>Admin</>}
