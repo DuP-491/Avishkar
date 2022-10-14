@@ -2,11 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 function Info(props: Props) {
-  const { showInfo, setShowInfo } = props;
+  const { setShowInfo } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
-
-  setShowInfo(showInfo);
-  console.log(showInfo);
 
   const handleClick = () => {
     if (baseDiv.current) {
@@ -94,7 +91,6 @@ function Info(props: Props) {
 }
 
 Info.propTypes = {
-  showInfo: PropTypes.bool.isRequired,
   setShowInfo: PropTypes.func.isRequired
 };
 
