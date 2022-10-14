@@ -20,9 +20,10 @@ const updateUserDetails = async (req: Request, res: Response, next) => {
     try {
         if (username !== undefined && username !== req.app.locals.username) {
             const user = await prisma.user.findFirst({
-                where: { username },
+                where: {
+                    username,
+                },
             });
-
             if (user !== null) {
                 res.statusCode = 400;
                 return res.json({
@@ -116,6 +117,30 @@ const getTeamInvite = async (req: Request, res: Response, next) => {
         res.json({ teams, success: true });
     } catch (error) {
         console.log("error occured in the getTeamInvite() controller!");
+        next(error);
+    }
+};
+
+const getTeamMembers = async (req: Request, res: Response, next) => {
+    const { teamId } = req.body;
+    const { id } = req.app.locals;
+    try {
+        const team = await prisma.team.findFirst({
+            where: { id: teamId },
+        });
+        if (team === null) {
+            res.statusCode = 404;
+            res.json({ error: "team not found!", success: false });
+        } else {
+            const members = await prisma.teamMember.findMany({
+                where: { teamId },
+                include: { user: true },
+            });
+            res.statusCode = 200;
+            res.json({ members, success: true });
+        }
+    } catch (error) {
+        console.log("error occured in the getTeamMembers() controller!");
         next(error);
     }
 };
