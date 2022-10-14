@@ -19,6 +19,8 @@ export class Campus extends Scene {
   private tileset3!: Tilemaps.Tileset;
   private tileset4!: Tilemaps.Tileset;
   private tileset5!: Tilemaps.Tileset;
+  private tileset6!: Tilemaps.Tileset;
+  private tileset7!: Tilemaps.Tileset;
   private layer!: Tilemaps.TilemapLayer;
   private layer2!: Tilemaps.TilemapLayer;
   private layer3!: Tilemaps.TilemapLayer;
@@ -89,76 +91,174 @@ export class Campus extends Scene {
     this.tileset3 = this.map.addTilesetImage('Sports', 'tileSports', 16, 16, 0, 0);
     this.tileset4 = this.map.addTilesetImage('InteriorChan', 'tileInteriorChan', 16, 16, 0, 0);
     this.tileset5 = this.map.addTilesetImage('RoomChan', 'tileRoomChan', 16, 16, 0, 0);
+    this.tileset6 = this.map.addTilesetImage('GoodyChan', 'tileGoodyChan', 16, 16, 0, 0);
+    this.tileset7 = this.map.addTilesetImage('BigTreeChan', 'tileBigTreeChan', 16, 16, 0, 0);
 
     this.layer = this.map.createLayer(
       'Base Tiles Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer2 = this.map.createLayer(
       'Floor Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer3 = this.map.createLayer(
       'Interior Layer 1',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer4 = this.map.createLayer(
       'Interior Layer 2',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer5 = this.map.createLayer(
       'Hidden Trees Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer6 = this.map.createLayer(
       'Walls Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer7 = this.map.createLayer(
       'Interior Layer 3',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer8 = this.map.createLayer(
       'Interior Layer 4',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer9 = this.map.createLayer(
       'WallSides Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer10 = this.map.createLayer(
       'Stadium Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer11 = this.map.createLayer(
       'Trees Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );
     this.layer12 = this.map.createLayer(
       'Roof Layer',
-      [this.tileset, this.tileset2, this.tileset3, this.tileset4, this.tileset5],
+      [
+        this.tileset,
+        this.tileset2,
+        this.tileset3,
+        this.tileset4,
+        this.tileset5,
+        this.tileset6,
+        this.tileset7
+      ],
       0,
       0
     );

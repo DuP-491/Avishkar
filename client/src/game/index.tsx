@@ -61,6 +61,8 @@ function GameComponent(props: Props) {
   useEffect(() => {
     if (game) {
       setTimeout(() => {
+        // console.log('game', game);
+
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
