@@ -87,6 +87,25 @@ function Profile({ onInvalidToken }: ProfileProps) {
       });
   };
 
+  const handleCreateTeam = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      onInvalidToken();
+      return;
+    }
+    UserService.createTeam(token)
+      .then((data) => {
+        if (data['success']) {
+          console.log('Created Team Successfully');
+        } else if (data['message'] === 'Invalid token!') {
+          onInvalidToken();
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
   function Tabrender() {
     if (selectedtab == 1)
       return (
@@ -242,7 +261,29 @@ function Profile({ onInvalidToken }: ProfileProps) {
             )}
           </>
         )}
-        {selectedtab === 2 && <>Teams</>}
+        {selectedtab === 2 && (
+          <>
+            <span
+              className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+              id="Profile"
+              onClick={() => handleCreateTeam()}>
+              <span
+                className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                id="Profile"></span>
+              <span
+                className="absolute inset-0 w-full h-full bg-white rounded-md "
+                id="Profile"></span>
+              <span
+                className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                id="Profile"></span>
+              <span
+                className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                id="Profile">
+                Create Team
+              </span>
+            </span>
+          </>
+        )}
       </div>
     </div>
   );

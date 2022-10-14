@@ -83,5 +83,46 @@ export default {
         message: 'Please try again later!'
       };
     }
+  },
+
+  createTeam: async function (token: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/team/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = await res.json();
+      switch (res.status) {
+        case 200:
+          return {
+            details: data['details'],
+            success: true,
+            message: 'Success'
+          };
+        case 400:
+          return {
+            success: false,
+            message: 'Cannot create team until fees is paid!'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
   }
 };
