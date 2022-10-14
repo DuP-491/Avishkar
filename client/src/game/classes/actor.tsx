@@ -36,8 +36,8 @@ export class Actor extends Physics.Arcade.Sprite {
     this.scene.cameras.main.shake(50, 0.01);
   }
 
-  public askInteract(name: string): void {
-    this.scene.game.events.emit(EVENTS_NAME.interact, name);
+  public askInteract(name: string, text: string): void {
+    this.scene.game.events.emit(EVENTS_NAME.interact, name, text);
     // console.log('askInteract');
   }
 

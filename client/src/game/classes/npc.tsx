@@ -72,7 +72,7 @@ export class NPC extends Actor {
     ) {
       if (!this.interacting) {
         this.interacting = true;
-        this.askInteract(this.name);
+        this.askInteract(this.name, "Press 'E' to interact");
       }
     } else {
       if (this.interacting) {
