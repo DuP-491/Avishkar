@@ -10,6 +10,7 @@ import MiniMap from '../components/MiniMap';
 import { npcData } from './npcData';
 import Map from '../components/Map';
 import Info from '../components/Info';
+import InteractPrompt from '../components/Interact';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -46,6 +47,8 @@ function GameComponent(props: Props) {
 
   // Game States
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
+  const [showInteractPrompt, setShowInteractPrompt] = useState(false);
+  const [stopInteract, setStopInteract] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
@@ -75,11 +78,19 @@ function GameComponent(props: Props) {
           setInfoPromptText(data.text);
           setShowInfoPrompt(true);
         });
+        game.instance?.events.on(EVENTS_NAME.interact, () => {
+          setShowInteractPrompt(true);
+          setStopInteract(false);
+        });
+        game.instance?.events.on(EVENTS_NAME.resetInteract, () => {
+          // console.log('resetInteract', showInteractPrompt);
+          if (showInteractPrompt) setStopInteract(true);
+        });
         game.instance?.events.on(EVENTS_NAME.openComputer, () => {
           setShowComputer(true);
         });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
-          console.log('show auth');
+          // console.log('show auth');
           setShowAuthPrompt(true);
         });
         game.instance?.events.on(
@@ -204,6 +215,13 @@ function GameComponent(props: Props) {
         />
       )}
       {showInfo && <Info showInfo={showInfo} setShowInfo={setShowInfo} />}
+      {showInteractPrompt && (
+        <InteractPrompt
+          stopInteract={stopInteract}
+          setShowInteractPrompt={setShowInteractPrompt}
+          setStopInteract={setStopInteract}
+        />
+      )}
       <img
         // eslint-disable-next-line no-undef
         src={require('../images/map-icon.png')}

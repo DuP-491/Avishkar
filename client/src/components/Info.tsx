@@ -83,6 +83,7 @@ function Info(props: Props) {
           earum veniam quasi aliquam eligendi, placeat qui corporis!
         </div>
         <img
+          // eslint-disable-next-line no-undef
           src={require('../images/cross-icon.png')}
           className="absolute hidden cursor-pointer right-4 top-4"
           onClick={handleClick}
