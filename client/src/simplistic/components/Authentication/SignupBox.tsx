@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import AuthService from '../../services/AuthService';
 
 /* eslint-disable */
 interface SignupBoxPropType {
@@ -10,14 +11,28 @@ interface SignupBoxPropType {
 
 function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
   function LoggingIn(e: any) {
-    console.log(NameRef.current.value, PasswordRef.current.value);
-    onSignup(e);
-    onCrossPress(e);
+    const name = NameRef.current.value;
+    const email = EmailRef.current.value;
+    const collegeName = CollegeNameRef.current.value;
+    const gender = GenderRef.current.value;
+    const mobile = MobileRef.current.value;
+    AuthService.signIn(name, email, collegeName, gender, mobile)
+      .then((data) => {
+        if (data['success']) {
+          onSignup(e);
+          onCrossPress(e);
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
   }
 
   const NameRef = useRef(document.createElement('input'));
-  const PasswordRef = useRef(document.createElement('input'));
-  const MailRef = useRef(document.createElement('input'));
+  const EmailRef = useRef(document.createElement('input'));
+  const CollegeNameRef = useRef(document.createElement('input'));
+  const GenderRef = useRef(document.createElement('input'));
+  const MobileRef = useRef(document.createElement('input'));
 
   return (
     <>
@@ -40,25 +55,7 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
               <label
                 className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
                 htmlFor="inline-full-name">
-                Email ID
-              </label>
-            </div>
-            <div className="md:w-2/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                id="inline-email"
-                type="text"
-                placeholder="Email-ID"
-                ref={MailRef}
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                htmlFor="inline-full-name">
-                Full Name
+                Name
               </label>
             </div>
             <div className="md:w-2/3">
@@ -66,7 +63,7 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-full-name"
                 type="text"
-                placeholder="Full Name"
+                placeholder="Name"
                 ref={NameRef}
               />
             </div>
@@ -75,17 +72,72 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
             <div className="md:w-1/3">
               <label
                 className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                htmlFor="inline-password">
-                Password
+                htmlFor="inline-email">
+                Email
               </label>
             </div>
             <div className="md:w-2/3">
               <input
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                id="inline-password"
-                type="password"
-                placeholder="***********"
-                ref={PasswordRef}
+                id="inline-email"
+                type="email"
+                placeholder="Email"
+                ref={EmailRef}
+              />
+            </div>
+          </div>
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label
+                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                htmlFor="inline-college-name">
+                College Name
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                id="inline-college-name"
+                type="text"
+                placeholder="College Name"
+                ref={CollegeNameRef}
+              />
+            </div>
+          </div>
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label
+                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                htmlFor="inline-gender">
+                Gender
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              {/* TODO: Replace input with dropdown containing values ["male", "female", "none"] */}
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                id="inline-gender"
+                type="text"
+                placeholder="Gender"
+                ref={GenderRef}
+              />
+            </div>
+          </div>
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label
+                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                htmlFor="inline-mobile">
+                Mobile
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                id="inline-mobile"
+                type="text"
+                placeholder="Mobile"
+                ref={MobileRef}
               />
             </div>
           </div>

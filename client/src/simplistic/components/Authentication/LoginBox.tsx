@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import Cookies from 'js-cookie';
+import AuthService from '../../services/AuthService';
 
 /* eslint-disable */
 interface LoginBoxPropType {
@@ -10,9 +12,19 @@ interface LoginBoxPropType {
 
 function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
   function LoggingIn(e: any) {
-    console.log(NameRef.current.value, PasswordRef.current.value);
-    onLogin(e);
-    onCrossPress(e);
+    const name = NameRef.current.value,
+      password = PasswordRef.current.value;
+    AuthService.logIn(name, password)
+      .then((data) => {
+        if (data['success']) {
+          Cookies.set('token', data['token']);
+          onLogin(e);
+          onCrossPress(e);
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
   }
   const NameRef = useRef(document.createElement('input'));
   const PasswordRef = useRef(document.createElement('input'));
@@ -38,15 +50,15 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
               <label
                 className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
                 htmlFor="inline-full-name">
-                Full Name
+                Email/Username
               </label>
             </div>
             <div className="md:w-2/3">
               <input
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                id="inline-full-name"
+                id="inline-user-name"
                 type="text"
-                placeholder="Full Name"
+                placeholder="Email/Username"
                 ref={NameRef}
               />
             </div>
