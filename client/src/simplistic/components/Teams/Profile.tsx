@@ -107,6 +107,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
   };
 
   function Tabrender() {
+    // TODO: Render Admin section only if user is admin
     if (selectedtab == 1)
       return (
         <>
@@ -114,15 +115,48 @@ function Profile({ onInvalidToken }: ProfileProps) {
             onClick={() => {
               setSelectedTab(1);
             }}
-            className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
+            className="w-1/3 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
             Profile
           </div>
           <div
             onClick={() => {
               setSelectedTab(2);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/3 text-center pt-5 pb-5">
             Teams
+          </div>
+          <div
+            onClick={() => {
+              setSelectedTab(3);
+            }}
+            className="w-1/3 text-center pt-5 pb-5">
+            Admin
+          </div>
+        </>
+      );
+    else if (selectedtab == 2)
+      return (
+        <>
+          <div
+            onClick={() => {
+              setSelectedTab(1);
+            }}
+            className="w-1/3 text-center pt-5 pb-5">
+            Profile
+          </div>
+          <div
+            onClick={() => {
+              setSelectedTab(2);
+            }}
+            className="w-1/3 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
+            Teams
+          </div>
+          <div
+            onClick={() => {
+              setSelectedTab(3);
+            }}
+            className="w-1/3 text-center pt-5 pb-5">
+            Admin
           </div>
         </>
       );
@@ -133,15 +167,22 @@ function Profile({ onInvalidToken }: ProfileProps) {
             onClick={() => {
               setSelectedTab(1);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/3 text-center pt-5 pb-5">
             Profile
           </div>
           <div
             onClick={() => {
               setSelectedTab(2);
             }}
-            className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
+            className="w-1/3 text-center pt-5 pb-5">
             Teams
+          </div>
+          <div
+            onClick={() => {
+              setSelectedTab(3);
+            }}
+            className="w-1/3 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
+            Admin
           </div>
         </>
       );
@@ -284,6 +325,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
             </span>
           </>
         )}
+        {selectedtab === 3 && <>Admin</>}
       </div>
     </div>
   );
