@@ -2,7 +2,7 @@ import { Scale, Types, WEBGL } from 'phaser';
 
 import { Campus, LoadingScene, UIScene, Cafe96Scene } from './scenes';
 
-type GameConfigExtended = Types.Core.GameConfig & {
+export type GameConfigExtended = Types.Core.GameConfig & {
   winScore: number;
 };
 

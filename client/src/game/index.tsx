@@ -9,6 +9,8 @@ import AuthPrompt from '../components/AuthPrompt';
 import MiniMap from '../components/MiniMap';
 import { npcData } from './npcData';
 import Map from '../components/Map';
+import Info from '../components/Info';
+import InteractPrompt from '../components/Interact';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -45,10 +47,13 @@ function GameComponent(props: Props) {
 
   // Game States
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
+  const [showInteractPrompt, setShowInteractPrompt] = useState(false);
+  const [stopInteract, setStopInteract] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
   const [showMap, setShowMap] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
 
   // Auto Initialize the game when the component is mounted
@@ -59,11 +64,17 @@ function GameComponent(props: Props) {
   useEffect(() => {
     if (game) {
       setTimeout(() => {
+        // TODO: CHECK AUTH STATUS HERE
+        const authenticated = false;
+        if (authenticated) {
+          game.instance?.events.emit(EVENTS_NAME.login);
+        }
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
           // GET NPC DATA
           console.log(key);
+          /* NICE 😈🥵6️⃣9️⃣ */
           const data = npcData[key];
           if (!data) {
             console.log('No data found for ' + key);
@@ -72,12 +83,21 @@ function GameComponent(props: Props) {
           setInfoPromptText(data.text);
           setShowInfoPrompt(true);
         });
+        game.instance?.events.on(EVENTS_NAME.interact, () => {
+          setShowInteractPrompt(true);
+          setStopInteract(false);
+        });
+        game.instance?.events.on(EVENTS_NAME.resetInteract, () => {
+          // console.log('resetInteract', showInteractPrompt);
+          if (showInteractPrompt) setStopInteract(true);
+        });
         game.instance?.events.on(EVENTS_NAME.openComputer, () => {
           setShowComputer(true);
         });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
-          console.log('show auth');
+          // console.log('show auth');
           setShowAuthPrompt(true);
+          game.instance?.scene.pause('campus');
         });
         game.instance?.events.on(
           EVENTS_NAME.sendPlayerPosition,
@@ -136,11 +156,17 @@ function GameComponent(props: Props) {
 
   const onAuthSuccess = () => {
     if (game) {
-      game?.instance?.events.emit(EVENTS_NAME.authSuccess);
+      game?.instance?.events.emit(EVENTS_NAME.login);
+      game.instance?.scene.resume('campus');
       setTimeout(() => {
         setShowAuthPrompt(false);
       }, 1000);
     }
+  };
+
+  const closeAuthPrompt = () => {
+    setShowAuthPrompt(false);
+    if (game) game.instance?.scene.resume('campus');
   };
 
   const teleport = (location: TELEPORT_LOCATIONS) => {
@@ -151,6 +177,9 @@ function GameComponent(props: Props) {
 
   const handleOnMapIconClick = () => {
     setShowMap(true);
+  };
+  const handleOnInfoIconClick = () => {
+    setShowInfo(true);
   };
 
   return (
@@ -175,7 +204,7 @@ function GameComponent(props: Props) {
         </button>
       </div>
       {showAuthPrompt && (
-        <AuthPrompt closePopup={setShowAuthPrompt} authSuccessCallback={onAuthSuccess} />
+        <AuthPrompt closePopup={closeAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
       {showComputer && (
         <AuthPrompt
@@ -197,6 +226,14 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
+      {showInfo && <Info setShowInfo={setShowInfo} />}
+      {showInteractPrompt && (
+        <InteractPrompt
+          stopInteract={stopInteract}
+          setShowInteractPrompt={setShowInteractPrompt}
+          setStopInteract={setStopInteract}
+        />
+      )}
       <img
         // eslint-disable-next-line no-undef
         src={require('../images/map-icon.png')}
@@ -205,6 +242,15 @@ function GameComponent(props: Props) {
         }`}
         width={64}
         onClick={handleOnMapIconClick}
+      />
+      <img
+        // eslint-disable-next-line no-undef
+        src={require('../images/info-icon.png')}
+        className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-20 bottom-[17.5rem] ${
+          !showInfo ? `cursor-zoom-in` : `cursor-zoom-out`
+        }`}
+        width={64}
+        onClick={handleOnInfoIconClick}
       />
     </>
   );

@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import LoginBox from '../simplistic/components/Authentication/LoginBox';
+import SignupBox from '../simplistic/components/Authentication/SignupBox';
 function AuthPrompt(props: Props) {
   const { closePopup, authSuccessCallback } = props;
+  const [showSignup, setShowSignup] = useState(false);
+
   return (
-    <div className="w-1/2 h-1/2 bg-white absolute bottom-0 left-1/2 z-30 flex-row space-y-3">
-      <span>AuthPrompt</span>
-      <button onClick={() => authSuccessCallback()}>Login</button>
-      <button onClick={() => closePopup(false)}>Close</button>
+    <div className="z-40 flex justify-center items-center w-full h-full backdrop-blur-sm">
+      {!showSignup && (
+        <LoginBox
+          onCrossPress={closePopup}
+          onLogin={authSuccessCallback}
+          onToggle={() => setShowSignup(true)}
+        />
+      )}
+      {showSignup && (
+        <SignupBox
+          onCrossPress={closePopup}
+          onSignup={authSuccessCallback}
+          onToggle={() => setShowSignup(false)}
+        />
+      )}
     </div>
   );
 }

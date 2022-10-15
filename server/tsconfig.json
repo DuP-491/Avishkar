@@ -9,7 +9,9 @@
     "esModuleInterop": true,                             
     "module": "commonjs",
     "moduleResolution": "node",
-    "incremental": true
+    "incremental": true,
+    "noImplicitAny": false,
+    "lib": [ "es2015" ]
   },
   "inclue": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]

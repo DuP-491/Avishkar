@@ -7,11 +7,12 @@ export enum EVENTS_NAME {
   resetInteract = 'reset-interact',
   infoPopup = 'info-popup',
   showAuth = 'show-auth',
-  authSuccess = 'auth-success',
   teleport = 'teleport',
   getPlayerPosition = 'get-player-position',
   sendPlayerPosition = 'send-player-position',
-  openComputer = 'open-computer'
+  openComputer = 'open-computer',
+  login = 'login',
+  logout = 'logout'
 }
 
 export enum TELEPORT_LOCATIONS {
