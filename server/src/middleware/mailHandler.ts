@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-let transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
         type: "OAuth2",
@@ -12,16 +12,8 @@ let transporter = nodemailer.createTransport({
     },
 });
 
-let mailOptions = {
-    from: process.env.MAIL_USERNAME,
-    to: process.env.MAIL_USERNAME,
-    subject: "Test",
-    text: "Hi from your nodemailer project",
+export const emailVerificationTemplate = (token) => {
+    return `<h1>Avishkar 2k22 | Email Verification</h1>
+    <p>Click the link below to verify your email address</p>
+    <a href="${process.env.FRONTEND_HOST_URL}/reset-password?key=${token}">Verify Email</a>`;
 };
-transporter.sendMail(mailOptions, function (err, data) {
-    if (err) {
-        console.log("Error " + err);
-    } else {
-        console.log("Email sent successfully");
-    }
-});
