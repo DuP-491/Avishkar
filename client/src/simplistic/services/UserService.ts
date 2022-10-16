@@ -131,9 +131,11 @@ export default {
           Authorization: `Bearer ${token}`
         }
       });
+      const data = await res.json();
       switch (res.status) {
         case 200:
           return {
+            members: data['members'],
             success: true,
             message: 'Success'
           };
@@ -267,6 +269,51 @@ export default {
           return {
             success: false,
             message: "You can't invite yourself!"
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
+  },
+
+  deleteMember: async function (token: string, teamId: number, userId: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/team-invite/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ teamId, userId })
+      });
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Success'
+          };
+        case 400:
+          return {
+            success: false,
+            message: "Can't remove member since team is already participating in event!"
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        case 404:
+          return {
+            success: false,
+            message: "User/Team with username doesn't exist!"
           };
         default:
           return {

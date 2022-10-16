@@ -83,6 +83,9 @@ function Profile({ onInvalidToken }: ProfileProps) {
           setInviteUsernames(
             Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
           );
+          setTeamMembers(
+            Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], []]))
+          );
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -216,6 +219,45 @@ function Profile({ onInvalidToken }: ProfileProps) {
         if (data['success']) {
           console.log('Invited User Successfully');
           fetchTeamInvites();
+        } else if (data['message'] === 'Invalid token!') {
+          onInvalidToken();
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  const handleRemoveMember = (teamId: number, userId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      onInvalidToken();
+      return;
+    }
+    UserService.deleteMember(token, teamId, userId)
+      .then((data) => {
+        if (data['success']) {
+          console.log('Removed Member Successfully');
+          handleGetMembers(teamId);
+        } else if (data['message'] === 'Invalid token!') {
+          onInvalidToken();
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  const handleGetMembers = (teamId: number) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      onInvalidToken();
+      return;
+    }
+    UserService.getTeamMembers(token, teamId)
+      .then((data) => {
+        if (data['success']) {
+          setTeamMembers({ ...teamMembers, teamId: data['members'] });
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -465,6 +507,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
     eventId: ''
   });
   const [inviteUsernames, setInviteUsernames] = useState({});
+  const [teamMembers, setTeamMembers] = useState({});
   const [newEvent, setNewEvent] = useState({
     name: '',
     tagline: '',
@@ -695,6 +738,58 @@ function Profile({ onInvalidToken }: ProfileProps) {
                           </span>
                         </>
                       )}
+                      <br />
+                      <span
+                        className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                        id="Profile"
+                        onClick={() =>
+                          (teamMembers[team['teamId']] as any).length === 0
+                            ? handleGetMembers(team['teamId'])
+                            : {}
+                        }>
+                        <span
+                          className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                          id="Profile"></span>
+                        <span
+                          className="absolute inset-0 w-full h-full bg-white rounded-md "
+                          id="Profile"></span>
+                        <span
+                          className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                          id="Profile"></span>
+                        <span
+                          className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                          id="Profile">
+                          {(teamMembers[team['teamId']] as any).length === 0
+                            ? 'Get Members'
+                            : 'Members'}
+                        </span>
+                      </span>
+                      {(teamMembers[team['teamId']] as any).map((teamMember: any) => (
+                        <div key={teamMember['user']['id']} className="mb-5">
+                          <p>Name: {teamMember['user']['name']}</p>
+                          <span
+                            className="relative ml-4 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                            id="Profile"
+                            onClick={() =>
+                              handleRemoveMember(team['teamId'], teamMember['user']['id'])
+                            }>
+                            <span
+                              className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full bg-white rounded-md "
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                              id="Profile"></span>
+                            <span
+                              className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                              id="Profile">
+                              Remove
+                            </span>
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   ))}
               </div>
