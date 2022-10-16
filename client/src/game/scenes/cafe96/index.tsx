@@ -164,7 +164,7 @@ export class Cafe96Scene extends Scene {
           })
           .setDepth(2)
           .on('pointerdown', () => {
-            this.game.events.emit(EVENTS_NAME.openComputer, 'team');
+            this.game.events.emit(EVENTS_NAME.openComputer, 'teams');
           })
       ])
     );

@@ -394,6 +394,10 @@ export class Campus extends Scene {
         this.player.y = 2689;
       }
     });
+    this.game.events.on(EVENTS_NAME.logout, () => {
+      this.player.x = 672;
+      this.player.y = 689;
+    });
     this.game.events.on(EVENTS_NAME.teleport, (location: string) => {
       const { x, y } = TELEPORT_LOCATIONS_DATA[location];
       this.player.x = x;

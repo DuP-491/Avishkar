@@ -91,7 +91,7 @@ function GameComponent(props: Props) {
         });
         game.instance?.events.on(EVENTS_NAME.resetInteract, () => {
           // console.log('resetInteract', showInteractPrompt);
-          if (showInteractPrompt) setStopInteract(true);
+          setStopInteract(true);
         });
         game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
           setDepartment(_department);
@@ -163,6 +163,20 @@ function GameComponent(props: Props) {
       game.instance?.scene.resume('campus');
       setTimeout(() => {
         setShowAuthPrompt(false);
+        setShowComputer(false);
+      }, 1000);
+    }
+  };
+
+  const onAuthFailure = () => {
+    if (game) {
+      game.instance?.scene.switch('cafe96', 'campus');
+      game.instance?.scene.resume('campus');
+      game.instance?.events.emit(EVENTS_NAME.logout);
+      console.log('logout');
+      setTimeout(() => {
+        setShowAuthPrompt(false);
+        setShowComputer(false);
       }, 1000);
     }
   };
@@ -213,7 +227,9 @@ function GameComponent(props: Props) {
       {showAuthPrompt && (
         <AuthPrompt closePopup={closeAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
-      {showComputer && <Computer closePopup={closeComputer} department={department} />}
+      {showComputer && (
+        <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
+      )}
       {showInfoPrompt && (
         <InfoPrompt text={infoPromptText} setShowInfoPrompt={setShowInfoPrompt}></InfoPrompt>
       )}

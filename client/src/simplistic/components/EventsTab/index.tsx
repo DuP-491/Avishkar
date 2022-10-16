@@ -31,7 +31,7 @@ function EventsTab({ onCrossPress, defaultDepartment }: EventTabPropType) {
     minTeamSize: 1
   });
   const [BGIMG, setBGIMG] = useState(img);
-  console.log(defaultDepartment);
+  // console.log(defaultDepartment);
 
   function onDepartmentSelect(deptId: string, name: string) {
     setDisplay('Department');
