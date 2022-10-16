@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@ion-phaser/react": "^1.3.0",
     "@radix-ui/react-tooltip": "^1.0.0",
