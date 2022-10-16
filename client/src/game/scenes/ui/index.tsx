@@ -52,7 +52,7 @@ export class UIScene extends Scene {
   }
 
   create(): void {
-    this.score = new Score(this, 20, 20, 0);
+    // this.score = new Score(this, 20, 20, 0);
 
     this.initListeners();
   }

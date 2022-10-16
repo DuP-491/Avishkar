@@ -12,6 +12,7 @@ import Map from '../components/Map';
 import Info from '../components/Info';
 import InteractPrompt from '../components/Interact';
 import Computer from '../components/Computer';
+import Cookies from 'js-cookie';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -64,13 +65,9 @@ function GameComponent(props: Props) {
   // }, []);
 
   useEffect(() => {
-    if (game) {
+    if (game && game.instance) {
       setTimeout(() => {
         // TODO: CHECK AUTH STATUS HERE
-        const authenticated = false;
-        if (authenticated) {
-          game.instance?.events.emit(EVENTS_NAME.login);
-        }
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
@@ -97,10 +94,15 @@ function GameComponent(props: Props) {
           setDepartment(_department);
           setShowComputer(true);
         });
+        game.instance?.events.on(EVENTS_NAME.logout, () => {
+          console.log('logout');
+          Cookies.remove('token');
+        });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
           // console.log('show auth');
           setShowAuthPrompt(true);
           game.instance?.scene.pause('campus');
+          if (game.instance) game.instance.input.keyboard.enabled = false;
         });
         game.instance?.events.on(
           EVENTS_NAME.sendPlayerPosition,
@@ -129,7 +131,9 @@ function GameComponent(props: Props) {
   }, [game]);
 
   useEffect(() => {
-    if (initialize) {
+    if (initialize && gameConfig.physics?.arcade) {
+      // eslint-disable-next-line no-undef
+      gameConfig.physics.arcade.debug = process.env.MODE === 'development';
       setGame(Object.assign({}, gameConfig));
       // document.getElementById("canvas-div")?.appendChild(React.createElement(InfoPrompt));
     }
@@ -161,6 +165,7 @@ function GameComponent(props: Props) {
     if (game) {
       game?.instance?.events.emit(EVENTS_NAME.login);
       game.instance?.scene.resume('campus');
+      if (game?.instance) game.instance.input.keyboard.enabled = true;
       setTimeout(() => {
         setShowAuthPrompt(false);
         setShowComputer(false);
@@ -172,6 +177,7 @@ function GameComponent(props: Props) {
     if (game) {
       game.instance?.scene.switch('cafe96', 'campus');
       game.instance?.scene.resume('campus');
+      if (game?.instance) game.instance.input.keyboard.enabled = true;
       game.instance?.events.emit(EVENTS_NAME.logout);
       console.log('logout');
       setTimeout(() => {
@@ -183,7 +189,10 @@ function GameComponent(props: Props) {
 
   const closeAuthPrompt = () => {
     setShowAuthPrompt(false);
-    if (game) game.instance?.scene.resume('campus');
+    if (game?.instance) {
+      game.instance.input.keyboard.enabled = true;
+      game.instance.scene.resume('campus');
+    }
   };
 
   const closeComputer = () => {
@@ -191,7 +200,9 @@ function GameComponent(props: Props) {
   };
 
   const teleport = (location: TELEPORT_LOCATIONS) => {
-    if (game) {
+    const token = Cookies.get('token');
+    const authenticated = token !== undefined && token !== null;
+    if (game && authenticated) {
       game?.instance?.events.emit(EVENTS_NAME.teleport, location);
     }
   };
@@ -206,24 +217,27 @@ function GameComponent(props: Props) {
   return (
     <>
       <IonPhaser ref={gameRef} game={game} initialize={initialize} />
-      <div className="absolute bottom-0 left-0 z-20 flex flex-col m-16 space-y-3">
-        <div className="text-white">
-          Dimensions : {dimensions.width} x {dimensions.height}
+      {/* eslint-disable-next-line no-undef */}
+      {process.env.MODE && process.env.MODE !== 'production' && (
+        <div className="absolute bottom-0 left-0 z-20 flex flex-col m-16 space-y-3">
+          <div className="text-white">
+            Dimensions : {dimensions.width} x {dimensions.height}
+          </div>
+          <button
+            className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
+            onClick={() => setInitialize(true)}>
+            Initialize game for {viewport}
+          </button>
+          <button
+            className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
+            onClick={() => teleport(TELEPORT_LOCATIONS.cafe96)}>
+            Teleport to Cafe96
+          </button>
+          <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={destroy}>
+            Destroy
+          </button>
         </div>
-        <button
-          className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
-          onClick={() => setInitialize(true)}>
-          Initialize game for {viewport}
-        </button>
-        <button
-          className="p-3 text-xl bg-gray-300 hover:bg-gray-400"
-          onClick={() => teleport(TELEPORT_LOCATIONS.cafe96)}>
-          Teleport to Cafe96
-        </button>
-        <button className="p-3 text-xl bg-gray-300 hover:bg-gray-400" onClick={destroy}>
-          Destroy
-        </button>
-      </div>
+      )}
       {showAuthPrompt && (
         <AuthPrompt closePopup={closeAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}

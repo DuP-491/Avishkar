@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LoginBox from './Authentication/LoginBox';
 import SignupBox from './Authentication/SignupBox';
 import AvishkarTitle from './../Assets/p6.png';
@@ -31,6 +31,13 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
     if (status == 'Login') setStatus('Signup');
     else setStatus('Login');
   }
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token !== undefined) {
+      setIsLogin(true);
+    }
+  }, []);
 
   function navbarRender() {
     return (

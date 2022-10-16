@@ -11,6 +11,7 @@ import {
 import { EVENTS_NAME, TELEPORT_LOCATIONS_DATA } from '../../consts';
 import { NPC } from '../../classes/npc';
 import { GameConfigExtended } from '../../config';
+import Cookies from 'js-cookie';
 
 export class Campus extends Scene {
   // private loggedIn = false;
@@ -43,12 +44,13 @@ export class Campus extends Scene {
   private loginYamunaGate!: boolean;
 
   private debugText!: GameObjects.Text;
+  private bgm: Phaser.Sound.BaseSound | undefined;
 
   constructor() {
     super('campus');
   }
 
-  create(): void {
+  create(data: any): void {
     this.initMap();
     this.initPlayer();
     this.initInteractables();
@@ -58,9 +60,16 @@ export class Campus extends Scene {
     this.initCamera();
 
     this.physics.add.collider(this.player, this.layer, this.player.onGrass);
-    this.physics.add.collider(this.player, this.layer6);
+    this.physics.add.collider(this.player, this.layer11);
+    this.physics.add.collider(this.player, this.layer10);
     this.physics.add.collider(this.player, this.layer9);
+    this.physics.add.collider(this.player, this.layer8);
+    this.physics.add.collider(this.player, this.layer7);
+    this.physics.add.collider(this.player, this.layer6);
+    this.physics.add.collider(this.player, this.layer5);
+    this.physics.add.collider(this.player, this.layer4);
     this.physics.add.collider(this.player, this.layer3);
+    this.physics.add.collider(this.player, this.layer2);
 
     this.game.events.on(EVENTS_NAME.getPlayerPosition, () => {
       this.game.events.emit(
@@ -74,10 +83,28 @@ export class Campus extends Scene {
       );
     });
 
+    this.game.events.on(EVENTS_NAME.sceneCampus, () => {
+      this.bgm?.resume();
+    });
+
+    this.bgm = this.sound.add('campusbg', {
+      loop: true,
+      volume: 0.7
+    });
+    this.bgm.play();
+
     // this.layer5.renderDebug(this.debug);
     // this.layer6.renderDebug(this.debug);
     // this.layer7.renderDebug(this.debug);
     // this.showDebug();
+
+    const token = Cookies.get('token');
+    const authenticated = token !== undefined && token !== null;
+    if (authenticated) {
+      setTimeout(() => {
+        this.game.events.emit(EVENTS_NAME.login);
+      }, 1000);
+    }
   }
 
   update(): void {
@@ -317,12 +344,6 @@ export class Campus extends Scene {
             this.game.events.emit(EVENTS_NAME.logout);
           }
         })
-        .on(EVENTS_NAME.login, () => {
-          this.interactables[0].setFrame(1);
-        })
-        .on(EVENTS_NAME.logout, () => {
-          this.interactables[0].setFrame(0);
-        })
     );
     this.interactables.push(
       this.physics.add
@@ -342,12 +363,6 @@ export class Campus extends Scene {
             this.game.events.emit(EVENTS_NAME.logout);
           }
         })
-        .on(EVENTS_NAME.login, () => {
-          this.interactables[0].setFrame(1);
-        })
-        .on(EVENTS_NAME.logout, () => {
-          this.interactables[0].setFrame(0);
-        })
     );
     this.interactables.push(
       this.physics.add
@@ -359,9 +374,22 @@ export class Campus extends Scene {
         })
         .on('pointerdown', (e: any) => {
           // console.log('enter');
+          this.bgm?.pause();
+          this.game.events.emit(EVENTS_NAME.sceneCafe);
           this.scene.switch('cafe96');
         })
     );
+    this.game.events.on(EVENTS_NAME.login, () => {
+      console.log(this.interactables);
+      this.interactables[0].setFrame(1);
+      this.interactables[1].setFrame(1);
+    });
+    this.game.events.on(EVENTS_NAME.logout, () => {
+      this.interactables[0].setFrame(0);
+      this.interactables[1].setFrame(0);
+      this.player.x = 672;
+      this.player.y = 689;
+    });
     computers.forEach((computer) => {
       this.interactables.push(
         this.physics.add
@@ -393,10 +421,6 @@ export class Campus extends Scene {
         this.player.x = 722;
         this.player.y = 2689;
       }
-    });
-    this.game.events.on(EVENTS_NAME.logout, () => {
-      this.player.x = 672;
-      this.player.y = 689;
     });
     this.game.events.on(EVENTS_NAME.teleport, (location: string) => {
       const { x, y } = TELEPORT_LOCATIONS_DATA[location];

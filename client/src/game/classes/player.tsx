@@ -1,4 +1,4 @@
-import { Input, Scene } from 'phaser';
+import Phaser, { Input, Scene } from 'phaser';
 
 import { EVENTS_NAME, GameStatus } from '../consts';
 import { Actor } from './actor';
@@ -14,6 +14,7 @@ export class Player extends Actor {
   private keyRight: Input.Keyboard.Key;
   private keyDown: Input.Keyboard.Key;
   private keySpace: Input.Keyboard.Key;
+  private attackSound: Phaser.Sound.BaseSound;
   // private hpValue: Text;
   private speed: number;
 
@@ -37,6 +38,7 @@ export class Player extends Actor {
     // eslint-disable-next-line no-unused-vars
     this.keySpace.on('down', (_event: KeyboardEvent) => {
       this.anims.play('attack');
+      this.attackSound.play();
       this.scene.game.events.emit(EVENTS_NAME.attack);
     });
 
@@ -51,6 +53,8 @@ export class Player extends Actor {
 
     // ANIMATIONS
     this.initAnimations();
+
+    this.attackSound = this.scene.sound.add('attack', { loop: false });
 
     this.on('destroy', () => {
       this.keySpace.removeAllListeners();

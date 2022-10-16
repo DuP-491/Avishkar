@@ -12,7 +12,9 @@ export enum EVENTS_NAME {
   sendPlayerPosition = 'send-player-position',
   openComputer = 'open-computer',
   login = 'login',
-  logout = 'logout'
+  logout = 'logout',
+  sceneCampus = 'scene-campus',
+  sceneCafe = 'scene-cafe'
 }
 
 export enum TELEPORT_LOCATIONS {

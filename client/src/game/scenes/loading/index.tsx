@@ -65,6 +65,11 @@ export class LoadingScene extends Scene {
       frameWidth: 16,
       frameHeight: 16
     });
+    this.load.audio('attack', 'music/attack.ogg');
+    this.load.audio('hit', 'music/hit.ogg');
+    this.load.audio('teleport', 'music/teleport.ogg');
+    this.load.audio('cafebg', 'music/cafebg.ogg');
+    this.load.audio('campusbg', 'music/campusbg.ogg');
     // this.load.spritesheet('tiles_Interior', 'tilemaps/tiles/Interior.png', {
     //   frameWidth: 16,
     //   frameHeight: 16

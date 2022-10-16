@@ -28,6 +28,8 @@ export class Cafe96Scene extends Scene {
   private interactables!: (GameObjects.Sprite | GameObjects.Group)[];
   private npcChatSprites!: Physics.Arcade.Sprite[];
 
+  private bgm: Phaser.Sound.BaseSound | undefined;
+
   constructor() {
     super('cafe96');
   }
@@ -72,7 +74,16 @@ export class Cafe96Scene extends Scene {
     // this.initEnemies();
     this.initNPCs();
     this.initCamera();
-    this.showDebug();
+
+    this.bgm = this.sound.add('cafebg', {
+      loop: true,
+      volume: 0.7
+    });
+    this.bgm.play();
+    this.game.events.on(EVENTS_NAME.sceneCafe, () => {
+      this.bgm?.resume();
+    });
+    // this.showDebug();
   }
 
   update(): void {
@@ -149,6 +160,8 @@ export class Cafe96Scene extends Scene {
           })
           .setDepth(2)
           .on('pointerdown', () => {
+            this.bgm?.pause();
+            this.game.events.emit(EVENTS_NAME.sceneCampus);
             this.scene.switch('campus');
           })
       ])

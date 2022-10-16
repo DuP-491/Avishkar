@@ -1,4 +1,4 @@
-import { Input, Math, Scene } from 'phaser';
+import Phaser, { Input, Math, Scene } from 'phaser';
 
 import { EVENTS_NAME } from '../consts';
 import { Actor } from './actor';
@@ -10,6 +10,7 @@ export class NPC extends Actor {
   private interacting = false;
   private attackHandler: () => void;
   private keyE: Input.Keyboard.Key;
+  private hitSound: Phaser.Sound.BaseSound;
 
   constructor(
     scene: Scene,
@@ -26,6 +27,7 @@ export class NPC extends Actor {
     if (interact_radius) this.INTERACT_RADIUS = interact_radius;
     this.flipX = left ?? false;
     this.keyE = this.scene.input.keyboard.addKey('E');
+    this.hitSound = this.scene.sound.add('hit', { loop: false });
 
     this.attackHandler = () => {
       if (
@@ -35,6 +37,7 @@ export class NPC extends Actor {
         ) < this.target.width
       ) {
         this.getAngry();
+        this.hitSound.play();
       }
     };
 
