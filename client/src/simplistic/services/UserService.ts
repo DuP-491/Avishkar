@@ -422,5 +422,45 @@ export default {
         message: 'Please try again later!'
       };
     }
+  },
+
+  eventUnparticipate: async function (token: string, teamId: number, eventId: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/participate/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ teamId, eventId })
+      });
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Success'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        case 404:
+          return {
+            success: false,
+            message: "Team/Event doesn't exist!"
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
   }
 };
