@@ -373,7 +373,7 @@ export class Campus extends Scene {
           })
           .setDepth(2)
           .on('pointerdown', () => {
-            this.game.events.emit(EVENTS_NAME.openComputer);
+            this.game.events.emit(EVENTS_NAME.openComputer, computer.name);
           })
       );
     });
