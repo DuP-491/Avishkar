@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DepartmentCard from './DepartmentCard';
 import '../common.css';
+import MainService from '../../services/MainService';
 
 /* eslint-disable */
 interface DepartmentSelectPropType {
-  onDepartmentSelect: (e: any) => void;
+  onDepartmentSelect: (deptId: string, name: string) => void;
 }
 
 function Dept({ onDepartmentSelect }: DepartmentSelectPropType) {
-  const DepartmentList = [
-    'CYBERQUEST',
-    'ELECTROMANIA',
-    'POWERSURGE',
-    'RASAYANS',
-    'MECHROCOSM',
-    'NIRMAAN',
-    'GENESIS',
-    'OLIGOPOLY',
-    'MONOPOLY',
-    'ROBOMANIA',
-    'AERODYNAMIX',
-    'ASTROWING',
-    'KREEDOMANIA',
-    'GNOSIOMANIA'
-  ];
+  const [departments, setDepartments] = useState([]);
+
+  const fetchDepartmentEvents = () => {
+    MainService.getAllDepartmentEvents()
+      .then((data) => {
+        if (data['success']) {
+          setDepartments(data['departmentEvents']);
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  useEffect(() => {
+    fetchDepartmentEvents();
+  }, []);
 
   return (
     <>
@@ -36,11 +38,12 @@ function Dept({ onDepartmentSelect }: DepartmentSelectPropType) {
         <span className="animating-event-title">S</span>
       </div>
       <div className="flex justify-evenly flex-wrap">
-        {DepartmentList.map((Department: typeof DepartmentList[0]) => (
+        {departments.map((department) => (
           <DepartmentCard
             onDepartmentSelect={onDepartmentSelect}
-            key={Department}
-            NAME={Department}
+            key={department['id']}
+            NAME={department['name']}
+            ID={department['id']}
           />
         ))}
       </div>

@@ -3,11 +3,12 @@ import React from 'react';
 /* eslint-disable */
 interface DepartmentCardPropType {
   NAME: string;
-  onDepartmentSelect: (e: any) => void;
+  ID: string;
+  onDepartmentSelect: (deptId: string, name: string) => void;
 }
 /* eslint-enable */
 
-function DepartmentCard({ NAME, onDepartmentSelect }: DepartmentCardPropType) {
+function DepartmentCard({ ID, NAME, onDepartmentSelect }: DepartmentCardPropType) {
   const IMG = [
     'https://i.imgur.com/vSvFDH7.jpg',
     'https://i.imgur.com/M6LcSPu.jpg',
@@ -21,9 +22,8 @@ function DepartmentCard({ NAME, onDepartmentSelect }: DepartmentCardPropType) {
   ];
   return (
     <button
-      id={NAME}
       className="flex flex-col items-center w-36 m-6 h-1/3"
-      onClick={onDepartmentSelect}>
+      onClick={() => onDepartmentSelect(ID, NAME)}>
       {/* <img id={NAME} src={IMG} className="float-none w-32 rounded-full shadow-md" /> */}
       <div
         id={NAME}

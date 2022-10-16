@@ -4,7 +4,7 @@ import React from 'react';
 interface EventCardPropType {
   IMG: string;
   NAME: string;
-  onEventSelect: (e: any) => void;
+  onEventSelect: () => void;
 }
 /* eslint-enable */
 

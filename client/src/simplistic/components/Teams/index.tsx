@@ -6,17 +6,18 @@ import TeamAvishkarBGIMG from './../../Assets/p4.jpg';
 /* eslint-disable */
 interface ProfilePageProps {
   onCrossPress: (e: any) => void;
+  onInvalidToken: () => void;
 }
 /* eslint-enable */
 
-function ProfilePage({ onCrossPress }: ProfilePageProps) {
+function ProfilePage({ onCrossPress, onInvalidToken }: ProfilePageProps) {
   return (
     <Tablet
       bgrd={TeamAvishkarBGIMG}
       onBackPress={() => {}}
       onCrossPress={onCrossPress}
       onHomePress={() => {}}>
-      <Profile />
+      <Profile onInvalidToken={() => onInvalidToken()} />
     </Tablet>
   );
 }

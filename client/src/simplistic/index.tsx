@@ -32,7 +32,12 @@ function Simplistic() {
       case 'FAQ':
         return <FAQ />;
       case 'Profile':
-        return <ProfilePage onCrossPress={onCrossPress} />;
+        return (
+          <ProfilePage
+            onCrossPress={onCrossPress}
+            onInvalidToken={() => setWhatToDisplay('Home')}
+          />
+        );
       default:
         break;
     }

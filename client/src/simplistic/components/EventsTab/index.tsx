@@ -17,23 +17,33 @@ function EventsTab({ onCrossPress, defaultDepartment }: EventTabPropType) {
   const [Display, setDisplay] = useState(
     defaultDepartment == 'null' ? 'DepartmentList' : 'Department'
   );
-  const [DepartmentDisplayValue, setDepartmentDisplayValue] = useState(defaultDepartment);
-  const [EventDisplayValue, setEventDisplayValue] = useState('null');
+  const [DepartmentDisplayValue, setDepartmentDisplayValue] = useState({ deptId: '', name: '' });
+  const [EventDisplayValue, setEventDisplayValue] = useState({
+    id: '',
+    deptEventId: '',
+    name: '',
+    tagline: '',
+    details: '',
+    criteria: '',
+    rules: '',
+    psLink: '',
+    maxTeamSize: 1,
+    minTeamSize: 1
+  });
   const [BGIMG, setBGIMG] = useState(img);
   console.log(defaultDepartment);
 
-  function onDepartmentSelect(event: any) {
+  function onDepartmentSelect(deptId: string, name: string) {
     setDisplay('Department');
     setBGIMG(img);
-    setDepartmentDisplayValue(event.target.id);
-    // console.log(event.target.id);
+    setDepartmentDisplayValue({ deptId, name });
   }
 
   function onEventSelect(event: any) {
     setDisplay('Event');
     setBGIMG(EventDisplayBGIMG);
-    setEventDisplayValue(event.target.id);
-    // console.log(event.target.id);
+    setEventDisplayValue(event);
+    console.log(event);
   }
   function onBackPress() {
     if (Display == 'Event') {
@@ -52,11 +62,20 @@ function EventsTab({ onCrossPress, defaultDepartment }: EventTabPropType) {
   function DisplayComponent() {
     switch (Display) {
       case 'DepartmentList':
-        return <Dept onDepartmentSelect={onDepartmentSelect} />;
+        return (
+          <Dept
+            onDepartmentSelect={(deptId: string, name: string) => onDepartmentSelect(deptId, name)}
+          />
+        );
       case 'Department':
-        return <EventList Department={DepartmentDisplayValue} onEventSelect={onEventSelect} />;
+        return (
+          <EventList
+            Department={DepartmentDisplayValue}
+            onEventSelect={(event) => onEventSelect(event)}
+          />
+        );
       default: {
-        return <EventDetails eventName={EventDisplayValue} />;
+        return <EventDetails event={EventDisplayValue} />;
       }
     }
   }
