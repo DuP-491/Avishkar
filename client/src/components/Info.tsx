@@ -8,10 +8,41 @@ function Info(props: Props) {
   const howTOPlay = [
     'You can use space key to attack.',
     'You can use E key to interact with interactable NPCs.',
-    'A tablet is placed at the demartments conducting various events, you can use the tablet for creating teams and regitering for events.'
+    'A tablet is placed at the demartments conducting various events, you can use the tablet for creating teams and regitering for events.',
+    'You can visit cafe 96 for team creation.'
   ];
-  const events = ['CYBERQUEST', 'ELECTROMANIA', 'POWERSURGE', 'RASAYANS', 'MECHROCOSM'];
-  const eventLocations = ['CSED', 'ECE', 'EEE', 'CIVIL', 'MECH'];
+  const events = [
+    'CYBERQUEST',
+    'ELECTROMANIA',
+    'POWERSURGE',
+    'RASAYANS',
+    'MECHROCOSM',
+    'NIRMAAN',
+    'GENESIS',
+    'OLIGOPOLY',
+    'MONOPOLY',
+    'ROBOMANIA',
+    'AERODYNAMIX',
+    'ASTROWING',
+    'KREEDOMANIA',
+    'GNOSIOMANIA'
+  ];
+  const eventLocations = [
+    'CSED',
+    'ACADEMIC BUILDING',
+    'ACADEMIC BUILDING',
+    'ACADEMIC BUILDING',
+    'NEAR WORKSHOP LAB',
+    'NEAR GYMKHANA GROUND',
+    'NEAR YASHNATH CANTEEN',
+    'SMS',
+    'SMS',
+    'MP HALL',
+    'NEAR MP HALL',
+    'NEAR MP HALL',
+    'ATHLETICS GROUND',
+    'SEMINAR HALL'
+  ];
 
   const handleClick = () => {
     if (baseDiv.current) {
