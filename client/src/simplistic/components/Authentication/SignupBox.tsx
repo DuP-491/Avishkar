@@ -11,6 +11,7 @@ interface SignupBoxPropType {
 
 function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
   function LoggingIn(e: any) {
+    e.preventDefault();
     const name = NameRef.current.value;
     const email = EmailRef.current.value;
     const collegeName = CollegeNameRef.current.value;
@@ -36,24 +37,24 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8">
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-gray-900 bg-opacity-50 backdrop-blur-sm py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="px-4 py-8 bg-gray-900 bg-opacity-50 shadow backdrop-blur-sm sm:rounded-lg sm:px-10">
             <img
               // eslint-disable-next-line no-undef
               src={require('../../../images/cross-icon.png')}
               className="absolute cursor-pointer right-4 top-4 invert"
               onClick={onCrossPress}
             />
-            <div className="flex space-x-4 justify-center items-center sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="flex items-center justify-center space-x-4 sm:mx-auto sm:w-full sm:max-w-md">
               <img
-                className="h-12 w-auto"
+                className="w-auto h-12"
                 src="https://i.imgur.com/cHH4xIh.png"
                 alt="Avishkar Logo"
               />
-              <h2 className="text-center text-2xl font-bold tracking-tight text-white">Sign Up</h2>
+              <h2 className="text-2xl font-bold tracking-tight text-center text-white">Sign Up</h2>
             </div>
-            <form className="space-y-6 mt-6" onSubmit={LoggingIn} method="POST">
+            <form className="mt-6 space-y-6" onSubmit={LoggingIn} method="POST">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-50">
                   Name
@@ -116,9 +117,9 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
                     ref={GenderRef}
                     required
                     className="block w-full min-w-[22rem] bg-gray-200 bg-opacity-50 appearance-none rounded-md border border-gray-200 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-100 focus:outline-none focus:ring-slate-100 sm:text-sm">
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>None</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="none">None</option>
                   </select>
                 </div>
               </div>
@@ -143,12 +144,12 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
               <div className="flex justify-between">
                 <button
                   type="submit"
-                  className="flex mt-2 w-fit justify-center rounded-md border border-transparent bg-slate-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
+                  className="flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
                   Sign up
                 </button>
                 <button
                   onClick={onToggle}
-                  className="flex mt-2 w-fit justify-center rounded-md border border-transparent bg-slate-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
+                  className="flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
                   Already Registered?
                 </button>
               </div>
@@ -157,7 +158,7 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
         </div>
       </div>
       {/* <div className="w-2/3 max-w-xl bg-gray-900/[0.5] h-3/5 rounded-lg flex flex-col p-10">
-        <button className="text-white self-end" onClick={onCrossPress}>
+        <button className="self-end text-white" onClick={onCrossPress}>
           X
         </button>
         <img
@@ -168,19 +169,19 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
             width: '4rem'
           }}
         />
-        <span className="text-white m-4 text-xl self-center font-black">Signup</span>
+        <span className="self-center m-4 text-xl font-black text-white">Signup</span>
         <form className="w-full">
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-full-name">
                 Name
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-full-name"
                 type="text"
                 placeholder="Name"
@@ -188,17 +189,17 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-email">
                 Email
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-email"
                 type="email"
                 placeholder="Email"
@@ -206,17 +207,17 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-college-name">
                 College Name
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-college-name"
                 type="text"
                 placeholder="College Name"
@@ -224,17 +225,17 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-gender">
                 Gender
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-gender"
                 type="text"
                 placeholder="Gender"
@@ -242,17 +243,17 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-mobile">
                 Mobile
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-mobile"
                 type="text"
                 placeholder="Mobile"
@@ -264,13 +265,13 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
             <div className="md:w-1/3"></div>
             <div className="md:w-2/3">
               <button
-                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-10"
+                className="px-4 py-2 mr-10 font-bold text-white bg-purple-500 rounded shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={LoggingIn}>
                 Sign Up
               </button>
               <button
-                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="px-4 py-2 font-bold text-white bg-purple-500 rounded shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={onToggle}>
                 Already a User?
