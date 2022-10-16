@@ -11,6 +11,7 @@ import { npcData } from './npcData';
 import Map from '../components/Map';
 import Info from '../components/Info';
 import InteractPrompt from '../components/Interact';
+import Computer from '../components/Computer';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -52,6 +53,7 @@ function GameComponent(props: Props) {
   const [infoPromptText, setInfoPromptText] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
+  const [department, setDepartment] = useState('');
   const [showMap, setShowMap] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
@@ -91,7 +93,8 @@ function GameComponent(props: Props) {
           // console.log('resetInteract', showInteractPrompt);
           if (showInteractPrompt) setStopInteract(true);
         });
-        game.instance?.events.on(EVENTS_NAME.openComputer, () => {
+        game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
+          setDepartment(_department);
           setShowComputer(true);
         });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
@@ -169,6 +172,10 @@ function GameComponent(props: Props) {
     if (game) game.instance?.scene.resume('campus');
   };
 
+  const closeComputer = () => {
+    setShowComputer(false);
+  };
+
   const teleport = (location: TELEPORT_LOCATIONS) => {
     if (game) {
       game?.instance?.events.emit(EVENTS_NAME.teleport, location);
@@ -206,14 +213,7 @@ function GameComponent(props: Props) {
       {showAuthPrompt && (
         <AuthPrompt closePopup={closeAuthPrompt} authSuccessCallback={onAuthSuccess} />
       )}
-      {showComputer && (
-        <AuthPrompt
-          closePopup={setShowComputer}
-          authSuccessCallback={() => {
-            setShowComputer(false);
-          }}
-        />
-      )}
+      {showComputer && <Computer closePopup={closeComputer} department={department} />}
       {showInfoPrompt && (
         <InfoPrompt text={infoPromptText} setShowInfoPrompt={setShowInfoPrompt}></InfoPrompt>
       )}
