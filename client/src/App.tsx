@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 /* eslint-disable */
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Simplistic from './simplistic';
 import GameLayout from './GameLayout';
 /* eslint-enable */
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/">
           <Route index element={<Simplistic />} />
@@ -16,7 +16,7 @@ function App() {
           <Route path="game" element={<GameLayout />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
