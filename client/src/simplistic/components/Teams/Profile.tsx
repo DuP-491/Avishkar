@@ -97,6 +97,8 @@ function Profile({ onInvalidToken }: ProfileProps) {
       .then((data) => {
         if (data['success']) {
           setDepartmentEvents(data['departmentEvents']);
+          if (data['departmentEvents'].length)
+            setCoordieCurrEvent(data['departmentEvents'][0]['id']);
         } else console.log(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
@@ -862,7 +864,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                   <div key={event['id']} className="mb-4">
                     <p>ID: {event['id']}</p>
                     <p>Name: {event['name']}</p>
-                    <p>Description: {event['description']}</p>
+                    <p>Details: {event['details']}</p>
                     <span
                       className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                       id="Profile"

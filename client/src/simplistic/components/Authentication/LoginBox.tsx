@@ -14,6 +14,7 @@ interface LoginBoxPropType {
 function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
   // eslint-disable-next-line no-unused-vars
   function LoggingIn(e: any) {
+    e.preventDefault();
     const name = NameRef.current.value,
       password = PasswordRef.current.value;
     AuthService.logIn(name, password)

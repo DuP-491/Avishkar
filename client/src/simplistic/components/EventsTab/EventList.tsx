@@ -1,38 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import EventCard from './EventCard';
 import './../common.css';
+import MainService from '../../services/MainService';
 
 /* eslint-disable */
 interface EventListPropType {
-  Department: string;
-  onEventSelect: (e: any) => void;
+  Department: { deptId: string; name: string };
+  onEventSelect: (event: any) => void;
 }
 /* eslint-enable */
 
 function EventList({ Department, onEventSelect }: EventListPropType) {
-  const DepartmentList = [
-    { IMG: 'https://i.imgur.com/vSvFDH7.jpg', NAME: 'EVENT 01' },
-    { IMG: 'https://i.imgur.com/M6LcSPu.jpg', NAME: 'EVENT 02' },
-    { IMG: 'https://i.imgur.com/7nPBj3Y.jpg', NAME: 'EVENT 03' },
-    { IMG: 'https://i.imgur.com/VUI6eHd.jpg', NAME: 'EVENT 04' },
-    { IMG: 'https://i.imgur.com/QkvrLvo.jpg', NAME: 'EVENT 05' },
-    { IMG: 'https://i.imgur.com/R1Fhzpi.jpg', NAME: 'EVENT 06' },
-    { IMG: 'https://i.imgur.com/4eU10cM.jpg', NAME: 'EVENT 07' },
-    { IMG: 'https://i.imgur.com/WMvYR2K.jpg', NAME: 'EVENT 08' },
-    { IMG: 'https://i.imgur.com/wVwhg2O.jpg', NAME: 'EVENT 09' }
+  const deptImgs = [
+    'https://i.imgur.com/vSvFDH7.jpg',
+    'https://i.imgur.com/M6LcSPu.jpg',
+    'https://i.imgur.com/7nPBj3Y.jpg',
+    'https://i.imgur.com/VUI6eHd.jpg',
+    'https://i.imgur.com/QkvrLvo.jpg',
+    'https://i.imgur.com/R1Fhzpi.jpg',
+    'https://i.imgur.com/4eU10cM.jpg',
+    'https://i.imgur.com/WMvYR2K.jpg',
+    'https://i.imgur.com/wVwhg2O.jpg'
   ];
+
+  const [events, setEvents] = useState([]);
+
+  const fetchEvents = (coordieCurrEvent: string) => {
+    MainService.getAllEventsOfDepartment(coordieCurrEvent)
+      .then((data) => {
+        if (data['success']) {
+          setEvents(data['events']);
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  };
+
+  useEffect(() => {
+    fetchEvents(Department['deptId']);
+  }, []);
+
   return (
     <>
       <div className="flex justify-center pt-3">
-        <span className="department-title">{Department}</span>
+        <span className="department-title">{Department['name']}</span>
       </div>
       <div className="flex flex-wrap justify-evenly">
-        {DepartmentList.map((selectedDepartment: typeof DepartmentList[0]) => (
+        {events.map((event) => (
           <EventCard
-            onEventSelect={onEventSelect}
-            key={selectedDepartment.NAME}
-            IMG={selectedDepartment.IMG}
-            NAME={selectedDepartment.NAME}
+            onEventSelect={() => onEventSelect(event)}
+            key={event['id']}
+            IMG={deptImgs[Math.floor(Math.random() * deptImgs.length)]}
+            NAME={event['name']}
           />
         ))}
       </div>

@@ -122,6 +122,45 @@ export default {
     }
   },
 
+  getTeamMembers: async function (token: string, teamId: number) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/team/${teamId}/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Success'
+          };
+        case 404:
+          return {
+            success: false,
+            message: 'Team not found!'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
+  },
+
   removeTeam: async function (token: string, teamId: number) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/team/`, {
@@ -273,6 +312,56 @@ export default {
           return {
             success: false,
             message: 'Team has been deleted!'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
+  },
+
+  eventParticipate: async function (token: string, teamId: number, eventId: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/participate/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ teamId, eventId })
+      });
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Success'
+          };
+        case 400:
+          return {
+            success: false,
+            message: 'Team is not ready to participate!'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        case 404:
+          return {
+            success: false,
+            message: "Team/Event doesn't exist!"
+          };
+        case 409:
+          return {
+            success: false,
+            message: 'Team is already participating for same event!'
           };
         default:
           return {
