@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { emailVerificationTemplate, transporter } from "../middleware/mailHandler";
 import {
     generateHash,
     generateSignedPayload,
@@ -17,6 +18,20 @@ const userSignup = async (req: Request, res: Response, next) => {
     // generating salt for password hash and token for user email verification
     const salt = generateSalt(8);
     const token = generateVerifyToken(48);
+
+    const mailOptions = {
+        from: process.env.MAIL_USERNAME,
+        to: email,
+        subject: "Avishkar 2k22 | Email Verification",
+        text: emailVerificationTemplate(token),
+    };
+    transporter.sendMail(mailOptions, function (err, data) {
+        if (err) {
+            console.log("Error " + err);
+        } else {
+            console.log("Email sent successfully");
+        }
+    });
 
     try {
         await prisma.user.create({
