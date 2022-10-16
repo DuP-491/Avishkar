@@ -162,7 +162,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 40.15 + '%',
                       top: 66.13 + '%'
@@ -181,7 +181,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 55.779999999999994 + '%',
                       top: 34.41 + '%'
@@ -200,7 +200,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 45.489999999999995 + '%',
                       top: 22.6 + '%'
@@ -219,7 +219,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 41.01 + '%',
                       top: 30.849999999999998 + '%'
@@ -238,7 +238,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 53.51 + '%',
                       top: 58.769999999999996 + '%'
@@ -257,7 +257,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 61.089999999999996 + '%',
                       top: 26.67 + '%'
@@ -276,7 +276,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 35.5 + '%',
                       top: 7.5 + '%'
@@ -295,7 +295,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 54.419999999999995 + '%',
                       top: 81.59 + '%'
@@ -314,7 +314,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 50.26 + '%',
                       top: 84.08 + '%'
@@ -333,7 +333,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 69.11 + '%',
                       top: 63.959999999999994 + '%'
@@ -352,7 +352,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 81.65 + '%',
                       top: 45.839999999999996 + '%'
@@ -371,7 +371,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 67.18 + '%',
                       top: 72.97 + '%'
@@ -390,7 +390,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 57.4 + '%',
                       top: 3.59 + '%'
@@ -409,7 +409,7 @@ function Map(props: Props) {
                 <Tooltip.Trigger>
                   <img
                     src={require('../images/tablet-icon.png')}
-                    className="absolute w-4 h-4 cursor-help"
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
                       left: 22.61 + '%',
                       top: 48.91 + '%'
