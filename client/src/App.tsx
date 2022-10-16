@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 /* eslint-disable */
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Simplistic from './simplistic';
 import GameLayout from './GameLayout';
 /* eslint-enable */
