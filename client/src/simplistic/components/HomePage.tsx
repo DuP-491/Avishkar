@@ -39,7 +39,9 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
           <div>
             <div className="flex items-center justify-between py-3 md:py-5 md:block">
               <button>
-                <h2 className="text-2xl font-bold text-white">Pro?</h2>
+                <a href="/game">
+                  <h2 className="text-2xl font-bold text-white">Pro?</h2>
+                </a>
               </button>
               <div className="md:hidden">
                 <button
@@ -276,9 +278,9 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
           backgroundPosition: 'top',
           backgroundSize: 'cover'
         }}
-        className="h-screen w-screen bg-cover bg-bottom no-scroll">
+        className="w-screen h-screen bg-bottom bg-cover no-scroll">
         {navbarRender()}
-        <div className="flex flex-col justify-center h-full items-center">{BodyRender()}</div>
+        <div className="flex flex-col items-center justify-center h-full">{BodyRender()}</div>
       </div>
     </>
   );
