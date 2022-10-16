@@ -10,10 +10,17 @@ interface ResetPasswordBoxPropType {
 /* eslint-enable */
 
 function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxPropType) {
+  const { key } = Object.fromEntries(new URLSearchParams(location.search));
+
   function handleResetPassword(e: any) {
     const password = PasswordRef.current.value;
-    const token = Cookies.get('token');
-    if (token === undefined) return;
+
+    let token;
+    if (key === undefined) {
+      onCrossPress(e);
+      onInvalidToken(e);
+      return;
+    } else token = key;
     AuthService.resetPassword(password, token)
       .then((data) => {
         if (data['success']) {

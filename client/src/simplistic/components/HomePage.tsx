@@ -4,6 +4,8 @@ import SignupBox from './Authentication/SignupBox';
 import AvishkarTitle from './../Assets/p6.png';
 import AvishkarLogo from './../Assets/p5.png';
 import ResetPasswordBox from './Authentication/ResetPasswordBox';
+import { useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 /* eslint-disable */
 interface HomePagePropType {
@@ -12,6 +14,8 @@ interface HomePagePropType {
 /* eslint-enable */
 
 function HomePage({ onRedirectPress }: HomePagePropType) {
+  const location = useLocation();
+
   function LogInPopUp() {
     if (status != 'Home') setStatus('Home');
     else setStatus('Login');
@@ -20,6 +24,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
     setIsLogin(true);
   }
   function LoggingOut() {
+    Cookies.remove('token');
     setIsLogin(false);
   }
   function SignUpToggle() {
@@ -137,7 +142,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
     );
   }
   function BodyRender() {
-    if (status == 'Home' && !isLogin)
+    if (status == 'Home' && !isLogin && !resettingPassword)
       return (
         <>
           <img
@@ -170,7 +175,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
           </span>
         </>
       );
-    else if (status == 'Home' && isLogin && resettingPassword)
+    else if (status == 'Home' && !isLogin && resettingPassword)
       return (
         <ResetPasswordBox
           onCrossPress={() => setResettingPassword(false)}
@@ -228,7 +233,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
                 Profile
               </span>
             </span>
-            <span
+            {/* <span
               className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
               id="Profile"
               onClick={() => setResettingPassword(true)}>
@@ -246,7 +251,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
                 id="Profile">
                 Reset Password
               </span>
-            </span>
+            </span> */}
           </div>
         </>
       );
@@ -256,8 +261,10 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
       return <SignupBox onCrossPress={LogInPopUp} onSignup={LoggingIn} onToggle={SignUpToggle} />;
   }
 
-  const [isLogin, setIsLogin] = useState(true);
-  const [resettingPassword, setResettingPassword] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [resettingPassword, setResettingPassword] = useState(
+    location.pathname === '/reset-password'
+  );
   const [navbar, setNavbar] = useState(false);
   const [status, setStatus] = useState('Home');
   return (

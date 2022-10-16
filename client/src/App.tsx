@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Simplistic />} />
+          <Route path="reset-password" element={<Simplistic />} />
           <Route path="game" element={<GameLayout />} />
         </Route>
       </Routes>
