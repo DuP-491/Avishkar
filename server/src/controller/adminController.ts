@@ -132,6 +132,35 @@ const removeEventCoordinator = async (req: Request, res: Response, next) => {
     }
 };
 
+const getParticipationInEvent = async (req: Request, res: Response, next) => {
+    const eventId = req.params.eventId;
+    console.log(eventId);
+    try {
+        const participation = await prisma.participation.findMany({
+            where: { eventId },
+            include: {
+                team: {
+                    include: {
+                        TeamMember: {
+                            include: {
+                                user: {
+                                    select: { id: true, name: true, email: true },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
+        res.statusCode = 200;
+        res.json({ participation, success: true });
+    } catch (error) {
+        console.log("error occured in the getParticipationInEvent() controller!");
+        next(error);
+    }
+};
+
 export {
     addDepartmentEvent,
     removeDepartmentEvent,
@@ -141,4 +170,5 @@ export {
     removeEvent,
     addEventCoordinator,
     removeEventCoordinator,
+    getParticipationInEvent,
 };

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { emailVerificationTemplate, transporter } from "../middleware/mailHandler";
+import { sendUserVerificationMail } from "../middleware/mailHandler";
 import {
     generateHash,
     generateSignedPayload,
@@ -19,29 +19,15 @@ const userSignup = async (req: Request, res: Response, next) => {
     const salt = generateSalt(8);
     const token = generateVerifyToken(48);
 
-    const mailOptions = {
-        from: process.env.MAIL_USERNAME,
-        to: email,
-        subject: "Avishkar 2k22 | Email Verification",
-        text: emailVerificationTemplate(token),
-    };
-    transporter.sendMail(mailOptions, function (err, data) {
-        if (err) {
-            console.log("Error " + err);
-        } else {
-            console.log("Email sent successfully");
-        }
-    });
-
     try {
         await prisma.user.create({
             data: { name, email, collegeName, gender, mobile, username, salt, token },
         });
+        // send verification email to the client
+        await sendUserVerificationMail(email, token);
 
         res.statusCode = 200;
         res.json({ message: "user registration successful!", success: true });
-
-        // TODO: send verification email to the client
     } catch (error) {
         console.log("error occured in the userSignup() controller!");
         next(error);

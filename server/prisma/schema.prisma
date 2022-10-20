@@ -32,6 +32,7 @@ model User {
   collegeName           String                  @default("Motilal Nehru National Institute Of Technology, Prayagraj")
   gender                String                  @default("None")
   resumeLink            String?
+  score                 Int                     @default(0)
   salt                  String?
   password              String?
   token                 String?
@@ -91,8 +92,9 @@ model EventCoordinator {
 }
 
 model Team {
-  id            Int          @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   user          User            @relation(fields: [leader], references: [id])
+  name          String?          
   leader        String
   size          Int             @default(1)
   createdAt     DateTime        @default(now())
