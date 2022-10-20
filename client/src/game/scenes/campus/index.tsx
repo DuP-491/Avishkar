@@ -42,12 +42,14 @@ export class Campus extends Scene {
   private interactables!: GameObjects.Sprite[];
   private npcChatSprites!: Physics.Arcade.Sprite[];
   private loginYamunaGate!: boolean;
+  private keyM: Phaser.Input.Keyboard.Key;
 
   private debugText!: GameObjects.Text;
   private bgm: Phaser.Sound.BaseSound | undefined;
 
   constructor() {
     super('campus');
+    this.keyM = this.input.keyboard.addKey('M');
   }
 
   create(data: any): void {
@@ -93,6 +95,10 @@ export class Campus extends Scene {
       volume: 0.7
     });
     this.bgm.play();
+
+    this.keyM.on('down', () => {
+      this.game.events.emit(EVENTS_NAME.openMap);
+    });
 
     // this.layer5.renderDebug(this.debug);
     // this.layer6.renderDebug(this.debug);

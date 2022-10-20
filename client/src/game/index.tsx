@@ -92,6 +92,9 @@ function GameComponent(props: Props) {
           // console.log('resetInteract', showInteractPrompt);
           setStopInteract(true);
         });
+        game.instance?.events.on(EVENTS_NAME.openMap, () => {
+          handleOnMapIconClick();
+        });
         game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
           setDepartment(_department);
           setShowComputer(true);
