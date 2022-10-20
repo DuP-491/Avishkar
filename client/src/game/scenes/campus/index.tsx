@@ -56,7 +56,7 @@ export class Campus extends Scene {
     this.initInteractables();
     // this.initChests();
     // this.initEnemies();
-    // this.initNPCs();
+    this.initNPCs();
     this.initCamera();
 
     this.physics.add.collider(this.player, this.layer, this.player.onGrass);
@@ -494,7 +494,8 @@ export class Campus extends Scene {
         this.player,
         360,
         npcPoint.properties.filter((prop) => prop.name === 'left')[0].value,
-        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value
+        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value,
+        npcPoint.properties.filter((prop) => prop.name === 'type')[0].value
       )
         .setName(npcPoint.id.toString())
         .setScale(1.5)

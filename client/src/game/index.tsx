@@ -52,6 +52,7 @@ function GameComponent(props: Props) {
   const [showInteractPrompt, setShowInteractPrompt] = useState(false);
   const [stopInteract, setStopInteract] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
+  const [infoPromptType, setInfoPromptType] = useState('text');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
   const [department, setDepartment] = useState('');
@@ -80,6 +81,7 @@ function GameComponent(props: Props) {
             return;
           }
           setInfoPromptText(data.text);
+          setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
         });
         game.instance?.events.on(EVENTS_NAME.interact, () => {
@@ -245,7 +247,10 @@ function GameComponent(props: Props) {
         <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
       )}
       {showInfoPrompt && (
-        <InfoPrompt text={infoPromptText} setShowInfoPrompt={setShowInfoPrompt}></InfoPrompt>
+        <InfoPrompt
+          text={infoPromptText}
+          setShowInfoPrompt={setShowInfoPrompt}
+          isChoice={infoPromptType === 'ask'}></InfoPrompt>
       )}
       <MiniMap playerPosition={playerPosition} teleport={teleport} />
       {showMap && (
