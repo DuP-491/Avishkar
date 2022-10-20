@@ -239,15 +239,19 @@ export class Cafe96Scene extends Scene {
     this.physics.add.collider(this.player, this.npcs);
     this.game.events.on(
       EVENTS_NAME.interact,
-      (name: string) => {
-        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+      (scene: string, name: string) => {
+        if (scene == 'cafe96') {
+          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+        }
       },
       this
     );
     this.game.events.on(
       EVENTS_NAME.resetInteract,
-      (name: string) => {
-        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+      (scene: string, name: string) => {
+        if (scene == 'cafe96') {
+          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+        }
       },
       this
     );

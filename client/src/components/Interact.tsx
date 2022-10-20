@@ -27,7 +27,7 @@ function InteractPrompt(props: Props) {
   return (
     <div
       ref={baseDiv}
-      className={`transition-all text-3xl text-white bg-black bg-opacity-25 font-pfeffer duration-100 mx-auto px-6 py-2 -mt-16 relative z-10 rounded-lg filter backdrop-blur-sm h-fit w-fit`}>
+      className={`absolute transition-all text-3xl text-white bg-black bg-opacity-25 font-pfeffer duration-100 right-[42%] px-6 py-2 -mt-16 z-10 rounded-lg filter backdrop-blur-sm h-fit w-fit`}>
       Press E to interact
     </div>
   );
