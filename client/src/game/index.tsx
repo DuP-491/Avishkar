@@ -65,7 +65,7 @@ function GameComponent(props: Props) {
   // }, []);
 
   useEffect(() => {
-    if (game && game.instance) {
+    if (game) {
       setTimeout(() => {
         // TODO: CHECK AUTH STATUS HERE
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
