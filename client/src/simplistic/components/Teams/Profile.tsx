@@ -564,98 +564,82 @@ function Profile({ onInvalidToken }: ProfileProps) {
             </span>
             <br />
             <br />
-            Name:{' '}
-            {editDetails ? (
-              <input
-                value={newUserDetails['name']}
-                onChange={(e) => setNewUserDetails({ ...newUserDetails, name: e.target.value })}
-              />
-            ) : (
-              userDetails['name']
-            )}
+            <div className="text-white">
+              Name:{' '}
+              {editDetails ? (
+                <input
+                  value={newUserDetails['name']}
+                  className="text-black"
+                  onChange={(e) => setNewUserDetails({ ...newUserDetails, name: e.target.value })}
+                />
+              ) : (
+                userDetails['name']
+              )}
+              <br />
+              Email: {userDetails['email']}
+              <br />
+              Username:{' '}
+              {editDetails ? (
+                <input
+                  value={newUserDetails['username']}
+                  className="text-black"
+                  onChange={(e) =>
+                    setNewUserDetails({ ...newUserDetails, username: e.target.value })
+                  }
+                />
+              ) : (
+                userDetails['username']
+              )}
+              <br />
+              Mobile:{' '}
+              {editDetails ? (
+                <input
+                  value={newUserDetails['mobile']}
+                  className="text-black"
+                  onChange={(e) => setNewUserDetails({ ...newUserDetails, mobile: e.target.value })}
+                />
+              ) : (
+                userDetails['mobile']
+              )}
+              <br />
+              College Name:{' '}
+              {editDetails ? (
+                <input
+                  value={newUserDetails['collegeName']}
+                  className="text-black"
+                  onChange={(e) =>
+                    setNewUserDetails({ ...newUserDetails, collegeName: e.target.value })
+                  }
+                />
+              ) : (
+                userDetails['collegeName']
+              )}
+              <br />
+              Gender: {userDetails['gender']}
+              <br />
+              Resume Link:{' '}
+              {editDetails ? (
+                <input
+                  value={newUserDetails['resumeLink']}
+                  className="text-black"
+                  onChange={(e) =>
+                    setNewUserDetails({ ...newUserDetails, resumeLink: e.target.value })
+                  }
+                />
+              ) : (
+                userDetails['resumeLink']
+              )}
+              <br />
+              Fee Status: {userDetails['isFeePaid'] ? 'Paid' : 'Not Paid'}
+            </div>
             <br />
-            Email: {userDetails['email']}
             <br />
-            Username:{' '}
-            {editDetails ? (
-              <input
-                value={newUserDetails['username']}
-                onChange={(e) => setNewUserDetails({ ...newUserDetails, username: e.target.value })}
-              />
-            ) : (
-              userDetails['username']
-            )}
-            <br />
-            Mobile:{' '}
-            {editDetails ? (
-              <input
-                value={newUserDetails['mobile']}
-                onChange={(e) => setNewUserDetails({ ...newUserDetails, mobile: e.target.value })}
-              />
-            ) : (
-              userDetails['mobile']
-            )}
-            <br />
-            College Name:{' '}
-            {editDetails ? (
-              <input
-                value={newUserDetails['collegeName']}
-                onChange={(e) =>
-                  setNewUserDetails({ ...newUserDetails, collegeName: e.target.value })
-                }
-              />
-            ) : (
-              userDetails['collegeName']
-            )}
-            <br />
-            Gender: {userDetails['gender']}
-            <br />
-            Resume Link:{' '}
-            {editDetails ? (
-              <input
-                value={newUserDetails['resumeLink']}
-                onChange={(e) =>
-                  setNewUserDetails({ ...newUserDetails, resumeLink: e.target.value })
-                }
-              />
-            ) : (
-              userDetails['resumeLink']
-            )}
-            <br />
-            Fee Status: {userDetails['isFeePaid'] ? 'Paid' : 'Not Paid'}
-            <br />
-            <br />
-            {editDetails && (
-              <span
-                className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                id="Profile"
-                onClick={() => handleEditDetails()}>
-                <span
-                  className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                  id="Profile"></span>
-                <span
-                  className="absolute inset-0 w-full h-full bg-white rounded-md "
-                  id="Profile"></span>
-                <span
-                  className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                  id="Profile"></span>
-                <span
-                  className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                  id="Profile">
-                  Submit New Details
-                </span>
-              </span>
-            )}
-          </>
-        )}
-        {selectedtab === 2 && (
-          <>
-            <div className="flex">
-              <div className="w-1/2">
+            <div className="text-white">
+              {editDetails && (
                 <span
                   className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                   id="Profile"
-                  onClick={() => handleCreateTeam()}>
+                  onClick={() => handleEditDetails()}>
                   <span
                     className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
                     id="Profile"></span>
@@ -668,150 +652,113 @@ function Profile({ onInvalidToken }: ProfileProps) {
                   <span
                     className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
                     id="Profile">
-                    Create Team
+                    Submit New Details
                   </span>
                 </span>
-                <br />
-                <br />
-                Teams
-                <br />
-                <br />
-                {teams
-                  .filter((team) => team['status'] === 'ACCEPTED')
-                  .map((team) => (
-                    <div key={team['teamId']} className="mb-5">
-                      <p>Team ID: {team['teamId']}</p>
-                      <p>Team Size: {team['team']['size']}</p>
-                      {team['userId'] === team['team']['leader'] && (
-                        <>
-                          <span
-                            className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                            id="Profile"
-                            onClick={() => handleDeleteTeam(team['teamId'])}>
+              )}
+            </div>
+          </>
+        )}
+        {selectedtab === 2 && (
+          <>
+            <div className="text-white">
+              <div className="flex">
+                <div className="w-1/2">
+                  <span
+                    className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    id="Profile"
+                    onClick={() => handleCreateTeam()}>
+                    <span
+                      className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full bg-white rounded-md "
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                      id="Profile"></span>
+                    <span
+                      className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                      id="Profile">
+                      Create Team
+                    </span>
+                  </span>
+                  <br />
+                  <br />
+                  Teams
+                  <br />
+                  <br />
+                  {teams
+                    .filter((team) => team['status'] === 'ACCEPTED')
+                    .map((team) => (
+                      <div key={team['teamId']} className="mb-5">
+                        <p>Team ID: {team['teamId']}</p>
+                        <p>Team Size: {team['team']['size']}</p>
+                        {team['userId'] === team['team']['leader'] && (
+                          <>
                             <span
-                              className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                              id="Profile"></span>
-                            <span
-                              className="absolute inset-0 w-full h-full bg-white rounded-md "
-                              id="Profile"></span>
-                            <span
-                              className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                              id="Profile"></span>
-                            <span
-                              className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                              id="Profile">
-                              Delete Team
+                              className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                              id="Profile"
+                              onClick={() => handleDeleteTeam(team['teamId'])}>
+                              <span
+                                className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                                id="Profile"></span>
+                              <span
+                                className="absolute inset-0 w-full h-full bg-white rounded-md "
+                                id="Profile"></span>
+                              <span
+                                className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                                id="Profile"></span>
+                              <span
+                                className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                                id="Profile">
+                                Delete Team
+                              </span>
                             </span>
-                          </span>
-                          <br />
-                          <input
-                            className="mr-4"
-                            value={inviteUsernames[team['teamId']]}
-                            placeholder="Enter username"
-                            onChange={(e) =>
-                              setInviteUsernames({
-                                ...inviteUsernames,
-                                [team['teamId']]: e.target.value
-                              })
-                            }
-                          />
-                          <span
-                            className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                            id="Profile"
-                            onClick={() =>
-                              handleInviteUser(team['teamId'], inviteUsernames[team['teamId']])
-                            }>
+                            <br />
+                            <input
+                              className="mr-4"
+                              value={inviteUsernames[team['teamId']]}
+                              placeholder="Enter username"
+                              onChange={(e) =>
+                                setInviteUsernames({
+                                  ...inviteUsernames,
+                                  [team['teamId']]: e.target.value
+                                })
+                              }
+                            />
                             <span
-                              className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                              id="Profile"></span>
-                            <span
-                              className="absolute inset-0 w-full h-full bg-white rounded-md "
-                              id="Profile"></span>
-                            <span
-                              className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                              id="Profile"></span>
-                            <span
-                              className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                              id="Profile">
-                              Invite Member
+                              className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                              id="Profile"
+                              onClick={() =>
+                                handleInviteUser(team['teamId'], inviteUsernames[team['teamId']])
+                              }>
+                              <span
+                                className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                                id="Profile"></span>
+                              <span
+                                className="absolute inset-0 w-full h-full bg-white rounded-md "
+                                id="Profile"></span>
+                              <span
+                                className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                                id="Profile"></span>
+                              <span
+                                className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                                id="Profile">
+                                Invite Member
+                              </span>
                             </span>
-                          </span>
-                        </>
-                      )}
-                      <br />
-                      <span
-                        className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                        id="Profile"
-                        onClick={() =>
-                          (teamMembers[team['teamId']] as any).length === 0
-                            ? handleGetMembers(team['teamId'])
-                            : {}
-                        }>
+                          </>
+                        )}
+                        <br />
                         <span
-                          className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                          id="Profile"></span>
-                        <span
-                          className="absolute inset-0 w-full h-full bg-white rounded-md "
-                          id="Profile"></span>
-                        <span
-                          className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                          id="Profile"></span>
-                        <span
-                          className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                          id="Profile">
-                          {(teamMembers[team['teamId']] as any).length === 0
-                            ? 'Get Members'
-                            : 'Members'}
-                        </span>
-                      </span>
-                      {(teamMembers[team['teamId']] as any).map((teamMember: any) => (
-                        <div key={teamMember['user']['id']} className="mb-5">
-                          <p>Name: {teamMember['user']['name']}</p>
-                          <span
-                            className="relative ml-4 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                            id="Profile"
-                            onClick={() =>
-                              handleRemoveMember(team['teamId'], teamMember['user']['id'])
-                            }>
-                            <span
-                              className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                              id="Profile"></span>
-                            <span
-                              className="absolute inset-0 w-full h-full bg-white rounded-md "
-                              id="Profile"></span>
-                            <span
-                              className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                              id="Profile"></span>
-                            <span
-                              className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                              id="Profile">
-                              Remove
-                            </span>
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-              </div>
-              <div className="w-1/2">
-                Team Invites
-                <br />
-                <br />
-                {teams
-                  .filter((team) => team['status'] !== 'ACCEPTED')
-                  .map((team) => (
-                    <div key={team['teamId']} className="mb-5">
-                      <p>Team ID: {team['teamId']}</p>
-                      <p>Team Size: {team['team']['size']}</p>
-                      {[
-                        ['Accept', 'ACCEPTED'],
-                        ['Decline', 'DECLINED']
-                      ].map(([button_text, response_text], i) => (
-                        <span
-                          key={i}
-                          className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                          className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                           id="Profile"
-                          onClick={() => handleRespondTeamInvite(team['teamId'], response_text)}>
+                          onClick={() =>
+                            (teamMembers[team['teamId']] as any).length === 0
+                              ? handleGetMembers(team['teamId'])
+                              : {}
+                          }>
                           <span
                             className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
                             id="Profile"></span>
@@ -824,393 +771,466 @@ function Profile({ onInvalidToken }: ProfileProps) {
                           <span
                             className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
                             id="Profile">
-                            {button_text}
+                            {(teamMembers[team['teamId']] as any).length === 0
+                              ? 'Get Members'
+                              : 'Members'}
                           </span>
                         </span>
-                      ))}
-                    </div>
-                  ))}
+                        {(teamMembers[team['teamId']] as any).map((teamMember: any) => (
+                          <div key={teamMember['user']['id']} className="mb-5">
+                            <p>Name: {teamMember['user']['name']}</p>
+                            <span
+                              className="relative ml-4 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                              id="Profile"
+                              onClick={() =>
+                                handleRemoveMember(team['teamId'], teamMember['user']['id'])
+                              }>
+                              <span
+                                className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                                id="Profile"></span>
+                              <span
+                                className="absolute inset-0 w-full h-full bg-white rounded-md "
+                                id="Profile"></span>
+                              <span
+                                className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                                id="Profile"></span>
+                              <span
+                                className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                                id="Profile">
+                                Remove
+                              </span>
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                </div>
+                <div className="w-1/2">
+                  Team Invites
+                  <br />
+                  <br />
+                  {teams
+                    .filter((team) => team['status'] !== 'ACCEPTED')
+                    .map((team) => (
+                      <div key={team['teamId']} className="mb-5">
+                        <p>Team ID: {team['teamId']}</p>
+                        <p>Team Size: {team['team']['size']}</p>
+                        {[
+                          ['Accept', 'ACCEPTED'],
+                          ['Decline', 'DECLINED']
+                        ].map(([button_text, response_text], i) => (
+                          <span
+                            key={i}
+                            className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                            id="Profile"
+                            onClick={() => handleRespondTeamInvite(team['teamId'], response_text)}>
+                            <span
+                              className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full bg-white rounded-md "
+                              id="Profile"></span>
+                            <span
+                              className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                              id="Profile"></span>
+                            <span
+                              className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                              id="Profile">
+                              {button_text}
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
           </>
         )}
         {selectedtab === 3 && (
           <>
-            <div className="flex">
-              <div className="w-1/2">
-                Event
-                <br />
-                <br />
-                Dept Event:
-                <select
-                  className="ml-4"
-                  placeholder="Enter deptEventId"
-                  value={coordieCurrEvent}
-                  onChange={(e) => setCoordieCurrEvent(e.target.value)}>
-                  {departmentEvents.map((departmentEvent) => (
-                    <option key={departmentEvent['id']} value={departmentEvent['id']}>
-                      {departmentEvent['name']}
-                    </option>
-                  ))}
-                </select>
-                <br />
-                <br />
-                Name:
-                <input
-                  className="ml-4"
-                  placeholder="Enter name"
-                  value={newEvent['name']}
-                  onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
-                />
-                <br />
-                Tagline:
-                <input
-                  className="ml-4"
-                  placeholder="Enter tagline"
-                  value={newEvent['tagline']}
-                  onChange={(e) => setNewEvent({ ...newEvent, tagline: e.target.value })}
-                />
-                <br />
-                Details:
-                <input
-                  className="ml-4"
-                  placeholder="Enter details"
-                  value={newEvent['details']}
-                  onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
-                />
-                <br />
-                Criteria:
-                <input
-                  className="ml-4"
-                  placeholder="Enter criteria"
-                  value={newEvent['criteria']}
-                  onChange={(e) => setNewEvent({ ...newEvent, criteria: e.target.value })}
-                />
-                <br />
-                Rules:
-                <input
-                  className="ml-4"
-                  placeholder="Enter rules"
-                  value={newEvent['rules']}
-                  onChange={(e) => setNewEvent({ ...newEvent, rules: e.target.value })}
-                />
-                <br />
-                PSLink:
-                <input
-                  className="ml-4"
-                  placeholder="Enter psLink"
-                  value={newEvent['psLink']}
-                  onChange={(e) => setNewEvent({ ...newEvent, psLink: e.target.value })}
-                />
-                <br />
-                Max Team Size:
-                <input
-                  className="ml-4"
-                  value={newEvent['maxTeamSize']}
-                  type="number"
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, maxTeamSize: parseInt(e.target.value) })
-                  }
-                />
-                <br />
-                Min Team Size:
-                <input
-                  className="ml-4"
-                  value={newEvent['minTeamSize']}
-                  type="number"
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, minTeamSize: parseInt(e.target.value) })
-                  }
-                />
-                <br />
-                <span
-                  className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                  id="Profile"
-                  onClick={() =>
-                    handleAddEvent(
-                      newEvent['name'],
-                      newEvent['tagline'],
-                      newEvent['details'],
-                      newEvent['criteria'],
-                      newEvent['rules'],
-                      newEvent['psLink'],
-                      newEvent['maxTeamSize'],
-                      newEvent['minTeamSize']
-                    )
-                  }>
+            <div className="text-white">
+              <div className="flex">
+                <div className="w-1/2">
+                  Event
+                  <br />
+                  <br />
+                  Dept Event:
+                  <select
+                    className="ml-4"
+                    placeholder="Enter deptEventId"
+                    value={coordieCurrEvent}
+                    onChange={(e) => setCoordieCurrEvent(e.target.value)}>
+                    {departmentEvents.map((departmentEvent) => (
+                      <option key={departmentEvent['id']} value={departmentEvent['id']}>
+                        {departmentEvent['name']}
+                      </option>
+                    ))}
+                  </select>
+                  <br />
+                  <br />
+                  Name:
+                  <input
+                    className="ml-4"
+                    placeholder="Enter name"
+                    value={newEvent['name']}
+                    onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
+                  />
+                  <br />
+                  Tagline:
+                  <input
+                    className="ml-4"
+                    placeholder="Enter tagline"
+                    value={newEvent['tagline']}
+                    onChange={(e) => setNewEvent({ ...newEvent, tagline: e.target.value })}
+                  />
+                  <br />
+                  Details:
+                  <input
+                    className="ml-4"
+                    placeholder="Enter details"
+                    value={newEvent['details']}
+                    onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
+                  />
+                  <br />
+                  Criteria:
+                  <input
+                    className="ml-4"
+                    placeholder="Enter criteria"
+                    value={newEvent['criteria']}
+                    onChange={(e) => setNewEvent({ ...newEvent, criteria: e.target.value })}
+                  />
+                  <br />
+                  Rules:
+                  <input
+                    className="ml-4"
+                    placeholder="Enter rules"
+                    value={newEvent['rules']}
+                    onChange={(e) => setNewEvent({ ...newEvent, rules: e.target.value })}
+                  />
+                  <br />
+                  PSLink:
+                  <input
+                    className="ml-4"
+                    placeholder="Enter psLink"
+                    value={newEvent['psLink']}
+                    onChange={(e) => setNewEvent({ ...newEvent, psLink: e.target.value })}
+                  />
+                  <br />
+                  Max Team Size:
+                  <input
+                    className="ml-4"
+                    value={newEvent['maxTeamSize']}
+                    type="number"
+                    onChange={(e) =>
+                      setNewEvent({ ...newEvent, maxTeamSize: parseInt(e.target.value) })
+                    }
+                  />
+                  <br />
+                  Min Team Size:
+                  <input
+                    className="ml-4"
+                    value={newEvent['minTeamSize']}
+                    type="number"
+                    onChange={(e) =>
+                      setNewEvent({ ...newEvent, minTeamSize: parseInt(e.target.value) })
+                    }
+                  />
+                  <br />
                   <span
-                    className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full bg-white rounded-md "
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                    id="Profile"></span>
-                  <span
-                    className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                    id="Profile">
-                    Create Event
-                  </span>
-                </span>
-                <br />
-                <br />
-                {events.map((event) => (
-                  <div key={event['id']} className="mb-4">
-                    <p>ID: {event['id']}</p>
-                    <p>Name: {event['name']}</p>
-                    <p>Details: {event['details']}</p>
+                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    id="Profile"
+                    onClick={() =>
+                      handleAddEvent(
+                        newEvent['name'],
+                        newEvent['tagline'],
+                        newEvent['details'],
+                        newEvent['criteria'],
+                        newEvent['rules'],
+                        newEvent['psLink'],
+                        newEvent['maxTeamSize'],
+                        newEvent['minTeamSize']
+                      )
+                    }>
                     <span
-                      className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                      id="Profile"
-                      onClick={() => handleDeleteEvent(event['id'])}>
-                      <span
-                        className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                        id="Profile"></span>
-                      <span
-                        className="absolute inset-0 w-full h-full bg-white rounded-md "
-                        id="Profile"></span>
-                      <span
-                        className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                        id="Profile"></span>
-                      <span
-                        className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                        id="Profile">
-                        Delete
-                      </span>
+                      className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full bg-white rounded-md "
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                      id="Profile"></span>
+                    <span
+                      className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                      id="Profile">
+                      Create Event
                     </span>
-                  </div>
-                ))}
-              </div>
-              <div className="w-1/2">
-                Events Coordies
-                <br />
-                <br />
-                <input
-                  type="text"
-                  value={newEventCoordie['userId']}
-                  onChange={(e) =>
-                    setNewEventCoordie({
-                      ...newEventCoordie,
-                      userId: e.target.value
-                    })
-                  }
-                  placeholder="Enter userId"
-                />
-                <input
-                  className="ml-4"
-                  type="text"
-                  value={newEventCoordie['eventId']}
-                  onChange={(e) =>
-                    setNewEventCoordie({
-                      ...newEventCoordie,
-                      eventId: e.target.value
-                    })
-                  }
-                  placeholder="Enter eventId"
-                />
-                <br />
-                <br />
-                <span
-                  className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                  id="Profile"
-                  onClick={() =>
-                    handleAddEventCoordie(newEventCoordie['userId'], newEventCoordie['eventId'])
-                  }>
-                  <span
-                    className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full bg-white rounded-md "
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                    id="Profile"></span>
-                  <span
-                    className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                    id="Profile">
-                    Add Event Coordie
                   </span>
-                </span>
-                <span
-                  className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                  id="Profile"
-                  onClick={() =>
-                    handleRemoveEventCoordie(newEventCoordie['userId'], newEventCoordie['eventId'])
-                  }>
+                  <br />
+                  <br />
+                  {events.map((event) => (
+                    <div key={event['id']} className="mb-4">
+                      <p>ID: {event['id']}</p>
+                      <p>Name: {event['name']}</p>
+                      <p>Details: {event['details']}</p>
+                      <span
+                        className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                        id="Profile"
+                        onClick={() => handleDeleteEvent(event['id'])}>
+                        <span
+                          className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                          id="Profile"></span>
+                        <span
+                          className="absolute inset-0 w-full h-full bg-white rounded-md "
+                          id="Profile"></span>
+                        <span
+                          className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                          id="Profile"></span>
+                        <span
+                          className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                          id="Profile">
+                          Delete
+                        </span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="w-1/2">
+                  Events Coordies
+                  <br />
+                  <br />
+                  <input
+                    type="text"
+                    value={newEventCoordie['userId']}
+                    onChange={(e) =>
+                      setNewEventCoordie({
+                        ...newEventCoordie,
+                        userId: e.target.value
+                      })
+                    }
+                    placeholder="Enter userId"
+                  />
+                  <input
+                    className="ml-4"
+                    type="text"
+                    value={newEventCoordie['eventId']}
+                    onChange={(e) =>
+                      setNewEventCoordie({
+                        ...newEventCoordie,
+                        eventId: e.target.value
+                      })
+                    }
+                    placeholder="Enter eventId"
+                  />
+                  <br />
+                  <br />
                   <span
-                    className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full bg-white rounded-md "
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                    id="Profile"></span>
-                  <span
-                    className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                    id="Profile">
-                    Remove Event Coordie
+                    className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    id="Profile"
+                    onClick={() =>
+                      handleAddEventCoordie(newEventCoordie['userId'], newEventCoordie['eventId'])
+                    }>
+                    <span
+                      className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full bg-white rounded-md "
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                      id="Profile"></span>
+                    <span
+                      className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                      id="Profile">
+                      Add Event Coordie
+                    </span>
                   </span>
-                </span>
+                  <span
+                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    id="Profile"
+                    onClick={() =>
+                      handleRemoveEventCoordie(
+                        newEventCoordie['userId'],
+                        newEventCoordie['eventId']
+                      )
+                    }>
+                    <span
+                      className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full bg-white rounded-md "
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                      id="Profile"></span>
+                    <span
+                      className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                      id="Profile">
+                      Remove Event Coordie
+                    </span>
+                  </span>
+                </div>
               </div>
             </div>
           </>
         )}
         {selectedtab === 4 && (
           <>
-            <div className="flex">
-              <div className="w-1/2">
-                Department Events
-                <br />
-                <br />
-                <input
-                  type="text"
-                  value={newDepartmentEvent['name']}
-                  onChange={(e) =>
-                    setNewDepartmentEvent({ ...newDepartmentEvent, name: e.target.value })
-                  }
-                  placeholder="Enter name"
-                />
-                <input
-                  className="ml-4"
-                  type="text"
-                  value={newDepartmentEvent['organizer']}
-                  onChange={(e) =>
-                    setNewDepartmentEvent({ ...newDepartmentEvent, organizer: e.target.value })
-                  }
-                  placeholder="Enter organizer"
-                />
-                <span
-                  className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                  id="Profile"
-                  onClick={() =>
-                    handleAddDepartmentEvent(
-                      newDepartmentEvent['name'],
-                      newDepartmentEvent['organizer']
-                    )
-                  }>
+            <div className="text-white">
+              <div className="flex">
+                <div className="w-1/2">
+                  Department Events
+                  <br />
+                  <br />
+                  <input
+                    type="text"
+                    value={newDepartmentEvent['name']}
+                    onChange={(e) =>
+                      setNewDepartmentEvent({ ...newDepartmentEvent, name: e.target.value })
+                    }
+                    placeholder="Enter name"
+                  />
+                  <input
+                    className="ml-4"
+                    type="text"
+                    value={newDepartmentEvent['organizer']}
+                    onChange={(e) =>
+                      setNewDepartmentEvent({ ...newDepartmentEvent, organizer: e.target.value })
+                    }
+                    placeholder="Enter organizer"
+                  />
                   <span
-                    className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full bg-white rounded-md "
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                    id="Profile"></span>
-                  <span
-                    className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                    id="Profile">
-                    Create Department Event
-                  </span>
-                </span>
-                <br />
-                <br />
-                {departmentEvents.map((departmentEvent) => (
-                  <div key={departmentEvent['id']} className="mb-4">
-                    <p>Department Event Id: {departmentEvent['id']}</p>
-                    <p>Name: {departmentEvent['name']}</p>
-                    <p>Organizer: {departmentEvent['organizer']}</p>
+                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    id="Profile"
+                    onClick={() =>
+                      handleAddDepartmentEvent(
+                        newDepartmentEvent['name'],
+                        newDepartmentEvent['organizer']
+                      )
+                    }>
                     <span
-                      className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                      id="Profile"
-                      onClick={() => handleDeleteDepartmentEvent(departmentEvent['id'])}>
-                      <span
-                        className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                        id="Profile"></span>
-                      <span
-                        className="absolute inset-0 w-full h-full bg-white rounded-md "
-                        id="Profile"></span>
-                      <span
-                        className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                        id="Profile"></span>
-                      <span
-                        className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                        id="Profile">
-                        Delete
-                      </span>
+                      className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full bg-white rounded-md "
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                      id="Profile"></span>
+                    <span
+                      className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                      id="Profile">
+                      Create Department Event
                     </span>
-                  </div>
-                ))}
-              </div>
-              <div className="w-1/2">
-                Department Events Coordies
-                <br />
-                <br />
-                <input
-                  type="text"
-                  value={newDepartmentEventCoordie['userId']}
-                  onChange={(e) =>
-                    setNewDepartmentEventCoordie({
-                      ...newDepartmentEventCoordie,
-                      userId: e.target.value
-                    })
-                  }
-                  placeholder="Enter userId"
-                />
-                <input
-                  className="ml-4"
-                  type="text"
-                  value={newDepartmentEventCoordie['deptEventId']}
-                  onChange={(e) =>
-                    setNewDepartmentEventCoordie({
-                      ...newDepartmentEventCoordie,
-                      deptEventId: e.target.value
-                    })
-                  }
-                  placeholder="Enter deptEventId"
-                />
-                <br />
-                <br />
-                <span
-                  className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                  id="Profile"
-                  onClick={() =>
-                    handleAddDepartmentEventCoordie(
-                      newDepartmentEventCoordie['userId'],
-                      newDepartmentEventCoordie['deptEventId']
-                    )
-                  }>
-                  <span
-                    className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full bg-white rounded-md "
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                    id="Profile"></span>
-                  <span
-                    className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                    id="Profile">
-                    Add Department Event Coordie
                   </span>
-                </span>
-                <span
-                  className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-                  id="Profile"
-                  onClick={() =>
-                    handleRemoveDepartmentEventCoordie(
-                      newDepartmentEventCoordie['userId'],
-                      newDepartmentEventCoordie['deptEventId']
-                    )
-                  }>
+                  <br />
+                  <br />
+                  {departmentEvents.map((departmentEvent) => (
+                    <div key={departmentEvent['id']} className="mb-4">
+                      <p>Department Event Id: {departmentEvent['id']}</p>
+                      <p>Name: {departmentEvent['name']}</p>
+                      <p>Organizer: {departmentEvent['organizer']}</p>
+                      <span
+                        className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                        id="Profile"
+                        onClick={() => handleDeleteDepartmentEvent(departmentEvent['id'])}>
+                        <span
+                          className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                          id="Profile"></span>
+                        <span
+                          className="absolute inset-0 w-full h-full bg-white rounded-md "
+                          id="Profile"></span>
+                        <span
+                          className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                          id="Profile"></span>
+                        <span
+                          className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                          id="Profile">
+                          Delete
+                        </span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="w-1/2">
+                  Department Events Coordies
+                  <br />
+                  <br />
+                  <input
+                    type="text"
+                    value={newDepartmentEventCoordie['userId']}
+                    onChange={(e) =>
+                      setNewDepartmentEventCoordie({
+                        ...newDepartmentEventCoordie,
+                        userId: e.target.value
+                      })
+                    }
+                    placeholder="Enter userId"
+                  />
+                  <input
+                    className="ml-4"
+                    type="text"
+                    value={newDepartmentEventCoordie['deptEventId']}
+                    onChange={(e) =>
+                      setNewDepartmentEventCoordie({
+                        ...newDepartmentEventCoordie,
+                        deptEventId: e.target.value
+                      })
+                    }
+                    placeholder="Enter deptEventId"
+                  />
+                  <br />
+                  <br />
                   <span
-                    className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full bg-white rounded-md "
-                    id="Profile"></span>
-                  <span
-                    className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                    id="Profile"></span>
-                  <span
-                    className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                    id="Profile">
-                    Remove Department Event Coordie
+                    className="relative inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    id="Profile"
+                    onClick={() =>
+                      handleAddDepartmentEventCoordie(
+                        newDepartmentEventCoordie['userId'],
+                        newDepartmentEventCoordie['deptEventId']
+                      )
+                    }>
+                    <span
+                      className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full bg-white rounded-md "
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                      id="Profile"></span>
+                    <span
+                      className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                      id="Profile">
+                      Add Department Event Coordie
+                    </span>
                   </span>
-                </span>
+                  <span
+                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    id="Profile"
+                    onClick={() =>
+                      handleRemoveDepartmentEventCoordie(
+                        newDepartmentEventCoordie['userId'],
+                        newDepartmentEventCoordie['deptEventId']
+                      )
+                    }>
+                    <span
+                      className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full bg-white rounded-md "
+                      id="Profile"></span>
+                    <span
+                      className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
+                      id="Profile"></span>
+                    <span
+                      className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
+                      id="Profile">
+                      Remove Department Event Coordie
+                    </span>
+                  </span>
+                </div>
               </div>
             </div>
           </>
