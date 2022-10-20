@@ -60,6 +60,7 @@ export class Campus extends Scene {
     this.initCamera();
 
     this.physics.add.collider(this.player, this.layer, this.player.onGrass);
+    this.physics.add.collider(this.player, this.layer12);
     this.physics.add.collider(this.player, this.layer11);
     this.physics.add.collider(this.player, this.layer10);
     this.physics.add.collider(this.player, this.layer9);
@@ -297,11 +298,19 @@ export class Campus extends Scene {
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
     // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
     this.layer.setCollisionByProperty({ collides: true }, false);
+    this.layer2.setCollisionByProperty({ collides: true }, true);
     this.layer3.setCollisionByProperty({ collides: true }, true);
+    this.layer4.setCollisionByProperty({ collides: true }, true);
+    this.layer5.setCollisionByProperty({ collides: true }, true);
     this.layer6.setCollisionByProperty({ collides: true }, true);
+    this.layer7.setCollisionByProperty({ collides: true }, true);
+    this.layer8.setCollisionByProperty({ collides: true }, true);
     this.layer9.setCollisionByProperty({ collides: true }, true);
+    this.layer10.setCollisionByProperty({ collides: true }, true);
+    this.layer11.setCollisionByProperty({ collides: true }, true);
+    this.layer12.setCollisionByProperty({ collides: true }, true);
 
-    this.loginYamunaGate = true;
+    this.loginYamunaGate = false;
 
     this.physics.world.setBounds(0, 0, this.layer.width, this.layer.height);
     // this.showDebug();
@@ -345,25 +354,25 @@ export class Campus extends Scene {
           }
         })
     );
-    this.interactables.push(
-      this.physics.add
-        .sprite(authYamuna.x, authYamuna.y, 'tiles_ui', 0)
-        .setOrigin(0.5, 0.5)
-        .setScale(1.5)
-        .setInteractive({
-          useHandCursor: true
-        })
-        .on('pointerdown', (e: any) => {
-          // console.log('auth');
-          if (this.interactables[0].frame.name == '0') {
-            this.loginYamunaGate = true;
-            this.game.events.emit(EVENTS_NAME.showAuth);
-          } else {
-            // LOGOUT
-            this.game.events.emit(EVENTS_NAME.logout);
-          }
-        })
-    );
+    // this.interactables.push(
+    //   this.physics.add
+    //     .sprite(authYamuna.x, authYamuna.y, 'tiles_ui', 0)
+    //     .setOrigin(0.5, 0.5)
+    //     .setScale(1.5)
+    //     .setInteractive({
+    //       useHandCursor: true
+    //     })
+    //     .on('pointerdown', (e: any) => {
+    //       // console.log('auth');
+    //       if (this.interactables[0].frame.name == '0') {
+    //         this.loginYamunaGate = true;
+    //         this.game.events.emit(EVENTS_NAME.showAuth);
+    //       } else {
+    //         // LOGOUT
+    //         this.game.events.emit(EVENTS_NAME.logout);
+    //       }
+    //     })
+    // );
     this.interactables.push(
       this.physics.add
         .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2)
