@@ -42,14 +42,12 @@ export class Campus extends Scene {
   private interactables!: GameObjects.Sprite[];
   private npcChatSprites!: Physics.Arcade.Sprite[];
   private loginYamunaGate!: boolean;
-  private keyM: Phaser.Input.Keyboard.Key;
 
   private debugText!: GameObjects.Text;
   private bgm: Phaser.Sound.BaseSound | undefined;
 
   constructor() {
     super('campus');
-    this.keyM = this.input.keyboard.addKey('M');
   }
 
   create(data: any): void {
@@ -95,10 +93,6 @@ export class Campus extends Scene {
       volume: 0.7
     });
     this.bgm.play();
-
-    this.keyM.on('down', () => {
-      this.game.events.emit(EVENTS_NAME.openMap);
-    });
 
     // this.layer5.renderDebug(this.debug);
     // this.layer6.renderDebug(this.debug);
@@ -381,7 +375,7 @@ export class Campus extends Scene {
     // );
     this.interactables.push(
       this.physics.add
-        .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2)
+        .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2) // Cafe-96 enter
         .setOrigin(0.5, 0.5)
         .setScale(1.5)
         .setInteractive({
@@ -397,13 +391,13 @@ export class Campus extends Scene {
     this.game.events.on(EVENTS_NAME.login, () => {
       console.log(this.interactables);
       this.interactables[0].setFrame(1);
-      this.interactables[1].setFrame(1);
+      // this.interactables[1].setFrame(1);
     });
     this.game.events.on(EVENTS_NAME.logout, () => {
       this.interactables[0].setFrame(0);
-      this.interactables[1].setFrame(0);
-      this.player.x = 672;
-      this.player.y = 689;
+      // this.interactables[1].setFrame(0);
+      this.player.x = 416;
+      this.player.y = 2632;
     });
     computers.forEach((computer) => {
       this.interactables.push(
@@ -423,7 +417,7 @@ export class Campus extends Scene {
   }
 
   private initPlayer(): void {
-    this.player = new Player(this, 672, 689);
+    this.player = new Player(this, 416, 2632);
     this.game.events.on(EVENTS_NAME.login, () => {
       // teleport player 200 pixels to the right
       // console.log('login');
@@ -527,15 +521,19 @@ export class Campus extends Scene {
     this.physics.add.collider(this.player, this.npcs);
     this.game.events.on(
       EVENTS_NAME.interact,
-      (name: string) => {
-        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+      (scene: string, name: string) => {
+        if (scene == 'campus') {
+          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+        }
       },
       this
     );
     this.game.events.on(
       EVENTS_NAME.resetInteract,
-      (name: string) => {
-        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+      (scene: string, name: string) => {
+        if (scene == 'campus') {
+          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+        }
       },
       this
     );
