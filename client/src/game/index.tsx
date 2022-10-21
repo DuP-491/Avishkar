@@ -52,6 +52,7 @@ function GameComponent(props: Props) {
   const [showInteractPrompt, setShowInteractPrompt] = useState(false);
   const [stopInteract, setStopInteract] = useState(false);
   const [infoPromptText, setInfoPromptText] = useState('');
+  const [infoPromptType, setInfoPromptType] = useState('text');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
   const [department, setDepartment] = useState('');
@@ -80,6 +81,7 @@ function GameComponent(props: Props) {
             return;
           }
           setInfoPromptText(data.text);
+          setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
         });
         game.instance?.events.on(EVENTS_NAME.interact, () => {
@@ -244,18 +246,6 @@ function GameComponent(props: Props) {
       {showComputer && (
         <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
       )}
-      {showInfoPrompt && (
-        <InfoPrompt text={infoPromptText} setShowInfoPrompt={setShowInfoPrompt}></InfoPrompt>
-      )}
-      <MiniMap playerPosition={playerPosition} teleport={teleport} />
-      {showMap && (
-        <Map
-          playerPosition={playerPosition}
-          teleport={teleport}
-          showMap={showMap}
-          setShowMap={setShowMap}
-        />
-      )}
       {showInfo && <Info setShowInfo={setShowInfo} />}
       {showInteractPrompt && (
         <InteractPrompt
@@ -264,24 +254,48 @@ function GameComponent(props: Props) {
           setStopInteract={setStopInteract}
         />
       )}
-      <img
-        // eslint-disable-next-line no-undef
-        src={require('../images/map-icon.png')}
-        className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-2 bottom-[17.5rem] ${
-          !showMap ? `cursor-zoom-in` : `cursor-zoom-out`
-        }`}
-        width={64}
-        onClick={handleOnMapIconClick}
-      />
-      <img
-        // eslint-disable-next-line no-undef
-        src={require('../images/info-icon.png')}
-        className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-20 bottom-[17.5rem] ${
-          !showInfo ? `cursor-zoom-in` : `cursor-zoom-out`
-        }`}
-        width={64}
-        onClick={handleOnInfoIconClick}
-      />
+      <div className="absolute bottom-0 z-10 w-full">
+        {showInfoPrompt && (
+          <InfoPrompt
+            text={infoPromptText}
+            setShowInfoPrompt={setShowInfoPrompt}
+            isChoice={infoPromptType === 'ask'}></InfoPrompt>
+        )}
+        {showMap && (
+          <Map
+            playerPosition={playerPosition}
+            teleport={teleport}
+            showMap={showMap}
+            setShowMap={setShowMap}
+          />
+        )}
+        <div className="w-full">
+          <MiniMap playerPosition={playerPosition} teleport={teleport} />
+          <img
+            // eslint-disable-next-line no-undef
+            src={require('../images/map-icon.png')}
+            className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-2 bottom-[17.5rem] ${
+              !showMap ? `cursor-zoom-in` : `cursor-zoom-out`
+            }`}
+            width={64}
+            onClick={handleOnMapIconClick}
+          />
+          <img
+            // eslint-disable-next-line no-undef
+            src={require('../images/info-icon.png')}
+            className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-20 bottom-[17.5rem] ${
+              !showInfo ? `cursor-zoom-in` : `cursor-zoom-out`
+            }`}
+            width={64}
+            onClick={handleOnInfoIconClick}
+          />
+        </div>
+      </div>
+      <div
+        className="hidden"
+        onKeyDown={(event: any) => {
+          if (event.key === 'W') handleOnMapIconClick;
+        }}></div>
     </>
   );
 }

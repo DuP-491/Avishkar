@@ -108,11 +108,11 @@ function MiniMap(props: Props) {
 }
 
 MiniMap.propTypes = {
-  playerPosition: {
-    x: PropTypes.number,
-    y: PropTypes.number,
-    rot: PropTypes.number
-  },
+  playerPosition: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    rot: PropTypes.number.isRequired
+  }).isRequired,
   teleport: PropTypes.func.isRequired
 };
 

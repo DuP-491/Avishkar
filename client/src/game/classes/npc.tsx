@@ -9,6 +9,7 @@ export class NPC extends Actor {
   private INTERACT_RADIUS = 100;
   private interacting = false;
   private attackHandler: () => void;
+  protected npcType: string = 'text';
   private keyE: Input.Keyboard.Key;
   private hitSound: Phaser.Sound.BaseSound;
 
@@ -20,11 +21,13 @@ export class NPC extends Actor {
     target: Player,
     frame?: string | number,
     left?: boolean,
-    interact_radius?: number
+    interact_radius?: number,
+    npctype?: string
   ) {
     super(scene, x, y, texture, frame);
     this.target = target;
     if (interact_radius) this.INTERACT_RADIUS = interact_radius;
+    if (npctype) this.npcType = npctype;
     this.flipX = left ?? false;
     this.keyE = this.scene.input.keyboard.addKey('E');
     this.hitSound = this.scene.sound.add('hit', { loop: false });
