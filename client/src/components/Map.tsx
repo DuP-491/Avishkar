@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TELEPORT_LOCATIONS } from '../game/consts';
@@ -50,7 +51,12 @@ function Map(props: Props) {
     <>
       <div
         className="absolute top-0 left-0 z-20 w-screen h-screen filter backdrop-blur-sm"
-        onClick={handleClick}></div>
+        onClick={handleClick}
+        onKeyDown={(event: any) => {
+          if (event.key === 'Escape') {
+            handleClick();
+          }
+        }}></div>
       <div
         ref={baseDiv}
         className={`transition-all duration-500 flex items-center justify-center m-auto relative z-40 bg-[#509b66] border-2 border-green-900 rounded-lg filter backdrop-blur-sm w-0 h-[768px]`}
@@ -438,11 +444,11 @@ function Map(props: Props) {
 }
 
 Map.propTypes = {
-  playerPosition: {
-    x: PropTypes.number,
-    y: PropTypes.number,
-    rot: PropTypes.number
-  },
+  playerPosition: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    rot: PropTypes.number.isRequired
+  }).isRequired,
   teleport: PropTypes.func.isRequired,
   showMap: PropTypes.bool.isRequired,
   setShowMap: PropTypes.func.isRequired

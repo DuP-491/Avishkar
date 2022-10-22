@@ -56,7 +56,7 @@ export class Campus extends Scene {
     this.initInteractables();
     // this.initChests();
     // this.initEnemies();
-    // this.initNPCs();
+    this.initNPCs();
     this.initCamera();
 
     this.physics.add.collider(this.player, this.layer, this.player.onGrass);
@@ -375,7 +375,7 @@ export class Campus extends Scene {
     // );
     this.interactables.push(
       this.physics.add
-        .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2)
+        .sprite(enterPoint.x, enterPoint.y, 'tiles_ui', 2) // Cafe-96 enter
         .setOrigin(0.5, 0.5)
         .setScale(1.5)
         .setInteractive({
@@ -391,13 +391,13 @@ export class Campus extends Scene {
     this.game.events.on(EVENTS_NAME.login, () => {
       console.log(this.interactables);
       this.interactables[0].setFrame(1);
-      this.interactables[1].setFrame(1);
+      // this.interactables[1].setFrame(1);
     });
     this.game.events.on(EVENTS_NAME.logout, () => {
       this.interactables[0].setFrame(0);
-      this.interactables[1].setFrame(0);
-      this.player.x = 672;
-      this.player.y = 689;
+      // this.interactables[1].setFrame(0);
+      this.player.x = 416;
+      this.player.y = 2632;
     });
     computers.forEach((computer) => {
       this.interactables.push(
@@ -417,7 +417,7 @@ export class Campus extends Scene {
   }
 
   private initPlayer(): void {
-    this.player = new Player(this, 672, 689);
+    this.player = new Player(this, 416, 2632);
     this.game.events.on(EVENTS_NAME.login, () => {
       // teleport player 200 pixels to the right
       // console.log('login');
@@ -494,7 +494,8 @@ export class Campus extends Scene {
         this.player,
         360,
         npcPoint.properties.filter((prop) => prop.name === 'left')[0].value,
-        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value
+        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value,
+        npcPoint.properties.filter((prop) => prop.name === 'type')[0].value
       )
         .setName(npcPoint.id.toString())
         .setScale(1.5)
@@ -520,15 +521,19 @@ export class Campus extends Scene {
     this.physics.add.collider(this.player, this.npcs);
     this.game.events.on(
       EVENTS_NAME.interact,
-      (name: string) => {
-        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+      (scene: string, name: string) => {
+        if (scene == 'campus') {
+          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+        }
       },
       this
     );
     this.game.events.on(
       EVENTS_NAME.resetInteract,
-      (name: string) => {
-        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+      (scene: string, name: string) => {
+        if (scene == 'campus') {
+          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+        }
       },
       this
     );
