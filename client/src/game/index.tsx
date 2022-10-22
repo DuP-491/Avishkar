@@ -13,6 +13,7 @@ import Info from '../components/Info';
 import InteractPrompt from '../components/Interact';
 import Computer from '../components/Computer';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -46,6 +47,7 @@ function GameComponent(props: Props) {
     setInitialize(false);
     setGame(undefined);
   };
+  const navigator = useNavigate();
 
   // Game States
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
@@ -160,6 +162,9 @@ function GameComponent(props: Props) {
   useEffect(() => {
     gameConfig.scale!.width = window.innerWidth;
     gameConfig.scale!.height = window.innerHeight;
+    if (dimensions.width < 768) {
+      navigator('/');
+    }
     setInitialize(true);
   }, [dimensions]);
 
