@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import LoginBox from './Authentication/LoginBox';
-import SignupBox from './Authentication/SignupBox';
-import AvishkarTitle from './../Assets/p6.png';
-import AvishkarLogo from './../Assets/p5.png';
-import ResetPasswordBox from './Authentication/ResetPasswordBox';
-import { useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import Nav from './Home/Nav';
+import Pattern from './Home/Pattern';
 
 /* eslint-disable */
 interface HomePagePropType {
@@ -13,283 +7,194 @@ interface HomePagePropType {
 }
 /* eslint-enable */
 
+// eslint-disable-next-line no-unused-vars
 function HomePage({ onRedirectPress }: HomePagePropType) {
-  const location = useLocation();
+  return (
+    <div className="">
+      <div
+        className="relative h-screen overflow-x-hidden bg-cover"
+        style={{
+          backgroundImage: `url('https://necromancers.dan-fisher.dev/assets/img/bg-texture-05.jpg')`
+        }}>
+        <Nav />
+        {/* main text */}
+        <main className="text-center site-content" id="wrapper">
+          <div className="pt-10 site-content__center">
+            <h1 className="font-bold tracking-wider text-white uppercase text-8xl landing-title">
+              <span className="block text-sm font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 ">
+                MNNIT allahabad present
+              </span>
+              Avishkar
+            </h1>
+            <a
+              href="#_"
+              className="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl mt-7 group hover:ring-1 hover:ring-purple-500">
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-700"></span>
+              <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 rounded-full opacity-30 group-hover:rotate-90 ease"></span>
+              <span className="relative text-white">Start Hacking</span>
+            </a>
+          </div>
+        </main>
+        {/* triangular patterns */}
+        <Pattern />
+      </div>
+      {/* marquee */}
+      <div className="-mt-32 overflow-x-hidden bg-gray-900">
+        <ul className="flex space-x-5 font-semibold text-transparent uppercase marquee text-8xl whitespace-nowrap animate-marquee-rtl">
+          <li className="stroke-text">Ideate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Innovate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Create</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Ideate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Innovate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Create</li>
+          <li className="text-white ">•</li>
+        </ul>
+        <ul className="flex space-x-5 font-semibold text-transparent uppercase marquee text-8xl whitespace-nowrap animate-marquee-ltr">
+          <li className="stroke-text">Ideate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Innovate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Create</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Ideate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Innovate</li>
+          <li className="text-white ">•</li>
+          <li className="stroke-text">Create</li>
+          <li className="text-white ">•</li>
+        </ul>
+      </div>
 
-  function LogInPopUp() {
-    if (status != 'Home') setStatus('Home');
-    else setStatus('Login');
-  }
-  function LoggingIn() {
-    setIsLogin(true);
-  }
-  function LoggingOut() {
-    Cookies.remove('token');
-    setIsLogin(false);
-  }
-  function SignUpToggle() {
-    if (status == 'Login') setStatus('Signup');
-    else setStatus('Login');
-  }
-
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token !== undefined) {
-      setIsLogin(true);
-    }
-  }, []);
-
-  function navbarRender() {
-    return (
-      <nav className="w-full">
-        <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
-          <div>
-            <div className="flex items-center justify-between py-3 md:py-5 md:block">
-              <button>
-                <a href="/game">
-                  <h2 className="text-2xl font-bold text-white">Pro?</h2>
-                </a>
-              </button>
-              <div className="md:hidden">
-                <button
-                  className="p-2 text-white rounded-md outline-none "
-                  onClick={() => setNavbar(!navbar)}>
-                  {navbar ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 "
-                      viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path
-                        fillRule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
-                  )}
-                </button>
+      {/* events display */}
+      <div className="pt-12 text-center bg-gray-900 hero-grid-container">
+        <h1 className="text-6xl font-semibold text-white capitalize">
+          test your <span className="p-1 tracking-tight text-black bg-purple-400">limits</span> with
+          plethora
+          <br /> of events
+        </h1>
+        <a
+          href="#_"
+          className="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow-xl mt-7 group hover:ring-1 hover:ring-purple-500">
+          <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-700"></span>
+          <span className="absolute bottom-0 right-0 block w-64 h-64 mb-32 mr-4 transition duration-500 origin-bottom-left transform rotate-45 translate-x-24 bg-pink-500 rounded-full opacity-30 group-hover:rotate-90 ease"></span>
+          <span className="relative text-white">view all events</span>
+        </a>
+        <div className="grid grid-cols-6 gap-2">
+          <div className="shadow-sm col col-1">
+            <div className="hero-card hero-card-12">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+            <div className="hero-card hero-card-10">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="translate-y-16 shadow-sm col col-2">
+            <div className="hero-card hero-card-11">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+            <div className="hero-card hero-card-7">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="shadow-sm col col-3 translate-y-1/3">
+            <div className="hero-card hero-card-1">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="translate-y-32 shadow-sm col col-4">
+            <div className="hero-card hero-card-6">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-2 hero-subgrid">
+              <div className="hero-card hero-card-8">
+                <img
+                  src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                  alt=""
+                />
+              </div>
+              <div className="hero-card hero-card-9">
+                <img
+                  src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                  alt=""
+                />
               </div>
             </div>
           </div>
-          <div>
-            <div
-              className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-                navbar ? 'block' : 'hidden'
-              }`}>
-              <ul className="items-center justify-center space-y-2 md:flex md:space-x-6 md:space-y-0">
-                <li className="text-gray-600 hover:text-blue-600">
-                  <span
-                    className="px-5 py-2.5 w-full md:w-fit relative rounded group overflow-hidden font-medium bg-purple-50 text-purple-600 inline-block"
-                    onClick={onRedirectPress}
-                    id="Events">
-                    <span
-                      className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-purple-600 group-hover:h-full opacity-90"
-                      id="Events"></span>
-                    <span className="relative group-hover:text-white" id="Events">
-                      Events
-                    </span>
-                  </span>
-                </li>
-                <li className="text-gray-600 hover:text-blue-600">
-                  <span
-                    className="px-5 py-2.5 w-full md:w-fit relative rounded group overflow-hidden font-medium bg-purple-50 text-purple-600 inline-block"
-                    onClick={onRedirectPress}
-                    id="TeamAvishkar">
-                    <span
-                      className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-purple-600 group-hover:h-full opacity-90"
-                      id="TeamAvishkar"></span>
-                    <span className="relative group-hover:text-white" id="TeamAvishkar">
-                      Team Avishkar
-                    </span>
-                  </span>
-                </li>
-                <li className="text-gray-600 hover:text-blue-600">
-                  <span
-                    className="px-5 py-2.5 w-full md:w-fit relative rounded group overflow-hidden font-medium bg-purple-50 text-purple-600 inline-block"
-                    onClick={onRedirectPress}
-                    id="FAQ">
-                    <span
-                      className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-purple-600 group-hover:h-full opacity-90"
-                      id="FAQ"></span>
-                    <span className="relative group-hover:text-white" id="FAQ">
-                      FAQ
-                    </span>
-                  </span>
-                </li>
-                <li className="text-gray-600 hover:text-blue-600">
-                  <span
-                    className="px-5 py-2.5 w-full md:w-fit relative rounded group overflow-hidden font-medium bg-purple-50 text-purple-600 inline-block"
-                    onClick={onRedirectPress}
-                    id="Sponsors">
-                    <span
-                      className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-purple-600 group-hover:h-full opacity-90"
-                      id="Sponsors"></span>
-                    <span className="relative group-hover:text-white" id="Sponsors">
-                      Sponsors
-                    </span>
-                  </span>
-                </li>
-              </ul>
+          <div className="translate-y-12 shadow-sm col col-5">
+            <div className="hero-card hero-card-3">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+            <div className="hero-card hero-card-4">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="shadow-sm col col-6">
+            <div className="hero-card hero-card-5">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
+            </div>
+            <div className="hero-card hero-card-2">
+              <img
+                src="https://cdn.dribbble.com/users/340118/screenshots/4543009/media/484d3ede4ebdbe10b984b782d40cec8b.png?compress=1&resize=800x600&vertical=top"
+                alt=""
+              />
             </div>
           </div>
         </div>
-      </nav>
-    );
-  }
-  function BodyRender() {
-    if (status == 'Home' && !isLogin && !resettingPassword)
-      return (
-        <>
-          <img
-            src={AvishkarTitle}
-            style={{
-              height: '5vw',
-              width: '20vw',
-              minHeight: '50px',
-              minWidth: '200px'
-            }}
-          />
-          <img
-            src={AvishkarLogo}
-            style={{
-              height: '20vw',
-              width: '20vw',
-              minHeight: '160px',
-              minWidth: '160px'
-            }}
-          />
-          <span
-            className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-            onClick={LogInPopUp}>
-            <span className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"></span>
-            <span className="absolute inset-0 w-full h-full bg-white rounded-md "></span>
-            <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "></span>
-            <span className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white">
-              Login
-            </span>
-          </span>
-        </>
-      );
-    else if (status == 'Home' && !isLogin && resettingPassword)
-      return (
-        <ResetPasswordBox
-          onCrossPress={() => setResettingPassword(false)}
-          onInvalidToken={() => setIsLogin(false)}
-        />
-      );
-    else if (status == 'Home' && isLogin)
-      return (
-        <>
-          <img
-            src="https://i.imgur.com/47LmWSp.png"
-            style={{
-              height: '5vw',
-              width: '20vw',
-              minHeight: '50px',
-              minWidth: '200px'
-            }}
-          />
-          <img
-            src="https://i.imgur.com/cHH4xIh.png"
-            style={{
-              height: '20vw',
-              width: '20vw',
-              minHeight: '160px',
-              minWidth: '160px'
-            }}
-          />
-          <div className="flex flex-row justify-center gap-x-9">
-            <span
-              className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-              onClick={LoggingOut}>
-              <span className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"></span>
-              <span className="absolute inset-0 w-full h-full bg-white rounded-md "></span>
-              <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "></span>
-              <span className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white">
-                Logout
-              </span>
-            </span>
-            <span
-              className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-              id="Profile"
-              onClick={onRedirectPress}>
-              <span
-                className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                id="Profile"></span>
-              <span
-                className="absolute inset-0 w-full h-full bg-white rounded-md "
-                id="Profile"></span>
-              <span
-                className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                id="Profile"></span>
-              <span
-                className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                id="Profile">
-                Profile
-              </span>
-            </span>
-            {/* <span
-              className="relative inline-flex items-center justify-center px-6 py-3 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
-              id="Profile"
-              onClick={() => setResettingPassword(true)}>
-              <span
-                className="absolute inset-0 w-full h-full mt-1 ml-1 transition-all duration-300 ease-in-out bg-purple-600 rounded-md group-hover:mt-0 group-hover:ml-0"
-                id="Profile"></span>
-              <span
-                className="absolute inset-0 w-full h-full bg-white rounded-md "
-                id="Profile"></span>
-              <span
-                className="absolute inset-0 w-full h-full transition-all duration-200 ease-in-out delay-100 bg-purple-600 rounded-md opacity-0 group-hover:opacity-100 "
-                id="Profile"></span>
-              <span
-                className="relative text-purple-600 transition-colors duration-200 ease-in-out delay-100 group-hover:text-white"
-                id="Profile">
-                Reset Password
-              </span>
-            </span> */}
-          </div>
-        </>
-      );
-    else if (status == 'Login')
-      return <LoginBox onCrossPress={LogInPopUp} onLogin={LoggingIn} onToggle={SignUpToggle} />;
-    else
-      return <SignupBox onCrossPress={LogInPopUp} onSignup={LoggingIn} onToggle={SignUpToggle} />;
-  }
-
-  const [isLogin, setIsLogin] = useState(false);
-  const [resettingPassword, setResettingPassword] = useState(
-    location.pathname === '/reset-password'
-  );
-  const [navbar, setNavbar] = useState(false);
-  const [status, setStatus] = useState('Home');
-  return (
-    <>
-      <div
-        style={{
-          overflow: 'scroll',
-          background: 'url(https://i.imgur.com/P1ys3d9.jpg)',
-          backgroundPosition: 'top',
-          backgroundSize: 'cover'
-        }}
-        className="w-screen h-screen bg-bottom bg-cover no-scroll">
-        {navbarRender()}
-        <div className="flex flex-col items-center justify-center h-full">{BodyRender()}</div>
       </div>
-    </>
+
+      <div className="pt-16 text-center bg-gray-900">
+        <h1 className="w-auto font-bold text-white text-8xl stroke-text">what's new</h1>
+        <p className="text-xl text-white capitalize ">introducting two new events</p>
+        <div className="grid grid-cols-1 px-4 md:grid-cols-2">
+          <div className="max-w-lg p-2 bg-white rounded-md shadow-md">
+            <h2 className="my-2 text-2xl capitalize">machine coding</h2>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem reiciendis distinctio
+              voluptatibus sapiente tenetur sit vel accusantium veritatis aperiam ducimus?
+            </p>
+          </div>
+          <div>
+            <h2>CSS Battle</h2>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem reiciendis distinctio
+              voluptatibus sapiente tenetur sit vel accusantium veritatis aperiam ducimus?
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
