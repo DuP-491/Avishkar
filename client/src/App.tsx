@@ -7,7 +7,11 @@ import GameLayout from './GameLayout';
 import FaqPage from './simplistic/components/FAQ';
 import TeamPage from './simplistic/components/Team';
 import SponsorPage from './simplistic/components/Sponsor';
-import AuthPage from './simplistic/components/Authentication';
+import LogIn from './simplistic/components/Authentication/LogIn';
+import SignUp from './simplistic/components/Authentication/SignUp';
+import NotFound from './simplistic/components/Common/NotFound';
+import ResetPassword from './simplistic/components/Authentication/ResetPassword';
+import ForgotPassword from './simplistic/components/Authentication/ForgotPassword';
 /* eslint-enable */
 
 function App() {
@@ -22,7 +26,11 @@ function App() {
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/sponsors" element={<SponsorPage />} />
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/reset/:token" element={<ResetPassword />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
