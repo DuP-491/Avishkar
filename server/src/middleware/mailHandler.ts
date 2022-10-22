@@ -1,4 +1,4 @@
-import * as nodemailer from "nodemailer";
+const nodemailer = require("nodemailer");
 
 export async function sendUserVerificationMail(email, token) {
     const mailSubject = "User Email Verification";
@@ -17,6 +17,7 @@ async function mailSender(email, subject, message) {
                 clientId: process.env.OAUTH_CLIENTID,
                 clientSecret: process.env.OAUTH_CLIENT_SECRET,
                 refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+                accessToken: process.env.OAUTH_ACCESS_TOKEN
             },
         });
 

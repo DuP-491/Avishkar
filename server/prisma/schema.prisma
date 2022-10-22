@@ -50,7 +50,7 @@ model DepartmentEvent {
   id                    String                  @id @default(uuid())
   name                  String
   organizer             String                  @default("MNNIT, Prayagraj")
-  desc                  String?
+  desc                  String? @db.LongText
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   DepartmentCoordinator DepartmentCoordinator[]
@@ -70,12 +70,12 @@ model Event {
   deptEvent        DepartmentEvent    @relation(fields: [deptEventId], references: [id])
   deptEventId      String
   name             String             @unique
-  tagline          String
-  details          String
-  criteria         String
-  rules            String
-  psLink           String
-  poster           String?
+  tagline          String  @db.LongText
+  details          String  @db.LongText
+  criteria         String  @db.LongText
+  rules            String  @db.LongText
+  psLink           String  @db.LongText
+  poster           String? @db.LongText
   maxTeamSize      Int                @default(1)
   minTeamSize      Int                @default(1)
   createdAt        DateTime           @default(now())
