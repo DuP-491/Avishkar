@@ -4,10 +4,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const addDepartmentEvent = async (req: Request, res: Response, next) => {
-    const { name, organizer } = req.body;
+    const { name, organizer, desc } = req.body;
     try {
         await prisma.departmentEvent.create({
-            data: { name, organizer },
+            data: { name, organizer, desc },
         });
 
         res.statusCode = 200;
@@ -73,10 +73,10 @@ const removeDepartmentCoordinator = async (req: Request, res: Response, next) =>
 };
 
 const addEvent = async (req: Request, res: Response, next) => {
-    const { name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, deptEventId } = req.body;
+    const { name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, deptEventId, poster } = req.body;
     try {
         await prisma.event.create({
-            data: { name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, deptEventId },
+            data: { name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, deptEventId, poster },
         });
 
         res.statusCode = 200;

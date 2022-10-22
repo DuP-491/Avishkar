@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 const prisma = new PrismaClient();
 
 const getAllDepartmentEvents = async (req: Request, res: Response, next) => {
+    // get a list of all the department events
     try {
         const departmentEvents = await prisma.departmentEvent.findMany();
 
@@ -16,6 +17,7 @@ const getAllDepartmentEvents = async (req: Request, res: Response, next) => {
 };
 
 const getDepartmentEvents = async (req: Request, res: Response, next) => {
+    // get a list of all the events under a department event
     const deptEventId = req.body.deptEventId;
     try {
         const events = await prisma.event.findMany({
@@ -31,6 +33,7 @@ const getDepartmentEvents = async (req: Request, res: Response, next) => {
 };
 
 const getDepartmentCoordinators = async (req: Request, res: Response, next) => {
+    // get a list of all the department coordinators of a department event
     const deptEventId = req.body.deptEventId;
     try {
         const deptEventCoordies = await prisma.departmentCoordinator.findMany({
@@ -47,6 +50,7 @@ const getDepartmentCoordinators = async (req: Request, res: Response, next) => {
 };
 
 const getEventCoordinators = async (req: Request, res: Response, next) => {
+    // get a list of all the event coordinators of an event
     const eventId = req.body.eventId;
     try {
         const eventCoordies = await prisma.eventCoordinator.findMany({
@@ -63,6 +67,7 @@ const getEventCoordinators = async (req: Request, res: Response, next) => {
 };
 
 const getUserLeaderboard = async (req: Request, res: Response, next) => {
+    // get the user leaderboard with top scores in the daily puzzles
     try {
         const topScores = await prisma.user.findMany({
             take: 10,

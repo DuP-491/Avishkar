@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { check } from "express-validator";
-import { userResetPassword, userSignin, userSignup } from "../controller/authController";
+import { userResetEmail, userResetPassword, userSignin, userSignup } from "../controller/authController";
 import { authErrorHandler } from "../middleware/errorHandler";
 
 const router = express.Router();
@@ -10,12 +10,6 @@ router.use((req: Request, res: Response, next) => {
     console.log("Triggering the auth router!!");
     next();
 });
-
-/*
-for getting the country codes use the following APIs
-ENDPOINT :- https://cuik-projects.github.io/country-list/countries.json
-REQUEST :- GET
-*/
 
 router.post(
     "/signup",
@@ -30,6 +24,8 @@ router.post(
 
 router.post("/signin", userSignin);
 
+router.post("/send-reset-mail", userResetEmail);
+
 router.post(
     "/reset-password",
     [
@@ -39,7 +35,5 @@ router.post(
     authErrorHandler,
     userResetPassword
 );
-
-// forget-password route - generates token and sends it through mail to the client
 
 export default router;
