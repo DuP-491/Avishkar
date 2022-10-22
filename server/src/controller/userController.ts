@@ -60,6 +60,13 @@ const createTeam = async (req: Request, res: Response, next) => {
             const team = await prisma.team.create({
                 data: { leader: id },
             });
+            const name = "Team-" + team.id.toString();
+            if (name !== null)
+                await prisma.team.update({
+                    where: { id: team.id },
+                    data: { name },
+                });
+
             await prisma.teamMember.create({
                 data: { userId: id, teamId: team.id, status: RequestStatus.ACCEPTED },
             });
@@ -70,6 +77,34 @@ const createTeam = async (req: Request, res: Response, next) => {
             console.log("error occured in the createTeam() controller!");
             next(error);
         }
+    }
+};
+
+const updateTeam = async (req: Request, res: Response, next) => {
+    const { teamId, name } = req.body;
+    const { id } = req.app.locals;
+    try {
+        const team = await prisma.team.findFirst({
+            where: { id: teamId },
+        });
+        if (team === null) {
+            res.statusCode = 404;
+            res.json({ error: "team not found!", success: false });
+        } else if (team.leader !== id) {
+            res.statusCode = 401;
+            res.json({ error: "not authorised! only leader can update a team!", success: false });
+        } else {
+            await prisma.team.update({
+                where: { id: teamId },
+                data: { name },
+            });
+
+            res.statusCode = 200;
+            res.json({ message: "team updated!", success: true });
+        }
+    } catch (error) {
+        console.log("error occured in the removeTeam() controller!");
+        next(error);
     }
 };
 
@@ -211,7 +246,7 @@ const respondToTeamInvite = async (req: Request, res: Response, next) => {
                     });
                 }
                 res.statusCode = 200;
-                res.json({ message: "invite response registered!", success: false });
+                res.json({ message: "invite response registered!", success: true });
             }
         } catch (error) {
             console.log("error occured in the respondToTeamInvite() controller!");
@@ -319,6 +354,7 @@ export {
     getUserDetails,
     updateUserDetails,
     createTeam,
+    updateTeam,
     removeTeam,
     getTeamInvite,
     getTeamMembers,

@@ -62,4 +62,27 @@ const getEventCoordinators = async (req: Request, res: Response, next) => {
     }
 };
 
-export { getAllDepartmentEvents, getDepartmentEvents, getDepartmentCoordinators, getEventCoordinators };
+const getUserLeaderboard = async (req: Request, res: Response, next) => {
+    try {
+        const topScores = await prisma.user.findMany({
+            take: 10,
+            orderBy: {
+                score: "desc",
+            },
+        });
+
+        res.statusCode = 200;
+        res.json({ topScores, success: true });
+    } catch (error) {
+        console.log("error occured in the getUserLeaderboard() controller!");
+        next(error);
+    }
+};
+
+export {
+    getAllDepartmentEvents,
+    getDepartmentEvents,
+    getDepartmentCoordinators,
+    getEventCoordinators,
+    getUserLeaderboard,
+};

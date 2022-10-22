@@ -8,6 +8,7 @@ import {
     removeEvent,
     addEventCoordinator,
     removeEventCoordinator,
+    getParticipationInEvent,
 } from "../controller/adminController";
 import { checkAdminAuthorization, checkCoordieAuthrorization, checkUserAuthorization } from "../middleware/authHandler";
 
@@ -33,6 +34,8 @@ router
     .route("/event")
     .post(checkUserAuthorization, checkCoordieAuthrorization, addEvent)
     .delete(checkUserAuthorization, checkCoordieAuthrorization, removeEvent);
+
+router.route("/event/:eventId").get(checkUserAuthorization, checkCoordieAuthrorization, getParticipationInEvent);
 
 router
     .route("/event-coordie")

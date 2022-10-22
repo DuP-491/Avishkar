@@ -1,19 +1,33 @@
-const nodemailer = require("nodemailer");
+import * as nodemailer from "nodemailer";
 
-export const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        type: "OAuth2",
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENTID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-    },
-});
+export async function sendUserVerificationMail(email, token) {
+    const mailSubject = "User Email Verification";
+    const mailMessage = `<h1> <a href="${process.env.FRONTEND_HOST_URL}/${token}">Click Here</a> To Verify </h1>`;
+    await mailSender(email, mailSubject, mailMessage);
+}
 
-export const emailVerificationTemplate = (token) => {
-    return `<h1>Avishkar 2k22 | Email Verification</h1>
-    <p>Click the link below to verify your email address</p>
-    <a href="${process.env.FRONTEND_HOST_URL}/reset-password?key=${token}">Verify Email</a>`;
-};
+async function mailSender(email, subject, message) {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                type: "OAuth2",
+                user: process.env.MAIL_USERNAME,
+                pass: process.env.MAIL_PASSWORD,
+                clientId: process.env.OAUTH_CLIENTID,
+                clientSecret: process.env.OAUTH_CLIENT_SECRET,
+                refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+            },
+        });
+
+        await transporter.sendMail({
+            from: process.env.MAIL_USERNAME,
+            to: email,
+            subject,
+            text: message,
+        });
+    } catch (error) {
+        console.log("error occured in the mailSender() function!");
+        console.log(error);
+    }
+}

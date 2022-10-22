@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import {
     createTeam,
+    updateTeam,
     removeTeam,
     getUserDetails,
     updateUserDetails,
@@ -24,7 +25,12 @@ router.use((req: Request, res: Response, next) => {
 
 router.route("/").get(checkUserAuthorization, getUserDetails).put(checkUserAuthorization, updateUserDetails);
 
-router.route("/team").post(checkUserAuthorization, createTeam).delete(checkUserAuthorization, removeTeam);
+router
+    .route("/team")
+    .post(checkUserAuthorization, createTeam)
+    .put(checkUserAuthorization, updateTeam)
+    .delete(checkUserAuthorization, removeTeam);
+
 router.route("/team/:id").get(checkUserAuthorization, getTeamMembers);
 
 router
