@@ -42,8 +42,8 @@ export class Actor extends Physics.Arcade.Sprite {
   }
 
   public resetInteract(name: string): void {
-    this.scene.game.events.emit(EVENTS_NAME.resetInteract, name);
-    // console.log('resetInteract');
+    this.scene.game.events.emit(EVENTS_NAME.resetInteract, this.scene.scene.key, name);
+    console.log('resetInteract');
   }
 
   public getHPValue(): number {

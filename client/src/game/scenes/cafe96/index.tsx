@@ -212,8 +212,8 @@ export class Cafe96Scene extends Scene {
         'tiles_spr',
         this.player,
         360,
-        npcPoint.properties.filter((prop) => prop.name === 'left')[0].value,
-        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value
+        npcPoint.properties.filter((prop) => prop.name === 'left')[0]?.value,
+        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0]?.value
       )
         .setName(npcPoint.id.toString())
         .setScale(1)

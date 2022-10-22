@@ -493,9 +493,9 @@ export class Campus extends Scene {
         'tiles_spr',
         this.player,
         360,
-        npcPoint.properties.filter((prop) => prop.name === 'left')[0].value,
-        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value,
-        npcPoint.properties.filter((prop) => prop.name === 'type')[0].value
+        npcPoint.properties.filter((prop) => prop.name === 'left')[0]?.value,
+        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0]?.value,
+        npcPoint.properties.filter((prop) => prop.name === 'type')[0]?.value
       )
         .setName(npcPoint.id.toString())
         .setScale(1.5)
@@ -519,24 +519,17 @@ export class Campus extends Scene {
     this.physics.add.collider(this.npcs, this.npcs);
     // this.physics.add.collider(this.npcs, this.wallsLayer);
     this.physics.add.collider(this.player, this.npcs);
-    this.game.events.on(
-      EVENTS_NAME.interact,
-      (scene: string, name: string) => {
-        if (scene == 'campus') {
-          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
-        }
-      },
-      this
-    );
-    this.game.events.on(
-      EVENTS_NAME.resetInteract,
-      (scene: string, name: string) => {
-        if (scene == 'campus') {
-          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
-        }
-      },
-      this
-    );
+    this.game.events.on(EVENTS_NAME.interact, (scene: string, name: string) => {
+      if (scene == 'campus') {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+      }
+    });
+    this.game.events.on(EVENTS_NAME.resetInteract, (scene: string, name: string) => {
+      console.log(scene, name);
+      if (scene == 'campus') {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+      }
+    });
     this.input.on('gameobjectup', (pointer: any, gameObject: any) => {
       // console.log('pointer');
       if (gameObject?.interacting)

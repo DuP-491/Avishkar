@@ -11,6 +11,10 @@ import ProfilePage from './components/Teams';
 function Simplistic() {
   const [WhatToDisplay, setWhatToDisplay] = useState('Home');
   const router = useNavigate();
+  const [dimensions] = React.useState({
+    height: window.innerHeight,
+    width: window.innerWidth
+  });
 
   function onCrossPress() {
     setWhatToDisplay('Home');
@@ -47,24 +51,27 @@ function Simplistic() {
   }
 
   useEffect(() => {
+    if (dimensions.width < 768) return;
     const token = Cookies.get('token');
     const preference = sessionStorage.getItem('game');
     if (token !== undefined && preference !== 'false') {
       router('/game');
       return;
     }
-  }, []);
+  }, [dimensions]);
 
   return (
     <>
-      <div
-        className="absolute bottom-5 left-5 text-white text-2xl font-pfeffer"
-        onClick={() => {
-          sessionStorage.setItem('game', 'true');
-          router('/game');
-        }}>
-        Continue in MNNIT Game Campus
-      </div>
+      {dimensions.width >= 768 && (
+        <div
+          className="absolute bottom-5 left-5 text-white text-2xl font-pfeffer"
+          onClick={() => {
+            sessionStorage.setItem('game', 'true');
+            router('/game');
+          }}>
+          Continue in MNNIT Game Campus
+        </div>
+      )}
       {decide(WhatToDisplay)}
     </>
   );
