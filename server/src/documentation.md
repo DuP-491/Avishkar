@@ -298,7 +298,7 @@
    **API Extras :** only super admin can create them
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { name (string), organizer (string) }
+    > { name (string), organizer (string), desc (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response
@@ -354,7 +354,7 @@
    **API Extras :** only department coordinator can create event
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { name (string), tagline (string), details (string), criteria (string), rules (string), psLink (string), maxTeamSize (number), minTeamSize (number), deptEventId (string) }
+    > { name (string), tagline (string), details (string), criteria (string), rules (string), psLink (string), poster (string), maxTeamSize (number), minTeamSize (number), deptEventId (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response

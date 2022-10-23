@@ -167,7 +167,7 @@ const getTeamInvite = async (req: Request, res: Response, next) => {
 };
 
 const getTeamMembers = async (req: Request, res: Response, next) => {
-    const { id } = req.query;
+    const { id } = req.params;
     try {
         const team = await prisma.team.findFirst({
             where: { id: Number(id) },
