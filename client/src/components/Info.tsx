@@ -39,7 +39,7 @@ function Info(props: Props) {
     'SMS',
     'MP HALL',
     'NEAR MP HALL',
-    'NEAR MP HALL',
+    'Bascket Ball Court',
     'ATHLETICS GROUND',
     'SEMINAR HALL'
   ];
