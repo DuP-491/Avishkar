@@ -14,7 +14,6 @@ const LogIn = () => {
     AuthService.logIn(name, password)
       .then((data) => {
         if (data['success']) {
-          console.log("Success");
           Cookies.set('token', data['token']);
         } else console.log(data['message']); // Replace with Toast/Alert
       })

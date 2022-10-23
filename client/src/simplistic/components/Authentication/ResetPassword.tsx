@@ -1,11 +1,10 @@
-import Cookies from 'js-cookie';
 import React, { useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
 
 const ResetPassword = () => {
-  // const { key } = Object.fromEntries(new URLSearchParams(location.search));
   const key = useParams().token;
+  const navigate = useNavigate();
 
   function PasswordReset(e: any) {
     e.preventDefault();
@@ -20,7 +19,7 @@ const ResetPassword = () => {
       .then((data) => {
         if (data['success']) {
           console.log('Success');
-          Cookies.set('token', data['token']);
+          navigate("/login");
         } else if (data['message'] === 'Invalid token!') {
           // Invalid Token
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -30,6 +29,7 @@ const ResetPassword = () => {
       });
   }
   const PasswordRef = useRef(document.createElement('input'));
+
   return (
     <div
       className="flex items-center justify-center w-full h-screen"

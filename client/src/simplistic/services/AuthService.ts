@@ -108,7 +108,6 @@ export default {
       switch (res.status) {
         case 200:
           return {
-            token: data['token'],
             success: true,
             message: 'Success'
           };
@@ -134,5 +133,45 @@ export default {
         message: 'Please try again later!'
       };
     }
-  }
+  },
+
+  forgotPassword: async function (email: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/send-reset-mail`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Success'
+          };
+        case 400:
+          return {
+            success: false,
+            message: data['message']
+          };
+        case 404:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
+  },
 };
