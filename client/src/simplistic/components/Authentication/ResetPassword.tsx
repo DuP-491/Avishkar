@@ -1,6 +1,35 @@
-import React from 'react';
+import Cookies from 'js-cookie';
+import React, { useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 
 const ResetPassword = () => {
+  // const { key } = Object.fromEntries(new URLSearchParams(location.search));
+  const key = useParams().token;
+
+  function PasswordReset(e: any) {
+    e.preventDefault();
+    const password = PasswordRef.current.value;
+    let token;
+    if (key === undefined) {
+      console.log('key===undefined');
+      return;
+    } else token = key;
+    console.log(password, token);
+    AuthService.resetPassword(password, token)
+      .then((data) => {
+        if (data['success']) {
+          console.log('Success');
+          Cookies.set('token', data['token']);
+        } else if (data['message'] === 'Invalid token!') {
+          // Invalid Token
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  }
+  const PasswordRef = useRef(document.createElement('input'));
   return (
     <div
       className="flex items-center justify-center w-full h-screen"
@@ -24,7 +53,7 @@ const ResetPassword = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 capitalize md:text-2xl dark:text-white">
               Reset Password
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={PasswordReset} method="POST">
               <div>
                 <label
                   htmlFor="password"
@@ -36,6 +65,7 @@ const ResetPassword = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
+                  ref={PasswordRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required={true}
                 />

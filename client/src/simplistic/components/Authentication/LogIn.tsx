@@ -1,7 +1,28 @@
-import React from 'react';
+import Cookies from 'js-cookie';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 
 const LogIn = () => {
+  const EmailRef = useRef(document.createElement('input'));
+  const PasswordRef = useRef(document.createElement('input'));
+
+  function LoggingIn(e: any) {
+    e.preventDefault();
+    const name = EmailRef.current.value,
+      password = PasswordRef.current.value;
+    AuthService.logIn(name, password)
+      .then((data) => {
+        if (data['success']) {
+          console.log("Success");
+          Cookies.set('token', data['token']);
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  }
+
   return (
     <div
       className="flex items-center justify-center w-full h-screen"
@@ -25,7 +46,7 @@ const LogIn = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 capitalize md:text-2xl dark:text-white">
               Log In
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={LoggingIn} method="POST">
               <div>
                 <label
                   htmlFor="email"
@@ -36,6 +57,7 @@ const LogIn = () => {
                   type="email"
                   name="email"
                   id="email"
+                  ref={EmailRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required={true}
@@ -52,6 +74,7 @@ const LogIn = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
+                  ref={PasswordRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required={true}
                 />

@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 
 const SignUp = () => {
+
+  function LoggingIn(e: any) {
+    e.preventDefault();
+    const name = NameRef.current.value;
+    const email = EmailRef.current.value;
+    const collegeName = CollegeNameRef.current.value;
+    const gender = GenderRef.current.value;
+    const mobile = MobileRef.current.value;
+    AuthService.signIn(name, email, collegeName, gender, mobile)
+      .then((data) => {
+        if (data['success']) {
+          console.log("Success");
+        } else console.log(data['message']); // Replace with Toast/Alert
+      })
+      .catch(() => {
+        console.log('Please try again later!');
+      });
+  }
+  
+  const NameRef = useRef(document.createElement('input'));
+  const EmailRef = useRef(document.createElement('input'));
+  const CollegeNameRef = useRef(document.createElement('input'));
+  const GenderRef = useRef(document.createElement('select'));
+  const MobileRef = useRef(document.createElement('input'));
+
   return (
     <div
       className="flex items-center justify-center w-full min-h-screen"
@@ -25,7 +51,7 @@ const SignUp = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6"  onSubmit={LoggingIn} method="POST">
               <div>
                 <label
                   htmlFor="name"
@@ -36,6 +62,7 @@ const SignUp = () => {
                   type="text"
                   name="name"
                   id="name"
+                  ref={NameRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="your name"
                   required={true}
@@ -51,6 +78,7 @@ const SignUp = () => {
                   type="email"
                   name="email"
                   id="email"
+                  ref={EmailRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required={true}
@@ -66,6 +94,7 @@ const SignUp = () => {
                   type="text"
                   name="college"
                   id="college"
+                  ref={CollegeNameRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="your college name"
                   required={true}
@@ -80,6 +109,7 @@ const SignUp = () => {
                 <select
                   name="gender"
                   id="gender"
+                  ref={GenderRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   <option value="male" selected={true}>
                     Male
@@ -99,6 +129,7 @@ const SignUp = () => {
                   type="tel"
                   minLength={10}
                   maxLength={10}
+                  ref={MobileRef}
                   name="mobile"
                   id="mobile"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

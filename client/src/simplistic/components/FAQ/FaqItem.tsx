@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
-const FaqItem = ({ children, question, expanded = false }) => {
+const FaqItem = ({ children, question, expanded = false }: any) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
   return (
     <div className="shadow-lg single-faq mb-8 w-full sm:w-4/5 mx-auto rounded-lg border border-[#F3F4FE] bg-white p-4 sm:p-8 lg:px-6 xl:px-8">
