@@ -259,20 +259,20 @@ function GameComponent(props: Props) {
           setStopInteract={setStopInteract}
         />
       )}
+      {showMap && (
+        <Map
+          playerPosition={playerPosition}
+          teleport={teleport}
+          showMap={showMap}
+          setShowMap={setShowMap}
+        />
+      )}
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
             text={infoPromptText}
             setShowInfoPrompt={setShowInfoPrompt}
             isChoice={infoPromptType === 'ask'}></InfoPrompt>
-        )}
-        {showMap && (
-          <Map
-            playerPosition={playerPosition}
-            teleport={teleport}
-            showMap={showMap}
-            setShowMap={setShowMap}
-          />
         )}
         <div className="w-full">
           <MiniMap playerPosition={playerPosition} teleport={teleport} />
