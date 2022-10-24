@@ -19,7 +19,7 @@ const ResetPassword = () => {
       .then((data) => {
         if (data['success']) {
           console.log('Success');
-          navigate("/login");
+          navigate('/login');
         } else if (data['message'] === 'Invalid token!') {
           // Invalid Token
         } else console.log(data['message']); // Replace with Toast/Alert

@@ -2,20 +2,17 @@ import React, { useRef } from 'react';
 import AuthService from '../../services/AuthService';
 
 const ForgotPassword = () => {
-
   function ResetPasswordEmail(e: any) {
     e.preventDefault();
     const email = EmailRef.current.value;
     console.log(email);
-    AuthService.forgotPassword(email)
-      .then((data) => {
-        if (data['success']) {
-          console.log("Sucessfully Email Sent!");
-        }
-        else {
-          console.log(data);
-        }
-      })
+    AuthService.forgotPassword(email).then((data) => {
+      if (data['success']) {
+        console.log('Sucessfully Email Sent!');
+      } else {
+        console.log(data);
+      }
+    });
   }
   const EmailRef = useRef(document.createElement('input'));
 

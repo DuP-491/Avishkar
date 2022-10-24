@@ -173,5 +173,5 @@ export default {
         message: 'Please try again later!'
       };
     }
-  },
+  }
 };

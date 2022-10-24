@@ -15,6 +15,7 @@ const LogIn = () => {
       .then((data) => {
         if (data['success']) {
           Cookies.set('token', data['token']);
+          console.log('success');
         } else console.log(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
 
 const SignUp = () => {
-
   function LoggingIn(e: any) {
     e.preventDefault();
     const name = NameRef.current.value;
@@ -14,14 +13,14 @@ const SignUp = () => {
     AuthService.signIn(name, email, collegeName, gender, mobile)
       .then((data) => {
         if (data['success']) {
-          console.log("Success");
+          console.log('Success');
         } else console.log(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
         console.log('Please try again later!');
       });
   }
-  
+
   const NameRef = useRef(document.createElement('input'));
   const EmailRef = useRef(document.createElement('input'));
   const CollegeNameRef = useRef(document.createElement('input'));
@@ -51,7 +50,7 @@ const SignUp = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
             </h1>
-            <form className="space-y-4 md:space-y-6"  onSubmit={LoggingIn} method="POST">
+            <form className="space-y-4 md:space-y-6" onSubmit={LoggingIn} method="POST">
               <div>
                 <label
                   htmlFor="name"
@@ -110,7 +109,8 @@ const SignUp = () => {
                   name="gender"
                   id="gender"
                   ref={GenderRef}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  defaultValue="Male">
                   <option value="male" selected={true}>
                     Male
                   </option>
