@@ -53,6 +53,7 @@ function GameComponent(props: Props) {
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
   const [showInteractPrompt, setShowInteractPrompt] = useState(false);
   const [stopInteract, setStopInteract] = useState(false);
+  const [interactText, setInteractText] = useState('');
   const [infoPromptText, setInfoPromptText] = useState('');
   const [infoPromptType, setInfoPromptType] = useState('text');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
@@ -86,10 +87,14 @@ function GameComponent(props: Props) {
           setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
         });
-        game.instance?.events.on(EVENTS_NAME.interact, () => {
-          setShowInteractPrompt(true);
-          setStopInteract(false);
-        });
+        game.instance?.events.on(
+          EVENTS_NAME.interact,
+          (_scene: any, _name: string, text: string) => {
+            setInteractText(text);
+            setShowInteractPrompt(true);
+            setStopInteract(false);
+          }
+        );
         game.instance?.events.on(EVENTS_NAME.resetInteract, () => {
           // console.log('resetInteract', showInteractPrompt);
           setStopInteract(true);
@@ -180,6 +185,11 @@ function GameComponent(props: Props) {
     }
   };
 
+  const signUpSuccessCallback = () => {
+    // TOAST: Please check your email to verify your account
+    navigator('/');
+  };
+
   const onAuthFailure = () => {
     if (game) {
       game.instance?.scene.switch('cafe96', 'campus');
@@ -246,7 +256,11 @@ function GameComponent(props: Props) {
         </div>
       )}
       {showAuthPrompt && (
-        <AuthPrompt closePopup={closeAuthPrompt} authSuccessCallback={onAuthSuccess} />
+        <AuthPrompt
+          closePopup={closeAuthPrompt}
+          authSuccessCallback={onAuthSuccess}
+          signUpSuccessCallback={signUpSuccessCallback}
+        />
       )}
       {showComputer && (
         <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
@@ -257,6 +271,7 @@ function GameComponent(props: Props) {
           stopInteract={stopInteract}
           setShowInteractPrompt={setShowInteractPrompt}
           setStopInteract={setStopInteract}
+          interactText={interactText}
         />
       )}
       {showMap && (
@@ -299,7 +314,7 @@ function GameComponent(props: Props) {
       <div
         className="hidden"
         onKeyDown={(event: any) => {
-          if (event.key === 'W') handleOnMapIconClick;
+          if (event.key === 'M') handleOnMapIconClick();
         }}></div>
     </>
   );

@@ -53,6 +53,7 @@ function Map(props: Props) {
         className="absolute top-0 left-0 z-20 w-screen h-screen filter backdrop-blur-sm"
         onClick={handleClick}
         onKeyDown={(event: any) => {
+          console.log(event.key);
           if (event.key === 'Escape') {
             handleClick();
           }

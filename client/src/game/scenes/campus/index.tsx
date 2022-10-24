@@ -59,7 +59,7 @@ export class Campus extends Scene {
     this.initNPCs();
     this.initCamera();
 
-    this.physics.add.collider(this.player, this.layer, this.player.onGrass);
+    // this.physics.add.overlap(this.player, this.layer, this.player.onGrass);
     this.physics.add.collider(this.player, this.layer12);
     this.physics.add.collider(this.player, this.layer11);
     this.physics.add.collider(this.player, this.layer10);
@@ -297,7 +297,7 @@ export class Campus extends Scene {
     // const layer2 = this.map.createLayer(1, this.tileset2, 0, 0);
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
     // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
-    this.layer.setCollisionByProperty({ collides: true }, false);
+    // this.layer.setCollisionByProperty({ collides: true }, false);
     this.layer2.setCollisionByProperty({ collides: true }, true);
     this.layer3.setCollisionByProperty({ collides: true }, true);
     this.layer4.setCollisionByProperty({ collides: true }, true);
@@ -413,6 +413,17 @@ export class Campus extends Scene {
             this.game.events.emit(EVENTS_NAME.openComputer, computer.name);
           })
       );
+    });
+    computers.forEach((computer) => {
+      const compZone = this.add.zone(computer.x, computer.y, 64, 64).setOrigin(0.5, 0.5);
+      this.physics.overlap(this.player, compZone, () => {
+        this.game.events.emit(
+          EVENTS_NAME.interact,
+          this.scene.key,
+          '',
+          `${computer.name} : Click on computer for details`
+        );
+      });
     });
   }
 

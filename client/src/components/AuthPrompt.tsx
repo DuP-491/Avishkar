@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LoginBox from '../simplistic/components/Authentication/LoginBox';
 import SignupBox from '../simplistic/components/Authentication/SignupBox';
 function AuthPrompt(props: Props) {
-  const { closePopup, authSuccessCallback } = props;
+  const { closePopup, authSuccessCallback, signUpSuccessCallback } = props;
   const [showSignup, setShowSignup] = useState(false);
 
   return (
@@ -18,7 +18,7 @@ function AuthPrompt(props: Props) {
       {showSignup && (
         <SignupBox
           onCrossPress={closePopup}
-          onSignup={authSuccessCallback}
+          onSignup={signUpSuccessCallback}
           onToggle={() => setShowSignup(false)}
         />
       )}
@@ -28,7 +28,8 @@ function AuthPrompt(props: Props) {
 
 AuthPrompt.propTypes = {
   closePopup: PropTypes.func.isRequired,
-  authSuccessCallback: PropTypes.func.isRequired
+  authSuccessCallback: PropTypes.func.isRequired,
+  signUpSuccessCallback: PropTypes.func.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof AuthPrompt.propTypes>;
