@@ -14,7 +14,6 @@ const ResetPassword = () => {
       console.log('key===undefined');
       return;
     } else token = key;
-    console.log(password, token);
     AuthService.resetPassword(password, token)
       .then((data) => {
         if (data['success']) {
