@@ -11,6 +11,7 @@ body {
   user-select: none;
 }
 
+/* classes for the stroke text on homepage */
 .stroke-text{
   -webkit-text-stroke:5px white;
   -webkit-text-fill-color:transparent;
@@ -22,6 +23,27 @@ body {
 .stroke-text:hover{
   color: white;
   -webkit-text-fill-color: white;
+}
+
+/* classes for cards on department page */
+.stack__deco{
+  @apply absolute top-0 left-0 w-full h-full bg-current origin-[50%_100%] opacity-0 rotate-0 scale-100 translate-y-0 transition-all duration-300;
+}
+.stack__deco:hover
+{
+  scale: 1.05;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.title{
+  text-shadow: rgb(255 215 77 / 60%) -1px -1px 6px, rgb(124 127 255 / 60%) 1px 1px 6px;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

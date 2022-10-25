@@ -17,6 +17,8 @@ export class Campus extends Scene {
   // private loggedIn = false;
   private player!: Player;
   private map!: Tilemaps.Tilemap;
+  private keyM!: Phaser.Input.Keyboard.Key;
+  private keyEsc!: Phaser.Input.Keyboard.Key;
   private tileset!: Tilemaps.Tileset;
   private tileset2!: Tilemaps.Tileset;
   private tileset3!: Tilemaps.Tileset;
@@ -116,6 +118,14 @@ export class Campus extends Scene {
   private initMap(): void {
     // this.map = this.make.tilemap({ key: 'dungeon', tileWidth: 16, tileHeight: 16 });
     this.map = this.make.tilemap({ key: 'try5', tileWidth: 16, tileHeight: 16 });
+    this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+    this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyM.on('down', () => {
+      this.game.events.emit(EVENTS_NAME.openMap);
+    });
+    this.keyEsc.on('down', () => {
+      this.game.events.emit(EVENTS_NAME.closeMap);
+    });
     // this.tileset = this.map.addTilesetImage('dungeon', 'tiles');
     this.tileset = this.map.addTilesetImage('SpriteChan', 'tileSpriteChan', 16, 16, 0, 0);
     this.tileset2 = this.map.addTilesetImage('Interior', 'tileInterior', 16, 16, 0, 0);

@@ -14,6 +14,7 @@ import InteractPrompt from '../components/Interact';
 import Computer from '../components/Computer';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -103,6 +104,12 @@ function GameComponent(props: Props) {
           setDepartment(_department);
           setShowComputer(true);
         });
+        game.instance?.events.on(EVENTS_NAME.openMap, () => {
+          setShowMap(true);
+        });
+        game.instance?.events.on(EVENTS_NAME.closeMap, () => {
+          setShowMap(false);
+        });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           console.log('logout');
           Cookies.remove('token');
@@ -175,6 +182,7 @@ function GameComponent(props: Props) {
 
   const onAuthSuccess = () => {
     if (game) {
+      toast.success('Logged in successfully!');
       game?.instance?.events.emit(EVENTS_NAME.login);
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
@@ -192,6 +200,7 @@ function GameComponent(props: Props) {
 
   const onAuthFailure = () => {
     if (game) {
+      toast.success('Could not authenticate! Please login again.');
       game.instance?.scene.switch('cafe96', 'campus');
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
@@ -311,11 +320,7 @@ function GameComponent(props: Props) {
           />
         </div>
       </div>
-      <div
-        className="hidden"
-        onKeyDown={(event: any) => {
-          if (event.key === 'M') handleOnMapIconClick();
-        }}></div>
+      <div className="hidden"></div>
     </>
   );
 }
