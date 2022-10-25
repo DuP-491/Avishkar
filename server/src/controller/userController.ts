@@ -3,11 +3,22 @@ import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
-const getUserDetails = async (req: Request, res: Response) => {
-    const details = req.app.locals;
+const getUserDetails = async (req: Request, res: Response, next) => {
+    const { id } = req.app.locals;
 
-    res.statusCode = 200;
-    res.json({ details, success: true });
+    try {
+        const details = await prisma.user.findFirst({
+            where: { id },
+            select: { id: true, name: true, email: true, username: true, mobile: true, collegeName: true, resumeLink: true, role: true, isFeePaid: true, score: true, createdAt: true, updatedAt: true }
+        });
+
+        res.statusCode = 200;
+        res.json({ details, success: true });
+    }
+    catch (error) {
+        console.log("error occured in the getUserDetails() controller!");
+        next(error);
+    }
 };
 
 const updateUserDetails = async (req: Request, res: Response, next) => {
@@ -24,11 +35,7 @@ const updateUserDetails = async (req: Request, res: Response, next) => {
             });
             if (user !== null) {
                 res.statusCode = 400;
-                return res.json({
-                    error: "bad request",
-                    message: "username is already taken!",
-                    success: false,
-                });
+                return res.json({ error: "bad request", message: "username is already taken!", success: false });
             }
         }
         // updating the sent details
@@ -88,16 +95,21 @@ const updateTeam = async (req: Request, res: Response, next) => {
         const team = await prisma.team.findFirst({
             where: { id: teamId },
         });
+        const participation = await prisma.participation.findFirst({ where: { teamId } });
 
         if (team === null) {
             // case when team doesn't exists
             res.statusCode = 404;
-            res.json({ error: "team not found!", success: false });
+            res.json({ error: "team not found!", message: "team not found!", success: false });
         } else if (team.leader !== id) {
             // case when another person than leader tries to update details
             res.statusCode = 401;
-            res.json({ error: "not authorised! only leader can update a team!", success: false });
-        } else {
+            res.json({ error: "unauthorized", message: "not authorised! only leader can update a team!", success: false });
+        } else if (participation) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "cannot update as team has already participated in an event!", success: false });
+        }
+        else {
             await prisma.team.update({
                 where: { id: teamId },
                 data: { name },
@@ -122,11 +134,11 @@ const removeTeam = async (req: Request, res: Response, next) => {
         if (team === null) {
             // case when team doesn't exists
             res.statusCode = 404;
-            res.json({ error: "team not found!", success: false });
+            res.json({ error: "not found", message: "team not found!", success: false });
         } else if (team.leader !== id) {
             // case when another person than leader tries to update details
             res.statusCode = 401;
-            res.json({ error: "not authorised! only leader can delete a team!", success: false });
+            res.json({ error: "unauthorized", message: "not authorised! only leader can delete a team!", success: false });
         } else {
             // deleting all the members of the team
             await prisma.teamMember.deleteMany({
@@ -150,6 +162,30 @@ const removeTeam = async (req: Request, res: Response, next) => {
     }
 };
 
+const getTeamMembers = async (req: Request, res: Response, next) => {
+    const { id } = req.params;
+    try {
+        const team = await prisma.team.findFirst({
+            where: { id: Number(id) },
+        });
+        if (team === null) {
+            // case when team doesn't exists
+            res.statusCode = 404;
+            res.json({ error: "not found", message: "team not found!", success: false });
+        } else {
+            const members = await prisma.teamMember.findMany({
+                where: { teamId: team.id },
+                include: { user: { select: { id: true, name: true, username: true, collegeName: true } } },
+            });
+            res.statusCode = 200;
+            res.json({ members, success: true });
+        }
+    } catch (error) {
+        console.log("error occured in the getTeamMembers() controller!");
+        next(error);
+    }
+};
+
 const getTeamInvite = async (req: Request, res: Response, next) => {
     const { id } = req.app.locals;
     try {
@@ -166,30 +202,6 @@ const getTeamInvite = async (req: Request, res: Response, next) => {
     }
 };
 
-const getTeamMembers = async (req: Request, res: Response, next) => {
-    const { id } = req.params;
-    try {
-        const team = await prisma.team.findFirst({
-            where: { id: Number(id) },
-        });
-        if (team === null) {
-            // case when team doesn't exists
-            res.statusCode = 404;
-            res.json({ error: "team not found!", success: false });
-        } else {
-            const members = await prisma.teamMember.findMany({
-                where: { teamId: team.id },
-                include: { user: true },
-            });
-            res.statusCode = 200;
-            res.json({ members, success: true });
-        }
-    } catch (error) {
-        console.log("error occured in the getTeamMembers() controller!");
-        next(error);
-    }
-};
-
 const sendInviteToUser = async (req: Request, res: Response, next) => {
     const { teamId, username } = req.body;
     const { id } = req.app.locals;
@@ -201,15 +213,15 @@ const sendInviteToUser = async (req: Request, res: Response, next) => {
         if (team === null || user === null) {
             // case when team or user doesn't exist
             res.statusCode = 404;
-            res.json({ error: "user / team not found!", success: false });
+            res.json({ error: "not found", message: "user / team not found!", success: false });
         } else if (participation) {
             // check if the team has already participated in any event
             res.statusCode = 400;
-            res.json({ error: "cannot send invite, team has already participated in events!", success: false });
+            res.json({ error: "bad request", message: "cannot send invite, team has already participated in events!", success: false });
         } else if (team.leader !== id) {
             // check if the person inviting is leader of the team
             res.statusCode = 401;
-            res.json({ error: "not authorised! only leader can send invite to a player!", success: false });
+            res.json({ error: "unauthorized", message: "not authorised! only leader can send invite to a player!", success: false });
         } else {
             await prisma.teamMember.create({
                 data: { userId: user.id, teamId },
@@ -242,7 +254,7 @@ const respondToTeamInvite = async (req: Request, res: Response, next) => {
 
             if (teamInvite === null || team === null) {
                 res.statusCode = 404;
-                res.json({ error: "team or invite not found!", success: false });
+                res.json({ error: "not found", message: "team or invite not found!", success: false });
             } else {
                 if (status === "ACCEPTED") {
                     const newSize = team.size + 1;
@@ -284,18 +296,22 @@ const deleteUserTeamInvite = async (req: Request, res: Response, next) => {
         if (teamInvite === null || team === null) {
             // case when team or invite doesn't exist
             res.statusCode = 404;
-            res.json({ error: "team member / invite not found!", success: false });
+            res.json({ error: "not found", message: "team member / invite not found!", success: false });
         } else if (participation) {
             // check if the team has not already participated in any event
             res.statusCode = 400;
             res.json({
-                error: "cannot delete member / invite, team has already participated in events!",
+                error: "bad request",
+                message: "cannot delete member / invite, team has already participated in events!",
                 success: false,
             });
+        } else if (userId === team.leader) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "cannot remove the leader of the team!", success: false });
         } else if (id !== team.leader) {
             // check if the request was made by person other than the leader
             res.statusCode = 401;
-            res.json({ error: "not authorised! only leader can send invite to a player!", success: false });
+            res.json({ error: "unauthorized", message: "not authorised! only leader can delete invite to a player!", success: false });
         } else {
             await prisma.teamMember.delete({ where: { userId_teamId: { userId, teamId } } });
             if (teamInvite.status === "ACCEPTED") {
@@ -327,19 +343,19 @@ const eventParticipate = async (req: Request, res: Response, next) => {
         if (team === null || event === null) {
             // case when team or event doesn't exist
             res.statusCode = 404;
-            res.json({ error: "team / event not found!", success: false });
+            res.json({ error: "not found", message: "team / event not found!", success: false });
         } else if (team.leader !== id) {
             // check if the request was made by person other than the leader
             res.statusCode = 401;
-            res.json({ error: "only team leader can add participation!", success: false });
+            res.json({ error: "unauthorized", message: "only team leader can add participation!", success: false });
         } else if (pendingInvite) {
             // check if there is any pending invite for the participating team
             res.statusCode = 400;
-            res.json({ error: "team invites are still pending!", success: false });
+            res.json({ error: "bad request", message: "team invites are still pending!", success: false });
         } else if (team.size > event.maxTeamSize || team.size < event.minTeamSize) {
             // checking the appropriate size of the team
             res.statusCode = 400;
-            res.json({ error: "team size constraints don't match with the participating team!", success: false });
+            res.json({ error: "bad request", message: "team size constraints don't match with the participating team!", success: false });
         } else {
             await prisma.participation.create({ data: { teamId, eventId } });
             res.statusCode = 200;
@@ -360,11 +376,11 @@ const eventUnparticipate = async (req: Request, res: Response, next) => {
         if (team === null) {
             // case when team doesn't exist
             res.statusCode = 404;
-            res.json({ error: "team not found!", success: false });
+            res.json({ error: "not found", message: "team not found!", success: false });
         } else if (team.leader !== id) {
             // check if the request was made by person other than the leader
             res.statusCode = 401;
-            res.json({ error: "only team leader can add participation!", success: false });
+            res.json({ error: "unauthorized", message: "only team leader can add participation!", success: false });
         } else {
             await prisma.participation.delete({
                 where: { teamId_eventId: { teamId, eventId } },
@@ -374,6 +390,24 @@ const eventUnparticipate = async (req: Request, res: Response, next) => {
         }
     } catch (error) {
         console.log("error occured in the eventUnparticipate() controller!");
+        next(error);
+    }
+};
+
+const eventParticipatingTeam = async (req: Request, res: Response, next) => {
+    const eventId = req.params.id;
+
+    try {
+        const participatingTeam = await prisma.user.findMany({
+            include: {
+                TeamMember: true,
+            },
+        });
+
+        res.statusCode = 200;
+        res.json({ participatingTeam, success: true });
+    } catch (error) {
+        console.log("error occured in the eventParticipatingTeam() controller!");
         next(error);
     }
 };
@@ -391,4 +425,5 @@ export {
     deleteUserTeamInvite,
     eventParticipate,
     eventUnparticipate,
+    eventParticipatingTeam
 };

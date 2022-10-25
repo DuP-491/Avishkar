@@ -4,6 +4,7 @@ import {
     getDepartmentCoordinators,
     getDepartmentEvents,
     getEventCoordinators,
+    getEventSponsors,
     getUserLeaderboard,
 } from "../controller/mainController";
 
@@ -22,6 +23,8 @@ router.post("/event", getDepartmentEvents);
 router.post("/dept-coordie", getDepartmentCoordinators);
 
 router.post("/event-coordie", getEventCoordinators);
+
+router.post("/event-sponsor", getEventSponsors);
 
 router.get("/leaderboard", getUserLeaderboard);
 

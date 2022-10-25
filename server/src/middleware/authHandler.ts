@@ -13,17 +13,11 @@ const verifyOptions = {
     algorithm: ["RS256"],
 };
 
-// returns if r1 has a higher priority than r2
-function comparePriority(r1: string, r2: string) {
-    if (r1 === Role.ADMIN) return true;
-    else if (r1 === Role.COORDIE) {
-        if (r2 === Role.ADMIN) return false;
-        else return true;
-    } else {
-        if (r2 === Role.USER) return true;
-        else return false;
-    }
-}
+const rolePriority = {
+    "ADMIN": 0,
+    "COORDIE": 1,
+    "USER": 2
+};
 
 export async function checkUserAuthorization(req: Request, res: Response, next) {
     try {
@@ -47,7 +41,7 @@ export async function checkUserAuthorization(req: Request, res: Response, next) 
 }
 
 export function checkCoordieAuthrorization(req: Request, res: Response, next) {
-    if (!comparePriority(req.app.locals.role, Role.COORDIE)) {
+    if (rolePriority[req.app.locals.role] > rolePriority["COORDIE"]) {
         res.statusCode = 401;
         res.json({
             error: "unauthorised user",
@@ -58,7 +52,7 @@ export function checkCoordieAuthrorization(req: Request, res: Response, next) {
 }
 
 export function checkAdminAuthorization(req: Request, res: Response, next) {
-    if (!comparePriority(req.app.locals.role, Role.ADMIN)) {
+    if (rolePriority[req.app.locals.role] > rolePriority["ADMIN"]) {
         res.statusCode = 401;
         res.json({
             error: "unauthorised user",

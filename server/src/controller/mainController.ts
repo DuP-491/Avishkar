@@ -66,10 +66,25 @@ const getEventCoordinators = async (req: Request, res: Response, next) => {
     }
 };
 
+const getEventSponsors = async (req: Request, res: Response, next) => {
+    // get a list of all the event sponsors of an event
+    const eventId = req.body.eventId;
+    try {
+        const eventSponsors = await prisma.eventSponsor.findMany({ where: { eventId } });
+
+        res.statusCode = 200;
+        res.json({ eventSponsors, success: true });
+    } catch (error) {
+        console.log("error occured in the getEventSponsors() controller!");
+        next(error);
+    }
+};
+
 const getUserLeaderboard = async (req: Request, res: Response, next) => {
     // get the user leaderboard with top scores in the daily puzzles
     try {
         const topScores = await prisma.user.findMany({
+            select: { id: true, name: true, score: true, username: true, email: true, role: true },
             take: 10,
             orderBy: {
                 score: "desc",
@@ -89,5 +104,6 @@ export {
     getDepartmentEvents,
     getDepartmentCoordinators,
     getEventCoordinators,
+    getEventSponsors,
     getUserLeaderboard,
 };
