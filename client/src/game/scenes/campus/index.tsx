@@ -418,7 +418,7 @@ export class Campus extends Scene {
           .setInteractive({
             useHandCursor: true
           })
-          .setDepth(2)
+          // .setDepth(2)
           .on('pointerdown', () => {
             this.game.events.emit(EVENTS_NAME.openComputer, computer.name);
           })

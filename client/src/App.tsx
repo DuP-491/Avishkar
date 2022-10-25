@@ -29,8 +29,16 @@ function App() {
           <Route index element={<Simplistic />} />
           <Route path="reset-password" element={<Simplistic />} />
           <Route path="game" element={<GameLayout />} />
-          <Route path="tab" element={<NewTablet is_profile={false} />} />
-          <Route path="profile" element={<NewTablet is_profile={true} />} />
+          <Route
+            path="tab"
+            element={
+              <NewTablet is_profile={false} logout={() => {}} closePopup={() => {}} key="" />
+            }
+          />
+          <Route
+            path="profile"
+            element={<NewTablet is_profile={true} logout={() => {}} closePopup={() => {}} key="" />}
+          />
         </Route>
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/team" element={<TeamPage />} />

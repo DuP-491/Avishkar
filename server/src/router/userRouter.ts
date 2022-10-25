@@ -12,6 +12,7 @@ import {
     deleteUserTeamInvite,
     getTeamInvite,
     getTeamMembers,
+    eventParticipatingTeam,
 } from "../controller/userController";
 import { checkUserAuthorization } from "../middleware/authHandler";
 
@@ -23,7 +24,10 @@ router.use((req: Request, res: Response, next) => {
     next();
 });
 
-router.route("/").get(checkUserAuthorization, getUserDetails).put(checkUserAuthorization, updateUserDetails);
+router
+    .route("/")
+    .get(checkUserAuthorization, getUserDetails)
+    .put(checkUserAuthorization, updateUserDetails);
 
 router
     .route("/team")
@@ -44,5 +48,7 @@ router
     .route("/participate")
     .post(checkUserAuthorization, eventParticipate)
     .delete(checkUserAuthorization, eventUnparticipate);
+
+router.route("/participate/:id").get(checkUserAuthorization, eventParticipatingTeam);
 
 export default router;

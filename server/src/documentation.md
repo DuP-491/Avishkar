@@ -58,6 +58,32 @@
     > { eventCoordies, success } - OK reponse
     > { error, message, success } - ERROR response
 
+    ***
+
+5. **Get Event Sponsors**
+   **API Path :** /event-sponsor
+   **API Method :** POST
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { eventId (string) }
+
+    > RESPONSE BODY :
+    > { eventSponsors, success } - OK reponse
+    > { error, message, success } - ERROR response
+
+    ***
+
+6. **Get Score Leaderboard**
+   **API Path :** /leaderboard
+   **API Method :** GET
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > {  }
+
+    > RESPONSE BODY :
+    > { topScores, success } - OK reponse
+    > { error, message, success } - ERROR response
+
 ---
 
 ### Authentication APIs
@@ -290,7 +316,7 @@
 
 ### Admin APIs
 
-**WBase API Path :** /admin
+**Base API Path :** /admin
 
 1. **Create Department Event**
    **API Path :** /dept-event
@@ -362,7 +388,21 @@
 
     ***
 
-6. **Delete Event**
+6. **Update Event**
+   **API Path :** /event
+   **API Method :** PUT
+   **API Extras :** only department coordinator can update event
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { name (string), tagline (string), details (string), criteria (string), rules (string), psLink (string), poster (string), maxTeamSize (number), minTeamSize (number) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+7. **Delete Event**
    **API Path :** /event
    **API Method :** DELETE
    **API Extras :** only department coordinator can delete event
@@ -376,13 +416,13 @@
 
     ***
 
-7. **Create Event Coordinator**
+8. **Create Event Coordinator**
    **API Path :** /event-coordie
    **API Method :** POST
    **API Extras :** only department coordinator can create them
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { userId (string), eventId (string) }
+    > { email (string), eventId (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response
@@ -390,13 +430,55 @@
 
     ***
 
-8. **Delete Department Coordinator**
+9. **Delete Event Coordinator**
    **API Path :** /event-coordie
    **API Method :** DELETE
    **API Extras :** only department coordinator can delete them
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { userId (string), eventId (string) }
+    > { email (string), eventId (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+10. **Add Event Sponsor**
+   **API Path :** /event-sponsor
+   **API Method :** POST
+   **API Extras :** only department coordinator can add event sponsor
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { name (string), poster (string), title ({ true, false }), eventId (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+11. **Update Event Sponsor**
+   **API Path :** /event-sponsor
+   **API Method :** PUT
+   **API Extras :** only department coordinator can update poster and title of event sponsor
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { name (string), poster (string), title ({ true, false }), eventId (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+12. **Delete Event Sponsor**
+   **API Path :** /event-sponsor
+   **API Method :** DELETE
+   **API Extras :** only department coordinator can delete them
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { name (string), eventId (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response
