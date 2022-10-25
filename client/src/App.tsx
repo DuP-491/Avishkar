@@ -7,6 +7,10 @@ import GameLayout from './GameLayout';
 import FaqPage from './simplistic/components/FAQ';
 import TeamPage from './simplistic/components/Team';
 import SponsorPage from './simplistic/components/Sponsor';
+import DepartmentList from './simplistic/components/Department';
+import EventList from './simplistic/components/Event';
+import UserProfile from './simplistic/components/Profile';
+import EventPage from './simplistic/components/Event/EventPage';
 import LogIn from './simplistic/components/Authentication/LogIn';
 import SignUp from './simplistic/components/Authentication/SignUp';
 import NotFound from './simplistic/components/Common/NotFound';
@@ -30,6 +34,15 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset/:token" element={<ResetPassword />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/department">
+          <Route index element={<DepartmentList />} />
+          <Route path=":dept">
+            <Route index element={<EventList />} />
+            <Route path=":event" element={<EventPage />} />
+          </Route>
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
