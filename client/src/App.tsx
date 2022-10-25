@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Simplistic from './simplistic';
 import GameLayout from './GameLayout';
+import NewTablet from './simplistic/components/NewTablet';
 /* eslint-enable */
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
           <Route index element={<Simplistic />} />
           <Route path="reset-password" element={<Simplistic />} />
           <Route path="game" element={<GameLayout />} />
+          <Route path="tab" element={<NewTablet is_profile={false} />} />
+          <Route path="profile" element={<NewTablet is_profile={true} />} />
         </Route>
       </Routes>
     </Router>
