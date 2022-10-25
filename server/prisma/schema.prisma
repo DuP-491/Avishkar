@@ -82,6 +82,7 @@ model Event {
   updatedAt        DateTime           @updatedAt
   EventCoordinator EventCoordinator[]
   Participation    Participation[]
+  EventSponsor     EventSponsor[]
 }
 
 model EventCoordinator {
@@ -118,10 +119,20 @@ model TeamMember {
 }
 
 model Participation {
-  team    Team   @relation(fields: [teamId], references: [id])
-  teamId  Int
-  event   Event  @relation(fields: [eventId], references: [id])
-  eventId String
+  team     Team   @relation(fields: [teamId], references: [id])
+  teamId   Int    
+  event    Event  @relation(fields: [eventId], references: [id])
+  eventId  String
 
   @@id([teamId, eventId])
+}
+
+model EventSponsor {
+  event    Event    @relation(fields: [eventId], references: [id])
+  eventId  String   
+  name     String   
+  poster   String?  
+  title    Boolean  @default(false)
+
+  @@id([eventId, name])
 }

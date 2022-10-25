@@ -36,14 +36,16 @@ const removeDepartmentEvent = async (req: Request, res: Response, next) => {
 const addDepartmentCoordinator = async (req: Request, res: Response, next) => {
     const { userId, deptEventId } = req.body;
     try {
+        const user = await prisma.user.findFirst({ where: { id: userId } });
         await prisma.departmentCoordinator.create({
             data: { userId, deptEventId },
         });
 
-        await prisma.user.update({
-            where: { id: userId },
-            data: { role: "COORDIE" },
-        });
+        if (user.role === "USER") {
+            await prisma.user.update({ 
+                where: { id: userId }, data: { role: "COORDIE" },
+            });
+        }
 
         res.statusCode = 200;
         res.json({ message: "user promoted to department coordinator!", success: true });
@@ -56,13 +58,16 @@ const addDepartmentCoordinator = async (req: Request, res: Response, next) => {
 const removeDepartmentCoordinator = async (req: Request, res: Response, next) => {
     const { userId, deptEventId } = req.body;
     try {
+        const user = await prisma.user.findFirst({ where: { id: userId } });
         await prisma.departmentCoordinator.delete({
             where: { userId_deptEventId: { userId, deptEventId } },
         });
-        await prisma.user.update({
-            where: { id: userId },
-            data: { role: "USER" },
-        });
+
+        if (user.role !== "ADMIN") {
+            await prisma.user.update({
+                where: { id: userId }, data: { role: "USER" },
+            });
+        }
 
         res.statusCode = 200;
         res.json({ message: "user demoted to regular user!", success: true });
@@ -87,6 +92,22 @@ const addEvent = async (req: Request, res: Response, next) => {
     }
 };
 
+const updateEvent = async (req: Request, res: Response, next) => {
+    const { id, name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, poster } = req.body;
+    try {
+        await prisma.event.update({
+            where: { id },
+            data: { name, tagline, details, criteria, rules, psLink, maxTeamSize, minTeamSize, poster },
+        });
+
+        res.statusCode = 200;
+        res.json({ message: "event updated!", success: true });
+    } catch (error) {
+        console.log("error occured in the updateEvent() controller!");
+        next(error);
+    }
+};
+
 const removeEvent = async (req: Request, res: Response, next) => {
     const { id } = req.body;
     try {
@@ -103,14 +124,21 @@ const removeEvent = async (req: Request, res: Response, next) => {
 };
 
 const addEventCoordinator = async (req: Request, res: Response, next) => {
-    const { userId, eventId } = req.body;
+    const { email, eventId } = req.body;
     try {
-        await prisma.eventCoordinator.create({
-            data: { userId, eventId },
-        });
+        const user = await prisma.user.findFirst({ where: { email } });
+        if (user === null) {
+            res.statusCode = 404;
+            res.json({ error: "not found", message: "user with this email doesn't exist!", success: false });
+        }
+        else {
+            await prisma.eventCoordinator.create({
+                data: { userId: user.id, eventId },
+            });
 
-        res.statusCode = 200;
-        res.json({ message: "user added as event coordinator!", success: true });
+            res.statusCode = 200;
+            res.json({ message: "user added as event coordinator!", success: true });
+        }
     } catch (error) {
         console.log("error occured in the addEventCoordinator() controller!");
         next(error);
@@ -118,14 +146,67 @@ const addEventCoordinator = async (req: Request, res: Response, next) => {
 };
 
 const removeEventCoordinator = async (req: Request, res: Response, next) => {
-    const { userId, eventId } = req.body;
+    const { email, eventId } = req.body;
     try {
-        await prisma.eventCoordinator.delete({
-            where: { userId_eventId: { userId, eventId } },
+        const user = await prisma.user.findFirst({ where: { email } });
+        if (user === null) {
+            res.statusCode = 404;
+            res.json({ error: "not found", message: "user with this email doesn't exist!", success: false });
+        }
+        else {
+            await prisma.eventCoordinator.delete({
+                where: { userId_eventId: { userId: user.id, eventId } },
+            });
+
+            res.statusCode = 200;
+            res.json({ message: "user removed as event coordinator!", success: true });
+        }
+    } catch (error) {
+        console.log("error occured in the removeDepartmentCoordinator() controller!");
+        next(error);
+    }
+};
+
+const addEventSponsor = async (req: Request, res: Response, next) => {
+    const { name, poster, title, eventId } = req.body;
+    try {
+        await prisma.eventSponsor.create({
+            data: { name, eventId, title, poster },
         });
 
         res.statusCode = 200;
-        res.json({ message: "user removed from event coordinator!", success: true });
+        res.json({ message: "event sponsor added!", success: true });
+    } catch (error) {
+        console.log("error occured in the addEventSponsor() controller!");
+        next(error);
+    }
+};
+
+const updateEventSponsor = async (req: Request, res: Response, next) => {
+    const { name, poster, title, eventId } = req.body;
+    try {
+        await prisma.eventSponsor.update({
+            where: { eventId_name: { eventId, name } },
+            data: { title, poster },
+        });
+
+        res.statusCode = 200;
+        res.json({ message: "event sponsor updated!", success: true });
+    } catch (error) {
+        console.log("error occured in the updateEventSponsor() controller!");
+        next(error);
+    }
+};
+
+const removeEventSponsor = async (req: Request, res: Response, next) => {
+    const { name, eventId } = req.body;
+    try {
+        await prisma.eventSponsor.delete({
+            where: { eventId_name: { eventId, name } },
+        });
+
+        res.statusCode = 200;
+        res.json({ message: "event sponsor removed!", success: true });
     } catch (error) {
         console.log("error occured in the removeDepartmentCoordinator() controller!");
         next(error);
@@ -167,8 +248,12 @@ export {
     addDepartmentCoordinator,
     removeDepartmentCoordinator,
     addEvent,
+    updateEvent,
     removeEvent,
     addEventCoordinator,
     removeEventCoordinator,
+    addEventSponsor,
+    updateEventSponsor,
+    removeEventSponsor,
     getParticipationInEvent,
 };

@@ -5,10 +5,14 @@ import {
     removeDepartmentCoordinator,
     removeDepartmentEvent,
     addEvent,
+    updateEvent,
     removeEvent,
     addEventCoordinator,
     removeEventCoordinator,
     getParticipationInEvent,
+    addEventSponsor,
+    removeEventSponsor,
+    updateEventSponsor,
 } from "../controller/adminController";
 import { checkAdminAuthorization, checkCoordieAuthrorization, checkUserAuthorization } from "../middleware/authHandler";
 
@@ -33,13 +37,22 @@ router
 router
     .route("/event")
     .post(checkUserAuthorization, checkCoordieAuthrorization, addEvent)
+    .put(checkUserAuthorization, checkCoordieAuthrorization, updateEvent)
     .delete(checkUserAuthorization, checkCoordieAuthrorization, removeEvent);
 
-router.route("/event/:eventId").get(checkUserAuthorization, checkCoordieAuthrorization, getParticipationInEvent);
+router
+    .route("/event/:eventId")
+    .get(checkUserAuthorization, checkCoordieAuthrorization, getParticipationInEvent);
 
 router
     .route("/event-coordie")
     .post(checkUserAuthorization, checkCoordieAuthrorization, addEventCoordinator)
     .delete(checkUserAuthorization, checkCoordieAuthrorization, removeEventCoordinator);
+
+router
+    .route("/event-sponsor")
+    .post(checkUserAuthorization, checkCoordieAuthrorization, addEventSponsor)
+    .put(checkUserAuthorization, checkCoordieAuthrorization, updateEventSponsor)
+    .delete(checkUserAuthorization, checkCoordieAuthrorization, removeEventSponsor);
 
 export default router;
