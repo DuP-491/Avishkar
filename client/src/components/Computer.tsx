@@ -1,24 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EventsTab from '../simplistic/components/EventsTab';
-import ProfilePage from '../simplistic/components/Teams';
+import NewTablet from '../simplistic/components/NewTablet';
 function Computer(props: Props) {
   const { closePopup, department, logout } = props;
 
   return (
     <div className="z-40 flex items-center justify-center w-full h-full backdrop-blur-sm">
-      {department !== 'teams' && (
-        <EventsTab defaultDepartment={department} onCrossPress={closePopup} />
-      )}
-      {department === 'teams' && (
-        <ProfilePage
-          onCrossPress={closePopup}
-          onInvalidToken={() => {
-            console.log('Invalid token');
-            logout();
-          }}
-        />
-      )}
+      <NewTablet
+        key={department != 'profile' ? department : null}
+        is_profile={department == 'profile'}
+        logout={logout}
+        closePopup={closePopup}
+      />
     </div>
   );
 }

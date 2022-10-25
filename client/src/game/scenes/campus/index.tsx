@@ -427,6 +427,7 @@ export class Campus extends Scene {
     computers.forEach((computer) => {
       const compZone = this.add.zone(computer.x, computer.y, 64, 64).setOrigin(0.5, 0.5);
       this.physics.overlap(this.player, compZone, () => {
+        console.log('overlap');
         this.game.events.emit(
           EVENTS_NAME.interact,
           this.scene.key,

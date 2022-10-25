@@ -5,12 +5,11 @@ import tabletBg from '../../images/tablet_bg.png';
 import defaultPfp from '../../images/default_pfp.png';
 import UserService from '../services/UserService';
 import Cookies from 'js-cookie';
+import PropTypes from 'prop-types';
 
-interface NewTabletProps {
-  is_profile: Boolean;
-}
-
-const NewTablet = ({ is_profile }: NewTabletProps) => {
+function NewTablet(props: NewTabletProps) {
+  const { is_profile, logout, closePopup } = props;
+  console.log(logout, closePopup);
   const APP_ICONS = [
     'https://i.imgur.com/vSvFDH7.jpg',
     'https://i.imgur.com/M6LcSPu.jpg',
@@ -966,6 +965,15 @@ const NewTablet = ({ is_profile }: NewTabletProps) => {
       </div>
     </>
   );
+}
+
+NewTablet.propTypes = {
+  key: PropTypes.string,
+  is_profile: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
+  closePopup: PropTypes.func.isRequired
 };
+
+type NewTabletProps = PropTypes.InferProps<typeof NewTablet.propTypes>;
 
 export default NewTablet;

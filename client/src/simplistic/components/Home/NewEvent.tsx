@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const NewEvent = ({ name, desc, redirectTo }) => {
+function NewEvent(props: Props) {
+  const { name, desc, redirectTo } = props;
   return (
     <div className="max-w-sm p-4 text-white bg-gray-800">
       <h2 className="text-4xl font-semibold capitalize title">{name}</h2>
@@ -14,6 +16,14 @@ const NewEvent = ({ name, desc, redirectTo }) => {
       </Link>
     </div>
   );
+}
+
+NewEvent.propTypes = {
+  name: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
+  redirectTo: PropTypes.string.isRequired
 };
+
+type Props = PropTypes.InferProps<typeof NewEvent.propTypes>;
 
 export default NewEvent;
