@@ -123,7 +123,7 @@ const index = () => {
               <Card imgsrc={MaticIMG} name="Matic" bgc="white" />
               <Card imgsrc={GithubIMG} name="Github" bgc="white" />
               <Card imgsrc={SkillenzaIMG} name="Skillenza" bgc="#3088f4" />
-              <Card imgsrc={SSGIMG} name="SSG" bgc="black" />
+              <Card imgsrc={SSGIMG} name="SSG" bgc="" />
               <Card imgsrc={ScalerEdgeIMG} name="Scaler Edge" bgc="white" />
               <Card imgsrc={HackerEarthIMG} name="HackerEarth" bgc="white" />
               <Card imgsrc={CodingBlocksIMG} name="Coding Blocks" bgc="white" />
