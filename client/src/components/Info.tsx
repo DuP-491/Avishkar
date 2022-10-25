@@ -8,7 +8,7 @@ function Info(props: Props) {
   const howTOPlay = [
     'You can use space key to attack.',
     'You can use E key to interact with interactable NPCs.',
-    'A tablet is placed at the demartments conducting various events, you can use the tablet for creating teams and regitering for events.',
+    'A tablet is placed at the departments conducting various events, you can use the tablet for creating teams and regitering for events.',
     'You can visit cafe 96 for team creation.'
   ];
   const events = [
