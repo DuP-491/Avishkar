@@ -21,7 +21,7 @@ function Info(props: Props) {
     'GENESIS',
     'OLIGOPOLY',
     'MONOPOLY',
-    'ROBOMANIA',
+    'GNOTALKS',
     'AERODYNAMIX',
     'ASTROWING',
     'KREEDOMANIA',

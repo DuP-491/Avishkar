@@ -348,7 +348,7 @@ function Map(props: Props) {
                 </Tooltip.Trigger>
                 <Tooltip.Content>
                   <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
-                    <div className="">ROBOMANIA</div>
+                    <div className="">GNOTALKS</div>
                     <div className="text-blue-900">{eventQuotes[9]}</div>
                   </div>
                   {/* <Tooltip.Arrow height={6} width={10} /> */}

@@ -99,10 +99,10 @@ export const npcData: {
   },
   'campus-65': {
     name: 'Mr. Sanjay',
-    location: 'outside MP HALL | ROBOMANIA',
+    location: 'outside MP HALL | GNOTALKS',
     type: 'text',
     character: 'Guard',
-    text: `This is MP HALL of MNNIT Allahabd.~Please visit here for registering in ROBOMANIA.~ROBOMANIA is a quest for top notch computer science students.`
+    text: `This is MP HALL of MNNIT Allahabd.~Please visit here for registering in GNOTALKS.~GNOTALKS is an event where experienced speakers will talk about their experiences.`
   },
   'campus-66': {
     name: 'Mr. Ratanlal',
