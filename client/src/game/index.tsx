@@ -70,6 +70,10 @@ function GameComponent(props: Props) {
   // }, []);
 
   useEffect(() => {
+    if (localStorage.getItem('firstload') == null || localStorage.getItem('firstload') == 'true') {
+      setShowInfo(true);
+      localStorage.setItem('firstload', 'false');
+    }
     if (game) {
       setTimeout(() => {
         // TODO: CHECK AUTH STATUS HERE
@@ -101,6 +105,7 @@ function GameComponent(props: Props) {
           setStopInteract(true);
         });
         game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
+          console.log(_department);
           setDepartment(_department);
           setShowComputer(true);
         });

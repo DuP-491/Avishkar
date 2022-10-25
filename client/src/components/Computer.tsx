@@ -7,7 +7,7 @@ function Computer(props: Props) {
   return (
     <div className="z-40 flex justify-center items-center w-full h-full backdrop-blur-sm">
       <NewTablet
-        key={department != 'profile' ? department : null}
+        key={department != 'profile' ? department : ''}
         is_profile={department == 'profile'}
         logout={logout}
         closePopup={closePopup}

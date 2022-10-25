@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import MainService from '../services/MainService';
 import tabletBg from '../../images/tablet_bg.png';
 import defaultPfp from '../../images/default_pfp.png';
@@ -7,9 +6,8 @@ import UserService from '../services/UserService';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 
-function NewTablet(props: NewTabletProps) {
-  const { is_profile, logout, closePopup } = props;
-  console.log(logout, closePopup);
+function NewTablet(props: Props) {
+  const { key, is_profile, logout, closePopup } = props;
   const APP_ICONS = [
     'https://i.imgur.com/vSvFDH7.jpg',
     'https://i.imgur.com/M6LcSPu.jpg',
@@ -22,7 +20,7 @@ function NewTablet(props: NewTabletProps) {
     'https://i.imgur.com/wVwhg2O.jpg'
   ];
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [tab, setTab] = useState(is_profile ? 'Profile' : 'Departments');
   const [departments, setDepartments] = useState([]);
   const [deptCoordies, setDeptCoordies] = useState([]);
@@ -59,7 +57,7 @@ function NewTablet(props: NewTabletProps) {
 
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState({});
-  console.log(teams, teamMembers);
+  // console.log(teams, teamMembers);
 
   useEffect(() => {
     fetchUserDetails();
@@ -67,15 +65,20 @@ function NewTablet(props: NewTabletProps) {
     if (tab === 'Profile') {
       setProfileSection(0);
     } else {
-      MainService.getAllDepartmentEvents()
-        .then((data) => {
-          if (data['success']) {
-            setDepartments(data['departmentEvents']);
-          } else navigate('/');
-        })
-        .catch(() => {
-          navigate('/');
-        });
+      console.log(key);
+      if (key) {
+        handleSelectDept(key);
+      } else {
+        MainService.getAllDepartmentEvents()
+          .then((data) => {
+            if (data['success']) {
+              setDepartments(data['departmentEvents']);
+            } else logout();
+          })
+          .catch(() => {
+            logout();
+          });
+      }
     }
   }, []);
 
@@ -89,19 +92,19 @@ function NewTablet(props: NewTabletProps) {
         .then((data) => {
           if (data['success']) {
             setEvents(data['events']);
-          } else navigate('/');
+          } else logout();
         })
         .catch(() => {
-          navigate('/');
+          logout();
         });
       MainService.getDepartmentCoordies(departments[selectedDeptID]['id'])
         .then((data) => {
           if (data['success']) {
             setDeptCoordies(data['deptEventCoordies']);
-          } else navigate('/');
+          } else logout();
         })
         .catch(() => {
-          navigate('/');
+          logout();
         });
     }
   }, [selectedDeptID]);
@@ -109,7 +112,7 @@ function NewTablet(props: NewTabletProps) {
   const fetchUserDetails = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      if (tab === 'Profile') navigate('/');
+      if (tab === 'Profile') logout();
       return;
     }
     UserService.getUserDetails(token)
@@ -119,18 +122,18 @@ function NewTablet(props: NewTabletProps) {
           setUserDetails(data['details']);
           setNewUserDetails(data['details']);
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const handleEditDetails = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      navigate('/');
+      logout();
       return;
     }
     UserService.updateUserDetails(
@@ -146,18 +149,18 @@ function NewTablet(props: NewTabletProps) {
           fetchUserDetails();
           setProfileSection(0);
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const fetchTeamInvites = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      if (tab === 'Profile') navigate('/');
+      if (tab === 'Profile') logout();
       return;
     }
     UserService.getTeamInvites(token)
@@ -168,18 +171,18 @@ function NewTablet(props: NewTabletProps) {
             Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], []]))
           );
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const fetchTeamMembers = (teamId: number) => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      navigate('/');
+      logout();
       return;
     }
     UserService.getTeamMembers(token, teamId)
@@ -187,18 +190,18 @@ function NewTablet(props: NewTabletProps) {
         if (data['success']) {
           setTeamMembers({ ...teamMembers, [teamId]: data['members'] });
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const handleCreateTeam = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      navigate('/');
+      logout();
       return;
     }
     UserService.createTeam(token)
@@ -206,18 +209,18 @@ function NewTablet(props: NewTabletProps) {
         if (data['success']) {
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const handleDeleteTeam = (teamId: number) => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      navigate('/');
+      logout();
       return;
     }
     UserService.removeTeam(token, teamId)
@@ -225,18 +228,18 @@ function NewTablet(props: NewTabletProps) {
         if (data['success']) {
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const handleRespondTeamInvite = (teamId: number, status: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      navigate('/');
+      logout();
       return;
     }
     UserService.responseToTeamInvite(token, teamId, status)
@@ -244,18 +247,18 @@ function NewTablet(props: NewTabletProps) {
         if (data['success']) {
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const handleRemoveMember = (teamId: number, userId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      navigate('/');
+      logout();
       return;
     }
     UserService.deleteMember(token, teamId, userId)
@@ -264,18 +267,18 @@ function NewTablet(props: NewTabletProps) {
           setProfileSection(2);
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
   const handleParticipate = (teamId: number, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      navigate('/');
+      logout();
       return;
     }
     UserService.eventParticipate(token, teamId, eventId)
@@ -283,15 +286,15 @@ function NewTablet(props: NewTabletProps) {
         if (data['success']) {
           setEventSection(0);
         } else if (data['message'] === 'Invalid token!') {
-          navigate('/');
-        } else navigate('/');
+          logout();
+        } else logout();
       })
       .catch(() => {
-        navigate('/');
+        logout();
       });
   };
 
-  const handleSelectDept = (i: number) => {
+  const handleSelectDept = (i: any) => {
     setTab('Events');
     setSelectedDeptID(i);
   };
@@ -314,6 +317,7 @@ function NewTablet(props: NewTabletProps) {
   const handleGoBack = () => {
     if (tab === 'Event') setTab('Events');
     else if (tab === 'Events') setTab('Departments');
+    else closePopup();
   };
 
   return (
@@ -968,12 +972,12 @@ function NewTablet(props: NewTabletProps) {
 }
 
 NewTablet.propTypes = {
-  key: PropTypes.string,
+  key: PropTypes.string.isRequired,
   is_profile: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   closePopup: PropTypes.func.isRequired
 };
 
-type NewTabletProps = PropTypes.InferProps<typeof NewTablet.propTypes>;
+type Props = PropTypes.InferProps<typeof NewTablet.propTypes>;
 
 export default NewTablet;
