@@ -1,14 +1,5 @@
 /* eslint-disable no-unused-vars */
 
-// TODO: Two buttons, one for yes and one for no
-// FIXME: Make the prompt appear in the middle of the screen - 60% space
-// TODO: Make the prompt disappear when the user clicks on either button
-// TODO: Make the prompt disappear when the user clicks outside of the prompt
-// TODO: Make the prompt disappear when the user presses the escape key
-// DONE: Make a key for next, and at last propmt, make keys for yes and no
-// no case me : two function, one for yes and one for no
-// word break, height variable, upar ki taraf growth
-
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PromptButton from './PromptButton';

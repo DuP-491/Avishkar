@@ -14,6 +14,7 @@ import InteractPrompt from '../components/Interact';
 import Computer from '../components/Computer';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import Trivia from '../components/Trivia';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -61,7 +62,10 @@ function GameComponent(props: Props) {
   const [showMap, setShowMap] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
+  const [showTrivia, setShowTrivia] = useState(true);
 
+  const triviaText = `Which is the best college in the world?`;
+  const triviaAnswer = `MNNIT Allahabad`;
   // Auto Initialize the game when the component is mounted
   // useEffect(() => {
   //   setInitialize(true);
@@ -165,7 +169,7 @@ function GameComponent(props: Props) {
     if (dimensions.width < 768) {
       navigator('/');
     }
-    setInitialize(true);
+    // setInitialize(true);
   }, [dimensions]);
 
   const onAuthSuccess = () => {
@@ -267,6 +271,7 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
+      <Trivia question={triviaText} answer={triviaAnswer} setShowTrivia={setShowTrivia} />
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
