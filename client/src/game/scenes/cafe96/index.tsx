@@ -35,6 +35,67 @@ export class Cafe96Scene extends Scene {
   }
 
   preload(): void {
+    let width = this.cameras.main.width;
+    let height = this.cameras.main.height;
+    let progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(width / 2 - 160, height / 2, 320, 50);
+
+    let loadingText = this.make.text({
+      x: width / 2 - 25,
+      y: height / 2 - 25,
+      text: 'Loading...',
+      style: {
+        font: '20px monospace',
+        color: '#ffffff'
+      }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    let percentText = this.make.text({
+      x: width / 2 + 55,
+      y: height / 2 - 25,
+      text: '0%',
+      style: {
+        font: '18px monospace',
+        color: '#ffffff'
+      }
+    });
+    percentText.setOrigin(0.5, 0.5);
+
+    var assetText = this.make.text({
+      x: width / 2,
+      y: height / 2 + 80,
+      text: '',
+      style: {
+        font: '18px monospace',
+        color: '#ffffff'
+      }
+    });
+    assetText.setOrigin(0.5, 0.5);
+
+    this.load.on('progress', function (value: number) {
+      console.log(value);
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRect(width / 2 + 10 - 160, height / 2 + 10, 300 * value, 30);
+      percentText.setText(parseInt((value * 100).toString()) + '%');
+    });
+
+    this.load.on('fileprogress', function (file: { src: string }) {
+      console.log(file.src);
+      assetText.setText('Loading asset: ' + file.src);
+    });
+    this.load.on('complete', function () {
+      console.log('complete');
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+      percentText.destroy();
+      assetText.destroy();
+    });
+
     this.load.baseURL = 'assets/';
 
     // PLAYER LOADING

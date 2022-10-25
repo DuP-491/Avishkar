@@ -37,7 +37,7 @@ function Dept({ onDepartmentSelect }: DepartmentSelectPropType) {
         <span className="animating-event-title">T</span>
         <span className="animating-event-title">S</span>
       </div>
-      <div className="flex justify-evenly flex-wrap">
+      <div className="flex flex-wrap justify-evenly">
         {departments.map((department) => (
           <DepartmentCard
             onDepartmentSelect={onDepartmentSelect}
