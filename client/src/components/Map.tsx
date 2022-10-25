@@ -51,12 +51,7 @@ function Map(props: Props) {
     <>
       <div
         className="absolute top-0 left-0 z-20 w-screen h-screen filter backdrop-blur-sm"
-        onClick={handleClick}
-        onKeyDown={(event: any) => {
-          if (event.key === 'Escape') {
-            handleClick();
-          }
-        }}></div>
+        onClick={handleClick}></div>
       <div
         ref={baseDiv}
         className={`transition-all duration-500 flex items-center justify-center m-auto relative z-40 bg-[#509b66] border-2 border-green-900 rounded-lg filter backdrop-blur-sm w-0 h-[768px]`}
@@ -348,7 +343,7 @@ function Map(props: Props) {
                 </Tooltip.Trigger>
                 <Tooltip.Content>
                   <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
-                    <div className="">ROBOMANIA</div>
+                    <div className="">GNOTALKS</div>
                     <div className="text-blue-900">{eventQuotes[9]}</div>
                   </div>
                   {/* <Tooltip.Arrow height={6} width={10} /> */}

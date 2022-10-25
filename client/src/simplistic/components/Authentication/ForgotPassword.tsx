@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import AuthService from '../../services/AuthService';
 
 const ForgotPassword = () => {
+  function ResetPasswordEmail(e: any) {
+    e.preventDefault();
+    const email = EmailRef.current.value;
+    console.log(email);
+    AuthService.forgotPassword(email).then((data) => {
+      if (data['success']) {
+        console.log('Sucessfully Email Sent!');
+      } else {
+        console.log(data);
+      }
+    });
+  }
+  const EmailRef = useRef(document.createElement('input'));
+
   return (
     <div
       className="flex items-center justify-center w-full h-screen"
@@ -24,7 +39,7 @@ const ForgotPassword = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 capitalize md:text-2xl dark:text-white">
               Forgot Password
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" method="POST" onSubmit={ResetPasswordEmail}>
               <div>
                 <label
                   htmlFor="email"
@@ -37,6 +52,7 @@ const ForgotPassword = () => {
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
+                  ref={EmailRef}
                   required={true}
                 />
               </div>

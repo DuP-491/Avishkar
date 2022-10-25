@@ -15,7 +15,7 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
   function handleResetPassword(e: any) {
     const password = PasswordRef.current.value;
 
-    let token;
+    let token = '';
     if (key === undefined) {
       onCrossPress(e);
       onInvalidToken(e);
@@ -24,7 +24,7 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
     AuthService.resetPassword(password, token)
       .then((data) => {
         if (data['success']) {
-          Cookies.set('token', data['token']);
+          Cookies.set('token', token);
           onCrossPress(e);
         } else if (data['message'] === 'Invalid token!') {
           onCrossPress(e);

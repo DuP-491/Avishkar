@@ -17,6 +17,8 @@ export class Campus extends Scene {
   // private loggedIn = false;
   private player!: Player;
   private map!: Tilemaps.Tilemap;
+  private keyM!: Phaser.Input.Keyboard.Key;
+  private keyEsc!: Phaser.Input.Keyboard.Key;
   private tileset!: Tilemaps.Tileset;
   private tileset2!: Tilemaps.Tileset;
   private tileset3!: Tilemaps.Tileset;
@@ -116,6 +118,14 @@ export class Campus extends Scene {
   private initMap(): void {
     // this.map = this.make.tilemap({ key: 'dungeon', tileWidth: 16, tileHeight: 16 });
     this.map = this.make.tilemap({ key: 'try5', tileWidth: 16, tileHeight: 16 });
+    this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+    this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyM.on('down', () => {
+      this.game.events.emit(EVENTS_NAME.openMap);
+    });
+    this.keyEsc.on('down', () => {
+      this.game.events.emit(EVENTS_NAME.closeMap);
+    });
     // this.tileset = this.map.addTilesetImage('dungeon', 'tiles');
     this.tileset = this.map.addTilesetImage('SpriteChan', 'tileSpriteChan', 16, 16, 0, 0);
     this.tileset2 = this.map.addTilesetImage('Interior', 'tileInterior', 16, 16, 0, 0);
@@ -493,9 +503,9 @@ export class Campus extends Scene {
         'tiles_spr',
         this.player,
         360,
-        npcPoint.properties.filter((prop) => prop.name === 'left')[0].value,
-        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0].value,
-        npcPoint.properties.filter((prop) => prop.name === 'type')[0].value
+        npcPoint.properties.filter((prop) => prop.name === 'left')[0]?.value,
+        npcPoint.properties.filter((prop) => prop.name === 'intr_rad')[0]?.value,
+        npcPoint.properties.filter((prop) => prop.name === 'type')[0]?.value
       )
         .setName(npcPoint.id.toString())
         .setScale(1.5)
@@ -519,24 +529,17 @@ export class Campus extends Scene {
     this.physics.add.collider(this.npcs, this.npcs);
     // this.physics.add.collider(this.npcs, this.wallsLayer);
     this.physics.add.collider(this.player, this.npcs);
-    this.game.events.on(
-      EVENTS_NAME.interact,
-      (scene: string, name: string) => {
-        if (scene == 'campus') {
-          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
-        }
-      },
-      this
-    );
-    this.game.events.on(
-      EVENTS_NAME.resetInteract,
-      (scene: string, name: string) => {
-        if (scene == 'campus') {
-          this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
-        }
-      },
-      this
-    );
+    this.game.events.on(EVENTS_NAME.interact, (scene: string, name: string) => {
+      if (scene == 'campus') {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(true);
+      }
+    });
+    this.game.events.on(EVENTS_NAME.resetInteract, (scene: string, name: string) => {
+      console.log(scene, name);
+      if (scene == 'campus') {
+        this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
+      }
+    });
     this.input.on('gameobjectup', (pointer: any, gameObject: any) => {
       // console.log('pointer');
       if (gameObject?.interacting)

@@ -116,7 +116,7 @@ eventList = [
         "class": "computer",
         "height": 0,
         "id": 42,
-        "name": "robomania",
+        "name": "gnotalks",
         "point": True,
         "rotation": 0,
         "visible": True,

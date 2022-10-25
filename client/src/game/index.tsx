@@ -13,6 +13,8 @@ import Info from '../components/Info';
 import InteractPrompt from '../components/Interact';
 import Computer from '../components/Computer';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -46,6 +48,7 @@ function GameComponent(props: Props) {
     setInitialize(false);
     setGame(undefined);
   };
+  const navigator = useNavigate();
 
   // Game States
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
@@ -95,6 +98,12 @@ function GameComponent(props: Props) {
         game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
           setDepartment(_department);
           setShowComputer(true);
+        });
+        game.instance?.events.on(EVENTS_NAME.openMap, () => {
+          setShowMap(true);
+        });
+        game.instance?.events.on(EVENTS_NAME.closeMap, () => {
+          setShowMap(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           console.log('logout');
@@ -160,11 +169,15 @@ function GameComponent(props: Props) {
   useEffect(() => {
     gameConfig.scale!.width = window.innerWidth;
     gameConfig.scale!.height = window.innerHeight;
+    if (dimensions.width < 768) {
+      navigator('/');
+    }
     setInitialize(true);
   }, [dimensions]);
 
   const onAuthSuccess = () => {
     if (game) {
+      toast.success('Logged in successfully!');
       game?.instance?.events.emit(EVENTS_NAME.login);
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
@@ -177,6 +190,7 @@ function GameComponent(props: Props) {
 
   const onAuthFailure = () => {
     if (game) {
+      toast.success('Could not authenticate! Please login again.');
       game.instance?.scene.switch('cafe96', 'campus');
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
@@ -254,20 +268,20 @@ function GameComponent(props: Props) {
           setStopInteract={setStopInteract}
         />
       )}
+      {showMap && (
+        <Map
+          playerPosition={playerPosition}
+          teleport={teleport}
+          showMap={showMap}
+          setShowMap={setShowMap}
+        />
+      )}
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
             text={infoPromptText}
             setShowInfoPrompt={setShowInfoPrompt}
             isChoice={infoPromptType === 'ask'}></InfoPrompt>
-        )}
-        {showMap && (
-          <Map
-            playerPosition={playerPosition}
-            teleport={teleport}
-            showMap={showMap}
-            setShowMap={setShowMap}
-          />
         )}
         <div className="w-full">
           <MiniMap playerPosition={playerPosition} teleport={teleport} />
@@ -291,11 +305,7 @@ function GameComponent(props: Props) {
           />
         </div>
       </div>
-      <div
-        className="hidden"
-        onKeyDown={(event: any) => {
-          if (event.key === 'W') handleOnMapIconClick;
-        }}></div>
+      <div className="hidden"></div>
     </>
   );
 }
