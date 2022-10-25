@@ -78,6 +78,42 @@ const userSignin = async (req: Request, res: Response, next) => {
     }
 };
 
+const userResetEmail = async (req: Request, res: Response, next) => {
+    const { email } = req.body;
+
+    try {
+        let user = await prisma.user.findFirst({
+            where: { email }
+        });
+
+        // check if the user with the email address exists or not
+        if (user === null) {
+            res.statusCode = 400;
+            return res.json({
+                error: "user not found",
+                message: "email is not registered!",
+                success: false
+            });
+        }
+
+        // regenerate the token field send via email to the user
+        const token = generateVerifyToken(48);
+        user = await prisma.user.update({
+            where: { email },
+            data: { token }
+        });
+        // send verification email to the client
+        await sendUserVerificationMail(email, token);
+
+        res.statusCode = 200;
+        res.json({ message: "reset email sent successfully!", success: true });
+    }
+    catch (error) {
+        console.log("error occured in the userResetEmail() controller!");
+        next(error);
+    }
+};
+
 const userResetPassword = async (req: Request, res: Response, next) => {
     const { token } = req.body;
     let { password } = req.body;
@@ -114,4 +150,4 @@ const userResetPassword = async (req: Request, res: Response, next) => {
     }
 };
 
-export { userSignup, userSignin, userResetPassword };
+export { userSignup, userSignin, userResetEmail, userResetPassword };
