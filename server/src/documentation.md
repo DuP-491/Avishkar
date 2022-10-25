@@ -90,7 +90,20 @@
 
     ***
 
-3. **User Password Reset**
+3. **User Reset Email Send**
+   **API Path :** /send-reset-mail
+   **API Method :** POST
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { email (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+4. **User Password Reset**
    **API Path :** /reset-password
    **API Method :** POST
 
@@ -147,7 +160,21 @@
 
     ***
 
-4. **Delete A Team**
+4. **Update New Team**
+   **API Path :** /team
+   **API Method :** POST
+   **API Extras :** only leader can update the details of the team
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { name (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+5. **Delete A Team**
    **API Path :** /team
    **API Method :** DELETE
    **API Extras :** only the leader can delete the team; all the participation of team get removed; all the members of the team get removed
@@ -161,7 +188,21 @@
 
     ***
 
-5. **Get Team Details with Members**
+6. **Get List of Team Invites**
+   **API Path :** /team-invite
+   **API Method :** GET
+   **API Extras :** get the list of all accepted, pending etc. invites to the user
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { }
+
+    > RESPONSE BODY :
+    > { members, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+7. **Get Team Details with Members**
    **API Path :** /team/:id
    **API Method :** GET
 
@@ -172,12 +213,12 @@
     > { }
 
     > RESPONSE BODY :
-    > { teams, success } - OK response
+    > { members, success } - OK response
     > { error, message, success } - ERROR response
 
     ***
 
-6. **Send Invite To User**
+8. **Send Invite To User**
    **API Path :** /team-invite
    **API Method :** POST
    **API Extras :** only team leader can send invite; team shouldn't be part of any event
@@ -191,7 +232,7 @@
 
     ***
 
-7. **Respond To Team Invite**
+9. **Respond To Team Invite**
    **API Path :** /team-invite
    **API Method :** PUT
    **API Extras :** request gets deleted in case the user declines the request
@@ -205,7 +246,21 @@
 
     ***
 
-8. **Participate In Event**
+10. **Delete Team Invite**
+   **API Path :** /team-invite
+   **API Method :** DELETE
+   **API Extras :** delete a pending or accepted team invite to the user
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > { teamId (int), userId (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+11. **Participate In Event**
    **API Path :** /participate
    **API Method :** POST
    **API Extras :** only team leader can participate in event; team shouldn't have any pending invite
@@ -219,7 +274,7 @@
 
     ***
 
-9. **Unparticipate In Event**
+12. **Unparticipate In Event**
    **API Path :** /participate
    **API Method :** DELETE
    **API Extras :** only team leader can unparticipate in any event
@@ -235,7 +290,7 @@
 
 ### Admin APIs
 
-**Base API Path :** /admin
+**WBase API Path :** /admin
 
 1. **Create Department Event**
    **API Path :** /dept-event
@@ -243,7 +298,7 @@
    **API Extras :** only super admin can create them
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { name (string), organizer (string) }
+    > { name (string), organizer (string), desc (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response
@@ -299,7 +354,7 @@
    **API Extras :** only department coordinator can create event
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { name (string), tagline (string), details (string), criteria (string), rules (string), psLink (string), maxTeamSize (number), minTeamSize (number), deptEventId (string) }
+    > { name (string), tagline (string), details (string), criteria (string), rules (string), psLink (string), poster (string), maxTeamSize (number), minTeamSize (number), deptEventId (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response

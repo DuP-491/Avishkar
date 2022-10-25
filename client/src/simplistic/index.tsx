@@ -64,7 +64,7 @@ function Simplistic() {
     <>
       {dimensions.width >= 768 && (
         <div
-          className="absolute bottom-5 left-5 text-white text-2xl font-pfeffer"
+          className="absolute text-2xl text-white bottom-5 left-5 font-pfeffer"
           onClick={() => {
             sessionStorage.setItem('game', 'true');
             router('/game');

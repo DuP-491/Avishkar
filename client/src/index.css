@@ -11,6 +11,18 @@ body {
   user-select: none;
 }
 
+.stroke-text{
+  -webkit-text-stroke:5px white;
+  -webkit-text-fill-color:transparent;
+  transition: all 250ms ease-in-out;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+.stroke-text:hover{
+  color: white;
+  -webkit-text-fill-color: white;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

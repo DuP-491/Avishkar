@@ -257,7 +257,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
     UserService.getTeamMembers(token, teamId)
       .then((data) => {
         if (data['success']) {
-          setTeamMembers({ ...teamMembers, teamId: data['members'] });
+          setTeamMembers({ ...teamMembers, [teamId]: data['members'] });
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -538,9 +538,9 @@ function Profile({ onInvalidToken }: ProfileProps) {
 
   return (
     <div>
-      <div className="text-neutral-400 text-3xl font-bold pl-10 font-mono mb-3">Profile Page</div>
+      <div className="pl-10 mb-3 font-mono text-3xl font-bold text-neutral-400">Profile Page</div>
       <div className="flex w-full">{Tabrender()}</div>
-      <div className="bg-gray-900 p-10" style={{ height: '80vh' }}>
+      <div className="p-10 bg-gray-900" style={{ height: '80vh' }}>
         {selectedtab === 1 && (
           <>
             <span
@@ -728,7 +728,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                               }
                             />
                             <span
-                              className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                              className="relative inline-flex items-center justify-center px-1 py-1 mt-2 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                               id="Profile"
                               onClick={() =>
                                 handleInviteUser(team['teamId'], inviteUsernames[team['teamId']])
@@ -752,7 +752,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                         )}
                         <br />
                         <span
-                          className="relative mt-2 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                          className="relative inline-flex items-center justify-center px-1 py-1 mt-2 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                           id="Profile"
                           onClick={() =>
                             (teamMembers[team['teamId']] as any).length === 0
@@ -780,7 +780,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                           <div key={teamMember['user']['id']} className="mb-5">
                             <p>Name: {teamMember['user']['name']}</p>
                             <span
-                              className="relative ml-4 inline-flex items-center justify-center px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                              className="relative inline-flex items-center justify-center px-1 py-1 ml-4 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                               id="Profile"
                               onClick={() =>
                                 handleRemoveMember(team['teamId'], teamMember['user']['id'])
@@ -821,7 +821,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                         ].map(([button_text, response_text], i) => (
                           <span
                             key={i}
-                            className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                            className="relative inline-flex items-center justify-center px-1 py-1 mx-2 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                             id="Profile"
                             onClick={() => handleRespondTeamInvite(team['teamId'], response_text)}>
                             <span
@@ -938,7 +938,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                   />
                   <br />
                   <span
-                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    className="relative inline-flex items-center justify-center px-1 py-1 mx-2 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                     id="Profile"
                     onClick={() =>
                       handleAddEvent(
@@ -1047,7 +1047,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                     </span>
                   </span>
                   <span
-                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    className="relative inline-flex items-center justify-center px-1 py-1 mx-2 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                     id="Profile"
                     onClick={() =>
                       handleRemoveEventCoordie(
@@ -1101,7 +1101,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                     placeholder="Enter organizer"
                   />
                   <span
-                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    className="relative inline-flex items-center justify-center px-1 py-1 mx-2 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                     id="Profile"
                     onClick={() =>
                       handleAddDepartmentEvent(
@@ -1207,7 +1207,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
                     </span>
                   </span>
                   <span
-                    className="relative inline-flex items-center justify-center mx-2 px-1 py-1 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
+                    className="relative inline-flex items-center justify-center px-1 py-1 mx-2 text-lg font-medium tracking-tighter text-white bg-gray-800 rounded-md group"
                     id="Profile"
                     onClick={() =>
                       handleRemoveDepartmentEventCoordie(
