@@ -4,7 +4,7 @@ import FaqItem from './FaqItem';
 /* eslint-disable */
 function FAQ() {
   return (
-    <section className="relative z-20 overflow-hidden bg-slate-100 pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
+    <section className="relative z-20 overflow-hidden bg-gray-900 text-white pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
       <div className="container p-4 mx-auto sm:p-0">
         <div className="flex flex-wrap -mx-4">
           <div className="w-full px-4">
@@ -75,7 +75,7 @@ function FAQ() {
             <p className="py-3 text-base leading-relaxed text-body-color">
               All the interested participants can register themselves by following the steps
               mentioned:
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Login to your avishkar account and lock your profile after updating the details.
                 </li>
@@ -90,7 +90,7 @@ function FAQ() {
             <p className="py-3 text-base leading-relaxed text-body-color">
               All the interested participants can register themselves by following the steps
               mentioned:
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Login to your avishkar account and lock your profile after updating the details.
                 </li>
@@ -102,7 +102,7 @@ function FAQ() {
           <FaqItem question="How to contact via Social Media?">
             <p className="py-3 text-base leading-relaxed text-body-color">
               Find us @
-              <ul className="list-disc ml-10">
+              <ul className="ml-10 list-disc">
                 <li>
                   Official Website:{' '}
                   <a href="https://avishkar.mnnit.ac.in/" className="no-underline hover:underline">
