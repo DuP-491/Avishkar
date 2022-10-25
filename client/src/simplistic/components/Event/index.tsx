@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import CoordinatorInfo from '../Common/CoordinatorInfo';
-import DividerLine from '../Common/DividerLine';
 import EventCard from './EventCard';
 
 const index = () => {

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const EventCard = ({ imgsrc, title, about, redirectTo }) => {
+function EventCard(props: Props) {
+  const { imgsrc, title, about, redirectTo } = props;
   return (
     <div className="flex flex-col justify-between max-w-sm px-2 pt-4 pb-2 transition-all bg-gray-800 rounded-md outline-white hover:outline-double hover:outline-4 hover:shadow-xl group ">
       <img src={imgsrc} alt="event logo" className="w-24 h-auto " />
@@ -16,6 +18,15 @@ const EventCard = ({ imgsrc, title, about, redirectTo }) => {
       </Link>
     </div>
   );
+}
+
+EventCard.propTypes = {
+  imgsrc: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  about: PropTypes.string.isRequired,
+  redirectTo: PropTypes.string.isRequired
 };
+
+type Props = PropTypes.InferProps<typeof EventCard.propTypes>;
 
 export default EventCard;

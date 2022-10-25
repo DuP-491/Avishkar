@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const DepartmentCard = ({ deptName, deptDesc, redirectTo }) => {
+function DepartmentCard(props: Props) {
+  const { deptName, deptDesc, redirectTo } = props;
   return (
     <div className="inline-block p-2 px-2 py-4 text-center text-gray-800 rounded-md hover:border-none">
       <div className="relative group" style={{ transformStyle: 'preserve-3d' }}>
@@ -22,6 +24,14 @@ const DepartmentCard = ({ deptName, deptDesc, redirectTo }) => {
       </div>
     </div>
   );
+}
+
+DepartmentCard.propTypes = {
+  deptName: PropTypes.string.isRequired,
+  deptDesc: PropTypes.string.isRequired,
+  redirectTo: PropTypes.string.isRequired
 };
+
+type Props = PropTypes.InferProps<typeof DepartmentCard.propTypes>;
 
 export default DepartmentCard;
