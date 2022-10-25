@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 function InteractPrompt(props: Props) {
-  const { stopInteract, setShowInteractPrompt, setStopInteract } = props;
+  const { stopInteract, setShowInteractPrompt, setStopInteract, interactText } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function InteractPrompt(props: Props) {
     <div
       ref={baseDiv}
       className={`absolute transition-all text-3xl text-white bg-black bg-opacity-25 font-pfeffer duration-100 right-[42%] px-6 py-2 -mt-16 z-10 rounded-lg filter backdrop-blur-sm h-fit w-fit`}>
-      Press E to interact
+      {interactText}
     </div>
   );
 }
@@ -36,7 +36,8 @@ function InteractPrompt(props: Props) {
 InteractPrompt.propTypes = {
   stopInteract: PropTypes.bool.isRequired,
   setShowInteractPrompt: PropTypes.func.isRequired,
-  setStopInteract: PropTypes.func.isRequired
+  setStopInteract: PropTypes.func.isRequired,
+  interactText: PropTypes.string.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof InteractPrompt.propTypes>;

@@ -15,6 +15,7 @@ import Computer from '../components/Computer';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import Trivia from '../components/Trivia';
+import { toast } from 'react-toastify';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -54,6 +55,7 @@ function GameComponent(props: Props) {
   const [showInfoPrompt, setShowInfoPrompt] = useState(false);
   const [showInteractPrompt, setShowInteractPrompt] = useState(false);
   const [stopInteract, setStopInteract] = useState(false);
+  const [interactText, setInteractText] = useState('');
   const [infoPromptText, setInfoPromptText] = useState('');
   const [infoPromptType, setInfoPromptType] = useState('text');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
@@ -90,10 +92,14 @@ function GameComponent(props: Props) {
           setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
         });
-        game.instance?.events.on(EVENTS_NAME.interact, () => {
-          setShowInteractPrompt(true);
-          setStopInteract(false);
-        });
+        game.instance?.events.on(
+          EVENTS_NAME.interact,
+          (_scene: any, _name: string, text: string) => {
+            setInteractText(text);
+            setShowInteractPrompt(true);
+            setStopInteract(false);
+          }
+        );
         game.instance?.events.on(EVENTS_NAME.resetInteract, () => {
           // console.log('resetInteract', showInteractPrompt);
           setStopInteract(true);
@@ -101,6 +107,12 @@ function GameComponent(props: Props) {
         game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
           setDepartment(_department);
           setShowComputer(true);
+        });
+        game.instance?.events.on(EVENTS_NAME.openMap, () => {
+          setShowMap(true);
+        });
+        game.instance?.events.on(EVENTS_NAME.closeMap, () => {
+          setShowMap(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           console.log('logout');
@@ -174,6 +186,7 @@ function GameComponent(props: Props) {
 
   const onAuthSuccess = () => {
     if (game) {
+      toast.success('Logged in successfully!');
       game?.instance?.events.emit(EVENTS_NAME.login);
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
@@ -184,8 +197,14 @@ function GameComponent(props: Props) {
     }
   };
 
+  const signUpSuccessCallback = () => {
+    // TOAST: Please check your email to verify your account
+    navigator('/');
+  };
+
   const onAuthFailure = () => {
     if (game) {
+      toast.success('Could not authenticate! Please login again.');
       game.instance?.scene.switch('cafe96', 'campus');
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
@@ -250,7 +269,11 @@ function GameComponent(props: Props) {
         </div>
       )}
       {showAuthPrompt && (
-        <AuthPrompt closePopup={closeAuthPrompt} authSuccessCallback={onAuthSuccess} />
+        <AuthPrompt
+          closePopup={closeAuthPrompt}
+          authSuccessCallback={onAuthSuccess}
+          signUpSuccessCallback={signUpSuccessCallback}
+        />
       )}
       {showComputer && (
         <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
@@ -261,6 +284,7 @@ function GameComponent(props: Props) {
           stopInteract={stopInteract}
           setShowInteractPrompt={setShowInteractPrompt}
           setStopInteract={setStopInteract}
+          interactText={interactText}
         />
       )}
       {showMap && (
@@ -301,11 +325,7 @@ function GameComponent(props: Props) {
           />
         </div>
       </div>
-      <div
-        className="hidden"
-        onKeyDown={(event: any) => {
-          if (event.key === 'W') handleOnMapIconClick;
-        }}></div>
+      <div className="hidden"></div>
     </>
   );
 }

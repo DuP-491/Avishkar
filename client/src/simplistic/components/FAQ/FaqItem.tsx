@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
-const FaqItem = ({ children, question, expanded = false }) => {
+function FaqItem(props: Props) {
+  const { children, question, expanded = false } = props;
   const [isExpanded, setIsExpanded] = useState(expanded);
   return (
-    <div className="shadow-lg single-faq mb-8 w-full sm:w-4/5 mx-auto rounded-lg border border-[#F3F4FE] bg-white p-4 sm:p-8 lg:px-6 xl:px-8">
+    <div className="w-full p-4 mx-auto mb-8 text-white bg-gray-800 border border-gray-900 rounded-lg shadow-lg single-faq sm:w-4/5 sm:p-8 lg:px-6 xl:px-8">
       <button className="flex w-full text-left faq-btn" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-primary bg-opacity-5 text-primary">
           <svg
@@ -21,7 +22,7 @@ const FaqItem = ({ children, question, expanded = false }) => {
           </svg>
         </div>
         <div className="w-full">
-          <h4 className="text-lg font-semibold text-black">{question}</h4>
+          <h4 className="text-lg font-semibold ">{question}</h4>
         </div>
       </button>
       <div
@@ -31,6 +32,14 @@ const FaqItem = ({ children, question, expanded = false }) => {
       </div>
     </div>
   );
+}
+
+FaqItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  question: PropTypes.string.isRequired,
+  expanded: PropTypes.bool
 };
+
+type Props = PropTypes.InferProps<typeof FaqItem.propTypes>;
 
 export default FaqItem;

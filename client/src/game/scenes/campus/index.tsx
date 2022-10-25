@@ -17,6 +17,8 @@ export class Campus extends Scene {
   // private loggedIn = false;
   private player!: Player;
   private map!: Tilemaps.Tilemap;
+  private keyM!: Phaser.Input.Keyboard.Key;
+  private keyEsc!: Phaser.Input.Keyboard.Key;
   private tileset!: Tilemaps.Tileset;
   private tileset2!: Tilemaps.Tileset;
   private tileset3!: Tilemaps.Tileset;
@@ -59,7 +61,7 @@ export class Campus extends Scene {
     this.initNPCs();
     this.initCamera();
 
-    this.physics.add.collider(this.player, this.layer, this.player.onGrass);
+    // this.physics.add.overlap(this.player, this.layer, this.player.onGrass);
     this.physics.add.collider(this.player, this.layer12);
     this.physics.add.collider(this.player, this.layer11);
     this.physics.add.collider(this.player, this.layer10);
@@ -116,6 +118,14 @@ export class Campus extends Scene {
   private initMap(): void {
     // this.map = this.make.tilemap({ key: 'dungeon', tileWidth: 16, tileHeight: 16 });
     this.map = this.make.tilemap({ key: 'try5', tileWidth: 16, tileHeight: 16 });
+    this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+    this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyM.on('down', () => {
+      this.game.events.emit(EVENTS_NAME.openMap);
+    });
+    this.keyEsc.on('down', () => {
+      this.game.events.emit(EVENTS_NAME.closeMap);
+    });
     // this.tileset = this.map.addTilesetImage('dungeon', 'tiles');
     this.tileset = this.map.addTilesetImage('SpriteChan', 'tileSpriteChan', 16, 16, 0, 0);
     this.tileset2 = this.map.addTilesetImage('Interior', 'tileInterior', 16, 16, 0, 0);
@@ -297,7 +307,7 @@ export class Campus extends Scene {
     // const layer2 = this.map.createLayer(1, this.tileset2, 0, 0);
     // this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
     // this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
-    this.layer.setCollisionByProperty({ collides: true }, false);
+    // this.layer.setCollisionByProperty({ collides: true }, false);
     this.layer2.setCollisionByProperty({ collides: true }, true);
     this.layer3.setCollisionByProperty({ collides: true }, true);
     this.layer4.setCollisionByProperty({ collides: true }, true);
@@ -413,6 +423,17 @@ export class Campus extends Scene {
             this.game.events.emit(EVENTS_NAME.openComputer, computer.name);
           })
       );
+    });
+    computers.forEach((computer) => {
+      const compZone = this.add.zone(computer.x, computer.y, 64, 64).setOrigin(0.5, 0.5);
+      this.physics.overlap(this.player, compZone, () => {
+        this.game.events.emit(
+          EVENTS_NAME.interact,
+          this.scene.key,
+          '',
+          `${computer.name} : Click on computer for details`
+        );
+      });
     });
   }
 
