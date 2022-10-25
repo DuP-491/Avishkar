@@ -13,11 +13,14 @@ import DesignMradulYadavIMG from './Assets/DesignMradulYadav.jpg';
 import DirectorRajeevTripathiIMG from './Assets/DirectorRajeevTripathi.jpg';
 import FSAdityaRajuDarjiIMG from './Assets/FSAdityaRajuDarji.jpg';
 import FSAnushreeIMG from './Assets/FSAnushree.jpeg';
+import FSOmVijayGuptaIMG from './Assets/FSOmVijayGupta.jpg';
 import FSShivanshiMaheshwariIMG from './Assets/FSShivanshiMaheshwari.jpg';
 import FSShreyaYadavIMG from './Assets/FSShreyaYadav.jpg';
 import FSVibhanshuVaibhavIMG from './Assets/FSVibhanshuVaibhav.jpg';
 import GnosomaniaVanshAmbashtaIMG from './Assets/GnosomaniaVanshAmbashta.jpg';
 import PRAdityaGuptaIMG from './Assets/PRAdityaGupta.jpeg';
+import PRGaurikaSharmaIMG from './Assets/PRGaurikaSharma.jpg';
+import PRHimanshuGoyalIMG from './Assets/PRHimanshuGoyal.jpg';
 import PRPrakharJainIMG from './Assets/PRPrakharJain.jpg';
 import PRRishiGargIMG from './Assets/PRRishiGarg.jpeg';
 import PRSiddharthDubeyIMG from './Assets/PRSiddharthDubey.jpg';
@@ -31,22 +34,22 @@ const index = () => {
   return (
     <>
       <section className="bg-white dark:bg-gray-900">
-        <div className="bg-gray-100  dark:bg-gray-800">
+        <div className="bg-gray-100 dark:bg-gray-800">
           <div className="container px-6 py-10 mx-auto">
-            <h1 className="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-white">
+            <h1 className="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-6xl dark:text-white">
               Team Avishkar
             </h1>
 
             <div className="flex justify-center mx-auto mt-6">
-              <span className="inline-block w-40 h-1 bg-blue-500 rounded-full"></span>
-              <span className="inline-block w-3 h-1 mx-1 bg-blue-500 rounded-full"></span>
-              <span className="inline-block w-1 h-1 bg-blue-500 rounded-full"></span>
+              <span className="inline-block h-1 bg-blue-500 rounded-full w-60"></span>
+              <span className="inline-block w-10 h-1 mx-1 bg-blue-500 rounded-full"></span>
+              <span className="inline-block w-3 h-1 bg-blue-500 rounded-full"></span>
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="DIRECTOR" />
-            <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card
                 imgsrc={DirectorRajeevTripathiIMG}
                 name="Professor Rajeev Tripathi"
@@ -57,7 +60,7 @@ const index = () => {
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="SAC President" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card
                 imgsrc={SACAnilKumarSinghIMG}
                 name="Prof. Anil Kumar Singh"
@@ -68,7 +71,7 @@ const index = () => {
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="faculty" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card imgsrc={PlaceholderIMG} name="Faculty 1" designation="Designations" />
               <Card imgsrc={PlaceholderIMG} name="Faculty 2" designation="Designations" />
               <Card imgsrc={PlaceholderIMG} name="Faculty 3" designation="Designations" />
@@ -79,11 +82,11 @@ const index = () => {
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Festive Secretaries" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card imgsrc={FSVibhanshuVaibhavIMG} name="Vibhanshu Vaibhav" designation="" />
               <Card imgsrc={FSShreyaYadavIMG} name="Shreya Yadav" designation="" />
               <Card imgsrc={FSAdityaRajuDarjiIMG} name="Aditya Raju Darji" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="Om Vijay Gupta" designation="" />
+              <Card imgsrc={FSOmVijayGuptaIMG} name="Om Vijay Gupta" designation="" />
               <Card imgsrc={FSShivanshiMaheshwariIMG} name="Shivanshi Maheshwari" designation="" />
               <Card imgsrc={FSAnushreeIMG} name="Anushree" designation="" />
               <Card imgsrc={PlaceholderIMG} name="---" designation="" />
@@ -93,20 +96,21 @@ const index = () => {
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Public Relations" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card imgsrc={PRAdityaGuptaIMG} name="Aditya Gupta" designation="" />
               <Card imgsrc={PRRishiGargIMG} name="Rishi Garg" designation="" />
               <Card imgsrc={PlaceholderIMG} name="Devashish Singh Tomar" designation="" />
               <Card imgsrc={PRSiddharthDubeyIMG} name="Siddharth Dubey" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="Himanshu Goyal" designation="" />
+              <Card imgsrc={PRHimanshuGoyalIMG} name="Himanshu Goyal" designation="" />
               <Card imgsrc={PRPrakharJainIMG} name="Prakhar Jain" designation="" />
               <Card imgsrc={PlaceholderIMG} name="Aashirwad Sharma" designation="" />
+              <Card imgsrc={PRGaurikaSharmaIMG} name="Gaurika Sharma" designation="" />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Gnosiomania Team" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card imgsrc={GnosomaniaVanshAmbashtaIMG} name="Vansh Ambashta" designation="" />
               <Card imgsrc={PlaceholderIMG} name="Darin Peter Carvalho" designation="" />
               <Card imgsrc={PlaceholderIMG} name="---" designation="" />
@@ -116,7 +120,7 @@ const index = () => {
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Tech Team" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card imgsrc={PlaceholderIMG} name="Lovedeep Singh Kamal" designation="" />
               <Card imgsrc={TechMohitPandeyIMG} name="Mohit Pandey" designation="" />
               <Card imgsrc={TechSanskarOmarIMG} name="Sanskar Omar" designation="" />
@@ -129,7 +133,7 @@ const index = () => {
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Design Team" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            <div className="flex flex-wrap justify-around">
               <Card imgsrc={DesignHardikMittalIMG} name="Hardik Mittal" designation="" />
               <Card imgsrc={DesignDarpanMittalIMG} name="Darpan Mittal" designation="" />
               <Card imgsrc={DesignKushagraSaxenaIMG} name="Kushagra Saxena" designation="" />
