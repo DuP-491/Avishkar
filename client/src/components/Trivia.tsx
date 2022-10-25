@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Typewriter from 'typewriter-effect';
 
 function Trivia(props: Props) {
-  const { question, answer } = props;
+  const { question, answer, setShowTrivia } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
 
@@ -70,7 +70,7 @@ function Trivia(props: Props) {
           {/* Input to accept answer */}
           <input
             type="text"
-            className="w-1/2 px-2 py-1 text-black bg-yellow-300 border-2 border-yellow-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent"
+            className="w-1/2 px-2 py-1 text-black bg-yellow-100 border-2 border-yellow-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent"
           />
           {/* Submit button */}
           <button
@@ -79,6 +79,8 @@ function Trivia(props: Props) {
             Submit
           </button>
         </div>
+
+        {/* TODO: toaster for correct / incorrect answer */}
       </div>
     </>
   );
@@ -86,7 +88,8 @@ function Trivia(props: Props) {
 
 Trivia.propTypes = {
   question: PropTypes.string.isRequired,
-  answer: PropTypes.string.isRequired
+  answer: PropTypes.string.isRequired,
+  setShowTrivia: PropTypes.func.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof Trivia.propTypes>;

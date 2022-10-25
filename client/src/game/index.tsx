@@ -114,12 +114,6 @@ function GameComponent(props: Props) {
         game.instance?.events.on(EVENTS_NAME.closeMap, () => {
           setShowMap(false);
         });
-        game.instance?.events.on(EVENTS_NAME.openTrivia, () => {
-          setShowTrivia(true);
-        });
-        game.instance?.events.on(EVENTS_NAME.closeTrivia, () => {
-          setShowTrivia(false);
-        });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           console.log('logout');
           Cookies.remove('token');
@@ -235,9 +229,6 @@ function GameComponent(props: Props) {
     setShowComputer(false);
   };
 
-  const closeTrivia = () => {
-    setShowTrivia(false);
-  };
   const teleport = (location: TELEPORT_LOCATIONS) => {
     const token = Cookies.get('token');
     const authenticated = token !== undefined && token !== null;
@@ -286,9 +277,6 @@ function GameComponent(props: Props) {
       )}
       {showComputer && (
         <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
-      )}
-      {showTrivia && (
-        <Trivia question={triviaText} answer={triviaAnswer} setShowTrivia={setShowTrivia} />
       )}
       {showInfo && <Info setShowInfo={setShowInfo} />}
       {showInteractPrompt && (
