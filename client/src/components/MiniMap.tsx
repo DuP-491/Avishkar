@@ -255,6 +255,12 @@ function MiniMap(props: Props) {
           </g>
         </g>
       </svg>
+      <div
+        className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-sky-400 animate-ping"
+        style={{
+          top: 39 + '%',
+          left: 29 + '%'
+        }}></div>
       {/* gnoTalks */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
