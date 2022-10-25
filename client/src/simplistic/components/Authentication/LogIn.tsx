@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 
 const LogIn = () => {
@@ -15,11 +16,12 @@ const LogIn = () => {
       .then((data) => {
         if (data['success']) {
           Cookies.set('token', data['token']);
+          toast.success('Logged in successfully!');
           console.log('success');
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   }
 
