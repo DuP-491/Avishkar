@@ -6,7 +6,7 @@ function Computer(props: Props) {
   const { closePopup, department, logout } = props;
 
   return (
-    <div className="z-40 flex justify-center items-center w-full h-full backdrop-blur-sm">
+    <div className="z-40 flex items-center justify-center w-full h-full backdrop-blur-sm">
       {department !== 'teams' && (
         <EventsTab defaultDepartment={department} onCrossPress={closePopup} />
       )}

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Typewriter from 'typewriter-effect';
 
 function Trivia(props: Props) {
-  const { question, answer, setShowTrivia } = props;
+  const { question, answer } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
 
@@ -86,8 +86,7 @@ function Trivia(props: Props) {
 
 Trivia.propTypes = {
   question: PropTypes.string.isRequired,
-  answer: PropTypes.string.isRequired,
-  setShowTrivia: PropTypes.func.isRequired
+  answer: PropTypes.string.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof Trivia.propTypes>;

@@ -14,8 +14,8 @@ import InteractPrompt from '../components/Interact';
 import Computer from '../components/Computer';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import Trivia from '../components/Trivia';
 import { toast } from 'react-toastify';
+import Trivia from '../components/Trivia';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -64,10 +64,10 @@ function GameComponent(props: Props) {
   const [showMap, setShowMap] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
-  const [showTrivia, setShowTrivia] = useState(true);
+  const [showTrivia, setShowTrivia] = useState(false);
 
   const triviaText = `Which is the best college in the world?`;
-  const triviaAnswer = `MNNIT Allahabad`;
+  const triviaAnswer = `MNNIT Allahabd`;
   // Auto Initialize the game when the component is mounted
   // useEffect(() => {
   //   setInitialize(true);
@@ -113,6 +113,12 @@ function GameComponent(props: Props) {
         });
         game.instance?.events.on(EVENTS_NAME.closeMap, () => {
           setShowMap(false);
+        });
+        game.instance?.events.on(EVENTS_NAME.openTrivia, () => {
+          setShowTrivia(true);
+        });
+        game.instance?.events.on(EVENTS_NAME.closeTrivia, () => {
+          setShowTrivia(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           console.log('logout');
@@ -181,7 +187,7 @@ function GameComponent(props: Props) {
     if (dimensions.width < 768) {
       navigator('/');
     }
-    // setInitialize(true);
+    setInitialize(true);
   }, [dimensions]);
 
   const onAuthSuccess = () => {
@@ -229,6 +235,9 @@ function GameComponent(props: Props) {
     setShowComputer(false);
   };
 
+  const closeTrivia = () => {
+    setShowTrivia(false);
+  };
   const teleport = (location: TELEPORT_LOCATIONS) => {
     const token = Cookies.get('token');
     const authenticated = token !== undefined && token !== null;
@@ -278,6 +287,9 @@ function GameComponent(props: Props) {
       {showComputer && (
         <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
       )}
+      {showTrivia && (
+        <Trivia question={triviaText} answer={triviaAnswer} setShowTrivia={setShowTrivia} />
+      )}
       {showInfo && <Info setShowInfo={setShowInfo} />}
       {showInteractPrompt && (
         <InteractPrompt
@@ -295,7 +307,6 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
-      <Trivia question={triviaText} answer={triviaAnswer} setShowTrivia={setShowTrivia} />
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt

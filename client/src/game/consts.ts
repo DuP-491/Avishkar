@@ -16,7 +16,9 @@ export enum EVENTS_NAME {
   sceneCampus = 'scene-campus',
   sceneCafe = 'scene-cafe',
   openMap = 'open-map',
-  closeMap = 'close-map'
+  closeMap = 'close-map',
+  openTrivia = 'open-trivia',
+  closeTrivia = 'close-trivia'
 }
 
 export enum TELEPORT_LOCATIONS {
