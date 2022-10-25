@@ -9,7 +9,7 @@ interface CardProps {
 const Card = ({ imgsrc, name, designation }: CardProps) => {
   return (
     <div className="flex flex-col items-center p-4 scale-75 sm:p-6 rounded-xl hover:scale-100 duration-75 hover:shadow-2xl">
-      <img className="object-contain w-full rounded-xl aspect-square" src={imgsrc} alt="" />
+      <img className="object-cover w-full aspect-square rounded-full" src={imgsrc} alt="" />
 
       <h1 className="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white">
         {name}

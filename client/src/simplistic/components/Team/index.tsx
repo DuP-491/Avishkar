@@ -45,7 +45,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="DIRECTOR" />
+            <DividerLine alignmentCenter={true} text="DIRECTOR" />
             <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card
                 imgsrc={DirectorRajeevTripathiIMG}
@@ -56,7 +56,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="SAC President" />
+            <DividerLine alignmentCenter={true} text="SAC President" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card
                 imgsrc={SACAnilKumarSinghIMG}
@@ -67,7 +67,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="faculty" />
+            <DividerLine alignmentCenter={true} text="faculty" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={PlaceholderIMG} name="Faculty 1" designation="Designations" />
               <Card imgsrc={PlaceholderIMG} name="Faculty 2" designation="Designations" />
@@ -78,7 +78,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="Festive Secretaries" />
+            <DividerLine alignmentCenter={true} text="Festive Secretaries" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={FSVibhanshuVaibhavIMG} name="Vibhanshu Vaibhav" designation="" />
               <Card imgsrc={FSShreyaYadavIMG} name="Shreya Yadav" designation="" />
@@ -92,7 +92,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="Public Relations" />
+            <DividerLine alignmentCenter={true} text="Public Relations" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={PRAdityaGuptaIMG} name="Aditya Gupta" designation="" />
               <Card imgsrc={PRRishiGargIMG} name="Rishi Garg" designation="" />
@@ -105,7 +105,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="Gnosiomania Team" />
+            <DividerLine alignmentCenter={true} text="Gnosiomania Team" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={GnosomaniaVanshAmbashtaIMG} name="Vansh Ambashta" designation="" />
               <Card imgsrc={PlaceholderIMG} name="Darin Peter Carvalho" designation="" />
@@ -115,7 +115,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="Tech Team" />
+            <DividerLine alignmentCenter={true} text="Tech Team" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={PlaceholderIMG} name="Lovedeep Singh Kamal" designation="" />
               <Card imgsrc={TechMohitPandeyIMG} name="Mohit Pandey" designation="" />
@@ -128,7 +128,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="Design Team" />
+            <DividerLine alignmentCenter={true} text="Design Team" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={DesignHardikMittalIMG} name="Hardik Mittal" designation="" />
               <Card imgsrc={DesignDarpanMittalIMG} name="Darpan Mittal" designation="" />

@@ -65,7 +65,7 @@ const index = () => {
             */}
           </div>
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="SPONSORS" />
+            <DividerLine alignmentCenter={true} text="SPONSORS" />
             <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="white" />
               <Card imgsrc={PolygonIMG} name="Polygon" bgc="white" />
@@ -79,7 +79,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="associate Sponsors" />
+            <DividerLine alignmentCenter={true} text="associate Sponsors" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={UltratechIMG} name="Ultratech" bgc="#f9ef2b" />
               <Card imgsrc={TIMEIMG} name="TIME" bgc="white" />
@@ -89,28 +89,28 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="RADIO PARTNER" />
+            <DividerLine alignmentCenter={true} text="RADIO PARTNER" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={RedIMG} name="Red FM 93.5" bgc="black" />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="BLOGGER PARTNER" />
+            <DividerLine alignmentCenter={true} text="BLOGGER PARTNER" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={BlogaddaIMG} name="Blogadda" bgc="white" />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="MEDIA PARTNER" />
+            <DividerLine alignmentCenter={true} text="MEDIA PARTNER" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={YouthIMG} name="Youth" bgc="white" />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="CO TITLE SPONSORS" />
+            <DividerLine alignmentCenter={true} text="CO TITLE SPONSORS" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={MyLocIMG} name="MyLoc" bgc="white" />
               <Card imgsrc={SkillLyncIMG} name="Skill Lync" bgc="white" />
@@ -118,7 +118,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine text="past sponsors" />
+            <DividerLine alignmentCenter={true} text="past sponsors" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={MaticIMG} name="Matic" bgc="white" />
               <Card imgsrc={GithubIMG} name="Github" bgc="white" />
