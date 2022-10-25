@@ -51,12 +51,7 @@ function Map(props: Props) {
     <>
       <div
         className="absolute top-0 left-0 z-20 w-screen h-screen filter backdrop-blur-sm"
-        onClick={handleClick}
-        onKeyDown={(event: any) => {
-          if (event.key === 'Escape') {
-            handleClick();
-          }
-        }}></div>
+        onClick={handleClick}></div>
       <div
         ref={baseDiv}
         className={`transition-all duration-500 flex items-center justify-center m-auto relative z-40 bg-[#509b66] border-2 border-green-900 rounded-lg filter backdrop-blur-sm w-0 h-[768px]`}

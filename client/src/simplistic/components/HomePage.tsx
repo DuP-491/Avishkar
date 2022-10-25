@@ -175,7 +175,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
       </div>
 
       <div className="pt-16 text-center bg-gray-900">
-        <h1 className="w-auto font-bold text-white text-8xl stroke-text">what's new</h1>
+        <h1 className="w-auto font-bold text-white text-8xl stroke-text">what&#39;s new</h1>
         <p className="text-xl text-white capitalize ">introducting two new events</p>
         <div className="grid grid-cols-1 px-4 md:grid-cols-2">
           <div className="max-w-lg p-2 bg-white rounded-md shadow-md">

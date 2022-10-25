@@ -13,6 +13,8 @@ import SignUp from './simplistic/components/Authentication/SignUp';
 import NotFound from './simplistic/components/Common/NotFound';
 import ResetPassword from './simplistic/components/Authentication/ResetPassword';
 import ForgotPassword from './simplistic/components/Authentication/ForgotPassword';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 /* eslint-enable */
 
 function App() {
@@ -35,6 +37,7 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <ToastContainer />
     </Router>
   );
 }

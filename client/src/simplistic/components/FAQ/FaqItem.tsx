@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
-const FaqItem = ({ children, question, expanded = false }) => {
+function FaqItem(props: Props) {
+  const { children, question, expanded = false } = props;
   const [isExpanded, setIsExpanded] = useState(expanded);
   return (
     <div className="shadow-lg single-faq mb-8 w-full sm:w-4/5 mx-auto rounded-lg border border-[#F3F4FE] bg-white p-4 sm:p-8 lg:px-6 xl:px-8">
@@ -31,6 +32,14 @@ const FaqItem = ({ children, question, expanded = false }) => {
       </div>
     </div>
   );
+}
+
+FaqItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  question: PropTypes.string.isRequired,
+  expanded: PropTypes.bool
 };
+
+type Props = PropTypes.InferProps<typeof FaqItem.propTypes>;
 
 export default FaqItem;
