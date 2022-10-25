@@ -67,13 +67,11 @@ export class LoadingScene extends Scene {
       assetText.destroy();
     });
 
-    
     this.load.baseURL = 'assets/';
 
     // PLAYER LOADING
     this.load.image('player', 'sprites/player.png');
     this.load.atlas('a-player', 'spritesheets/PlayerChan-0.png', 'spritesheets/PlayerChan.json');
-
     // MAP LOADING
     // this.load.image({
     //   key: 'tiles',
