@@ -105,29 +105,13 @@ function NewTablet(props: Props) {
         .catch(() => {
           logout();
         });
-      MainService.getDepartmentCoordies(departments[selectedDeptID]['id'])
-        .then((data) => {
-          if (data['success']) {
-            setDeptCoordies(data['deptEventCoordies']);
-          } else logout();
-        })
-        .catch(() => {
-          logout();
-        });
+      fetchDepartmentCoordies(departments[selectedDeptID]['id']);
     }
   }, [selectedDeptID]);
 
   useEffect(() => {
     if (delDeptCoordie !== '') {
-      MainService.getDepartmentCoordies(delDeptCoordie)
-        .then((data) => {
-          if (data['success']) {
-            setDeptCoordies(data['deptEventCoordies']);
-          } else logout();
-        })
-        .catch(() => {
-          logout();
-        });
+      fetchDepartmentCoordies(delDeptCoordie);
     }
   }, [delDeptCoordie]);
 
@@ -161,6 +145,18 @@ function NewTablet(props: Props) {
           setDepartments(data['departmentEvents']);
           setNewDeptCoordie({ ...newDeptCoordie, deptEventId: data['departmentEvents'][0]['id'] });
           setDelDeptCoordie(data['departmentEvents'][0]['id']);
+        } else logout();
+      })
+      .catch(() => {
+        logout();
+      });
+  };
+
+  const fetchDepartmentCoordies = (deptId: string) => {
+    MainService.getDepartmentCoordies(deptId)
+      .then((data) => {
+        if (data['success']) {
+          setDeptCoordies(data['deptEventCoordies']);
         } else logout();
       })
       .catch(() => {
@@ -454,6 +450,7 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           toast.success('Deleted Department Event Coordie Successfully');
+          fetchDepartmentCoordies(delDeptCoordie);
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
