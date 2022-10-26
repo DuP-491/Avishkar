@@ -857,96 +857,174 @@ function NewTablet(props: Props) {
                     <p className="text-lg ">{userDetails['username']}</p>
                   </div>
                 </div>
-                <p className="px-5 py-1 mt-5 text-2xl font-bold">Details</p>
-                <p
-                  className={
-                    profileSection === 0
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setProfileSection(0)}>
-                  View
-                </p>
-                <p
-                  className={
-                    profileSection === 1
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setProfileSection(1)}>
-                  Edit
-                </p>
-                <p className="px-5 py-1 mt-5 text-2xl font-bold">Team</p>
-                <p
-                  className={
-                    profileSection === 2
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setProfileSection(2)}>
-                  View
-                </p>
-                <p
-                  className={
-                    profileSection === 3
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setProfileSection(3)}>
-                  Manage
-                </p>
-                <p
-                  className={
-                    profileSection === 4
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setProfileSection(4)}>
-                  Invitations
-                </p>
-                {userDetails['role'] !== 'USER' && (
-                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Admin</p>
-                )}
-                {userDetails['role'] === 'ADMIN' && (
-                  <>
-                    <p
-                      className={
-                        profileSection === 5
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                      }
-                      onClick={() => setProfileSection(5)}>
-                      Add Department Event
-                    </p>
-                    <p
-                      className={
-                        profileSection === 6
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                      }
-                      onClick={() => setProfileSection(6)}>
-                      Delete Department Event
-                    </p>
-                    <p
-                      className={
-                        profileSection === 7
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                      }
-                      onClick={() => setProfileSection(7)}>
-                      Add Department Coordinator
-                    </p>
-                    <p
-                      className={
-                        profileSection === 8
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                      }
-                      onClick={() => setProfileSection(8)}>
-                      Delete Department Coordinator
-                    </p>
-                  </>
-                )}
+                <div className="overflow-y-auto h-[70vh] mt-4 mr-5">
+                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Details</p>
+                  <p
+                    className={
+                      profileSection === 0
+                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                    }
+                    onClick={() => setProfileSection(0)}>
+                    View
+                  </p>
+                  <p
+                    className={
+                      profileSection === 1
+                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                    }
+                    onClick={() => setProfileSection(1)}>
+                    Edit
+                  </p>
+                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Team</p>
+                  <p
+                    className={
+                      profileSection === 2
+                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                    }
+                    onClick={() => setProfileSection(2)}>
+                    View
+                  </p>
+                  <p
+                    className={
+                      profileSection === 3
+                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                    }
+                    onClick={() => setProfileSection(3)}>
+                    Manage
+                  </p>
+                  <p
+                    className={
+                      profileSection === 4
+                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                    }
+                    onClick={() => setProfileSection(4)}>
+                    Invitations
+                  </p>
+                  {userDetails['role'] !== 'USER' && (
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Admin</p>
+                  )}
+                  {userDetails['role'] === 'ADMIN' && (
+                    <>
+                      <p
+                        className={
+                          profileSection === 5
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(5)}>
+                        Add Department Event
+                      </p>
+                      <p
+                        className={
+                          profileSection === 6
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(6)}>
+                        Delete Department Event
+                      </p>
+                      <p
+                        className={
+                          profileSection === 7
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(7)}>
+                        Add Department Coordinator
+                      </p>
+                      <p
+                        className={
+                          profileSection === 8
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(8)}>
+                        Delete Department Coordinator
+                      </p>
+                    </>
+                  )}
+                  {userDetails['role'] !== 'USER' && (
+                    <>
+                      <p
+                        className={
+                          profileSection === 9
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(9)}>
+                        Add Event
+                      </p>
+                      <p
+                        className={
+                          profileSection === 10
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(10)}>
+                        Update Event
+                      </p>
+                      <p
+                        className={
+                          profileSection === 11
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(11)}>
+                        Delete Event
+                      </p>
+                      <p
+                        className={
+                          profileSection === 12
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(12)}>
+                        Add Event Coordinator
+                      </p>
+                      <p
+                        className={
+                          profileSection === 13
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(13)}>
+                        Delete Event Coordinator
+                      </p>
+                      <p
+                        className={
+                          profileSection === 14
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(14)}>
+                        Add Event Sponsor
+                      </p>
+                      <p
+                        className={
+                          profileSection === 15
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(15)}>
+                        Update Event Sponsor
+                      </p>
+                      <p
+                        className={
+                          profileSection === 16
+                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setProfileSection(16)}>
+                        Delete Event Sponsor
+                      </p>
+                    </>
+                  )}
+                </div>
               </div>
               <div className="relative flex flex-col w-2/3 bg-slate-200 rounded-r-md">
                 {profileSection === 0 && (
