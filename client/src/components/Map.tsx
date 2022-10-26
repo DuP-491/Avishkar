@@ -158,6 +158,12 @@ function Map(props: Props) {
               />
             </svg>
             {/* Noticeboard SVG */}
+            <div
+              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-sky-400 animate-ping"
+              style={{
+                top: 41 + '%',
+                left: 31 + '%'
+              }}></div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 150 150"
@@ -311,12 +317,6 @@ function Map(props: Props) {
                 </g>
               </g>
             </svg>
-            <div
-              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-sky-400 animate-ping"
-              style={{
-                top: 41 + '%',
-                left: 31 + '%'
-              }}></div>
             {/* gnoTalks */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
