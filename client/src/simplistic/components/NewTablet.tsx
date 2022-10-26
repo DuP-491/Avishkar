@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import AdminService from '../services/AdminService';
 
 function NewTablet(props: Props) {
-  const { key, is_profile, logout, closePopup } = props;
+  const { deptId, is_profile, logout, closePopup } = props;
   const APP_ICONS = [
     'https://i.imgur.com/vSvFDH7.jpg',
     'https://i.imgur.com/M6LcSPu.jpg',
@@ -22,9 +22,11 @@ function NewTablet(props: Props) {
     'https://i.imgur.com/wVwhg2O.jpg'
   ];
 
-  // const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState(is_profile ? 'Profile' : 'Departments');
-  const [departments, setDepartments] = useState([]);
+  const [departments, setDepartments] = useState<{
+    [key: string]: any;
+  }>({});
   const [deptCoordies, setDeptCoordies] = useState([]);
   const [eventCoordies, setEventCoordies] = useState([]);
   const [sponsors, setSponsors] = useState([]);
@@ -46,6 +48,7 @@ function NewTablet(props: Props) {
     role: 'USER',
     mobile: '',
     collegeName: '',
+    score: '',
     // gender: '',
     resumeLink: '',
     isFeePaid: false
@@ -78,16 +81,19 @@ function NewTablet(props: Props) {
   useEffect(() => {
     fetchUserDetails();
     fetchTeamInvites();
+    setLoading(false);
     if (tab === 'Profile') {
       setProfileSection(0);
     } else {
-      if (key) {
-        handleSelectDept(key);
-      } else {
-        fetchDepartmentEvents();
-      }
+      fetchDepartmentEvents();
     }
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(departments).length > 0 && deptId) {
+      handleSelectDept(deptId);
+    }
+  }, [departments]);
 
   useEffect(() => {
     if (tab === 'Profile' && 2 <= profileSection && profileSection <= 4) fetchTeamInvites();
@@ -142,9 +148,11 @@ function NewTablet(props: Props) {
     MainService.getAllDepartmentEvents()
       .then((data) => {
         if (data['success']) {
-          setDepartments(data['departmentEvents']);
-          setNewDeptCoordie({ ...newDeptCoordie, deptEventId: data['departmentEvents'][0]['id'] });
-          setDelDeptCoordie(data['departmentEvents'][0]['id']);
+          let parsedDepartments: any = {};
+          data['departmentEvents'].forEach((dept: any) => {
+            parsedDepartments[dept['id']] = dept;
+          });
+          setDepartments(parsedDepartments);
         } else logout();
       })
       .catch(() => {
@@ -157,10 +165,11 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setDeptCoordies(data['deptEventCoordies']);
-        } else logout();
+        }
+        // else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -488,665 +497,249 @@ function NewTablet(props: Props) {
 
   return (
     <>
-      <div className="absolute top-0 left-0 w-screen h-screen bg-black rounded-3xl">
-        {/* Front Camera */}
-        <div className="absolute top-[50vh] left-[2.5%] rounded-full bg-zinc-800 w-3 h-3" />
-        <div className="absolute top-[50.5vh] left-[2.7%] rounded-full bg-blue-900 w-1 h-1" />
+      {loading && <div className="flex items-center justify-center">Loading...</div>}
+      {!loading && (
+        <div className="absolute top-0 left-0 w-screen h-screen bg-black rounded-3xl">
+          {/* Front Camera */}
+          <div className="absolute top-[50vh] left-[2.5%] rounded-full bg-zinc-800 w-3 h-3" />
+          <div className="absolute top-[50.5vh] left-[2.7%] rounded-full bg-blue-900 w-1 h-1" />
 
-        {/* Home Button */}
-        <div
-          className="absolute top-[48.5vh] right-[1.5%] cursor-pointer rounded-full bg-zinc-900 w-10 h-10"
-          onClick={handleGoBack}
-        />
-        <div
-          className="absolute top-[49.8vh] right-[2.1%] cursor-pointer rounded-sm border-slate-400 border-2 w-5 h-5"
-          onClick={handleGoBack}
-        />
+          {/* Home Button */}
+          <div
+            className="absolute top-[48.5vh] right-[1.5%] cursor-pointer rounded-full bg-zinc-900 w-10 h-10"
+            onClick={handleGoBack}
+          />
+          <div
+            className="absolute top-[49.8vh] right-[2.1%] cursor-pointer rounded-sm border-slate-400 border-2 w-5 h-5"
+            onClick={handleGoBack}
+          />
 
-        {/* Background Image */}
-        <div
-          className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center blur brightness-75 h-[90vh] text-[50px] rounded-md"
-          style={{ backgroundImage: `url(${tabletBg})` }}
-        />
+          {/* Background Image */}
+          <div
+            className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center blur brightness-75 h-[90vh] text-[50px] rounded-md"
+            style={{ backgroundImage: `url(${tabletBg})` }}
+          />
 
-        <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-white rounded-md">
-          {tab === 'Departments' && (
-            <div className="flex flex-col h-full">
-              <h1 className="mt-10 text-3xl text-center">Departments</h1>
-              <div className="flex flex-wrap items-center justify-center flex-1">
-                {departments.map((department, i) => (
-                  <button
-                    key={department['id']}
-                    className="flex flex-col items-center m-2 w-36 h-1/3"
-                    onClick={() => handleSelectDept(i)}>
-                    <div className="flex flex-wrap justify-around w-32 h-32 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
-                      {[...Array(4)]
-                        .map(() => APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)])
-                        .map((APP_ICON, j) => (
-                          <img
-                            key={`${department['id']}-${j}`}
-                            className="w-10 h-10 m-1 bg-orange-500 rounded-xl shrink-0"
-                            src={APP_ICON}
-                          />
-                        ))}
-                    </div>
-                    <span className="text-sm font-bold">{department['name']}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-          {tab === 'Events' && selectedDeptID !== -1 && (
-            <div className="flex flex-col h-full">
-              <h1 className="mt-10 text-3xl text-center">{departments[selectedDeptID]['name']}</h1>
-              <p className="mt-3 text-xl italic text-center">
-                {departments[selectedDeptID]['desc']}
-              </p>
-              <div className="flex flex-wrap items-center justify-center flex-1 overflow-y-auto">
-                {events.map((event, i) => (
-                  <button
-                    key={event['id']}
-                    className="flex flex-col items-center m-2 w-36 h-1/3"
-                    onClick={() => handleSelectEvent(i)}>
-                    <img
-                      className="w-20 h-20 m-1 bg-orange-500 rounded-xl shrink-0"
-                      src={APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]}
-                    />
-                    <span className="text-sm font-bold">{event['name']}</span>
-                  </button>
-                ))}
-              </div>
-              <div className="flex rounded-xl items-center justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
-                {deptCoordies.map((deptCoordie, i) => (
-                  <button
-                    key={deptCoordie['user']['id']}
-                    className="flex flex-col items-center w-36"
-                    onClick={() => handleSelectDeptCoordie(i)}>
-                    <img
-                      className="w-20 h-20 m-1 bg-orange-500 rounded-xl shrink-0"
-                      src={APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]}
-                    />
-                    <span className="text-sm font-bold">{deptCoordie['user']['name']}</span>
-                  </button>
-                ))}
-              </div>
-              {showDeptCoordieDetails && (
-                <div
-                  className="absolute top-0 left-0 w-full h-full backdrop-blur"
-                  onClick={() => setShowDeptCoordieDetails(false)}>
-                  <div className="relative w-1/3 mx-auto text-sm text-black bg-white rounded-lg top-[40%]">
-                    <p className="flex justify-between px-2 py-2 border-gray-500">
-                      <span>Name</span>
-                      <span>{selectedDeptCoordie['name']}</span>
-                    </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Email</span>
-                      <span>{selectedDeptCoordie['email']}</span>
-                    </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Mobile</span>
-                      <span>{selectedDeptCoordie['mobile']}</span>
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-          {tab === 'Event' && selectedEventID !== -1 && (
-            <div className="flex h-full text-black">
-              <div className="w-1/3 pl-5 border-r-2 border-slate-300 bg-slate-200 rounded-l-md">
-                <h1 className="mt-5 font-bold">{events[selectedEventID]['name']}</h1>
-                <p className="px-5 py-1 mt-5 text-2xl font-bold">Details</p>
-                <p
-                  className={
-                    eventSection === 0
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setEventSection(0)}>
-                  Home
-                </p>
-                <p
-                  className={
-                    eventSection === 1
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setEventSection(1)}>
-                  About
-                </p>
-                <p
-                  className={
-                    eventSection === 2
-                      ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setEventSection(2)}>
-                  Participation Criteria
-                </p>
-                <p
-                  className={
-                    eventSection === 3
-                      ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setEventSection(3)}>
-                  Rules
-                </p>
-                <p className="px-5 py-1 mt-5 text-2xl font-bold">Organisers</p>
-                <p
-                  className={
-                    eventSection === 5
-                      ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
-                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                  }
-                  onClick={() => setEventSection(5)}>
-                  Event Coordinators
-                </p>
-                {sponsors.length !== 0 && (
-                  <p
-                    className={
-                      eventSection === 6
-                        ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
-                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                    }
-                    onClick={() => setEventSection(6)}>
-                    Event Sponsors
-                  </p>
-                )}
-                {(events[selectedEventID]['psLink'] !== '#' ||
-                  (Cookies.get('token') !== undefined &&
-                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
-                      0)) && <p className="px-5 py-1 mt-5 text-2xl font-bold">Participate</p>}
-                {events[selectedEventID]['psLink'] !== '#' && (
-                  <p
-                    className="text-white bg-blue-800 cursor-pointer mb-1 rounded-2xl px-5 py-1 text-2xl w-[95%]"
-                    onClick={() => window.open(events[selectedEventID]['psLink'], '_blank')}>
-                    Problem Statement
-                  </p>
-                )}
-                {Cookies.get('token') !== undefined &&
-                  teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
-                    0 && (
-                    <p
-                      className={
-                        eventSection === 4
-                          ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
-                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                      }
-                      onClick={() => setEventSection(4)}>
-                      Register
-                    </p>
-                  )}
-              </div>
-              <div className="relative flex flex-col w-2/3 bg-white rounded-r-md">
-                <div className="absolute top-0 left-0 flex flex-col w-full border-b-2 bg-slate-100 border-slate-200 h-1/6 ">
-                  <h2 className="flex-1 mt-5 text-lg font-bold text-center">
-                    {departments[selectedDeptID]['name']}
-                  </h2>
-                  <div className="w-[90%] mx-auto bg-zinc-400/[0.4] h-7 rounded-md mb-4"></div>
-                </div>
-                {eventSection === 0 && (
-                  <div>
-                    <p className="text-3xl italic text-center mt-[45vh] translate-y-[-50%]">
-                      {events[selectedEventID]['tagline']}
-                    </p>
-                  </div>
-                )}
-                {eventSection === 1 && (
-                  <div className="mt-[15vh] overflow-y-auto">
-                    <p
-                      className="m-5 text-3xl"
-                      dangerouslySetInnerHTML={{ __html: events[selectedEventID]['details'] }}
-                    />
-                  </div>
-                )}
-                {eventSection === 2 && (
-                  <div className="mt-[15vh] overflow-y-auto">
-                    <p
-                      className="m-5 text-3xl"
-                      dangerouslySetInnerHTML={{ __html: events[selectedEventID]['criteria'] }}
-                    />
-                  </div>
-                )}
-                {eventSection === 3 && (
-                  <div className="mt-[15vh] overflow-y-auto">
-                    <p
-                      className="m-5 text-3xl"
-                      dangerouslySetInnerHTML={{ __html: events[selectedEventID]['rules'] }}
-                    />
-                  </div>
-                )}
-                {eventSection === 4 && (
-                  <div className="mt-[15vh] overflow-y-auto">
-                    {teams
-                      .filter((team) => team['team']['leader'] === userDetails['id'])
-                      .map((team) => (
-                        <div
-                          key={team['team']['id']}
-                          className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
-                          <p className="flex justify-between px-2 py-2 border-gray-500">
-                            <span>Name</span>
-                            <span>{team['team']['name']}</span>
-                          </p>
-                          <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                            <span>Number of members</span>
-                            <span>{team['team']['size']}</span>
-                          </p>
-                          <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                            <span>
-                              {(teamMembers[team['team']['id']] as any).length === 0
-                                ? 'View all members'
-                                : 'Members'}
-                            </span>
-                            <span>
-                              {(teamMembers[team['team']['id']] as any).length === 0 && (
-                                <div
-                                  className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
-                                  onClick={() => fetchTeamMembers(team['team']['id'])}
-                                />
-                              )}
-                            </span>
-                          </p>
-                          {(teamMembers[team['team']['id']] as any).map(
-                            (teamMember: any, i: number) => (
-                              <p
-                                key={teamMember['userId']}
-                                className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                                <span>
-                                  &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
-                                  {teamMember['user']['id'] === team['team']['leader']
-                                    ? '(Leader)'
-                                    : ''}
-                                </span>
-                                {teamMember['user']['id'] !== team['team']['leader'] && (
-                                  <span
-                                    className="mr-2 text-red-800 cursor-pointer"
-                                    onClick={() =>
-                                      handleRemoveMember(
-                                        team['team']['id'],
-                                        teamMember['user']['id']
-                                      )
-                                    }>
-                                    X
-                                  </span>
-                                )}
-                              </p>
-                            )
-                          )}
-                          <p
-                            className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
-                            onClick={() =>
-                              handleParticipate(team['team']['id'], events[selectedEventID]['id'])
-                            }>
-                            Participate
-                          </p>
-                        </div>
-                      ))}
-                  </div>
-                )}
-                {eventSection === 5 && (
-                  <div className="overflow-y-auto mt-[15vh]">
-                    {eventCoordies.map((eventCoordie) => (
-                      <div
-                        key={eventCoordie['user']['id']}
-                        className="m-5 text-sm text-black bg-gray-100 rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-500">
-                          <span>Name</span>
-                          <span>{eventCoordie['user']['name']}</span>
-                        </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                          <span>Email</span>
-                          <span>{eventCoordie['user']['email']}</span>
-                        </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                          <span>Mobile</span>
-                          <span>{eventCoordie['user']['mobile']}</span>
-                        </p>
+          <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-white rounded-md">
+            {tab === 'Departments' && (
+              <div className="flex flex-col h-full">
+                <h1 className="mt-10 text-3xl text-center">Departments</h1>
+                <div className="flex flex-wrap items-center justify-center flex-1">
+                  {Object.keys(departments).map((department) => (
+                    <button
+                      key={department}
+                      className="flex flex-col items-center m-2 w-36 h-1/3"
+                      onClick={() => handleSelectDept(department)}>
+                      <div className="flex flex-wrap justify-around w-32 h-32 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
+                        {[...Array(4)]
+                          .map(() => APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)])
+                          .map((APP_ICON, j) => (
+                            <img
+                              key={`${department}-${j}`}
+                              className="w-10 h-10 m-1 bg-orange-500 rounded-xl shrink-0"
+                              src={APP_ICON}
+                            />
+                          ))}
                       </div>
-                    ))}
-                  </div>
-                )}
-                {eventSection === 6 && (
-                  <div className="overflow-y-auto mt-[15vh]">
-                    {sponsors.filter((sponsor) => sponsor['title']).length !== 0 && (
-                      <div className="my-5 text-3xl font-bold text-center">Title Sponsors</div>
-                    )}
-                    {sponsors
-                      .filter((sponsor) => sponsor['title'])
-                      .map((sponsor) => (
-                        <div
-                          key={sponsor['name']}
-                          className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
-                          <img src={sponsor['poster']} />
-                          <p className="flex justify-between px-2 py-2 text-lg">
-                            <span>{sponsor['name']}</span>
-                          </p>
-                        </div>
-                      ))}
-                    {sponsors.filter((sponsor) => !sponsor['title']).length !== 0 && (
-                      <div className="my-5 text-3xl font-bold text-center">Sponsors</div>
-                    )}
-                    {sponsors
-                      .filter((sponsor) => !sponsor['title'])
-                      .map((sponsor) => (
-                        <div
-                          key={sponsor['name']}
-                          className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
-                          <img src={sponsor['poster']} />
-                          <p className="flex justify-between px-2 py-2 text-lg">
-                            <span>{sponsor['name']}</span>
-                          </p>
-                        </div>
-                      ))}
+                      <span className="text-sm font-bold">{departments[department]['name']}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {tab === 'Events' && selectedDeptID !== -1 && (
+              <div className="flex flex-col h-full">
+                <h1 className="mt-10 text-3xl text-center">
+                  {departments[selectedDeptID]['name']}
+                </h1>
+                <p className="mt-3 text-xl italic text-center">
+                  {departments[selectedDeptID]['desc']}
+                </p>
+                <div className="flex flex-wrap items-center justify-center flex-1 overflow-y-auto">
+                  {events.map((event, i) => (
+                    <button
+                      key={event['id']}
+                      className="flex flex-col items-center m-2 w-36 h-1/3"
+                      onClick={() => handleSelectEvent(i)}>
+                      <img
+                        className="w-20 h-20 m-1 bg-orange-500 rounded-xl shrink-0"
+                        src={APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]}
+                      />
+                      <span className="text-sm font-bold">{event['name']}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="flex rounded-xl items-center justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
+                  {deptCoordies.map((deptCoordie, i) => (
+                    <button
+                      key={deptCoordie['user']['id']}
+                      className="flex flex-col items-center w-36"
+                      onClick={() => handleSelectDeptCoordie(i)}>
+                      <img
+                        className="w-20 h-20 m-1 bg-orange-500 rounded-xl shrink-0"
+                        src={APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]}
+                      />
+                      <span className="text-sm font-bold">{deptCoordie['user']['name']}</span>
+                    </button>
+                  ))}
+                </div>
+                {showDeptCoordieDetails && (
+                  <div
+                    className="absolute top-0 left-0 w-full h-full backdrop-blur"
+                    onClick={() => setShowDeptCoordieDetails(false)}>
+                    <div className="relative w-1/3 mx-auto text-sm text-black bg-white rounded-lg top-[40%]">
+                      <p className="flex justify-between px-2 py-2 border-gray-500">
+                        <span>Name</span>
+                        <span>{selectedDeptCoordie['name']}</span>
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Email</span>
+                        <span>{selectedDeptCoordie['email']}</span>
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Mobile</span>
+                        <span>{selectedDeptCoordie['mobile']}</span>
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
-            </div>
-          )}
-          {tab === 'Profile' && (
-            <div className="flex h-full text-black">
-              <div className="w-1/3 pl-5 border-r-2 border-slate-300 bg-slate-200 rounded-l-md">
-                <div className="bg-white rounded-md mt-5 w-[95%] flex p-3">
-                  <img className="w-20 h-20 m-1 rounded-full shrink-0" src={defaultPfp} />
-                  <div className="flex flex-col justify-center ml-3">
-                    <h2 className="text-2xl">{userDetails['name']}</h2>
-                    <p className="text-lg ">{userDetails['username']}</p>
-                  </div>
-                </div>
-                <div className="overflow-y-auto h-[70vh] mt-4 mr-5">
+            )}
+            {tab === 'Event' && selectedEventID !== -1 && (
+              <div className="flex h-full text-black">
+                <div className="w-1/3 pl-5 border-r-2 border-slate-300 bg-slate-200 rounded-l-md">
+                  <h1 className="mt-5 font-bold">{events[selectedEventID]['name']}</h1>
                   <p className="px-5 py-1 mt-5 text-2xl font-bold">Details</p>
                   <p
                     className={
-                      profileSection === 0
+                      eventSection === 0
                         ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
-                    onClick={() => setProfileSection(0)}>
-                    View
+                    onClick={() => setEventSection(0)}>
+                    Home
                   </p>
                   <p
                     className={
-                      profileSection === 1
+                      eventSection === 1
                         ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
-                    onClick={() => setProfileSection(1)}>
-                    Edit
-                  </p>
-                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Team</p>
-                  <p
-                    className={
-                      profileSection === 2
-                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                    }
-                    onClick={() => setProfileSection(2)}>
-                    View
+                    onClick={() => setEventSection(1)}>
+                    About
                   </p>
                   <p
                     className={
-                      profileSection === 3
+                      eventSection === 2
                         ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
-                    onClick={() => setProfileSection(3)}>
-                    Manage
+                    onClick={() => setEventSection(2)}>
+                    Participation Criteria
                   </p>
                   <p
                     className={
-                      profileSection === 4
-                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                      eventSection === 3
+                        ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
-                    onClick={() => setProfileSection(4)}>
-                    Invitations
+                    onClick={() => setEventSection(3)}>
+                    Rules
                   </p>
-                  {userDetails['role'] !== 'USER' && (
-                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Admin</p>
+                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Organisers</p>
+                  <p
+                    className={
+                      eventSection === 5
+                        ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                    }
+                    onClick={() => setEventSection(5)}>
+                    Event Coordinators
+                  </p>
+                  {sponsors.length !== 0 && (
+                    <p
+                      className={
+                        eventSection === 6
+                          ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setEventSection(6)}>
+                      Event Sponsors
+                    </p>
                   )}
-                  {userDetails['role'] === 'ADMIN' && (
-                    <>
-                      <p
-                        className={
-                          profileSection === 5
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(5)}>
-                        Add Department Event
-                      </p>
-                      <p
-                        className={
-                          profileSection === 6
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(6)}>
-                        Delete Department Event
-                      </p>
-                      <p
-                        className={
-                          profileSection === 7
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(7)}>
-                        Add Department Coordinator
-                      </p>
-                      <p
-                        className={
-                          profileSection === 8
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(8)}>
-                        Delete Department Coordinator
-                      </p>
-                    </>
+                  {(events[selectedEventID]['psLink'] !== '#' ||
+                    (Cookies.get('token') !== undefined &&
+                      teams.filter((team) => team['team']['leader'] === userDetails['id'])
+                        .length !== 0)) && (
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Participate</p>
                   )}
-                  {userDetails['role'] !== 'USER' && (
-                    <>
-                      <p
-                        className={
-                          profileSection === 9
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(9)}>
-                        Add Event
-                      </p>
-                      <p
-                        className={
-                          profileSection === 10
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(10)}>
-                        Update Event
-                      </p>
-                      <p
-                        className={
-                          profileSection === 11
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(11)}>
-                        Delete Event
-                      </p>
-                      <p
-                        className={
-                          profileSection === 12
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(12)}>
-                        Add Event Coordinator
-                      </p>
-                      <p
-                        className={
-                          profileSection === 13
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(13)}>
-                        Delete Event Coordinator
-                      </p>
-                      <p
-                        className={
-                          profileSection === 14
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(14)}>
-                        Add Event Sponsor
-                      </p>
-                      <p
-                        className={
-                          profileSection === 15
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(15)}>
-                        Update Event Sponsor
-                      </p>
-                      <p
-                        className={
-                          profileSection === 16
-                            ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setProfileSection(16)}>
-                        Delete Event Sponsor
-                      </p>
-                    </>
+                  {events[selectedEventID]['psLink'] !== '#' && (
+                    <p
+                      className="text-white bg-blue-800 cursor-pointer mb-1 rounded-2xl px-5 py-1 text-2xl w-[95%]"
+                      onClick={() => window.open(events[selectedEventID]['psLink'], '_blank')}>
+                      Problem Statement
+                    </p>
                   )}
+                  {Cookies.get('token') !== undefined &&
+                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
+                      0 && (
+                      <p
+                        className={
+                          eventSection === 4
+                            ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setEventSection(4)}>
+                        Register
+                      </p>
+                    )}
                 </div>
-              </div>
-              <div className="relative flex flex-col w-2/3 bg-slate-200 rounded-r-md">
-                {profileSection === 0 && (
-                  <div className="m-5 text-sm text-black bg-white rounded-lg">
-                    <p className="flex justify-between px-2 py-2 border-gray-500">
-                      <span>Name</span>
-                      <span>{userDetails['name']}</span>
-                    </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Username</span>
-                      <span>{userDetails['username']}</span>
-                    </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>College</span>
-                      <span>{userDetails['collegeName']}</span>
-                    </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Mobile</span>
-                      <span>{userDetails['mobile']}</span>
-                    </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Resume Link</span>
-                      <span>{userDetails['resumeLink']}</span>
-                    </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Email</span>
-                      <span>{userDetails['email']}</span>
-                    </p>
-                    {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Gender</span>
-                      <span>
-                        {userDetails['gender'].charAt(0).toUpperCase() +
-                          userDetails['gender'].slice(1)}
-                      </span>
-                    </p> */}
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                      <span>Fee Status</span>
-                      <span>{userDetails['isFeePaid'] ? 'PAID' : 'NOT PAID'}</span>
-                    </p>
+                <div className="relative flex flex-col w-2/3 bg-white rounded-r-md">
+                  <div className="absolute top-0 left-0 flex flex-col w-full border-b-2 bg-slate-100 border-slate-200 h-1/6 ">
+                    <h2 className="flex-1 mt-5 text-lg font-bold text-center">
+                      {departments[selectedDeptID]['name']}
+                    </h2>
+                    <div className="w-[90%] mx-auto bg-zinc-400/[0.4] h-7 rounded-md mb-4"></div>
                   </div>
-                )}
-                {profileSection === 1 && (
-                  <>
-                    <div className="m-5 text-sm text-black bg-white rounded-lg">
-                      {/* <p className="flex justify-between px-2 py-2 border-gray-500">
-                        <span>Name</span>
-                        <input
-                          placeholder="Enter your name"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newUserDetails['name']}
-                          onChange={(e) =>
-                            setNewUserDetails({ ...newUserDetails, name: e.target.value })
-                          }
-                        />
-                      </p> */}
-                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                        <span>Username</span>
-                        <input
-                          placeholder="Enter your username"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newUserDetails['username']}
-                          onChange={(e) =>
-                            setNewUserDetails({ ...newUserDetails, username: e.target.value })
-                          }
-                        />
-                      </p> */}
-                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                        <span>College</span>
-                        <input
-                          placeholder="Enter your college name"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newUserDetails['collegeName']}
-                          onChange={(e) =>
-                            setNewUserDetails({ ...newUserDetails, collegeName: e.target.value })
-                          }
-                        />
-                      </p> */}
-                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                        <span>Mobile</span>
-                        <input
-                          placeholder="Enter your mobile"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newUserDetails['mobile']}
-                          onChange={(e) =>
-                            setNewUserDetails({ ...newUserDetails, mobile: e.target.value })
-                          }
-                        />
-                      </p> */}
-                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300"> */}
-                      <p className="flex justify-between px-2 py-2 border-gray-300">
-                        <span>Resume Link</span>
-                        <input
-                          placeholder="Enter your resumeLink"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newUserDetails['resumeLink']}
-                          onChange={(e) =>
-                            setNewUserDetails({ ...newUserDetails, resumeLink: e.target.value })
-                          }
-                        />
-                      </p>
-                    </div>
-                    <div
-                      className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
-                      onClick={() => handleEditDetails()}>
-                      <p className="w-full px-2 py-2 text-center text-blue-800">Submit</p>
-                    </div>
-                  </>
-                )}
-                {profileSection === 2 &&
-                  teams.filter((team) => team['status'] === 'ACCEPTED').length === 0 && (
+                  {eventSection === 0 && (
                     <div>
-                      <p className="text-3xl text-center mt-[45vh] translate-y-[-50%]">
-                        You are not part of any team!
+                      <p className="text-3xl italic text-center mt-[45vh] translate-y-[-50%]">
+                        {events[selectedEventID]['tagline']}
                       </p>
                     </div>
                   )}
-                {profileSection === 2 &&
-                  teams.filter((team) => team['status'] === 'ACCEPTED').length !== 0 && (
-                    <div className="overflow-y-auto">
+                  {eventSection === 1 && (
+                    <div className="mt-[15vh] overflow-y-auto">
+                      <p
+                        className="m-5 text-3xl"
+                        dangerouslySetInnerHTML={{ __html: events[selectedEventID]['details'] }}
+                      />
+                    </div>
+                  )}
+                  {eventSection === 2 && (
+                    <div className="mt-[15vh] overflow-y-auto">
+                      <p
+                        className="m-5 text-3xl"
+                        dangerouslySetInnerHTML={{ __html: events[selectedEventID]['criteria'] }}
+                      />
+                    </div>
+                  )}
+                  {eventSection === 3 && (
+                    <div className="mt-[15vh] overflow-y-auto">
+                      <p
+                        className="m-5 text-3xl"
+                        dangerouslySetInnerHTML={{ __html: events[selectedEventID]['rules'] }}
+                      />
+                    </div>
+                  )}
+                  {eventSection === 4 && (
+                    <div className="mt-[15vh] overflow-y-auto">
                       {teams
-                        .filter((team) => team['status'] === 'ACCEPTED')
+                        .filter((team) => team['team']['leader'] === userDetails['id'])
                         .map((team) => (
                           <div
                             key={team['team']['id']}
-                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{team['team']['name']}</span>
@@ -1175,130 +768,449 @@ function NewTablet(props: Props) {
                                 <p
                                   key={teamMember['userId']}
                                   className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                                  &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
-                                  {teamMember['user']['id'] === team['team']['leader']
-                                    ? '(Leader)'
-                                    : teamMember['status'] === 'ACCEPTED'
-                                    ? ''
-                                    : '(Invitation Pending)'}
+                                  <span>
+                                    &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
+                                    {teamMember['user']['id'] === team['team']['leader']
+                                      ? '(Leader)'
+                                      : ''}
+                                  </span>
+                                  {teamMember['user']['id'] !== team['team']['leader'] && (
+                                    <span
+                                      className="mr-2 text-red-800 cursor-pointer"
+                                      onClick={() =>
+                                        handleRemoveMember(
+                                          team['team']['id'],
+                                          teamMember['user']['id']
+                                        )
+                                      }>
+                                      X
+                                    </span>
+                                  )}
                                 </p>
                               )
                             )}
+                            <p
+                              className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                              onClick={() =>
+                                handleParticipate(team['team']['id'], events[selectedEventID]['id'])
+                              }>
+                              Participate
+                            </p>
                           </div>
                         ))}
                     </div>
                   )}
-                {profileSection === 3 && (
-                  <div className="overflow-y-auto">
-                    {teams
-                      .filter((team) => team['team']['leader'] === userDetails['id'])
-                      .map((team) => (
+                  {eventSection === 5 && (
+                    <div className="overflow-y-auto mt-[15vh]">
+                      {eventCoordies.map((eventCoordie) => (
                         <div
-                          key={team['team']['id']}
-                          className="relative m-5 text-sm text-black bg-white rounded-lg">
+                          key={eventCoordie['user']['id']}
+                          className="m-5 text-sm text-black bg-gray-100 rounded-lg">
                           <p className="flex justify-between px-2 py-2 border-gray-500">
                             <span>Name</span>
-                            <span>{team['team']['name']}</span>
+                            <span>{eventCoordie['user']['name']}</span>
                           </p>
                           <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                            <span>Number of members</span>
-                            <span>{team['team']['size']}</span>
+                            <span>Email</span>
+                            <span>{eventCoordie['user']['email']}</span>
                           </p>
                           <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                            <span>
-                              {(teamMembers[team['team']['id']] as any).length === 0
-                                ? 'View all members'
-                                : 'Members'}
-                            </span>
-                            <span>
-                              {(teamMembers[team['team']['id']] as any).length === 0 && (
-                                <div
-                                  className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
-                                  onClick={() => fetchTeamMembers(team['team']['id'])}
-                                />
-                              )}
-                            </span>
-                          </p>
-                          {(teamMembers[team['team']['id']] as any).map(
-                            (teamMember: any, i: number) => (
-                              <p
-                                key={teamMember['userId']}
-                                className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                                <span>
-                                  &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
-                                  {teamMember['user']['id'] === team['team']['leader']
-                                    ? '(Leader)'
-                                    : teamMember['status'] === 'ACCEPTED'
-                                    ? ''
-                                    : '(Invitation Pending)'}
-                                </span>
-                                {teamMember['user']['id'] !== team['team']['leader'] && (
-                                  <span
-                                    className="mr-2 text-red-800 cursor-pointer"
-                                    onClick={() =>
-                                      handleRemoveMember(
-                                        team['team']['id'],
-                                        teamMember['user']['id']
-                                      )
-                                    }>
-                                    X
-                                  </span>
-                                )}
-                              </p>
-                            )
-                          )}
-                          {showInviteUsernames[team['team']['id']] && (
-                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                              <span>Invite User</span>
-                              <input
-                                placeholder="Enter username of user you want to invite"
-                                className="flex-1 ml-1 text-right outline-none"
-                                value={inviteUsernames[team['team']['id']]}
-                                onChange={(e) =>
-                                  setInviteUsernames({
-                                    ...inviteUsernames,
-                                    [team['team']['id']]: e.target.value
-                                  })
-                                }
-                              />
-                            </p>
-                          )}
-                          <p
-                            className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
-                            onClick={() => handleInviteUser(team['team']['id'])}>
-                            Invite User
-                          </p>
-                          <p
-                            className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
-                            onClick={() => handleDeleteTeam(team['team']['id'])}>
-                            Delete Team
+                            <span>Mobile</span>
+                            <span>{eventCoordie['user']['mobile']}</span>
                           </p>
                         </div>
                       ))}
-                    <div
-                      className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
-                      onClick={() => handleCreateTeam()}>
-                      <p className="w-full px-2 py-2 text-center text-blue-800">Create Team</p>
+                    </div>
+                  )}
+                  {eventSection === 6 && (
+                    <div className="overflow-y-auto mt-[15vh]">
+                      {sponsors.filter((sponsor) => sponsor['title']).length !== 0 && (
+                        <div className="my-5 text-3xl font-bold text-center">Title Sponsors</div>
+                      )}
+                      {sponsors
+                        .filter((sponsor) => sponsor['title'])
+                        .map((sponsor) => (
+                          <div
+                            key={sponsor['name']}
+                            className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
+                            <img src={sponsor['poster']} />
+                            <p className="flex justify-between px-2 py-2 text-lg">
+                              <span>{sponsor['name']}</span>
+                            </p>
+                          </div>
+                        ))}
+                      {sponsors.filter((sponsor) => !sponsor['title']).length !== 0 && (
+                        <div className="my-5 text-3xl font-bold text-center">Sponsors</div>
+                      )}
+                      {sponsors
+                        .filter((sponsor) => !sponsor['title'])
+                        .map((sponsor) => (
+                          <div
+                            key={sponsor['name']}
+                            className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
+                            <img src={sponsor['poster']} />
+                            <p className="flex justify-between px-2 py-2 text-lg">
+                              <span>{sponsor['name']}</span>
+                            </p>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {tab === 'Profile' && (
+              <div className="flex h-full text-black">
+                <div className="w-1/3 pl-5 border-r-2 border-slate-300 bg-slate-200 rounded-l-md">
+                  <div className="bg-white rounded-md mt-5 w-[95%] flex p-3">
+                    <img className="w-20 h-20 m-1 rounded-full shrink-0" src={defaultPfp} />
+                    <div className="flex flex-col justify-center ml-3">
+                      <h2 className="text-2xl">{userDetails['name']}</h2>
+                      <p className="text-lg ">{userDetails['username']}</p>
                     </div>
                   </div>
-                )}
-                {profileSection === 4 &&
-                  teams.filter((team) => team['status'] !== 'ACCEPTED').length === 0 && (
-                    <div>
-                      <p className="text-3xl text-center mt-[45vh] translate-y-[-50%]">
-                        You do not have any invitations!
+                  <div className="overflow-y-auto h-[70vh] mt-4 mr-5">
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Details</p>
+                    <p
+                      className={
+                        profileSection === 0
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(0)}>
+                      View
+                    </p>
+                    <p
+                      className={
+                        profileSection === 1
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(1)}>
+                      Edit
+                    </p>
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Team</p>
+                    <p
+                      className={
+                        profileSection === 2
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(2)}>
+                      View
+                    </p>
+                    <p
+                      className={
+                        profileSection === 3
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(3)}>
+                      Manage
+                    </p>
+                    <p
+                      className={
+                        profileSection === 4
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(4)}>
+                      Invitations
+                    </p>
+                    {userDetails['role'] !== 'USER' && (
+                      <p className="px-5 py-1 mt-5 text-2xl font-bold">Admin</p>
+                    )}
+                    {userDetails['role'] === 'ADMIN' && (
+                      <>
+                        <p
+                          className={
+                            profileSection === 5
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(5)}>
+                          Add Department Event
+                        </p>
+                        <p
+                          className={
+                            profileSection === 6
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(6)}>
+                          Delete Department Event
+                        </p>
+                        <p
+                          className={
+                            profileSection === 7
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(7)}>
+                          Add Department Coordinator
+                        </p>
+                        <p
+                          className={
+                            profileSection === 8
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(8)}>
+                          Delete Department Coordinator
+                        </p>
+                      </>
+                    )}
+                    {userDetails['role'] !== 'USER' && (
+                      <>
+                        <p
+                          className={
+                            profileSection === 9
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(9)}>
+                          Add Event
+                        </p>
+                        <p
+                          className={
+                            profileSection === 10
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(10)}>
+                          Update Event
+                        </p>
+                        <p
+                          className={
+                            profileSection === 11
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(11)}>
+                          Delete Event
+                        </p>
+                        <p
+                          className={
+                            profileSection === 12
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(12)}>
+                          Add Event Coordinator
+                        </p>
+                        <p
+                          className={
+                            profileSection === 13
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(13)}>
+                          Delete Event Coordinator
+                        </p>
+                        <p
+                          className={
+                            profileSection === 14
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(14)}>
+                          Add Event Sponsor
+                        </p>
+                        <p
+                          className={
+                            profileSection === 15
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(15)}>
+                          Update Event Sponsor
+                        </p>
+                        <p
+                          className={
+                            profileSection === 16
+                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                          }
+                          onClick={() => setProfileSection(16)}>
+                          Delete Event Sponsor
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="relative flex flex-col w-2/3 bg-slate-200 rounded-r-md">
+                  {profileSection === 0 && (
+                    <div className="m-5 text-sm text-black bg-white rounded-lg">
+                      <p className="flex justify-between px-2 py-2 border-gray-500">
+                        <span>Name</span>
+                        <span>{userDetails['name']}</span>
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Username</span>
+                        <span>{userDetails['username']}</span>
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>College</span>
+                        <span>{userDetails['collegeName']}</span>
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Mobile</span>
+                        <span>{userDetails['mobile']}</span>
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Resume Link</span>
+                        <span>{userDetails['resumeLink']}</span>
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Email</span>
+                        <span>{userDetails['email']}</span>
+                      </p>
+                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <span>Gender</span>
+                      <span>
+                        {userDetails['gender'].charAt(0).toUpperCase() +
+                          userDetails['gender'].slice(1)}
+                      </span>
+                    </p> */}
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Fee Status</span>
+                        <span>{userDetails['isFeePaid'] ? 'PAID' : 'NOT PAID'}</span>
                       </p>
                     </div>
                   )}
-                {profileSection === 4 &&
-                  teams.filter((team) => team['status'] !== 'ACCEPTED').length !== 0 && (
+                  {profileSection === 1 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        {/* <p className="flex justify-between px-2 py-2 border-gray-500">
+                        <span>Name</span>
+                        <input
+                          placeholder="Enter your name"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newUserDetails['name']}
+                          onChange={(e) =>
+                            setNewUserDetails({ ...newUserDetails, name: e.target.value })
+                          }
+                        />
+                      </p> */}
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Username</span>
+                        <input
+                          placeholder="Enter your username"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newUserDetails['username']}
+                          onChange={(e) =>
+                            setNewUserDetails({ ...newUserDetails, username: e.target.value })
+                          }
+                        />
+                      </p> */}
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>College</span>
+                        <input
+                          placeholder="Enter your college name"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newUserDetails['collegeName']}
+                          onChange={(e) =>
+                            setNewUserDetails({ ...newUserDetails, collegeName: e.target.value })
+                          }
+                        />
+                      </p> */}
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Mobile</span>
+                        <input
+                          placeholder="Enter your mobile"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newUserDetails['mobile']}
+                          onChange={(e) =>
+                            setNewUserDetails({ ...newUserDetails, mobile: e.target.value })
+                          }
+                        />
+                      </p> */}
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300"> */}
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Resume Link</span>
+                          <input
+                            placeholder="Enter your resumeLink"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newUserDetails['resumeLink']}
+                            onChange={(e) =>
+                              setNewUserDetails({ ...newUserDetails, resumeLink: e.target.value })
+                            }
+                          />
+                        </p>
+                      </div>
+                      <div
+                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        onClick={() => handleEditDetails()}>
+                        <p className="w-full px-2 py-2 text-center text-blue-800">Submit</p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 2 &&
+                    teams.filter((team) => team['status'] === 'ACCEPTED').length === 0 && (
+                      <div>
+                        <p className="text-3xl text-center mt-[45vh] translate-y-[-50%]">
+                          You are not part of any team!
+                        </p>
+                      </div>
+                    )}
+                  {profileSection === 2 &&
+                    teams.filter((team) => team['status'] === 'ACCEPTED').length !== 0 && (
+                      <div className="overflow-y-auto">
+                        {teams
+                          .filter((team) => team['status'] === 'ACCEPTED')
+                          .map((team) => (
+                            <div
+                              key={team['team']['id']}
+                              className="m-5 text-sm text-black bg-white rounded-lg">
+                              <p className="flex justify-between px-2 py-2 border-gray-500">
+                                <span>Name</span>
+                                <span>{team['team']['name']}</span>
+                              </p>
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                <span>Number of members</span>
+                                <span>{team['team']['size']}</span>
+                              </p>
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                <span>
+                                  {(teamMembers[team['team']['id']] as any).length === 0
+                                    ? 'View all members'
+                                    : 'Members'}
+                                </span>
+                                <span>
+                                  {(teamMembers[team['team']['id']] as any).length === 0 && (
+                                    <div
+                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                      onClick={() => fetchTeamMembers(team['team']['id'])}
+                                    />
+                                  )}
+                                </span>
+                              </p>
+                              {(teamMembers[team['team']['id']] as any).map(
+                                (teamMember: any, i: number) => (
+                                  <p
+                                    key={teamMember['userId']}
+                                    className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                    &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
+                                    {teamMember['user']['id'] === team['team']['leader']
+                                      ? '(Leader)'
+                                      : teamMember['status'] === 'ACCEPTED'
+                                      ? ''
+                                      : '(Invitation Pending)'}
+                                  </p>
+                                )
+                              )}
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  {profileSection === 3 && (
                     <div className="overflow-y-auto">
                       {teams
-                        .filter((team) => team['status'] !== 'ACCEPTED')
+                        .filter((team) => team['team']['leader'] === userDetails['id'])
                         .map((team) => (
                           <div
                             key={team['team']['id']}
-                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            className="relative m-5 text-sm text-black bg-white rounded-lg">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{team['team']['name']}</span>
@@ -1322,203 +1234,307 @@ function NewTablet(props: Props) {
                                 )}
                               </span>
                             </p>
-                            {(teamMembers[team['team']['id']] as any)
-                              .filter((teamMember: any) => teamMember['status'] === 'ACCEPTED')
-                              .map((teamMember: any, i: number) => (
+                            {(teamMembers[team['team']['id']] as any).map(
+                              (teamMember: any, i: number) => (
                                 <p
                                   key={teamMember['userId']}
                                   className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                                  &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
-                                  {teamMember['user']['id'] === team['team']['leader']
-                                    ? '(Leader)'
-                                    : ''}
+                                  <span>
+                                    &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
+                                    {teamMember['user']['id'] === team['team']['leader']
+                                      ? '(Leader)'
+                                      : teamMember['status'] === 'ACCEPTED'
+                                      ? ''
+                                      : '(Invitation Pending)'}
+                                  </span>
+                                  {teamMember['user']['id'] !== team['team']['leader'] && (
+                                    <span
+                                      className="mr-2 text-red-800 cursor-pointer"
+                                      onClick={() =>
+                                        handleRemoveMember(
+                                          team['team']['id'],
+                                          teamMember['user']['id']
+                                        )
+                                      }>
+                                      X
+                                    </span>
+                                  )}
                                 </p>
-                              ))}
+                              )
+                            )}
+                            {showInviteUsernames[team['team']['id']] && (
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                <span>Invite User</span>
+                                <input
+                                  placeholder="Enter username of user you want to invite"
+                                  className="flex-1 ml-1 text-right outline-none"
+                                  value={inviteUsernames[team['team']['id']]}
+                                  onChange={(e) =>
+                                    setInviteUsernames({
+                                      ...inviteUsernames,
+                                      [team['team']['id']]: e.target.value
+                                    })
+                                  }
+                                />
+                              </p>
+                            )}
                             <p
                               className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
-                              onClick={() =>
-                                handleRespondTeamInvite(team['team']['id'], 'ACCEPTED')
-                              }>
-                              Accept Invitation
+                              onClick={() => handleInviteUser(team['team']['id'])}>
+                              Invite User
                             </p>
                             <p
                               className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
-                              onClick={() =>
-                                handleRespondTeamInvite(team['team']['id'], 'DECLINED')
-                              }>
-                              Reject Invitation
+                              onClick={() => handleDeleteTeam(team['team']['id'])}>
+                              Delete Team
                             </p>
                           </div>
                         ))}
+                      <div
+                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        onClick={() => handleCreateTeam()}>
+                        <p className="w-full px-2 py-2 text-center text-blue-800">Create Team</p>
+                      </div>
                     </div>
                   )}
-                {profileSection === 5 && (
-                  <>
-                    <div className="m-5 text-sm text-black bg-white rounded-lg">
-                      <p className="flex justify-between px-2 py-2 border-gray-300">
-                        <span>Name</span>
-                        <input
-                          placeholder="Enter event name"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newDeptEvent['name']}
-                          onChange={(e) =>
-                            setNewDeptEvent({ ...newDeptEvent, name: e.target.value })
-                          }
-                        />
-                      </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                        <span>Organizer</span>
-                        <input
-                          placeholder="Enter event organizer"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newDeptEvent['organizer']}
-                          onChange={(e) =>
-                            setNewDeptEvent({ ...newDeptEvent, organizer: e.target.value })
-                          }
-                        />
-                      </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                        <span>Description</span>
-                        <input
-                          placeholder="Enter event description"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newDeptEvent['desc']}
-                          onChange={(e) =>
-                            setNewDeptEvent({ ...newDeptEvent, desc: e.target.value })
-                          }
-                        />
-                      </p>
-                    </div>
-                    <div
-                      className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
-                      onClick={() =>
-                        handleAddDepartmentEvent(
-                          newDeptEvent['name'],
-                          newDeptEvent['organizer'],
-                          newDeptEvent['desc']
-                        )
-                      }>
-                      <p className="w-full px-2 py-2 text-center text-blue-800">
-                        Create Department Event
-                      </p>
-                    </div>
-                  </>
-                )}
-                {profileSection === 6 && (
-                  <div className="overflow-y-auto">
-                    {departments.map((department) => (
-                      <div
-                        key={department['id']}
-                        className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-500">
-                          <span>Name</span>
-                          <span>{department['name']}</span>
-                        </p>
-                        <p
-                          className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
-                          onClick={() => handleDeleteDepartmentEvent(department['id'])}>
-                          Delete Department Event
+                  {profileSection === 4 &&
+                    teams.filter((team) => team['status'] !== 'ACCEPTED').length === 0 && (
+                      <div>
+                        <p className="text-3xl text-center mt-[45vh] translate-y-[-50%]">
+                          You do not have any invitations!
                         </p>
                       </div>
-                    ))}
-                  </div>
-                )}
-                {profileSection === 7 && (
-                  <>
-                    <div className="m-5 text-sm text-black bg-white rounded-lg">
-                      <p className="flex justify-between px-2 py-2 border-gray-300">
-                        <span>User ID</span>
-                        <input
-                          placeholder="Enter user id"
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newDeptCoordie['userId']}
-                          onChange={(e) =>
-                            setNewDeptCoordie({ ...newDeptCoordie, userId: e.target.value })
-                          }
-                        />
-                      </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
-                        <span>Department Event</span>
-                        <select
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={newDeptCoordie['deptEventId']}
-                          onChange={(e) =>
-                            setNewDeptCoordie({ ...newDeptCoordie, deptEventId: e.target.value })
-                          }>
-                          {departments.map((department) => (
-                            <option key={department['id']} value={department['id']}>
-                              {department['name']}
-                            </option>
+                    )}
+                  {profileSection === 4 &&
+                    teams.filter((team) => team['status'] !== 'ACCEPTED').length !== 0 && (
+                      <div className="overflow-y-auto">
+                        {teams
+                          .filter((team) => team['status'] !== 'ACCEPTED')
+                          .map((team) => (
+                            <div
+                              key={team['team']['id']}
+                              className="m-5 text-sm text-black bg-white rounded-lg">
+                              <p className="flex justify-between px-2 py-2 border-gray-500">
+                                <span>Name</span>
+                                <span>{team['team']['name']}</span>
+                              </p>
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                <span>Number of members</span>
+                                <span>{team['team']['size']}</span>
+                              </p>
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                <span>
+                                  {(teamMembers[team['team']['id']] as any).length === 0
+                                    ? 'View all members'
+                                    : 'Members'}
+                                </span>
+                                <span>
+                                  {(teamMembers[team['team']['id']] as any).length === 0 && (
+                                    <div
+                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                      onClick={() => fetchTeamMembers(team['team']['id'])}
+                                    />
+                                  )}
+                                </span>
+                              </p>
+                              {(teamMembers[team['team']['id']] as any)
+                                .filter((teamMember: any) => teamMember['status'] === 'ACCEPTED')
+                                .map((teamMember: any, i: number) => (
+                                  <p
+                                    key={teamMember['userId']}
+                                    className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                    &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
+                                    {teamMember['user']['id'] === team['team']['leader']
+                                      ? '(Leader)'
+                                      : ''}
+                                  </p>
+                                ))}
+                              <p
+                                className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                                onClick={() =>
+                                  handleRespondTeamInvite(team['team']['id'], 'ACCEPTED')
+                                }>
+                                Accept Invitation
+                              </p>
+                              <p
+                                className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                                onClick={() =>
+                                  handleRespondTeamInvite(team['team']['id'], 'DECLINED')
+                                }>
+                                Reject Invitation
+                              </p>
+                            </div>
                           ))}
-                        </select>
-                      </p>
-                    </div>
-                    <div
-                      className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
-                      onClick={() =>
-                        handleAddDepartmentEventCoordie(
-                          newDeptCoordie['userId'],
-                          newDeptCoordie['deptEventId']
-                        )
-                      }>
-                      <p className="w-full px-2 py-2 text-center text-blue-800">
-                        Add Department Coordie
-                      </p>
-                    </div>
-                  </>
-                )}
-                {profileSection === 8 && (
-                  <>
-                    <div className="m-5 text-sm text-black bg-white rounded-lg">
-                      <p className="flex justify-between px-2 py-2 border-gray-300">
-                        <span>Department Event</span>
-                        <select
-                          className="flex-1 ml-1 text-right outline-none"
-                          value={delDeptCoordie}
-                          onChange={(e) => setDelDeptCoordie(e.target.value)}>
-                          {departments.map((department) => (
-                            <option key={department['id']} value={department['id']}>
-                              {department['name']}
-                            </option>
-                          ))}
-                        </select>
-                      </p>
-                    </div>
+                      </div>
+                    )}
+                  {profileSection === 5 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Name</span>
+                          <input
+                            placeholder="Enter event name"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newDeptEvent['name']}
+                            onChange={(e) =>
+                              setNewDeptEvent({ ...newDeptEvent, name: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Organizer</span>
+                          <input
+                            placeholder="Enter event organizer"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newDeptEvent['organizer']}
+                            onChange={(e) =>
+                              setNewDeptEvent({ ...newDeptEvent, organizer: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Description</span>
+                          <input
+                            placeholder="Enter event description"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newDeptEvent['desc']}
+                            onChange={(e) =>
+                              setNewDeptEvent({ ...newDeptEvent, desc: e.target.value })
+                            }
+                          />
+                        </p>
+                      </div>
+                      <div
+                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        onClick={() =>
+                          handleAddDepartmentEvent(
+                            newDeptEvent['name'],
+                            newDeptEvent['organizer'],
+                            newDeptEvent['desc']
+                          )
+                        }>
+                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                          Create Department Event
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 6 && (
                     <div className="overflow-y-auto">
-                      {deptCoordies.map((deptCoordie) => (
+                      {Object.keys(departments).map((department) => (
                         <div
-                          key={deptCoordie['user']['id']}
+                          key={department}
                           className="m-5 text-sm text-black bg-white rounded-lg">
                           <p className="flex justify-between px-2 py-2 border-gray-500">
                             <span>Name</span>
-                            <span>{deptCoordie['user']['name']}</span>
+                            <span>{departments[department]['name']}</span>
                           </p>
                           <p
                             className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
-                            onClick={() =>
-                              handleRemoveDepartmentEventCoordie(
-                                deptCoordie['user']['id'],
-                                delDeptCoordie
-                              )
-                            }>
-                            Delete Department Coordie
+                            onClick={() => handleDeleteDepartmentEvent(department)}>
+                            Delete Department Event
                           </p>
                         </div>
                       ))}
                     </div>
-                  </>
-                )}
+                  )}
+                  {profileSection === 7 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>User ID</span>
+                          <input
+                            placeholder="Enter user id"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newDeptCoordie['userId']}
+                            onChange={(e) =>
+                              setNewDeptCoordie({ ...newDeptCoordie, userId: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newDeptCoordie['deptEventId']}
+                            onChange={(e) =>
+                              setNewDeptCoordie({ ...newDeptCoordie, deptEventId: e.target.value })
+                            }>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div
+                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        onClick={() =>
+                          handleAddDepartmentEventCoordie(
+                            newDeptCoordie['userId'],
+                            newDeptCoordie['deptEventId']
+                          )
+                        }>
+                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                          Add Department Coordie
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 8 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={delDeptCoordie}
+                            onChange={(e) => setDelDeptCoordie(e.target.value)}>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div className="overflow-y-auto">
+                        {deptCoordies.map((deptCoordie) => (
+                          <div
+                            key={deptCoordie['user']['id']}
+                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                              <span>Name</span>
+                              <span>{deptCoordie['user']['name']}</span>
+                            </p>
+                            <p
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              onClick={() =>
+                                handleRemoveDepartmentEventCoordie(
+                                  deptCoordie['user']['id'],
+                                  delDeptCoordie
+                                )
+                              }>
+                              Delete Department Coordie
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
 
 NewTablet.propTypes = {
-  key: PropTypes.string.isRequired,
+  deptId: PropTypes.string.isRequired,
   is_profile: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   closePopup: PropTypes.func.isRequired

@@ -8,6 +8,8 @@ import NewTablet from './simplistic/components/NewTablet';
 import FaqPage from './simplistic/components/FAQ';
 import TeamPage from './simplistic/components/Team';
 import SponsorPage from './simplistic/components/Sponsor';
+import TabletSponsors from './simplistic/components/Sponsors';
+import TabletTeam from './simplistic/components/TeamAvishkar';
 import DepartmentList from './simplistic/components/Department';
 import EventList from './simplistic/components/Event';
 import UserProfile from './simplistic/components/Profile';
@@ -32,17 +34,22 @@ function App() {
           <Route
             path="tab"
             element={
-              <NewTablet is_profile={false} logout={() => {}} closePopup={() => {}} key="" />
+              <NewTablet is_profile={false} logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
           <Route
             path="profile"
-            element={<NewTablet is_profile={true} logout={() => {}} closePopup={() => {}} key="" />}
+            element={
+              <NewTablet is_profile={true} logout={() => {}} closePopup={() => {}} deptId="" />
+            }
           />
         </Route>
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/sponsors" element={<SponsorPage />} />
+        {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
+        <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
+        <Route path="/tbtm" element={<TabletTeam onCrossPress={() => {}} />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset/:token" element={<ResetPassword />} />
@@ -55,7 +62,6 @@ function App() {
             <Route path=":event" element={<EventPage />} />
           </Route>
         </Route>
-
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer />

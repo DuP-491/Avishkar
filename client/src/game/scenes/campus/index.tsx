@@ -337,6 +337,9 @@ export class Campus extends Scene {
     const enterPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'cafe')
     );
+    const teamPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'team')
+    );
     const computers = gameObjectsToObjectPoints(
       this.map.filterObjects('Events', () => {
         return true;
@@ -396,6 +399,18 @@ export class Campus extends Scene {
           this.bgm?.pause();
           this.game.events.emit(EVENTS_NAME.sceneCafe);
           this.scene.switch('cafe96');
+        })
+    );
+    this.interactables.push(
+      this.physics.add
+        .sprite(teamPoint.x, teamPoint.y, 'tiles_sports', 43) // Team
+        .setOrigin(0.5, 0.5)
+        .setScale(1.5)
+        .setInteractive({
+          useHandCursor: true
+        })
+        .on('pointerdown', (e: any) => {
+          this.game.events.emit(EVENTS_NAME.openTeam);
         })
     );
     this.game.events.on(EVENTS_NAME.login, () => {
