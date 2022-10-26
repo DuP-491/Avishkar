@@ -66,13 +66,14 @@ function NewTablet(props: Props) {
     userId: '',
     deptEventId: ''
   });
+  const [delDeptCoordie, setDelDeptCoordie] = useState('');
   const [showDeptCoordieDetails, setShowDeptCoordieDetails] = useState(false);
 
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState({});
   const [showInviteUsernames, setShowInviteUsernames] = useState({});
   const [inviteUsernames, setInviteUsernames] = useState({});
-  // console.log(sponsors);
+  // console.log(deptIdNameMapper);
 
   useEffect(() => {
     fetchUserDetails();
@@ -117,6 +118,20 @@ function NewTablet(props: Props) {
   }, [selectedDeptID]);
 
   useEffect(() => {
+    if (delDeptCoordie !== '') {
+      MainService.getDepartmentCoordies(delDeptCoordie)
+        .then((data) => {
+          if (data['success']) {
+            setDeptCoordies(data['deptEventCoordies']);
+          } else logout();
+        })
+        .catch(() => {
+          logout();
+        });
+    }
+  }, [delDeptCoordie]);
+
+  useEffect(() => {
     if (selectedEventID !== -1) {
       MainService.getEventCoordies(events[selectedEventID]['id'])
         .then((data) => {
@@ -145,6 +160,7 @@ function NewTablet(props: Props) {
         if (data['success']) {
           setDepartments(data['departmentEvents']);
           setNewDeptCoordie({ ...newDeptCoordie, deptEventId: data['departmentEvents'][0]['id'] });
+          setDelDeptCoordie(data['departmentEvents'][0]['id']);
         } else logout();
       })
       .catch(() => {
@@ -419,6 +435,25 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           toast.success('Created Department Event Coordie Successfully');
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleRemoveDepartmentEventCoordie = (userId: string, deptEventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    AdminService.removeDepartmentCoordie(token, userId, deptEventId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Deleted Department Event Coordie Successfully');
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -1327,7 +1362,7 @@ function NewTablet(props: Props) {
                           }
                         />
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                         <span>Department Event</span>
                         <select
                           className="flex-1 ml-1 text-right outline-none"
@@ -1354,6 +1389,47 @@ function NewTablet(props: Props) {
                       <p className="w-full px-2 py-2 text-center text-blue-800">
                         Add Department Coordie
                       </p>
+                    </div>
+                  </>
+                )}
+                {profileSection === 8 && (
+                  <>
+                    <div className="m-5 text-sm text-black bg-white rounded-lg">
+                      <p className="flex justify-between px-2 py-2 border-gray-300">
+                        <span>Department Event</span>
+                        <select
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={delDeptCoordie}
+                          onChange={(e) => setDelDeptCoordie(e.target.value)}>
+                          {departments.map((department) => (
+                            <option key={department['id']} value={department['id']}>
+                              {department['name']}
+                            </option>
+                          ))}
+                        </select>
+                      </p>
+                    </div>
+                    <div className="overflow-y-auto">
+                      {deptCoordies.map((deptCoordie) => (
+                        <div
+                          key={deptCoordie['user']['id']}
+                          className="m-5 text-sm text-black bg-white rounded-lg">
+                          <p className="flex justify-between px-2 py-2 border-gray-500">
+                            <span>Name</span>
+                            <span>{deptCoordie['user']['name']}</span>
+                          </p>
+                          <p
+                            className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                            onClick={() =>
+                              handleRemoveDepartmentEventCoordie(
+                                deptCoordie['user']['id'],
+                                delDeptCoordie
+                              )
+                            }>
+                            Delete Department Coordie
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </>
                 )}
