@@ -847,7 +847,9 @@ function NewTablet(props: Props) {
                                   &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                   {teamMember['user']['id'] === team['team']['leader']
                                     ? '(Leader)'
-                                    : ''}
+                                    : teamMember['status'] === 'ACCEPTED'
+                                    ? ''
+                                    : '(Invitation Pending)'}
                                 </p>
                               )
                             )}
@@ -895,7 +897,9 @@ function NewTablet(props: Props) {
                                   &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                   {teamMember['user']['id'] === team['team']['leader']
                                     ? '(Leader)'
-                                    : ''}
+                                    : teamMember['status'] === 'ACCEPTED'
+                                    ? ''
+                                    : '(Invitation Pending)'}
                                 </span>
                                 {teamMember['user']['id'] !== team['team']['leader'] && (
                                   <span
@@ -987,8 +991,9 @@ function NewTablet(props: Props) {
                                 )}
                               </span>
                             </p>
-                            {(teamMembers[team['team']['id']] as any).map(
-                              (teamMember: any, i: number) => (
+                            {(teamMembers[team['team']['id']] as any)
+                              .filter((teamMember: any) => teamMember['status'] === 'ACCEPTED')
+                              .map((teamMember: any, i: number) => (
                                 <p
                                   key={teamMember['userId']}
                                   className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
@@ -997,8 +1002,7 @@ function NewTablet(props: Props) {
                                     ? '(Leader)'
                                     : ''}
                                 </p>
-                              )
-                            )}
+                              ))}
                             <p
                               className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
                               onClick={() =>
