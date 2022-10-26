@@ -43,11 +43,9 @@ function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
         {prop.map((p) => {
           return (
             <div
-              style={{ width: '20vw', minWidth: '200px' }}
+              style={{ width: '20vw', minWidth: '200px', aspectRatio: '1' }}
               className="group relative block overflow-hidden rounded-md transition-all duration-500 h-fit bg-gray-100/[0.2] p-1 m-2 rounded-lg justify-center text-white">
-              <span className="transition-all duration-500">
-                <img src={p[0]} />
-              </span>
+              <img src={p[0]} className="object-cover aspect-square" />
               <div className="absolute text-center transition-all duration-300 rounded -bottom-52 group-hover:bottom-2 right-2 left-2 bg-slate-900 shadow-gray-700">
                 <span className="text-lg font-medium transition duration-500 hover:text-primary-600">
                   {p[1]}
@@ -124,9 +122,9 @@ function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
           ])}
           <DividerLine alignmentCenter={true} text="FACULTIES" />
           {DisplayCard([
-            [PlaceholderIMG, 'Faculty 1', 'Designation 1', '', '', ''],
-            [PlaceholderIMG, 'Faculty 2', 'Designation 2', '', '', ''],
-            [PlaceholderIMG, 'Faculty 3', 'Designation 3', '', '', ''],
+            [PlaceholderIMG, 'Faculty 1', 'Designation 1', 'fb', 'in', ''],
+            [PlaceholderIMG, 'Faculty 2', 'Designation 2', '', 'as', ''],
+            [PlaceholderIMG, 'Faculty 3', 'Designation 3', 'asd', 'sa', 'as'],
             [PlaceholderIMG, 'Faculty 4', 'Designation 4', '', '', ''],
             [PlaceholderIMG, 'Faculty 5', 'Designation 5', '', '', '']
           ])}

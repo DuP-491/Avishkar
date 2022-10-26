@@ -53,7 +53,7 @@ function Sponsors({ onCrossPress }: TeamAvishkarPropType) {
             <div
               style={{ width: '20vw', minWidth: '200px' }}
               className="justify-center p-1 text-white transition-all duration-500 rounded-md rounded-lg height-fit">
-              <img src={p} className="bg-white/[0.2] p-2 rounded-xl" />
+              <img src={p} className="object-contain p-2 rounded-xl aspect-square" />
             </div>
           );
         })}
