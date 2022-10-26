@@ -60,10 +60,12 @@ const index = () => {
           </div>
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="SPONSORS" />
-            <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
+            <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+              <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="white" />
+            </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          {/* <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="associate Sponsors" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
           </div>
@@ -86,12 +88,11 @@ const index = () => {
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="CO TITLE SPONSORS" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
-          </div>
+          </div> */}
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="past sponsors" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="white" />
               <Card imgsrc={PolygonIMG} name="Polygon" bgc="white" />
               <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="white" />
               <Card imgsrc={TezosIMG} name="Tezos" bgc="white" />
