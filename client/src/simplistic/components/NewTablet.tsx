@@ -6,6 +6,7 @@ import UserService from '../services/UserService';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import AdminService from '../services/AdminService';
 
 function NewTablet(props: Props) {
   const { key, is_profile, logout, closePopup } = props;
@@ -56,6 +57,11 @@ function NewTablet(props: Props) {
     collegeName: '',
     resumeLink: ''
   });
+  const [newDeptEvent, setNewDeptEvent] = useState({
+    name: '',
+    organizer: '',
+    desc: ''
+  });
   const [showDeptCoordieDetails, setShowDeptCoordieDetails] = useState(false);
 
   const [teams, setTeams] = useState([]);
@@ -73,15 +79,7 @@ function NewTablet(props: Props) {
       if (key) {
         handleSelectDept(key);
       } else {
-        MainService.getAllDepartmentEvents()
-          .then((data) => {
-            if (data['success']) {
-              setDepartments(data['departmentEvents']);
-            } else logout();
-          })
-          .catch(() => {
-            logout();
-          });
+        fetchDepartmentEvents();
       }
     }
   }, []);
@@ -135,6 +133,18 @@ function NewTablet(props: Props) {
         });
     }
   }, [selectedEventID]);
+
+  const fetchDepartmentEvents = () => {
+    MainService.getAllDepartmentEvents()
+      .then((data) => {
+        if (data['success']) {
+          setDepartments(data['departmentEvents']);
+        } else logout();
+      })
+      .catch(() => {
+        logout();
+      });
+  };
 
   const fetchUserDetails = () => {
     const token = Cookies.get('token');
@@ -282,7 +292,7 @@ function NewTablet(props: Props) {
     UserService.inviteUser(token, teamId, (inviteUsernames as { [key: string]: string })[teamId])
       .then((data) => {
         if (data['success']) {
-          toast.success('User invited successfully!');
+          toast.success('User Invited Successfully!');
           setShowInviteUsernames({ ...showInviteUsernames, [teamId]: false });
           setInviteUsernames({ ...inviteUsernames, [teamId]: '' });
         } else if (data['message'] === 'Invalid token!') {
@@ -350,6 +360,26 @@ function NewTablet(props: Props) {
       })
       .catch(() => {
         logout();
+      });
+  };
+
+  const handleAddDepartmentEvent = (name: string, organizer: string, desc: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    AdminService.addDepartmentEvent(token, name, organizer, desc)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Created Department Event Successfully');
+          fetchDepartmentEvents();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
       });
   };
 
@@ -794,6 +824,49 @@ function NewTablet(props: Props) {
                   onClick={() => setProfileSection(4)}>
                   Invitations
                 </p>
+                {userDetails['role'] !== 'USER' && (
+                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Admin</p>
+                )}
+                {userDetails['role'] === 'ADMIN' && (
+                  <>
+                    <p
+                      className={
+                        profileSection === 5
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(5)}>
+                      Add Department Event
+                    </p>
+                    <p
+                      className={
+                        profileSection === 6
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(6)}>
+                      Delete Department Event
+                    </p>
+                    <p
+                      className={
+                        profileSection === 7
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(7)}>
+                      Add Department Coordinator
+                    </p>
+                    <p
+                      className={
+                        profileSection === 8
+                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setProfileSection(8)}>
+                      Delete Department Coordinator
+                    </p>
+                  </>
+                )}
               </div>
               <div className="relative flex flex-col w-2/3 bg-slate-200 rounded-r-md">
                 {profileSection === 0 && (
@@ -882,7 +955,8 @@ function NewTablet(props: Props) {
                           }
                         />
                       </p> */}
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300"> */}
+                      <p className="flex justify-between px-2 py-2 border-gray-300">
                         <span>Resume Link</span>
                         <input
                           placeholder="Enter your resumeLink"
@@ -1123,6 +1197,58 @@ function NewTablet(props: Props) {
                         ))}
                     </div>
                   )}
+                {profileSection === 5 && (
+                  <>
+                    <div className="m-5 text-sm text-black bg-white rounded-lg">
+                      <p className="flex justify-between px-2 py-2 border-gray-300">
+                        <span>Name</span>
+                        <input
+                          placeholder="Enter event name"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newDeptEvent['name']}
+                          onChange={(e) =>
+                            setNewDeptEvent({ ...newDeptEvent, name: e.target.value })
+                          }
+                        />
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Organizer</span>
+                        <input
+                          placeholder="Enter event organizer"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newDeptEvent['organizer']}
+                          onChange={(e) =>
+                            setNewDeptEvent({ ...newDeptEvent, organizer: e.target.value })
+                          }
+                        />
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Description</span>
+                        <input
+                          placeholder="Enter event description"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newDeptEvent['desc']}
+                          onChange={(e) =>
+                            setNewDeptEvent({ ...newDeptEvent, desc: e.target.value })
+                          }
+                        />
+                      </p>
+                    </div>
+                    <div
+                      className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                      onClick={() =>
+                        handleAddDepartmentEvent(
+                          newDeptEvent['name'],
+                          newDeptEvent['organizer'],
+                          newDeptEvent['desc']
+                        )
+                      }>
+                      <p className="w-full px-2 py-2 text-center text-blue-800">
+                        Create Department Event
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}
