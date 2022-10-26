@@ -116,6 +116,11 @@ export default {
             success: false,
             message: 'Invalid token!'
           };
+        case 404:
+          return {
+            success: false,
+            message: "User Id doesn't belong to a user!"
+          };
         case 409:
           return {
             success: false,

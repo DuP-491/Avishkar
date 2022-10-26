@@ -90,6 +90,11 @@ export default {
             success: true,
             message: 'Success'
           };
+        case 400:
+          return {
+            success: false,
+            message: "User Id doesn't belong to a user!"
+          };
         case 401:
           return {
             success: false,
