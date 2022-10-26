@@ -26,6 +26,7 @@ function NewTablet(props: Props) {
   const [departments, setDepartments] = useState([]);
   const [deptCoordies, setDeptCoordies] = useState([]);
   const [eventCoordies, setEventCoordies] = useState([]);
+  const [sponsors, setSponsors] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedDeptID, setSelectedDeptID] = useState(-1);
   const [selectedEventID, setSelectedEventID] = useState(-1);
@@ -61,7 +62,7 @@ function NewTablet(props: Props) {
   const [teamMembers, setTeamMembers] = useState({});
   const [showInviteUsernames, setShowInviteUsernames] = useState({});
   const [inviteUsernames, setInviteUsernames] = useState({});
-  console.log(eventCoordies);
+  // console.log(sponsors);
 
   useEffect(() => {
     fetchUserDetails();
@@ -118,6 +119,15 @@ function NewTablet(props: Props) {
         .then((data) => {
           if (data['success']) {
             setEventCoordies(data['eventCoordies']);
+          } else logout();
+        })
+        .catch(() => {
+          logout();
+        });
+      MainService.getEventSponsors(events[selectedEventID]['id'])
+        .then((data) => {
+          if (data['success']) {
+            setSponsors(data['eventSponsors']);
           } else logout();
         })
         .catch(() => {
@@ -526,6 +536,17 @@ function NewTablet(props: Props) {
                   onClick={() => setEventSection(5)}>
                   Event Coordinators
                 </p>
+                {sponsors.length !== 0 && (
+                  <p
+                    className={
+                      eventSection === 6
+                        ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                    }
+                    onClick={() => setEventSection(6)}>
+                    Event Sponsors
+                  </p>
+                )}
                 {(events[selectedEventID]['psLink'] !== '#' ||
                   (Cookies.get('token') !== undefined &&
                     teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
@@ -677,6 +698,40 @@ function NewTablet(props: Props) {
                         </p>
                       </div>
                     ))}
+                  </div>
+                )}
+                {eventSection === 6 && (
+                  <div className="overflow-y-auto mt-[15vh]">
+                    {sponsors.filter((sponsor) => sponsor['title']).length !== 0 && (
+                      <div className="my-5 text-3xl font-bold text-center">Title Sponsors</div>
+                    )}
+                    {sponsors
+                      .filter((sponsor) => sponsor['title'])
+                      .map((sponsor) => (
+                        <div
+                          key={sponsor['name']}
+                          className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
+                          <img src={sponsor['poster']} />
+                          <p className="flex justify-between px-2 py-2 text-lg">
+                            <span>{sponsor['name']}</span>
+                          </p>
+                        </div>
+                      ))}
+                    {sponsors.filter((sponsor) => !sponsor['title']).length !== 0 && (
+                      <div className="my-5 text-3xl font-bold text-center">Sponsors</div>
+                    )}
+                    {sponsors
+                      .filter((sponsor) => !sponsor['title'])
+                      .map((sponsor) => (
+                        <div
+                          key={sponsor['name']}
+                          className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
+                          <img src={sponsor['poster']} />
+                          <p className="flex justify-between px-2 py-2 text-lg">
+                            <span>{sponsor['name']}</span>
+                          </p>
+                        </div>
+                      ))}
                   </div>
                 )}
               </div>
