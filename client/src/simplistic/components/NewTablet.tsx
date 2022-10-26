@@ -86,6 +86,7 @@ function NewTablet(props: Props) {
 
   useEffect(() => {
     if (tab === 'Profile' && 2 <= profileSection && profileSection <= 4) fetchTeamInvites();
+    if (profileSection === 6) fetchDepartmentEvents();
   }, [profileSection]);
 
   useEffect(() => {
@@ -373,6 +374,26 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           toast.success('Created Department Event Successfully');
+          fetchDepartmentEvents();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleDeleteDepartmentEvent = (id: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    AdminService.removeDepartmentEvent(token, id)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Deleted Department Event Successfully');
           fetchDepartmentEvents();
         } else if (data['message'] === 'Invalid token!') {
           logout();
@@ -1248,6 +1269,25 @@ function NewTablet(props: Props) {
                       </p>
                     </div>
                   </>
+                )}
+                {profileSection === 6 && (
+                  <div className="overflow-y-auto">
+                    {departments.map((department) => (
+                      <div
+                        key={department['id']}
+                        className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-500">
+                          <span>Name</span>
+                          <span>{department['name']}</span>
+                        </p>
+                        <p
+                          className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                          onClick={() => handleDeleteDepartmentEvent(department['id'])}>
+                          Delete Department Event
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
