@@ -120,7 +120,7 @@ function NewTablet(props: Props) {
     UserService.getUserDetails(token)
       .then((data) => {
         if (data['success']) {
-          if (data['details']['resumeLink'] !== null) data['details']['resumeLink'] = '';
+          if (data['details']['resumeLink'] === null) data['details']['resumeLink'] = '';
           setUserDetails(data['details']);
           setNewUserDetails(data['details']);
         } else if (data['message'] === 'Invalid token!') {
