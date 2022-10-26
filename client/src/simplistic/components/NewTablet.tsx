@@ -42,7 +42,7 @@ function NewTablet(props: Props) {
     role: 'USER',
     mobile: '',
     collegeName: '',
-    gender: '',
+    // gender: '',
     resumeLink: '',
     isFeePaid: false
   });
@@ -65,7 +65,6 @@ function NewTablet(props: Props) {
     if (tab === 'Profile') {
       setProfileSection(0);
     } else {
-      console.log(key);
       if (key) {
         handleSelectDept(key);
       } else {
@@ -686,13 +685,13 @@ function NewTablet(props: Props) {
                       <span>Email</span>
                       <span>{userDetails['email']}</span>
                     </p>
-                    <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                    {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                       <span>Gender</span>
                       <span>
                         {userDetails['gender'].charAt(0).toUpperCase() +
                           userDetails['gender'].slice(1)}
                       </span>
-                    </p>
+                    </p> */}
                     <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                       <span>Fee Status</span>
                       <span>{userDetails['isFeePaid'] ? 'PAID' : 'NOT PAID'}</span>
@@ -702,7 +701,7 @@ function NewTablet(props: Props) {
                 {profileSection === 1 && (
                   <>
                     <div className="m-5 text-sm text-black bg-white rounded-lg">
-                      <p className="flex justify-between px-2 py-2 border-gray-500">
+                      {/* <p className="flex justify-between px-2 py-2 border-gray-500">
                         <span>Name</span>
                         <input
                           placeholder="Enter your name"
@@ -712,8 +711,8 @@ function NewTablet(props: Props) {
                             setNewUserDetails({ ...newUserDetails, name: e.target.value })
                           }
                         />
-                      </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      </p> */}
+                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                         <span>Username</span>
                         <input
                           placeholder="Enter your username"
@@ -723,8 +722,8 @@ function NewTablet(props: Props) {
                             setNewUserDetails({ ...newUserDetails, username: e.target.value })
                           }
                         />
-                      </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      </p> */}
+                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                         <span>College</span>
                         <input
                           placeholder="Enter your college name"
@@ -734,8 +733,8 @@ function NewTablet(props: Props) {
                             setNewUserDetails({ ...newUserDetails, collegeName: e.target.value })
                           }
                         />
-                      </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      </p> */}
+                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                         <span>Mobile</span>
                         <input
                           placeholder="Enter your mobile"
@@ -745,7 +744,7 @@ function NewTablet(props: Props) {
                             setNewUserDetails({ ...newUserDetails, mobile: e.target.value })
                           }
                         />
-                      </p>
+                      </p> */}
                       <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                         <span>Resume Link</span>
                         <input
