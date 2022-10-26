@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 
 function NewTablet(props: Props) {
-  const { key, is_profile, logout, closePopup } = props;
+  const { deptId, is_profile, logout, closePopup } = props;
   const APP_ICONS = [
     'https://i.imgur.com/vSvFDH7.jpg',
     'https://i.imgur.com/M6LcSPu.jpg',
@@ -22,7 +22,9 @@ function NewTablet(props: Props) {
 
   // const navigate = useNavigate();
   const [tab, setTab] = useState(is_profile ? 'Profile' : 'Departments');
-  const [departments, setDepartments] = useState([]);
+  const [departments, setDepartments] = useState<{
+    [key: string]: any;
+  }>({});
   const [deptCoordies, setDeptCoordies] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedDeptID, setSelectedDeptID] = useState(-1);
@@ -65,22 +67,28 @@ function NewTablet(props: Props) {
     if (tab === 'Profile') {
       setProfileSection(0);
     } else {
-      console.log(key);
-      if (key) {
-        handleSelectDept(key);
-      } else {
-        MainService.getAllDepartmentEvents()
-          .then((data) => {
-            if (data['success']) {
-              setDepartments(data['departmentEvents']);
-            } else logout();
-          })
-          .catch(() => {
-            logout();
-          });
-      }
+      MainService.getAllDepartmentEvents()
+        .then((data) => {
+          if (data['success']) {
+            let parsedDepartments: any = {};
+            data['departmentEvents'].forEach((dept: any) => {
+              parsedDepartments[dept['id']] = dept;
+            });
+            setDepartments(parsedDepartments);
+          } else logout();
+        })
+        .catch(() => {
+          logout();
+        });
     }
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(departments).length > 0 && deptId) {
+      console.log(departments);
+      handleSelectDept(deptId);
+    }
+  }, [departments]);
 
   useEffect(() => {
     if (tab === 'Profile' && 2 <= profileSection && profileSection <= 4) fetchTeamInvites();
@@ -101,10 +109,11 @@ function NewTablet(props: Props) {
         .then((data) => {
           if (data['success']) {
             setDeptCoordies(data['deptEventCoordies']);
-          } else logout();
+          }
+          // else logout();
         })
         .catch(() => {
-          logout();
+          // logout();
         });
     }
   }, [selectedDeptID]);
@@ -348,9 +357,9 @@ function NewTablet(props: Props) {
             <div className="flex flex-col h-full">
               <h1 className="mt-10 text-3xl text-center">Departments</h1>
               <div className="flex flex-wrap items-center justify-center flex-1">
-                {departments.map((department, i) => (
+                {Object.keys(departments).map((department, i) => (
                   <button
-                    key={department['id']}
+                    key={department}
                     className="flex flex-col items-center m-2 w-36 h-1/3"
                     onClick={() => handleSelectDept(i)}>
                     <div className="flex flex-wrap justify-around w-32 h-32 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
@@ -358,13 +367,13 @@ function NewTablet(props: Props) {
                         .map(() => APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)])
                         .map((APP_ICON, j) => (
                           <img
-                            key={`${department['id']}-${j}`}
+                            key={`${department}-${j}`}
                             className="w-10 h-10 m-1 bg-orange-500 rounded-xl shrink-0"
                             src={APP_ICON}
                           />
                         ))}
                     </div>
-                    <span className="text-sm font-bold">{department['name']}</span>
+                    <span className="text-sm font-bold">{departments[department]['name']}</span>
                   </button>
                 ))}
               </div>
@@ -972,7 +981,7 @@ function NewTablet(props: Props) {
 }
 
 NewTablet.propTypes = {
-  key: PropTypes.string.isRequired,
+  deptId: PropTypes.string.isRequired,
   is_profile: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   closePopup: PropTypes.func.isRequired

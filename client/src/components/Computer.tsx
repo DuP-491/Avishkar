@@ -4,10 +4,12 @@ import NewTablet from '../simplistic/components/NewTablet';
 function Computer(props: Props) {
   const { closePopup, department, logout } = props;
 
+  const deptId = department != 'profile' ? department : '';
+
   return (
     <div className="z-40 flex justify-center items-center w-full h-full backdrop-blur-sm">
       <NewTablet
-        key={department != 'profile' ? department : ''}
+        deptId={deptId}
         is_profile={department == 'profile'}
         logout={logout}
         closePopup={closePopup}
