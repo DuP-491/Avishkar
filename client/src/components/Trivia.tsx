@@ -5,6 +5,7 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typewriter from 'typewriter-effect';
+import { toast } from 'react-toastify';
 
 function Trivia(props: Props) {
   const { question, answer, setShowTrivia } = props;
@@ -24,6 +25,13 @@ function Trivia(props: Props) {
 
   const handleSubmit = () => {
     console.log(answer);
+    // handle given answer here
+    toast.success('Correct! You have been awarded 1000 points!');
+    sessionStorage.setItem('dailyTrivia', 'true');
+    handleClick();
+    setTimeout(() => {
+      setShowTrivia(false);
+    }, 500);
   };
 
   useEffect(() => {

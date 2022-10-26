@@ -97,10 +97,17 @@ function GameComponent(props: Props) {
           setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
 
-          if (infoPromptType == 'trivia') {
-            setTriviaFunction(() => {
-              setShowTrivia(true);
-            });
+          if (gameObject.npcType == 'trivia') {
+            if (
+              sessionStorage.getItem('dailyTrivia') == null ||
+              sessionStorage.getItem('dailyTrivia') == 'false'
+            ) {
+              setTriviaFunction(() => openTrivia);
+            } else {
+              setTriviaFunction(() => () => {
+                toast.error('You have already attempted the trivia for today!');
+              });
+            }
           }
         });
         game.instance?.events.on(
@@ -247,6 +254,10 @@ function GameComponent(props: Props) {
     if (game && authenticated) {
       game?.instance?.events.emit(EVENTS_NAME.teleport, location);
     }
+  };
+
+  const openTrivia = () => {
+    setShowTrivia(true);
   };
 
   const handleOnMapIconClick = () => {

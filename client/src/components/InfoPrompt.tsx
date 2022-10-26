@@ -105,12 +105,10 @@ function InfoPrompt(props: Props) {
                 <PromptButton
                   btnText={customText ?? ''}
                   btnClass="mr-4 hover:text-green-600"
-                  customFunction={
-                    customFunction ??
-                    (() => {
-                      setShowInfoPrompt(false);
-                    })
-                  }
+                  customFunction={() => {
+                    if (customFunction) customFunction();
+                    setShowInfoPrompt(false);
+                  }}
                 />
               ) : isChoice ? (
                 <>
@@ -129,12 +127,10 @@ function InfoPrompt(props: Props) {
                 <PromptButton
                   btnText="OK"
                   btnClass="mr-4 hover:text-green-600"
-                  customFunction={
-                    customFunction ??
-                    (() => {
-                      setShowInfoPrompt(false);
-                    })
-                  }
+                  customFunction={() => {
+                    if (customFunction) customFunction();
+                    setShowInfoPrompt(false);
+                  }}
                 />
               ))}
           </div>
