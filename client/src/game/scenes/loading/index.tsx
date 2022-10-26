@@ -12,6 +12,7 @@ export class LoadingScene extends Scene {
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(width / 2 - 160, height / 2, 320, 50);
+    progressBox.setDepth(50);
 
     let loadingText = this.make.text({
       x: width / 2 - 25,
@@ -20,7 +21,8 @@ export class LoadingScene extends Scene {
       style: {
         font: '20px monospace',
         color: '#ffffff'
-      }
+      },
+      depth: 50
     });
     loadingText.setOrigin(0.5, 0.5);
 
@@ -31,7 +33,8 @@ export class LoadingScene extends Scene {
       style: {
         font: '18px monospace',
         color: '#ffffff'
-      }
+      },
+      depth: 50
     });
     percentText.setOrigin(0.5, 0.5);
 
@@ -42,13 +45,15 @@ export class LoadingScene extends Scene {
       style: {
         font: '18px monospace',
         color: '#ffffff'
-      }
+      },
+      depth: 50
     });
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', function (value: number) {
       console.log(value);
       progressBar.clear();
+      progressBar.setDepth(50);
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(width / 2 + 10 - 160, height / 2 + 10, 300 * value, 30);
       percentText.setText(parseInt((value * 100).toString()) + '%');
