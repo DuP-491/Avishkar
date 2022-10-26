@@ -25,6 +25,7 @@ function NewTablet(props: Props) {
   const [tab, setTab] = useState(is_profile ? 'Profile' : 'Departments');
   const [departments, setDepartments] = useState([]);
   const [deptCoordies, setDeptCoordies] = useState([]);
+  const [eventCoordies, setEventCoordies] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedDeptID, setSelectedDeptID] = useState(-1);
   const [selectedEventID, setSelectedEventID] = useState(-1);
@@ -60,7 +61,7 @@ function NewTablet(props: Props) {
   const [teamMembers, setTeamMembers] = useState({});
   const [showInviteUsernames, setShowInviteUsernames] = useState({});
   const [inviteUsernames, setInviteUsernames] = useState({});
-  // console.log(teams, teamMembers);
+  console.log(eventCoordies);
 
   useEffect(() => {
     fetchUserDetails();
@@ -110,6 +111,20 @@ function NewTablet(props: Props) {
         });
     }
   }, [selectedDeptID]);
+
+  useEffect(() => {
+    if (selectedEventID !== -1) {
+      MainService.getEventCoordies(events[selectedEventID]['id'])
+        .then((data) => {
+          if (data['success']) {
+            setEventCoordies(data['eventCoordies']);
+          } else logout();
+        })
+        .catch(() => {
+          logout();
+        });
+    }
+  }, [selectedEventID]);
 
   const fetchUserDetails = () => {
     const token = Cookies.get('token');
@@ -501,6 +516,16 @@ function NewTablet(props: Props) {
                   onClick={() => setEventSection(3)}>
                   Rules
                 </p>
+                <p className="px-5 py-1 mt-5 text-2xl font-bold">Organisers</p>
+                <p
+                  className={
+                    eventSection === 5
+                      ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                      : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                  }
+                  onClick={() => setEventSection(5)}>
+                  Event Coordinators
+                </p>
                 {(events[selectedEventID]['psLink'] !== '#' ||
                   (Cookies.get('token') !== undefined &&
                     teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
@@ -630,6 +655,28 @@ function NewTablet(props: Props) {
                           </p>
                         </div>
                       ))}
+                  </div>
+                )}
+                {eventSection === 5 && (
+                  <div className="overflow-y-auto mt-[15vh]">
+                    {eventCoordies.map((eventCoordie) => (
+                      <div
+                        key={eventCoordie['user']['id']}
+                        className="m-5 text-sm text-black bg-gray-100 rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-500">
+                          <span>Name</span>
+                          <span>{eventCoordie['user']['name']}</span>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Email</span>
+                          <span>{eventCoordie['user']['email']}</span>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Mobile</span>
+                          <span>{eventCoordie['user']['mobile']}</span>
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
