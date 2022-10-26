@@ -262,23 +262,35 @@ function GameComponent(props: Props) {
   };
 
   const openTrivia = () => {
-    if (game) game.instance?.scene.pause('campus');
+    if (game) {
+      game.instance?.scene.pause('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = false;
+    }
     setShowTrivia(true);
   };
 
   const closeTrivia = () => {
-    if (game) game.instance?.scene.resume('campus');
+    if (game) {
+      game.instance?.scene.resume('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = true;
+    }
     setShowTrivia(false);
   };
 
   const openNotice = () => {
-    if (game) game.instance?.scene.pause('campus');
+    if (game) {
+      game.instance?.scene.pause('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = false;
+    }
     setStopInteract(true);
     setShowNotice(true);
   };
 
   const closeNotice = () => {
-    if (game) game.instance?.scene.resume('campus');
+    if (game) {
+      game.instance?.scene.resume('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = true;
+    }
     setShowNotice(false);
   };
 
@@ -341,6 +353,9 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
+      <div className="absolute w-full h-full top-0 pt-[7%]">
+        {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
+      </div>
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
@@ -349,7 +364,6 @@ function GameComponent(props: Props) {
             isChoice={infoPromptType === 'ask'}
             customFunction={triviaFunction}></InfoPrompt>
         )}
-        {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
         <div className="w-full">
           <MiniMap playerPosition={playerPosition} teleport={teleport} />
           <img
