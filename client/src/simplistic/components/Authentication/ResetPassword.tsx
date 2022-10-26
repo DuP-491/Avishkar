@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 
 const ResetPassword = () => {
@@ -12,6 +13,7 @@ const ResetPassword = () => {
     const confirmpassword = ConfirmPasswordRef.current.value;
     if (confirmpassword != password) {
       console.log('Confirm password does not match the password');
+      toast.error('Confirm password does not match the password');
       return;
     }
     let token;
