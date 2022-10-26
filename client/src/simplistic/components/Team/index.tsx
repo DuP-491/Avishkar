@@ -28,6 +28,8 @@ import SACAnilKumarSinghIMG from './Assets/SACAnilKumarSingh.jpg';
 import TechDennisThomasIMG from './Assets/TechDennisThomas.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
+import PVSumitYadavIMG from './Assets/PVSumitYadav.jpg';
+import PVVarunKumarIMG from './Assets/PVVarunKumar.jpg';
 /* eslint-enable */
 
 const index = () => {
@@ -54,6 +56,9 @@ const index = () => {
                 imgsrc={DirectorRajeevTripathiIMG}
                 name="Professor Rajeev Tripathi"
                 designation="Director"
+                facebook=""
+                instagram=""
+                linkedin=""
               />
             </div>
           </div>
@@ -65,6 +70,9 @@ const index = () => {
                 imgsrc={SACAnilKumarSinghIMG}
                 name="Prof. Anil Kumar Singh"
                 designation="SAC President"
+                facebook=""
+                instagram=""
+                linkedin=""
               />
             </div>
           </div>
@@ -72,73 +80,361 @@ const index = () => {
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="faculty" />
             <div className="flex flex-wrap justify-around">
-              <Card imgsrc={PlaceholderIMG} name="Faculty 1" designation="Designations" />
-              <Card imgsrc={PlaceholderIMG} name="Faculty 2" designation="Designations" />
-              <Card imgsrc={PlaceholderIMG} name="Faculty 3" designation="Designations" />
-              <Card imgsrc={PlaceholderIMG} name="Faculty 4" designation="Designations" />
-              <Card imgsrc={PlaceholderIMG} name="Faculty 5" designation="Designations" />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Faculty 1"
+                designation="Designations"
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Faculty 2"
+                designation="Designations"
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Faculty 3"
+                designation="Designations"
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Faculty 4"
+                designation="Designations"
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Faculty 5"
+                designation="Designations"
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine alignmentCenter={true} text="Festive Secretaries" />
+            <DividerLine alignmentCenter={true} text="Festival Secretary" />
             <div className="flex flex-wrap justify-around">
-              <Card imgsrc={FSAdityaRajuDarjiIMG} name="Aditya Raju Darji" designation="" />
-              <Card imgsrc={FSOmVijayGuptaIMG} name="Om Vijay Gupta" designation="" />
-              <Card imgsrc={FSShivanshiMaheshwariIMG} name="Shivanshi Maheshwari" designation="" />
-              <Card imgsrc={FSShreyaYadavIMG} name="Shreya Yadav" designation="" />
-              <Card imgsrc={FSVibhanshuVaibhavIMG} name="Vibhanshu Vaibhav" designation="" />
-              <Card imgsrc={FSAnushreeIMG} name="Anushree" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="---" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="---" designation="" />
+              <Card
+                imgsrc={FSAdityaRajuDarjiIMG}
+                name="Aditya Raju Darji"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={FSOmVijayGuptaIMG}
+                name="Om Vijay Gupta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={FSShivanshiMaheshwariIMG}
+                name="Shivanshi Maheshwari"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={FSShreyaYadavIMG}
+                name="Shreya Yadav"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={FSVibhanshuVaibhavIMG}
+                name="Vibhanshu Vaibhav"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={FSAnushreeIMG}
+                name="Anushree"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="---"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="---"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Public Relations" />
             <div className="flex flex-wrap justify-around">
-              <Card imgsrc={PlaceholderIMG} name="Aashirwad Sharma" designation="" />
-              <Card imgsrc={PRAdityaGuptaIMG} name="Aditya Gupta" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="Devashish Singh Tomar" designation="" />
-              <Card imgsrc={PRGaurikaSharmaIMG} name="Gaurika Sharma" designation="" />
-              <Card imgsrc={PRHimanshuGoyalIMG} name="Himanshu Goyal" designation="" />
-              <Card imgsrc={PRPrakharJainIMG} name="Prakhar Jain" designation="" />
-              <Card imgsrc={PRRishiGargIMG} name="Rishi Garg" designation="" />
-              <Card imgsrc={PRSiddharthDubeyIMG} name="Siddharth Dubey" designation="" />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Aashirwad Sharma"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PRAdityaGuptaIMG}
+                name="Aditya Gupta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Devashish Singh Tomar"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PRGaurikaSharmaIMG}
+                name="Gaurika Sharma"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PRHimanshuGoyalIMG}
+                name="Himanshu Goyal"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PRPrakharJainIMG}
+                name="Prakhar Jain"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PRRishiGargIMG}
+                name="Rishi Garg"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PRSiddharthDubeyIMG}
+                name="Siddharth Dubey"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Gnosiomania Team" />
             <div className="flex flex-wrap justify-around">
-              <Card imgsrc={PlaceholderIMG} name="Darin Peter Carvalho" designation="" />
-              <Card imgsrc={GnosomaniaVanshAmbashtaIMG} name="Vansh Ambashta" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="---" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="---" designation="" />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Darin Peter Carvalho"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={GnosomaniaVanshAmbashtaIMG}
+                name="Vansh Ambashta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="---"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="---"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Tech Team" />
             <div className="flex flex-wrap justify-around">
-              <Card imgsrc={TechDennisThomasIMG} name="Dennis Thomas" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="Ishan Gupta" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="Lovedeep Singh Kamal" designation="" />
-              <Card imgsrc={TechMohitPandeyIMG} name="Mohit Pandey" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="Parth Mittal" designation="" />
-              <Card imgsrc={PlaceholderIMG} name="Priyav K Kaneria" designation="" />
-              <Card imgsrc={TechSanskarOmarIMG} name="Sanskar Omar" designation="" />
+              <Card
+                imgsrc={TechDennisThomasIMG}
+                name="Dennis Thomas"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Ishan Gupta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Lovedeep Singh Kamal"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={TechMohitPandeyIMG}
+                name="Mohit Pandey"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Parth Mittal"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PlaceholderIMG}
+                name="Priyav K Kaneria"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={TechSanskarOmarIMG}
+                name="Sanskar Omar"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
             </div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="Design Team" />
             <div className="flex flex-wrap justify-around">
-              <Card imgsrc={DesignAnchalYadavIMG} name="Anchal Yadav" designation="" />
-              <Card imgsrc={DesignDarpanMittalIMG} name="Darpan Mittal" designation="" />
-              <Card imgsrc={DesignHardikMittalIMG} name="Hardik Mittal" designation="" />
-              <Card imgsrc={DesignKushagraSaxenaIMG} name="Kushagra Saxena" designation="" />
-              <Card imgsrc={DesignMradulYadavIMG} name="Mradul Yadav" designation="" />
+              <Card
+                imgsrc={DesignAnchalYadavIMG}
+                name="Anchal Yadav"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={DesignDarpanMittalIMG}
+                name="Darpan Mittal"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={DesignHardikMittalIMG}
+                name="Hardik Mittal"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={DesignKushagraSaxenaIMG}
+                name="Kushagra Saxena"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={DesignMradulYadavIMG}
+                name="Mradul Yadav"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+            </div>
+          </div>
+          <div className="container px-6 py-10 mx-auto">
+            <DividerLine alignmentCenter={true} text="Tech Team" />
+            <div className="flex flex-wrap justify-around">
+              <Card
+                imgsrc={PRAdityaGuptaIMG}
+                name="Aditya Gupta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PVSumitYadavIMG}
+                name="Sumit Yadav"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PVVarunKumarIMG}
+                name="Varun Kumar"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
             </div>
           </div>
         </div>

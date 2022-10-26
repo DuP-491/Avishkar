@@ -257,5 +257,12 @@ export const npcData: {
     type: 'text',
     character: 'QuizMaster',
     text: `Hi! I'm QuizMaster. I'm here to conduct a quiz. Do you want to participate?`
+  },
+  'campus-88': {
+    name: 'Notice Board',
+    location: 'Near Dean Academics',
+    type: 'notice',
+    character: 'QuizMaster',
+    text: `Want to know what is going on in Avishkar. Click Ok to know more`
   }
 };

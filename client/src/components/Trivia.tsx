@@ -8,7 +8,7 @@ import Typewriter from 'typewriter-effect';
 import { toast } from 'react-toastify';
 
 function Trivia(props: Props) {
-  const { question, answer, setShowTrivia } = props;
+  const { question, answer, onClose } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
 
@@ -30,7 +30,7 @@ function Trivia(props: Props) {
     sessionStorage.setItem('dailyTrivia', 'true');
     handleClick();
     setTimeout(() => {
-      setShowTrivia(false);
+      onClose();
     }, 500);
   };
 
@@ -97,7 +97,7 @@ function Trivia(props: Props) {
 Trivia.propTypes = {
   question: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired,
-  setShowTrivia: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof Trivia.propTypes>;
