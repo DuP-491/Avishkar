@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 function NoticeBoard(props: Props) {
-  const { setShowNoticeBoard } = props;
+  const { onCloseNotice } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
   const notices = [
@@ -20,7 +21,7 @@ function NoticeBoard(props: Props) {
       textDiv.current?.classList.add('h-0');
     }
     setTimeout(() => {
-      setShowNoticeBoard(false);
+      onCloseNotice();
     }, 500);
   };
   useEffect(() => {
@@ -68,7 +69,12 @@ function NoticeBoard(props: Props) {
             sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid.
             Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
             sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam recusandae alias
-            error harum maxime adipisci amet laborum.
+            error harum maxime adipisci amet laborum. Important Notices -
+            <ul>
+              {notices.map((notice, index) => (
+                <li key={index}>{notice}</li>
+              ))}
+            </ul>
             <br />
             <p className="text-sm text-center">
               Thank you for talking part in Avishkar 2k22. We hope you are enjoying it. If you have
@@ -87,7 +93,7 @@ function NoticeBoard(props: Props) {
 }
 
 NoticeBoard.propTypes = {
-  setShowNoticeBoard: PropTypes.func.isRequired
+  onCloseNotice: PropTypes.func.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof NoticeBoard.propTypes>;

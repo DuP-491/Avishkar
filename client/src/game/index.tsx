@@ -16,6 +16,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Trivia from '../components/Trivia';
+import NoticeBoard from '../components/NoticeBoard';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -65,6 +66,7 @@ function GameComponent(props: Props) {
   const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
   const [showTrivia, setShowTrivia] = useState(false);
+  const [showNotice, setShowNotice] = useState(false);
   const [triviaFunction, setTriviaFunction] = useState(() => () => {});
 
   const triviaText = `Which is the best college in the world?`;
@@ -108,6 +110,9 @@ function GameComponent(props: Props) {
                 toast.error('You have already attempted the trivia for today!');
               });
             }
+          }
+          if (gameObject.npcType == 'notice') {
+            setTriviaFunction(() => openNotice);
           }
         });
         game.instance?.events.on(
@@ -257,7 +262,24 @@ function GameComponent(props: Props) {
   };
 
   const openTrivia = () => {
+    if (game) game.instance?.scene.pause('campus');
     setShowTrivia(true);
+  };
+
+  const closeTrivia = () => {
+    if (game) game.instance?.scene.resume('campus');
+    setShowTrivia(false);
+  };
+
+  const openNotice = () => {
+    if (game) game.instance?.scene.pause('campus');
+    setStopInteract(true);
+    setShowNotice(true);
+  };
+
+  const closeNotice = () => {
+    if (game) game.instance?.scene.resume('campus');
+    setShowNotice(false);
   };
 
   const handleOnMapIconClick = () => {
@@ -310,9 +332,7 @@ function GameComponent(props: Props) {
           interactText={interactText}
         />
       )}
-      {showTrivia && (
-        <Trivia question={triviaText} answer={triviaAnswer} setShowTrivia={setShowTrivia} />
-      )}
+      {showTrivia && <Trivia question={triviaText} answer={triviaAnswer} onClose={closeTrivia} />}
       {showMap && (
         <Map
           playerPosition={playerPosition}
@@ -329,6 +349,7 @@ function GameComponent(props: Props) {
             isChoice={infoPromptType === 'ask'}
             customFunction={triviaFunction}></InfoPrompt>
         )}
+        {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
         <div className="w-full">
           <MiniMap playerPosition={playerPosition} teleport={teleport} />
           <img
