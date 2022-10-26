@@ -45,7 +45,7 @@ function Trivia(props: Props) {
     <>
       <div
         ref={baseDiv}
-        className="z-30 flex flex-col w-0 mx-auto mb-16 text-xl font-normal transition-all duration-500 h-[300px] px-32 py-24 font-pfeffer"
+        className="z-40 flex flex-col w-0 mx-auto mb-16 text-xl font-normal transition-all duration-500 h-[300px] px-32 py-24 font-pfeffer"
         style={{
           backgroundImage: `url("/npc-scroll.png")`,
           backgroundSize: 'fill',

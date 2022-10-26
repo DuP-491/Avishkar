@@ -65,6 +65,7 @@ function GameComponent(props: Props) {
   const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
   const [showTrivia, setShowTrivia] = useState(false);
+  const [triviaFunction, setTriviaFunction] = useState(() => () => {});
 
   const triviaText = `Which is the best college in the world?`;
   const triviaAnswer = `MNNIT Allahabd`;
@@ -95,6 +96,12 @@ function GameComponent(props: Props) {
           setInfoPromptText(data.text);
           setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
+
+          if (infoPromptType == 'trivia') {
+            setTriviaFunction(() => {
+              setShowTrivia(true);
+            });
+          }
         });
         game.instance?.events.on(
           EVENTS_NAME.interact,
@@ -292,6 +299,9 @@ function GameComponent(props: Props) {
           interactText={interactText}
         />
       )}
+      {showTrivia && (
+        <Trivia question={triviaText} answer={triviaAnswer} setShowTrivia={setShowTrivia} />
+      )}
       {showMap && (
         <Map
           playerPosition={playerPosition}
@@ -305,7 +315,8 @@ function GameComponent(props: Props) {
           <InfoPrompt
             text={infoPromptText}
             setShowInfoPrompt={setShowInfoPrompt}
-            isChoice={infoPromptType === 'ask'}></InfoPrompt>
+            isChoice={infoPromptType === 'ask'}
+            customFunction={triviaFunction}></InfoPrompt>
         )}
         <div className="w-full">
           <MiniMap playerPosition={playerPosition} teleport={teleport} />
