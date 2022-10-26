@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 
 function PromptButton(props: Props) {
   return (
-    <div className={props.btnClass} onClick={props.customFunction}>
+    <div
+      className={props.btnClass}
+      onClick={() => {
+        console.log('clicked');
+        props.customFunction();
+      }}>
       {props.btnText}
     </div>
   );
