@@ -37,18 +37,25 @@ const addDepartmentCoordinator = async (req: Request, res: Response, next) => {
     const { userId, deptEventId } = req.body;
     try {
         const user = await prisma.user.findFirst({ where: { id: userId } });
-        await prisma.departmentCoordinator.create({
-            data: { userId, deptEventId },
-        });
+        const departmentEvent = await prisma.departmentEvent.findFirst({ where: { id: deptEventId } });
 
-        if (user.role === "USER") {
-            await prisma.user.update({ 
-                where: { id: userId }, data: { role: "COORDIE" },
+        if (user === null || departmentEvent === null) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "user / department event doesn't exist!" });
+        } else {
+            await prisma.departmentCoordinator.create({
+                data: { userId, deptEventId },
             });
-        }
 
-        res.statusCode = 200;
-        res.json({ message: "user promoted to department coordinator!", success: true });
+            if (user.role === "USER") {
+                await prisma.user.update({
+                    where: { id: userId }, data: { role: "COORDIE" },
+                });
+            }
+
+            res.statusCode = 200;
+            res.json({ message: "user promoted to department coordinator!", success: true });
+        }
     } catch (error) {
         console.log("error occured in the addDepartmentCoordinator() controller!");
         next(error);
@@ -127,9 +134,11 @@ const addEventCoordinator = async (req: Request, res: Response, next) => {
     const { email, eventId } = req.body;
     try {
         const user = await prisma.user.findFirst({ where: { email } });
-        if (user === null) {
+        const event = await prisma.event.findFirst({ where: { id: eventId } });
+
+        if (user === null || event === null) {
             res.statusCode = 404;
-            res.json({ error: "not found", message: "user with this email doesn't exist!", success: false });
+            res.json({ error: "not found", message: "user / event doesn't exist!", success: false });
         }
         else {
             await prisma.eventCoordinator.create({
@@ -215,24 +224,14 @@ const removeEventSponsor = async (req: Request, res: Response, next) => {
 
 const getParticipationInEvent = async (req: Request, res: Response, next) => {
     const eventId = req.params.eventId;
-    console.log(eventId);
     try {
-        const participation = await prisma.participation.findMany({
-            where: { eventId },
-            include: {
-                team: {
-                    include: {
-                        TeamMember: {
-                            include: {
-                                user: {
-                                    select: { id: true, name: true, email: true },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        });
+        const participation = await prisma.$queryRaw`
+            SELECT T.id, T.name, T.size, U.id AS leaderId, U.name AS leaderName, U.email AS leaderEmail, U.mobile AS leaderMobile FROM Participation AS P
+            INNER JOIN Team AS T ON P.teamId = T.id
+            INNER JOIN User AS U ON T.leader = U.id
+            WHERE P.eventId = ${eventId}
+
+        `;
 
         res.statusCode = 200;
         res.json({ participation, success: true });
