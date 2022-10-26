@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 
 const SignUp = () => {
@@ -14,10 +15,11 @@ const SignUp = () => {
       .then((data) => {
         if (data['success']) {
           console.log('Success');
-        } else console.log(data['message']); // Replace with Toast/Alert
+          toast.success('Please verify you mail id to continue!');
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   }
 

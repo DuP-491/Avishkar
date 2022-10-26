@@ -7,7 +7,7 @@ function Computer(props: Props) {
   const deptId = department != 'profile' ? department : '';
 
   return (
-    <div className="z-40 flex justify-center items-center w-full h-full backdrop-blur-sm">
+    <div className="z-40 flex items-center justify-center w-full h-full backdrop-blur-sm">
       <NewTablet
         deptId={deptId}
         is_profile={department == 'profile'}

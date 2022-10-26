@@ -250,5 +250,12 @@ export const npcData: {
     type: 'text',
     character: 'Training and Placement Representative',
     text: `Hi! I'm Vayirp. I'm a representative of Training and Placement office of MNNIT Allahabad. I'm here to help you out.~Our students are the tresure of our college. Please extend them with your job offers and they will be the best asset for your company as well.`
+  },
+  'campus-87': {
+    name: 'QuizMaster',
+    location: 'Near Ganga gate',
+    type: 'text',
+    character: 'QuizMaster',
+    text: `Hi! I'm QuizMaster. I'm here to conduct a quiz. Do you want to participate?`
   }
 };
