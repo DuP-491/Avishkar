@@ -5,9 +5,10 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typewriter from 'typewriter-effect';
+import { toast } from 'react-toastify';
 
 function Trivia(props: Props) {
-  const { question, answer, setShowTrivia } = props;
+  const { question, answer, onClose } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
 
@@ -24,6 +25,13 @@ function Trivia(props: Props) {
 
   const handleSubmit = () => {
     console.log(answer);
+    // handle given answer here
+    toast.success('Correct! You have been awarded 1000 points!');
+    sessionStorage.setItem('dailyTrivia', 'true');
+    handleClick();
+    setTimeout(() => {
+      onClose();
+    }, 500);
   };
 
   useEffect(() => {
@@ -45,7 +53,7 @@ function Trivia(props: Props) {
     <>
       <div
         ref={baseDiv}
-        className="z-30 flex flex-col w-0 mx-auto mb-16 text-xl font-normal transition-all duration-500 h-[300px] px-32 py-24 font-pfeffer"
+        className="z-40 flex flex-col w-0 mx-auto mb-16 text-xl font-normal transition-all duration-500 h-[300px] px-32 py-24 font-pfeffer"
         style={{
           backgroundImage: `url("/npc-scroll.png")`,
           backgroundSize: 'fill',
@@ -89,7 +97,7 @@ function Trivia(props: Props) {
 Trivia.propTypes = {
   question: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired,
-  setShowTrivia: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof Trivia.propTypes>;
