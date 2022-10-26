@@ -28,6 +28,8 @@ import SACAnilKumarSinghIMG from './Assets/SACAnilKumarSingh.jpg';
 import TechDennisThomasIMG from './Assets/TechDennisThomas.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
+import PVSumitYadavIMG from './Assets/PVSumitYadav.jpg';
+import PVVarunKumarIMG from './Assets/PVVarunKumar.jpg';
 /* eslint-enable */
 
 const index = () => {
@@ -122,7 +124,7 @@ const index = () => {
           </div>
 
           <div className="container px-6 py-10 mx-auto">
-            <DividerLine alignmentCenter={true} text="Festive Secretaries" />
+            <DividerLine alignmentCenter={true} text="Festival Secretary" />
             <div className="flex flex-wrap justify-around">
               <Card
                 imgsrc={FSAdityaRajuDarjiIMG}
@@ -399,6 +401,35 @@ const index = () => {
               <Card
                 imgsrc={DesignMradulYadavIMG}
                 name="Mradul Yadav"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+            </div>
+          </div>
+          <div className="container px-6 py-10 mx-auto">
+            <DividerLine alignmentCenter={true} text="Tech Team" />
+            <div className="flex flex-wrap justify-around">
+              <Card
+                imgsrc={PRAdityaGuptaIMG}
+                name="Aditya Gupta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PVSumitYadavIMG}
+                name="Sumit Yadav"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={PVVarunKumarIMG}
+                name="Varun Kumar"
                 designation=""
                 facebook=""
                 instagram=""
