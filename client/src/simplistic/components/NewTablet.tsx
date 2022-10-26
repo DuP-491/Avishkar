@@ -5,6 +5,7 @@ import defaultPfp from '../../images/default_pfp.png';
 import UserService from '../services/UserService';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 function NewTablet(props: Props) {
   const { key, is_profile, logout, closePopup } = props;
@@ -57,6 +58,8 @@ function NewTablet(props: Props) {
 
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState({});
+  const [showInviteUsernames, setShowInviteUsernames] = useState({});
+  const [inviteUsernames, setInviteUsernames] = useState({});
   // console.log(teams, teamMembers);
 
   useEffect(() => {
@@ -169,6 +172,12 @@ function NewTablet(props: Props) {
           setTeamMembers(
             Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], []]))
           );
+          setShowInviteUsernames(
+            Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], false]))
+          );
+          setInviteUsernames(
+            Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
+          );
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else logout();
@@ -232,6 +241,32 @@ function NewTablet(props: Props) {
       })
       .catch(() => {
         logout();
+      });
+  };
+
+  const handleInviteUser = (teamId: number) => {
+    if (!(showInviteUsernames as { [key: string]: Boolean })[teamId]) {
+      setShowInviteUsernames({ ...showInviteUsernames, [teamId]: true });
+      return;
+    }
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    UserService.inviteUser(token, teamId, (inviteUsernames as { [key: string]: string })[teamId])
+      .then((data) => {
+        if (data['success']) {
+          toast.success('User invited successfully!');
+          setShowInviteUsernames({ ...showInviteUsernames, [teamId]: false });
+          setInviteUsernames({ ...inviteUsernames, [teamId]: '' });
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error('Please login again!');
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
       });
   };
 
@@ -877,6 +912,27 @@ function NewTablet(props: Props) {
                               </p>
                             )
                           )}
+                          {showInviteUsernames[team['team']['id']] && (
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <span>Invite User</span>
+                              <input
+                                placeholder="Enter username of user you want to invite"
+                                className="flex-1 ml-1 text-right outline-none"
+                                value={inviteUsernames[team['team']['id']]}
+                                onChange={(e) =>
+                                  setInviteUsernames({
+                                    ...inviteUsernames,
+                                    [team['team']['id']]: e.target.value
+                                  })
+                                }
+                              />
+                            </p>
+                          )}
+                          <p
+                            className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                            onClick={() => handleInviteUser(team['team']['id'])}>
+                            Invite User
+                          </p>
                           <p
                             className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
                             onClick={() => handleDeleteTeam(team['team']['id'])}>
