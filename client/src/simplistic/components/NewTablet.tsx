@@ -62,6 +62,10 @@ function NewTablet(props: Props) {
     organizer: '',
     desc: ''
   });
+  const [newDeptCoordie, setNewDeptCoordie] = useState({
+    userId: '',
+    deptEventId: ''
+  });
   const [showDeptCoordieDetails, setShowDeptCoordieDetails] = useState(false);
 
   const [teams, setTeams] = useState([]);
@@ -86,7 +90,7 @@ function NewTablet(props: Props) {
 
   useEffect(() => {
     if (tab === 'Profile' && 2 <= profileSection && profileSection <= 4) fetchTeamInvites();
-    if (profileSection === 6) fetchDepartmentEvents();
+    if (tab === 'Profile' && 6 <= profileSection && profileSection <= 8) fetchDepartmentEvents();
   }, [profileSection]);
 
   useEffect(() => {
@@ -140,6 +144,7 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setDepartments(data['departmentEvents']);
+          setNewDeptCoordie({ ...newDeptCoordie, deptEventId: data['departmentEvents'][0]['id'] });
         } else logout();
       })
       .catch(() => {
@@ -395,6 +400,25 @@ function NewTablet(props: Props) {
         if (data['success']) {
           toast.success('Deleted Department Event Successfully');
           fetchDepartmentEvents();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleAddDepartmentEventCoordie = (userId: string, deptEventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    AdminService.addDepartmentCoordie(token, userId, deptEventId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Created Department Event Coordie Successfully');
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -1288,6 +1312,50 @@ function NewTablet(props: Props) {
                       </div>
                     ))}
                   </div>
+                )}
+                {profileSection === 7 && (
+                  <>
+                    <div className="m-5 text-sm text-black bg-white rounded-lg">
+                      <p className="flex justify-between px-2 py-2 border-gray-300">
+                        <span>User ID</span>
+                        <input
+                          placeholder="Enter user id"
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newDeptCoordie['userId']}
+                          onChange={(e) =>
+                            setNewDeptCoordie({ ...newDeptCoordie, userId: e.target.value })
+                          }
+                        />
+                      </p>
+                      <p className="flex justify-between px-2 py-2 border-gray-300">
+                        <span>Department Event</span>
+                        <select
+                          className="flex-1 ml-1 text-right outline-none"
+                          value={newDeptCoordie['deptEventId']}
+                          onChange={(e) =>
+                            setNewDeptCoordie({ ...newDeptCoordie, deptEventId: e.target.value })
+                          }>
+                          {departments.map((department) => (
+                            <option key={department['id']} value={department['id']}>
+                              {department['name']}
+                            </option>
+                          ))}
+                        </select>
+                      </p>
+                    </div>
+                    <div
+                      className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                      onClick={() =>
+                        handleAddDepartmentEventCoordie(
+                          newDeptCoordie['userId'],
+                          newDeptCoordie['deptEventId']
+                        )
+                      }>
+                      <p className="w-full px-2 py-2 text-center text-blue-800">
+                        Add Department Coordie
+                      </p>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
