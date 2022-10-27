@@ -12,7 +12,13 @@ import DesignHardikMittalIMG from './Assets/DesignHardikMittal.jpg';
 import DesignKushagraSaxenaIMG from './Assets/DesignKushagraSaxena.jpeg';
 import DesignMradulYadavIMG from './Assets/DesignMradulYadav.jpg';
 
-import DirectorRajeevTripathiIMG from './Assets/DirectorRajeevTripathi.jpg';
+import DirectorRSVermaIMG from './Assets/DirectorRSVerma.jpg';
+
+import FacultyAnandSharmaIMG from './Assets/FacultyAnandSharma.jpg';
+import FacultyRanvijayIMG from './Assets/FacultyRanvijay.jpeg';
+import FacultySunilGuptaIMG from './Assets/FacultySunilGupta.jpeg';
+import FacultyShashankShrivastavaIMG from './Assets/FacultyShashankShrivastava.png';
+import FacultyAsimMukherjeeIMG from './Assets/FacultyAsimMukherjee.jpg';
 
 import FSAdityaRajuDarjiIMG from './Assets/FSAdityaRajuDarji.jpg';
 import FSAnushreeIMG from './Assets/FSAnushree.jpeg';
@@ -69,8 +75,8 @@ const index = () => {
             <DividerLine alignmentCenter={true} text="DIRECTOR" />
             <div className="flex flex-wrap justify-around">
               <Card
-                imgsrc={DirectorRajeevTripathiIMG}
-                name="Professor Rajeev Tripathi"
+                imgsrc={DirectorRSVermaIMG}
+                name="Professor R. S. Verma"
                 designation="Director"
                 facebook=""
                 instagram=""
@@ -97,41 +103,41 @@ const index = () => {
             <DividerLine alignmentCenter={true} text="faculty" />
             <div className="flex flex-wrap justify-around">
               <Card
-                imgsrc={PlaceholderIMG}
-                name="Faculty 1"
-                designation="Designations"
+                imgsrc={FacultyAsimMukherjeeIMG}
+                name="Asim Mukherjee"
+                designation=""
                 facebook=""
                 instagram=""
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
-                name="Faculty 2"
-                designation="Designations"
+                imgsrc={FacultyShashankShrivastavaIMG}
+                name="Shashank Shrivastava"
+                designation=""
                 facebook=""
                 instagram=""
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
-                name="Faculty 3"
-                designation="Designations"
+                imgsrc={FacultyRanvijayIMG}
+                name="Ranvijay"
+                designation=""
                 facebook=""
                 instagram=""
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
-                name="Faculty 4"
-                designation="Designations"
+                imgsrc={FacultyAnandSharmaIMG}
+                name="Anand Sharma"
+                designation=""
                 facebook=""
                 instagram=""
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
-                name="Faculty 5"
-                designation="Designations"
+                imgsrc={FacultySunilGuptaIMG}
+                name="Sunil Gupta"
+                designation="Assistant Professor"
                 facebook=""
                 instagram=""
                 linkedin=""

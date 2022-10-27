@@ -7,7 +7,12 @@ import DesignDarpanMittalIMG from '../Team/Assets/DesignDarpanMittal.jpg';
 import DesignHardikMittalIMG from '../Team/Assets/DesignHardikMittal.jpg';
 import DesignKushagraSaxenaIMG from '../Team/Assets/DesignKushagraSaxena.jpeg';
 import DesignMradulYadavIMG from '../Team/Assets/DesignMradulYadav.jpg';
-import DirectorRajeevTripathiIMG from '../Team/Assets/DirectorRajeevTripathi.jpg';
+import DirectorRSVermaIMG from '../Team/Assets/DirectorRSVerma.jpg';
+import FacultyAnandSharmaIMG from '../Team/Assets/FacultyAnandSharma.jpg';
+import FacultyRanvijayIMG from '../Team/Assets/FacultyRanvijay.jpeg';
+import FacultySunilGuptaIMG from '../Team/Assets/FacultySunilGupta.jpeg';
+import FacultyShashankShrivastavaIMG from '../Team/Assets/FacultyShashankShrivastava.png';
+import FacultyAsimMukherjeeIMG from '../Team/Assets/FacultyAsimMukherjee.jpg';
 import FSAdityaRajuDarjiIMG from '../Team/Assets/FSAdityaRajuDarji.jpg';
 import FSAnushreeIMG from '../Team/Assets/FSAnushree.jpeg';
 import FSDivyanshUpdhyayIMG from '../Team/Assets/FSDivyanshUpadhyay.jpeg';
@@ -48,7 +53,11 @@ function TeamAvishkar() {
             <div
               style={{ width: '20vw', minWidth: '200px', aspectRatio: '1' }}
               className="group relative block overflow-hidden  text-base rounded-md transition-all duration-500 h-fit bg-gray-100/[0.2] p-1 m-2 rounded-lg justify-center text-white">
-              <img src={p[0]} className="object-cover aspect-square" />
+              <img
+                src={p[0]}
+                className="object-cover aspect-square"
+                style={{ width: '20vw', minWidth: '200px', aspectRatio: '1' }}
+              />
               <div className="absolute text-center transition-all duration-300 rounded -bottom-52 group-hover:bottom-2 right-2 left-2 bg-slate-900 shadow-gray-700">
                 <span className="text-sm font-medium transition duration-500 h-fit">
                   {p[1]}
@@ -111,20 +120,18 @@ function TeamAvishkar() {
       </div>
       <div className="flex flex-col items-center px-10 pb-10">
         <DividerLine alignmentCenter={true} text="DIRECTOR MNNIT" />
-        {DisplayCard([
-          [DirectorRajeevTripathiIMG, 'PROF. RAJEEV TRIPATHI', 'Director', '', '', '']
-        ])}
+        {DisplayCard([[DirectorRSVermaIMG, 'PROF. R. S. Verma', 'Director', '', '', '']])}
         <DividerLine alignmentCenter={true} text="SAC President" />
         {DisplayCard([
           [SACAnilKumarSinghIMG, 'Prof. Anil Kumar Singh', 'SAC President', '', '', '']
         ])}
         <DividerLine alignmentCenter={true} text="FACULTIES" />
         {DisplayCard([
-          [PlaceholderIMG, 'Faculty 1', 'Designation 1', '', '', ''],
-          [PlaceholderIMG, 'Faculty 2', 'Designation 2', '', '', ''],
-          [PlaceholderIMG, 'Faculty 3', 'Designation 3', '', '', ''],
-          [PlaceholderIMG, 'Faculty 4', 'Designation 4', '', '', ''],
-          [PlaceholderIMG, 'Faculty 5', 'Designation 5', '', '', '']
+          [FacultyAsimMukherjeeIMG, 'Asim Mukherjee', '', '', '', ''],
+          [FacultyShashankShrivastavaIMG, 'Shashank Shrivastava', '', '', '', ''],
+          [FacultyRanvijayIMG, 'Ranvijay', '', '', '', ''],
+          [FacultyAnandSharmaIMG, 'Anand Sharma', '', '', '', ''],
+          [FacultySunilGuptaIMG, 'Sunil Gupta', '', '', '', '']
         ])}
         <DividerLine alignmentCenter={true} text="FESTIVAL SECRETARY" />
         {DisplayCard([
