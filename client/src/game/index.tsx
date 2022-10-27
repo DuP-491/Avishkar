@@ -353,9 +353,9 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
-      <div className="absolute w-full h-full top-0 pt-[7%]">
-        {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
-      </div>
+      {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
+      {/* <div className="absolute w-full h-full top-0 pt-[7%]">
+      </div> */}
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
