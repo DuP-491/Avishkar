@@ -30,7 +30,7 @@ export const npcData: {
   'campus-34': {
     name: 'Mitsuka',
     location: 'Near Ganga Gate spawn point',
-    type: 'sponsor',
+    type: 'text',
     character: 'Guard',
     text: 'Welcome to MNNIT Allahabad! I am Mr. Sanjay Kumar, the guard of Ganga Gate. I am here to help you.~There are many guards like me in the campus to help you out. They will tell you about various buildings of campus.'
   },
@@ -226,7 +226,7 @@ export const npcData: {
   'campus-83': {
     name: 'Mr. Raman Singh',
     location: 'Near ganga gate outside campus',
-    type: 'text',
+    type: 'sponsor',
     character: 'Guard',
     text: `Do you want to see the generous sponsors for AVISHKAR 2k22?`
   },

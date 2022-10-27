@@ -134,12 +134,12 @@ function GameComponent(props: Props) {
                 toast.error('You have already attempted the trivia for today!');
               });
             }
-          }
-          if (gameObject.npcType == 'notice') {
+          } else if (gameObject.npcType == 'notice') {
             setTriviaFunction(() => openNotice);
-          }
-          if (gameObject.npcType == 'sponsor') {
+          } else if (gameObject.npcType == 'sponsor') {
             setTriviaFunction(() => openSponsor);
+          } else {
+            setTriviaFunction(() => () => {});
           }
         });
         game.instance?.events.on(
@@ -370,6 +370,7 @@ function GameComponent(props: Props) {
     if (game) {
       game.instance?.scene.resume('campus');
       if (game.instance) game.instance.input.keyboard.enabled = true;
+      fetchUserScore();
     }
     setShowTrivia(false);
   };
@@ -463,7 +464,7 @@ function GameComponent(props: Props) {
         />
       )}
       <div className="absolute top-0 left-0 z-10 m-5 text-xl">
-        Score: {userCoinDetails.coins ? 'N/A' : userCoinDetails.coins}
+        Score: {!userCoinDetails ? 'N/A' : userCoinDetails.coins}
       </div>
       <div className="absolute w-full h-full top-0 pt-[7%]">
         {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
