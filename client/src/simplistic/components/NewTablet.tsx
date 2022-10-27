@@ -100,9 +100,10 @@ function NewTablet(props: Props) {
 
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState({});
+  const [participatingTeam, setParticipatingTeam] = useState(null);
   const [showInviteUsernames, setShowInviteUsernames] = useState({});
   const [inviteUsernames, setInviteUsernames] = useState({});
-  // console.log(deptIdNameMapper);
+  console.log(participatingTeam);
 
   useEffect(() => {
     fetchDepartmentEvents();
@@ -264,7 +265,9 @@ function NewTablet(props: Props) {
     UserService.checkEventParticipation(token, eventId)
       .then((data) => {
         if (data['success']) {
-          console.log('fwefewwfwefewf', data['participatingTeam']);
+          if (data['participatingTeam'].length !== 0)
+            setParticipatingTeam(data['participatingTeam'][0]);
+          else setParticipatingTeam(null);
         } else logout();
       })
       .catch(() => {
@@ -481,6 +484,27 @@ function NewTablet(props: Props) {
         if (data['success']) {
           setEventSection(0);
           toast.success('Registered for Event Successfully!');
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleUnparticipate = (teamId: number, eventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    UserService.eventUnparticipate(token, teamId, eventId)
+      .then((data) => {
+        if (data['success']) {
+          setEventSection(0);
+          fetchParticipation(events[selectedEventID]['id']);
+          toast.success('Unregistered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -927,9 +951,7 @@ function NewTablet(props: Props) {
                     </p>
                   )}
                   {(events[selectedEventID]['psLink'] !== '#' ||
-                    (Cookies.get('token') !== undefined &&
-                      teams.filter((team) => team['team']['leader'] === userDetails['id'])
-                        .length !== 0)) && (
+                    Cookies.get('token') !== undefined) && (
                     <p className="px-5 py-1 mt-5 text-2xl font-bold">Participate</p>
                   )}
                   {events[selectedEventID]['psLink'] !== '#' && (
@@ -939,19 +961,17 @@ function NewTablet(props: Props) {
                       Problem Statement
                     </p>
                   )}
-                  {Cookies.get('token') !== undefined &&
-                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
-                      0 && (
-                      <p
-                        className={
-                          eventSection === 4
-                            ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
-                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                        }
-                        onClick={() => setEventSection(4)}>
-                        Register
-                      </p>
-                    )}
+                  {Cookies.get('token') !== undefined && (
+                    <p
+                      className={
+                        eventSection === 4
+                          ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setEventSection(4)}>
+                      {participatingTeam === null ? 'Register' : 'Registered'}
+                    </p>
+                  )}
                 </div>
                 <div className="relative flex flex-col w-2/3 bg-white rounded-r-md">
                   <div className="absolute top-0 left-0 flex flex-col w-full border-b-2 bg-slate-100 border-slate-200 h-1/6 ">
@@ -991,76 +1011,193 @@ function NewTablet(props: Props) {
                       />
                     </div>
                   )}
-                  {eventSection === 4 && (
-                    <div className="mt-[15vh] overflow-y-auto">
-                      {teams
-                        .filter((team) => team['team']['leader'] === userDetails['id'])
-                        .map((team) => (
+                  {eventSection === 4 &&
+                    participatingTeam === null &&
+                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length ===
+                      0 && (
+                      <div>
+                        <p className="text-3xl text-center mt-[45vh] translate-y-[-50%] px-4">
+                          To register for the event, either create a team and register for the event
+                          or join a team and tell the leader to register for the event
+                        </p>
+                      </div>
+                    )}
+                  {eventSection === 4 &&
+                    participatingTeam === null &&
+                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
+                      0 && (
+                      <div className="mt-[15vh] overflow-y-auto">
+                        {teams
+                          .filter((team) => team['team']['leader'] === userDetails['id'])
+                          .map((team) => (
+                            <div
+                              key={team['team']['id']}
+                              className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
+                              <p className="flex justify-between px-2 py-2 border-gray-500">
+                                <span>Name</span>
+                                <span>{team['team']['name']}</span>
+                              </p>
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                <span>Number of members</span>
+                                <span>{team['team']['size']}</span>
+                              </p>
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                <span>
+                                  {(teamMembers[team['team']['id']] as any).length === 0
+                                    ? 'View all members'
+                                    : 'Members'}
+                                </span>
+                                <span>
+                                  {(teamMembers[team['team']['id']] as any).length === 0 && (
+                                    <div
+                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                      onClick={() => fetchTeamMembers(team['team']['id'])}
+                                    />
+                                  )}
+                                </span>
+                              </p>
+                              {(teamMembers[team['team']['id']] as any).map(
+                                (teamMember: any, i: number) => (
+                                  <p
+                                    key={teamMember['userId']}
+                                    className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                    <span>
+                                      &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
+                                      {teamMember['user']['id'] === team['team']['leader']
+                                        ? '(Leader)'
+                                        : teamMember['status'] === 'ACCEPTED'
+                                        ? ''
+                                        : '(Invitation Pending)'}
+                                    </span>
+                                  </p>
+                                )
+                              )}
+                              <p
+                                className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                                onClick={() =>
+                                  handleParticipate(
+                                    team['team']['id'],
+                                    events[selectedEventID]['id']
+                                  )
+                                }>
+                                Participate
+                              </p>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  {eventSection === 4 &&
+                    participatingTeam !== null &&
+                    participatingTeam['leader'] === userDetails['id'] && (
+                      <div className="mt-[15vh] overflow-y-auto">
+                        {
                           <div
-                            key={team['team']['id']}
+                            key={participatingTeam['id']}
                             className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
-                              <span>{team['team']['name']}</span>
+                              <span>{participatingTeam['name']}</span>
                             </p>
                             <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                               <span>Number of members</span>
-                              <span>{team['team']['size']}</span>
+                              <span>{participatingTeam['size']}</span>
                             </p>
                             <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                               <span>
-                                {(teamMembers[team['team']['id']] as any).length === 0
+                                {(teamMembers[participatingTeam['id']] as any).length === 0
                                   ? 'View all members'
                                   : 'Members'}
                               </span>
                               <span>
-                                {(teamMembers[team['team']['id']] as any).length === 0 && (
+                                {(teamMembers[participatingTeam['id']] as any).length === 0 && (
                                   <div
                                     className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
-                                    onClick={() => fetchTeamMembers(team['team']['id'])}
+                                    onClick={() => fetchTeamMembers(participatingTeam['id'])}
                                   />
                                 )}
                               </span>
                             </p>
-                            {(teamMembers[team['team']['id']] as any).map(
+                            {(teamMembers[participatingTeam['id']] as any).map(
                               (teamMember: any, i: number) => (
                                 <p
                                   key={teamMember['userId']}
                                   className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                                   <span>
                                     &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
-                                    {teamMember['user']['id'] === team['team']['leader']
+                                    {teamMember['user']['id'] === participatingTeam['leader']
                                       ? '(Leader)'
                                       : teamMember['status'] === 'ACCEPTED'
                                       ? ''
                                       : '(Invitation Pending)'}
                                   </span>
-                                  {teamMember['user']['id'] !== team['team']['leader'] && (
-                                    <span
-                                      className="mr-2 text-red-800 cursor-pointer"
-                                      onClick={() =>
-                                        handleRemoveMember(
-                                          team['team']['id'],
-                                          teamMember['user']['id']
-                                        )
-                                      }>
-                                      X
-                                    </span>
-                                  )}
                                 </p>
                               )
                             )}
                             <p
                               className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
                               onClick={() =>
-                                handleParticipate(team['team']['id'], events[selectedEventID]['id'])
+                                handleUnparticipate(
+                                  participatingTeam['id'],
+                                  events[selectedEventID]['id']
+                                )
                               }>
-                              Participate
+                              Unparticipate
                             </p>
                           </div>
-                        ))}
-                    </div>
-                  )}
+                        }
+                      </div>
+                    )}
+                  {eventSection === 4 &&
+                    participatingTeam !== null &&
+                    participatingTeam['leader'] !== userDetails['id'] && (
+                      <div className="mt-[15vh] overflow-y-auto">
+                        {
+                          <div
+                            key={participatingTeam['id']}
+                            className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
+                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                              <span>Name</span>
+                              <span>{participatingTeam['name']}</span>
+                            </p>
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <span>Number of members</span>
+                              <span>{participatingTeam['size']}</span>
+                            </p>
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <span>
+                                {(teamMembers[participatingTeam['id']] as any).length === 0
+                                  ? 'View all members'
+                                  : 'Members'}
+                              </span>
+                              <span>
+                                {(teamMembers[participatingTeam['id']] as any).length === 0 && (
+                                  <div
+                                    className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                    onClick={() => fetchTeamMembers(participatingTeam['id'])}
+                                  />
+                                )}
+                              </span>
+                            </p>
+                            {(teamMembers[participatingTeam['id']] as any).map(
+                              (teamMember: any, i: number) => (
+                                <p
+                                  key={teamMember['userId']}
+                                  className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                  <span>
+                                    &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
+                                    {teamMember['user']['id'] === participatingTeam['leader']
+                                      ? '(Leader)'
+                                      : teamMember['status'] === 'ACCEPTED'
+                                      ? ''
+                                      : '(Invitation Pending)'}
+                                  </span>
+                                </p>
+                              )
+                            )}
+                          </div>
+                        }
+                      </div>
+                    )}
                   {eventSection === 5 && (
                     <div className="overflow-y-auto mt-[15vh]">
                       {eventCoordies.map((eventCoordie) => (
