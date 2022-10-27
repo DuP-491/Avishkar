@@ -26,6 +26,7 @@ export class Campus extends Scene {
   private tileset5!: Tilemaps.Tileset;
   private tileset6!: Tilemaps.Tileset;
   private tileset7!: Tilemaps.Tileset;
+  private tileset8!: Tilemaps.Tileset;
   private layer!: Tilemaps.TilemapLayer;
   private layer2!: Tilemaps.TilemapLayer;
   private layer3!: Tilemaps.TilemapLayer;
@@ -134,6 +135,7 @@ export class Campus extends Scene {
     this.tileset5 = this.map.addTilesetImage('RoomChan', 'tileRoomChan', 16, 16, 0, 0);
     this.tileset6 = this.map.addTilesetImage('GoodyChan', 'tileGoodyChan', 16, 16, 0, 0);
     this.tileset7 = this.map.addTilesetImage('BigTreeChan', 'tileBigTreeChan', 16, 16, 0, 0);
+    this.tileset8 = this.map.addTilesetImage('logo', 'tilelogo', 16, 16, 0, 0);
 
     this.layer = this.map.createLayer(
       'Base Tiles Layer',
@@ -144,7 +146,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -158,7 +161,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -172,7 +176,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -186,7 +191,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -200,7 +206,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -214,7 +221,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -228,7 +236,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -242,7 +251,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -256,7 +266,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -270,7 +281,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -284,7 +296,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -298,7 +311,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0

@@ -26,26 +26,38 @@ const updateUserDetails = async (req: Request, res: Response, next) => {
     const id = req.app.locals.id;
 
     try {
-        // check if the updated username is already taken or not
-        if (username !== undefined && username !== req.app.locals.username) {
-            const user = await prisma.user.findFirst({
-                where: {
-                    username,
-                },
-            });
-            if (user !== null) {
-                res.statusCode = 400;
-                return res.json({ error: "bad request", message: "username is already taken!", success: false });
-            }
-        }
-        // updating the sent details
-        await prisma.user.update({
-            where: { id },
-            data: { name, username, collegeName, mobile, resumeLink },
-        });
+        const participation: any = await prisma.$queryRaw`
+            SELECT P.eventId FROM TeamMember AS TM
+            INNER JOIN Participation AS P ON TM.teamId = P.teamId
+            WHERE TM.userId = ${id} AND TM.status = "ACCEPTED"
+        `;
 
-        res.statusCode = 200;
-        res.json({ message: "user details updated successfully!", success: true });
+        if (participation.length) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "already participating in an event, cannot update details!", success: false });
+        } else {
+            if (username !== undefined && username !== req.app.locals.username) {
+            // check if the updated username is already taken or not
+                const user = await prisma.user.findFirst({
+                    where: {
+                        username,
+                    },
+                });
+                if (user !== null) {
+                    res.statusCode = 400;
+                    return res.json({ error: "bad request", message: "username is already taken!", success: false });
+                }
+            }
+
+            // updating the sent details
+            await prisma.user.update({
+                where: { id },
+                data: { name, username, collegeName, mobile, resumeLink },
+            });
+
+            res.statusCode = 200;
+            res.json({ message: "user details updated successfully!", success: true });
+        }
     } catch (error) {
         console.log("error occured in the updateUserDetails() controller!");
         next(error);
@@ -395,14 +407,18 @@ const eventUnparticipate = async (req: Request, res: Response, next) => {
 };
 
 const eventParticipatingTeam = async (req: Request, res: Response, next) => {
+    // for a user with userId returns the team which is participating in the event with eventId
     const eventId = req.params.id;
+    const userId = req.app.locals.id;
 
     try {
-        const participatingTeam = await prisma.user.findMany({
-            include: {
-                TeamMember: true,
-            },
-        });
+        const participatingTeam = await prisma.$queryRaw`
+            SELECT T.id, T.name, T.leader, T.size FROM User AS U
+            INNER JOIN TeamMember AS TM ON U.id = TM.userId AND TM.status = "ACCEPTED"
+            INNER JOIN Team AS T ON T.id = TM.teamId
+            INNER JOIN Participation AS P ON TM.teamId = P.teamId
+            WHERE P.eventId = ${eventId} AND U.id = ${userId}
+        `;
 
         res.statusCode = 200;
         res.json({ participatingTeam, success: true });
