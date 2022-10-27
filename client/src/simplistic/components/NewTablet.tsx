@@ -424,6 +424,7 @@ function NewTablet(props: Props) {
           toast.success('User Invited Successfully!');
           setShowInviteUsernames({ ...showInviteUsernames, [teamId]: false });
           setInviteUsernames({ ...inviteUsernames, [teamId]: '' });
+          setProfileSection(2);
         } else if (data['message'] === 'Invalid token!') {
           toast.error('Please login again!');
           logout();
@@ -798,12 +799,14 @@ function NewTablet(props: Props) {
           />
 
           {/* Background Image */}
-          <div
-            className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center blur brightness-75 h-[90vh] text-[50px] rounded-md"
-            style={{ backgroundImage: `url(${tabletBg})` }}
-          />
+          {(tab === 'Departments' || tab === 'Events') && (
+            <div
+              className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center blur brightness-75 h-[90vh] text-[50px] rounded-md"
+              style={{ backgroundImage: `url(${tabletBg})` }}
+            />
+          )}
 
-          <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-white rounded-md">
+          <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-gray-200 rounded-md border-2 border-zinc-800">
             {tab === 'Departments' && (
               <div className="flex flex-col h-full">
                 <h1 className="mt-10 text-3xl text-center">Departments</h1>
@@ -870,16 +873,16 @@ function NewTablet(props: Props) {
                   <div
                     className="absolute top-0 left-0 w-full h-full backdrop-blur"
                     onClick={() => setShowDeptCoordieDetails(false)}>
-                    <div className="relative w-1/3 mx-auto text-sm text-black bg-white rounded-lg top-[40%]">
+                    <div className="relative w-1/3 mx-auto text-sm text-gray-200 border-zinc-800 rounded-lg top-[40%]">
                       <p className="flex justify-between px-2 py-2 border-gray-500">
                         <span>Name</span>
                         <span>{selectedDeptCoordie['name']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Email</span>
                         <span>{selectedDeptCoordie['email']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Mobile</span>
                         <span>{selectedDeptCoordie['mobile']}</span>
                       </p>
@@ -889,14 +892,14 @@ function NewTablet(props: Props) {
               </div>
             )}
             {tab === 'Event' && selectedEventID !== -1 && (
-              <div className="flex h-full text-black">
-                <div className="w-1/3 pl-5 border-r-2 border-slate-300 bg-slate-200 rounded-l-md">
-                  <h1 className="mt-5 font-bold">{events[selectedEventID]['name']}</h1>
-                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Details</p>
+              <div className="flex h-full text-gray-200">
+                <div className="w-1/3 bg-black border-r-2 border-zinc-900 rounded-l-md">
+                  <h1 className="pl-5 mt-5 font-bold">{events[selectedEventID]['name']}</h1>
+                  <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Details</p>
                   <p
                     className={
                       eventSection === 0
-                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
                     onClick={() => setEventSection(0)}>
@@ -905,7 +908,7 @@ function NewTablet(props: Props) {
                   <p
                     className={
                       eventSection === 1
-                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
                     onClick={() => setEventSection(1)}>
@@ -914,7 +917,7 @@ function NewTablet(props: Props) {
                   <p
                     className={
                       eventSection === 2
-                        ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
                     onClick={() => setEventSection(2)}>
@@ -923,17 +926,17 @@ function NewTablet(props: Props) {
                   <p
                     className={
                       eventSection === 3
-                        ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
                     onClick={() => setEventSection(3)}>
                     Rules
                   </p>
-                  <p className="px-5 py-1 mt-5 text-2xl font-bold">Organisers</p>
+                  <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Organisers</p>
                   <p
                     className={
                       eventSection === 5
-                        ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                         : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                     }
                     onClick={() => setEventSection(5)}>
@@ -943,7 +946,7 @@ function NewTablet(props: Props) {
                     <p
                       className={
                         eventSection === 6
-                          ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
                       onClick={() => setEventSection(6)}>
@@ -952,11 +955,11 @@ function NewTablet(props: Props) {
                   )}
                   {(events[selectedEventID]['psLink'] !== '#' ||
                     Cookies.get('token') !== undefined) && (
-                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Participate</p>
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Participate</p>
                   )}
                   {events[selectedEventID]['psLink'] !== '#' && (
                     <p
-                      className="text-white bg-blue-800 cursor-pointer mb-1 rounded-2xl px-5 py-1 text-2xl w-[95%]"
+                      className="px-5 py-1 text-2xl text-gray-200 bg-blue-900 cursor-pointer"
                       onClick={() => window.open(events[selectedEventID]['psLink'], '_blank')}>
                       Problem Statement
                     </p>
@@ -965,7 +968,7 @@ function NewTablet(props: Props) {
                     <p
                       className={
                         eventSection === 4
-                          ? 'text-white bg-blue-800 cursor-pointer rounded-2xl px-5 py-1 text-2xl w-[95%]'
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
                       onClick={() => setEventSection(4)}>
@@ -973,12 +976,12 @@ function NewTablet(props: Props) {
                     </p>
                   )}
                 </div>
-                <div className="relative flex flex-col w-2/3 bg-white rounded-r-md">
-                  <div className="absolute top-0 left-0 flex flex-col w-full border-b-2 bg-slate-100 border-slate-200 h-1/6 ">
+                <div className="relative flex flex-col w-2/3 bg-black rounded-r-md">
+                  <div className="absolute top-0 left-0 flex flex-col w-full border-b-2 bg-zinc-900 border-zinc-900 h-1/6 ">
                     <h2 className="flex-1 mt-5 text-lg font-bold text-center">
                       {departments[selectedDeptID]['name']}
                     </h2>
-                    <div className="w-[90%] mx-auto bg-zinc-400/[0.4] h-7 rounded-md mb-4"></div>
+                    <div className="w-[90%] mx-auto bg-zinc-800/[0.4] h-7 rounded-md mb-4"></div>
                   </div>
                   {eventSection === 0 && (
                     <div>
@@ -1032,16 +1035,16 @@ function NewTablet(props: Props) {
                           .map((team) => (
                             <div
                               key={team['team']['id']}
-                              className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
+                              className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800">
                               <p className="flex justify-between px-2 py-2 border-gray-500">
                                 <span>Name</span>
                                 <span>{team['team']['name']}</span>
                               </p>
-                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                 <span>Number of members</span>
                                 <span>{team['team']['size']}</span>
                               </p>
-                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                 <span>
                                   {(teamMembers[team['team']['id']] as any).length === 0
                                     ? 'View all members'
@@ -1050,7 +1053,7 @@ function NewTablet(props: Props) {
                                 <span>
                                   {(teamMembers[team['team']['id']] as any).length === 0 && (
                                     <div
-                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-900 cursor-pointer"
                                       onClick={() => fetchTeamMembers(team['team']['id'])}
                                     />
                                   )}
@@ -1060,7 +1063,7 @@ function NewTablet(props: Props) {
                                 (teamMember: any, i: number) => (
                                   <p
                                     key={teamMember['userId']}
-                                    className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                    className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                     <span>
                                       &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                       {teamMember['user']['id'] === team['team']['leader']
@@ -1073,7 +1076,7 @@ function NewTablet(props: Props) {
                                 )
                               )}
                               <p
-                                className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                                className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
                                 onClick={() =>
                                   handleParticipate(
                                     team['team']['id'],
@@ -1093,16 +1096,16 @@ function NewTablet(props: Props) {
                         {
                           <div
                             key={participatingTeam['id']}
-                            className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
+                            className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{participatingTeam['name']}</span>
                             </p>
-                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                               <span>Number of members</span>
                               <span>{participatingTeam['size']}</span>
                             </p>
-                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                               <span>
                                 {(teamMembers[participatingTeam['id']] as any).length === 0
                                   ? 'View all members'
@@ -1111,7 +1114,7 @@ function NewTablet(props: Props) {
                               <span>
                                 {(teamMembers[participatingTeam['id']] as any).length === 0 && (
                                   <div
-                                    className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                    className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-900 cursor-pointer"
                                     onClick={() => fetchTeamMembers(participatingTeam['id'])}
                                   />
                                 )}
@@ -1121,7 +1124,7 @@ function NewTablet(props: Props) {
                               (teamMember: any, i: number) => (
                                 <p
                                   key={teamMember['userId']}
-                                  className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                  className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                   <span>
                                     &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                     {teamMember['user']['id'] === participatingTeam['leader']
@@ -1134,7 +1137,7 @@ function NewTablet(props: Props) {
                               )
                             )}
                             <p
-                              className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                              className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() =>
                                 handleUnparticipate(
                                   participatingTeam['id'],
@@ -1154,16 +1157,16 @@ function NewTablet(props: Props) {
                         {
                           <div
                             key={participatingTeam['id']}
-                            className="relative m-5 text-sm text-black bg-gray-100 rounded-lg">
-                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                            className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800">
+                            <p className="flex justify-between px-2 py-2">
                               <span>Name</span>
                               <span>{participatingTeam['name']}</span>
                             </p>
-                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                               <span>Number of members</span>
                               <span>{participatingTeam['size']}</span>
                             </p>
-                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                               <span>
                                 {(teamMembers[participatingTeam['id']] as any).length === 0
                                   ? 'View all members'
@@ -1172,7 +1175,7 @@ function NewTablet(props: Props) {
                               <span>
                                 {(teamMembers[participatingTeam['id']] as any).length === 0 && (
                                   <div
-                                    className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                    className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-900 cursor-pointer"
                                     onClick={() => fetchTeamMembers(participatingTeam['id'])}
                                   />
                                 )}
@@ -1182,7 +1185,7 @@ function NewTablet(props: Props) {
                               (teamMember: any, i: number) => (
                                 <p
                                   key={teamMember['userId']}
-                                  className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                  className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                   <span>
                                     &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                     {teamMember['user']['id'] === participatingTeam['leader']
@@ -1203,16 +1206,16 @@ function NewTablet(props: Props) {
                       {eventCoordies.map((eventCoordie) => (
                         <div
                           key={eventCoordie['user']['id']}
-                          className="m-5 text-sm text-black bg-gray-100 rounded-lg">
-                          <p className="flex justify-between px-2 py-2 border-gray-500">
+                          className="m-5 text-sm text-gray-200 rounded-lg bg-zinc-900">
+                          <p className="flex justify-between px-2 py-2">
                             <span>Name</span>
                             <span>{eventCoordie['user']['name']}</span>
                           </p>
-                          <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                             <span>Email</span>
                             <span>{eventCoordie['user']['email']}</span>
                           </p>
-                          <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                             <span>Mobile</span>
                             <span>{eventCoordie['user']['mobile']}</span>
                           </p>
@@ -1230,7 +1233,7 @@ function NewTablet(props: Props) {
                         .map((sponsor) => (
                           <div
                             key={sponsor['name']}
-                            className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
+                            className="flex flex-col m-5 text-sm text-gray-200 rounded-lg max-w-[30%] mx-auto items-center">
                             <img src={sponsor['poster']} />
                             <p className="flex justify-between px-2 py-2 text-lg">
                               <span>{sponsor['name']}</span>
@@ -1245,7 +1248,7 @@ function NewTablet(props: Props) {
                         .map((sponsor) => (
                           <div
                             key={sponsor['name']}
-                            className="flex flex-col m-5 text-sm text-black rounded-lg max-w-[30%] mx-auto items-center">
+                            className="flex flex-col m-5 text-sm text-gray-200 rounded-lg max-w-[30%] mx-auto items-center">
                             <img src={sponsor['poster']} />
                             <p className="flex justify-between px-2 py-2 text-lg">
                               <span>{sponsor['name']}</span>
@@ -1258,9 +1261,9 @@ function NewTablet(props: Props) {
               </div>
             )}
             {tab === 'Profile' && (
-              <div className="flex h-full text-black">
-                <div className="w-1/3 pl-5 border-r-2 border-slate-300 bg-slate-200 rounded-l-md">
-                  <div className="bg-white rounded-md mt-5 w-[95%] flex p-3">
+              <div className="flex h-full text-gray-200">
+                <div className="w-1/3 pl-5 bg-black border-r-2 border-zinc-900 rounded-l-md">
+                  <div className="border-zinc-800 bg-zinc-900 rounded-md mt-5 w-[95%] flex p-3">
                     <img className="w-20 h-20 m-1 rounded-full shrink-0" src={defaultPfp} />
                     <div className="flex flex-col justify-center ml-3">
                       <h2 className="text-2xl">{userDetails['name']}</h2>
@@ -1268,11 +1271,11 @@ function NewTablet(props: Props) {
                     </div>
                   </div>
                   <div className="overflow-y-auto h-[70vh] mt-4 mr-5">
-                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Details</p>
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Details</p>
                     <p
                       className={
                         profileSection === 0
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
                       onClick={() => setProfileSection(0)}>
@@ -1281,17 +1284,17 @@ function NewTablet(props: Props) {
                     <p
                       className={
                         profileSection === 1
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
                       onClick={() => setProfileSection(1)}>
                       Edit
                     </p>
-                    <p className="px-5 py-1 mt-5 text-2xl font-bold">Team</p>
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Team</p>
                     <p
                       className={
                         profileSection === 2
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
                       onClick={() => setProfileSection(2)}>
@@ -1300,7 +1303,7 @@ function NewTablet(props: Props) {
                     <p
                       className={
                         profileSection === 3
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
                       onClick={() => setProfileSection(3)}>
@@ -1309,21 +1312,21 @@ function NewTablet(props: Props) {
                     <p
                       className={
                         profileSection === 4
-                          ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
                       onClick={() => setProfileSection(4)}>
                       Invitations
                     </p>
                     {userDetails['role'] !== 'USER' && (
-                      <p className="px-5 py-1 mt-5 text-2xl font-bold">Admin</p>
+                      <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Admin</p>
                     )}
                     {userDetails['role'] === 'ADMIN' && (
                       <>
                         <p
                           className={
                             profileSection === 5
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(5)}>
@@ -1332,7 +1335,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 6
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(6)}>
@@ -1341,7 +1344,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 7
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(7)}>
@@ -1350,7 +1353,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 8
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(8)}>
@@ -1363,7 +1366,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 9
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(9)}>
@@ -1372,7 +1375,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 10
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(10)}>
@@ -1381,7 +1384,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 11
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(11)}>
@@ -1390,7 +1393,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 12
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(12)}>
@@ -1399,7 +1402,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 13
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(13)}>
@@ -1408,7 +1411,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 14
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(14)}>
@@ -1417,7 +1420,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 15
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(15)}>
@@ -1426,7 +1429,7 @@ function NewTablet(props: Props) {
                         <p
                           className={
                             profileSection === 16
-                              ? 'text-white bg-blue-800 rounded-2xl cursor-pointer px-5 py-1 text-2xl w-[95%]'
+                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                               : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                           }
                           onClick={() => setProfileSection(16)}>
@@ -1436,45 +1439,45 @@ function NewTablet(props: Props) {
                     )}
                   </div>
                 </div>
-                <div className="relative flex flex-col w-2/3 bg-slate-200 rounded-r-md">
+                <div className="relative flex flex-col w-2/3 bg-black rounded-r-md">
                   {profileSection === 0 && (
-                    <div className="m-5 text-sm text-black bg-white rounded-lg">
-                      <p className="flex justify-between px-2 py-2 border-gray-500">
+                    <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                      <p className="flex justify-between px-2 py-2">
                         <span>Name</span>
                         <span>{userDetails['name']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Username</span>
                         <span>{userDetails['username']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>College</span>
                         <span>{userDetails['collegeName']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Mobile</span>
                         <span>{userDetails['mobile']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Resume Link</span>
                         <span>{userDetails['resumeLink']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Email</span>
                         <span>{userDetails['email']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Score</span>
                         <span>{userDetails['score']}</span>
                       </p>
-                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      {/* <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                       <span>Gender</span>
                       <span>
                         {userDetails['gender'].charAt(0).toUpperCase() +
                           userDetails['gender'].slice(1)}
                       </span>
                     </p> */}
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Fee Status</span>
                         <span>{userDetails['isFeePaid'] ? 'PAID' : 'NOT PAID'}</span>
                       </p>
@@ -1482,7 +1485,7 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 1 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg bg-zinc-900 border-zinc-800">
                         {/* <p className="flex justify-between px-2 py-2 border-gray-500">
                         <span>Name</span>
                         <input
@@ -1494,7 +1497,7 @@ function NewTablet(props: Props) {
                           }
                         />
                       </p> */}
-                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Username</span>
                         <input
                           placeholder="Enter your username"
@@ -1505,7 +1508,7 @@ function NewTablet(props: Props) {
                           }
                         />
                       </p> */}
-                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>College</span>
                         <input
                           placeholder="Enter your college name"
@@ -1516,7 +1519,7 @@ function NewTablet(props: Props) {
                           }
                         />
                       </p> */}
-                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                         <span>Mobile</span>
                         <input
                           placeholder="Enter your mobile"
@@ -1527,12 +1530,12 @@ function NewTablet(props: Props) {
                           }
                         />
                       </p> */}
-                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300"> */}
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                        {/* <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800"> */}
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Resume Link</span>
                           <input
                             placeholder="Enter your resumeLink"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newUserDetails['resumeLink']}
                             onChange={(e) =>
                               setNewUserDetails({ ...newUserDetails, resumeLink: e.target.value })
@@ -1541,9 +1544,9 @@ function NewTablet(props: Props) {
                         </p>
                       </div>
                       <div
-                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer bg-zinc-900 border-zinc-800"
                         onClick={() => handleEditDetails()}>
-                        <p className="w-full px-2 py-2 text-center text-blue-800">Submit</p>
+                        <p className="w-full px-2 py-2 text-center text-blue-900">Submit</p>
                       </div>
                     </>
                   )}
@@ -1563,16 +1566,16 @@ function NewTablet(props: Props) {
                           .map((team) => (
                             <div
                               key={team['team']['id']}
-                              className="m-5 text-sm text-black bg-white rounded-lg">
+                              className="m-5 text-sm text-gray-200 rounded-lg bg-zinc-900 border-zinc-800">
                               <p className="flex justify-between px-2 py-2 border-gray-500">
                                 <span>Name</span>
                                 <span>{team['team']['name']}</span>
                               </p>
-                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                 <span>Number of members</span>
                                 <span>{team['team']['size']}</span>
                               </p>
-                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                 <span>
                                   {(teamMembers[team['team']['id']] as any).length === 0
                                     ? 'View all members'
@@ -1581,7 +1584,7 @@ function NewTablet(props: Props) {
                                 <span>
                                   {(teamMembers[team['team']['id']] as any).length === 0 && (
                                     <div
-                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-900 cursor-pointer"
                                       onClick={() => fetchTeamMembers(team['team']['id'])}
                                     />
                                   )}
@@ -1591,7 +1594,7 @@ function NewTablet(props: Props) {
                                 (teamMember: any, i: number) => (
                                   <p
                                     key={teamMember['userId']}
-                                    className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                    className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                     &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                     {teamMember['user']['id'] === team['team']['leader']
                                       ? '(Leader)'
@@ -1612,16 +1615,16 @@ function NewTablet(props: Props) {
                         .map((team) => (
                           <div
                             key={team['team']['id']}
-                            className="relative m-5 text-sm text-black bg-white rounded-lg">
+                            className="relative m-5 text-sm text-gray-200 rounded-lg bg-zinc-900 border-zinc-800">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{team['team']['name']}</span>
                             </p>
-                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                               <span>Number of members</span>
                               <span>{team['team']['size']}</span>
                             </p>
-                            <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                            <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                               <span>
                                 {(teamMembers[team['team']['id']] as any).length === 0
                                   ? 'View all members'
@@ -1630,7 +1633,7 @@ function NewTablet(props: Props) {
                               <span>
                                 {(teamMembers[team['team']['id']] as any).length === 0 && (
                                   <div
-                                    className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                    className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-900 cursor-pointer"
                                     onClick={() => fetchTeamMembers(team['team']['id'])}
                                   />
                                 )}
@@ -1640,7 +1643,7 @@ function NewTablet(props: Props) {
                               (teamMember: any, i: number) => (
                                 <p
                                   key={teamMember['userId']}
-                                  className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                  className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                   <span>
                                     &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                     {teamMember['user']['id'] === team['team']['leader']
@@ -1665,11 +1668,11 @@ function NewTablet(props: Props) {
                               )
                             )}
                             {showInviteUsernames[team['team']['id']] && (
-                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                 <span>Invite User</span>
                                 <input
                                   placeholder="Enter username of user you want to invite"
-                                  className="flex-1 ml-1 text-right outline-none"
+                                  className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                                   value={inviteUsernames[team['team']['id']]}
                                   onChange={(e) =>
                                     setInviteUsernames({
@@ -1681,21 +1684,21 @@ function NewTablet(props: Props) {
                               </p>
                             )}
                             <p
-                              className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                              className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() => handleInviteUser(team['team']['id'])}>
                               Invite User
                             </p>
                             <p
-                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() => handleDeleteTeam(team['team']['id'])}>
                               Delete Team
                             </p>
                           </div>
                         ))}
                       <div
-                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer bg-zinc-900 border-zinc-800"
                         onClick={() => handleCreateTeam()}>
-                        <p className="w-full px-2 py-2 text-center text-blue-800">Create Team</p>
+                        <p className="w-full px-2 py-2 text-center text-blue-900">Create Team</p>
                       </div>
                     </div>
                   )}
@@ -1715,16 +1718,16 @@ function NewTablet(props: Props) {
                           .map((team) => (
                             <div
                               key={team['team']['id']}
-                              className="m-5 text-sm text-black bg-white rounded-lg">
+                              className="m-5 text-sm text-gray-200 rounded-lg bg-zinc-900 border-zinc-800">
                               <p className="flex justify-between px-2 py-2 border-gray-500">
                                 <span>Name</span>
                                 <span>{team['team']['name']}</span>
                               </p>
-                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                 <span>Number of members</span>
                                 <span>{team['team']['size']}</span>
                               </p>
-                              <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                              <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                 <span>
                                   {(teamMembers[team['team']['id']] as any).length === 0
                                     ? 'View all members'
@@ -1733,7 +1736,7 @@ function NewTablet(props: Props) {
                                 <span>
                                   {(teamMembers[team['team']['id']] as any).length === 0 && (
                                     <div
-                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-800 cursor-pointer"
+                                      className="w-3 h-3 mr-2 rotate-45 border-b-2 border-r-2 border-blue-900 cursor-pointer"
                                       onClick={() => fetchTeamMembers(team['team']['id'])}
                                     />
                                   )}
@@ -1744,7 +1747,7 @@ function NewTablet(props: Props) {
                                 .map((teamMember: any, i: number) => (
                                   <p
                                     key={teamMember['userId']}
-                                    className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                                    className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                                     &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                     {teamMember['user']['id'] === team['team']['leader']
                                       ? '(Leader)'
@@ -1752,14 +1755,14 @@ function NewTablet(props: Props) {
                                   </p>
                                 ))}
                               <p
-                                className="w-full px-2 py-2 text-center text-blue-800 border-t-2 border-gray-300 cursor-pointer"
+                                className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
                                 onClick={() =>
                                   handleRespondTeamInvite(team['team']['id'], 'ACCEPTED')
                                 }>
                                 Accept Invitation
                               </p>
                               <p
-                                className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                                className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
                                 onClick={() =>
                                   handleRespondTeamInvite(team['team']['id'], 'DECLINED')
                                 }>
@@ -1771,34 +1774,34 @@ function NewTablet(props: Props) {
                     )}
                   {profileSection === 5 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Name</span>
                           <input
                             placeholder="Enter department name"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newDeptEvent['name']}
                             onChange={(e) =>
                               setNewDeptEvent({ ...newDeptEvent, name: e.target.value })
                             }
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Organizer</span>
                           <input
                             placeholder="Enter department organizer"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newDeptEvent['organizer']}
                             onChange={(e) =>
                               setNewDeptEvent({ ...newDeptEvent, organizer: e.target.value })
                             }
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Description</span>
                           <input
                             placeholder="Enter department description"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newDeptEvent['desc']}
                             onChange={(e) =>
                               setNewDeptEvent({ ...newDeptEvent, desc: e.target.value })
@@ -1807,7 +1810,7 @@ function NewTablet(props: Props) {
                         </p>
                       </div>
                       <div
-                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer border-zinc-800 bg-zinc-900"
                         onClick={() =>
                           handleAddDepartmentEvent(
                             newDeptEvent['name'],
@@ -1815,7 +1818,7 @@ function NewTablet(props: Props) {
                             newDeptEvent['desc']
                           )
                         }>
-                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                        <p className="w-full px-2 py-2 text-center text-blue-900">
                           Create Department Event
                         </p>
                       </div>
@@ -1826,13 +1829,13 @@ function NewTablet(props: Props) {
                       {Object.keys(departments).map((department) => (
                         <div
                           key={department}
-                          className="m-5 text-sm text-black bg-white rounded-lg">
+                          className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                           <p className="flex justify-between px-2 py-2 border-gray-500">
                             <span>Name</span>
                             <span>{departments[department]['name']}</span>
                           </p>
                           <p
-                            className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                            className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
                             onClick={() => handleDeleteDepartmentEvent(department)}>
                             Delete Department Event
                           </p>
@@ -1842,22 +1845,22 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 7 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>User ID</span>
                           <input
                             placeholder="Enter user id"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newDeptCoordie['userId']}
                             onChange={(e) =>
                               setNewDeptCoordie({ ...newDeptCoordie, userId: e.target.value })
                             }
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newDeptCoordie['deptEventId']}
                             onChange={(e) =>
                               setNewDeptCoordie({ ...newDeptCoordie, deptEventId: e.target.value })
@@ -1871,14 +1874,14 @@ function NewTablet(props: Props) {
                         </p>
                       </div>
                       <div
-                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer border-zinc-800 bg-zinc-900"
                         onClick={() =>
                           handleAddDepartmentEventCoordie(
                             newDeptCoordie['userId'],
                             newDeptCoordie['deptEventId']
                           )
                         }>
-                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                        <p className="w-full px-2 py-2 text-center text-blue-900">
                           Add Department Coordie
                         </p>
                       </div>
@@ -1886,11 +1889,11 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 8 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={delDeptCoordie}
                             onChange={(e) => setDelDeptCoordie(e.target.value)}>
                             {Object.keys(departments).map((department) => (
@@ -1905,13 +1908,13 @@ function NewTablet(props: Props) {
                         {deptCoordies.map((deptCoordie) => (
                           <div
                             key={deptCoordie['user']['id']}
-                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{deptCoordie['user']['name']}</span>
                             </p>
                             <p
-                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() =>
                                 handleRemoveDepartmentEventCoordie(
                                   deptCoordie['user']['id'],
@@ -1927,96 +1930,96 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 9 && (
                     <>
-                      <div className="m-5 overflow-y-auto text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Name</span>
                           <input
                             placeholder="Enter event name"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['name']}
                             onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Tagline</span>
                           <input
                             placeholder="Enter event tagline"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['tagline']}
                             onChange={(e) => setNewEvent({ ...newEvent, tagline: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Details</span>
                           <textarea
                             placeholder="Enter event details"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['details']}
                             onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Criteria</span>
                           <textarea
                             placeholder="Enter event criteria"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['criteria']}
                             onChange={(e) => setNewEvent({ ...newEvent, criteria: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Rules</span>
                           <textarea
                             placeholder="Enter event rules"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['rules']}
                             onChange={(e) => setNewEvent({ ...newEvent, rules: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Problem Statement link</span>
                           <input
                             placeholder="Enter event problem statement link (if any)"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['psLink']}
                             onChange={(e) => setNewEvent({ ...newEvent, psLink: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Poster Link</span>
                           <input
                             placeholder="Enter event poster link"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['poster']}
                             onChange={(e) => setNewEvent({ ...newEvent, poster: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Min Team Size</span>
                           <input
                             type="number"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['minTeamSize']}
                             onChange={(e) =>
                               setNewEvent({ ...newEvent, minTeamSize: parseInt(e.target.value) })
                             }
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Max Team Size</span>
                           <input
                             type="number"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['maxTeamSize']}
                             onChange={(e) =>
                               setNewEvent({ ...newEvent, maxTeamSize: parseInt(e.target.value) })
                             }
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={newEvent['deptEventId']}
                             onChange={(e) =>
                               setNewEvent({ ...newEvent, deptEventId: e.target.value })
@@ -2030,7 +2033,7 @@ function NewTablet(props: Props) {
                         </p>
                       </div>
                       <div
-                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer border-zinc-800 bg-zinc-900"
                         onClick={() =>
                           handleAddEvent(
                             newEvent['name'],
@@ -2045,17 +2048,17 @@ function NewTablet(props: Props) {
                             newEvent['deptEventId']
                           )
                         }>
-                        <p className="w-full px-2 py-2 text-center text-blue-800">Create Event</p>
+                        <p className="w-full px-2 py-2 text-center text-blue-900">Create Event</p>
                       </div>
                     </>
                   )}
                   {profileSection === 10 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currEUDDept}
                             onChange={(e) => setCurrEUDDept(e.target.value)}>
                             {Object.keys(departments).map((department) => (
@@ -2071,11 +2074,11 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 11 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currEUDDept}
                             onChange={(e) => setCurrEUDDept(e.target.value)}>
                             {Object.keys(departments).map((department) => (
@@ -2090,13 +2093,13 @@ function NewTablet(props: Props) {
                         {events.map((event) => (
                           <div
                             key={event['id']}
-                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{event['name']}</span>
                             </p>
                             <p
-                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() => handleDeleteEvent(event['id'])}>
                               Delete Event
                             </p>
@@ -2107,20 +2110,20 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 12 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Email</span>
                           <input
                             placeholder="Enter email of user"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currECUD['email']}
                             onChange={(e) => setCurrECUD({ ...currECUD, email: e.target.value })}
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currECUD['deptEventId']}
                             onChange={(e) =>
                               setCurrECUD({ ...currECUD, deptEventId: e.target.value })
@@ -2132,10 +2135,10 @@ function NewTablet(props: Props) {
                             ))}
                           </select>
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currECUD['eventId']}
                             onChange={(e) => setCurrECUD({ ...currECUD, eventId: e.target.value })}>
                             {events.map((event) => (
@@ -2147,11 +2150,11 @@ function NewTablet(props: Props) {
                         </p>
                       </div>
                       <div
-                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer border-zinc-800 bg-zinc-900"
                         onClick={() =>
                           handleAddEventCoordie(currECUD['email'], currECUD['eventId'])
                         }>
-                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                        <p className="w-full px-2 py-2 text-center text-blue-900">
                           Add Event Coordie
                         </p>
                       </div>
@@ -2159,11 +2162,11 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 13 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currECUD['deptEventId']}
                             onChange={(e) =>
                               setCurrECUD({ ...currECUD, deptEventId: e.target.value })
@@ -2175,10 +2178,10 @@ function NewTablet(props: Props) {
                             ))}
                           </select>
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currECUD['eventId']}
                             onChange={(e) => setCurrECUD({ ...currECUD, eventId: e.target.value })}>
                             {events.map((event) => (
@@ -2193,13 +2196,13 @@ function NewTablet(props: Props) {
                         {eventCoordies.map((eventCoordie) => (
                           <div
                             key={eventCoordie['user']['id']}
-                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{eventCoordie['user']['name']}</span>
                             </p>
                             <p
-                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() =>
                                 handleRemoveEventCoordie(
                                   eventCoordie['user']['email'],
@@ -2215,33 +2218,33 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 14 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Name</span>
                           <input
                             placeholder="Enter name of sponsor"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currSponsorAUD['name']}
                             onChange={(e) =>
                               setCurrSponsorAUD({ ...currSponsorAUD, name: e.target.value })
                             }
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Poster</span>
                           <input
                             placeholder="Enter poster link of sponsor"
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currSponsorAUD['poster']}
                             onChange={(e) =>
                               setCurrSponsorAUD({ ...currSponsorAUD, poster: e.target.value })
                             }
                           />
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Is Title Sponsor?</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currSponsorAUD['title']}
                             onChange={(e) =>
                               setCurrSponsorAUD({ ...currSponsorAUD, title: e.target.value })
@@ -2253,10 +2256,10 @@ function NewTablet(props: Props) {
                             ))}
                           </select>
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currSponsorAUD['deptEventId']}
                             onChange={(e) =>
                               setCurrSponsorAUD({ ...currSponsorAUD, deptEventId: e.target.value })
@@ -2268,10 +2271,10 @@ function NewTablet(props: Props) {
                             ))}
                           </select>
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currSponsorAUD['eventId']}
                             onChange={(e) =>
                               setCurrSponsorAUD({ ...currSponsorAUD, eventId: e.target.value })
@@ -2285,7 +2288,7 @@ function NewTablet(props: Props) {
                         </p>
                       </div>
                       <div
-                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer border-zinc-800 bg-zinc-900"
                         onClick={() =>
                           handleAddEventSponsor(
                             currSponsorAUD['name'],
@@ -2294,7 +2297,7 @@ function NewTablet(props: Props) {
                             currSponsorAUD['eventId']
                           )
                         }>
-                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                        <p className="w-full px-2 py-2 text-center text-blue-900">
                           Add Event Sponsor
                         </p>
                       </div>
@@ -2302,11 +2305,11 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 16 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currSponsorAUD['deptEventId']}
                             onChange={(e) =>
                               setCurrSponsorAUD({ ...currSponsorAUD, deptEventId: e.target.value })
@@ -2318,10 +2321,10 @@ function NewTablet(props: Props) {
                             ))}
                           </select>
                         </p>
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                           <span>Event</span>
                           <select
-                            className="flex-1 ml-1 text-right outline-none"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
                             value={currSponsorAUD['eventId']}
                             onChange={(e) =>
                               setCurrSponsorAUD({ ...currSponsorAUD, eventId: e.target.value })
@@ -2338,13 +2341,13 @@ function NewTablet(props: Props) {
                         {sponsors.map((sponsor) => (
                           <div
                             key={sponsor['id']}
-                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{sponsor['name']}</span>
                             </p>
                             <p
-                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() =>
                                 handleRemoveEventSponsor(sponsor['name'], currSponsorAUD['eventId'])
                               }>
