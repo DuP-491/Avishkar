@@ -8,20 +8,20 @@ function Map(props: Props) {
   const baseDiv = useRef<HTMLDivElement>(null);
   const [showMarks, setShowMarks] = useState(false);
   const eventQuotes = [
-    'A quest for top notch programmers and hackers.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.'
+    'Programmers and Hackers put on your hats and dive into the cyber world.',
+    'Does the electronic circuits amaze you? This event is your calling.',
+    'Electrify the environment with the power inside you.',
+    'Get yourself chemically reacting and enjoy the world of chemistry.',
+    'All thermodynamically unstable mechanchies , welcome to this fun event.',
+    'Build to sustain and to inspire.',
+    'Amazing world of biotechnology in front of you.',
+    'See the manager inside you and test your communication and leadership skills.',
+    'A leadership event to test your team leading and strategic skills.',
+    'Robotic geeks build and show your stuffs here and amaze the audience.',
+    'Fly high and look beyond the horizons.',
+    'Lover of the night sky , lets have some contest.',
+    'An event for the gaming maniacs.',
+    'Want to know what you dont know ? Lets get the mind to work.'
   ];
 
   const handleClick = () => {
