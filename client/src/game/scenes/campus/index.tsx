@@ -418,7 +418,7 @@ export class Campus extends Scene {
             useHandCursor: true
           })
           .on('pointerdown', (e: any) => {
-            this.game.events.emit(EVENTS_NAME.openComputer, '', 'teams');
+            this.game.events.emit(EVENTS_NAME.openComputer, '', 'Team');
           })
       );
     }
@@ -432,7 +432,7 @@ export class Campus extends Scene {
             useHandCursor: true
           })
           .on('pointerdown', (e: any) => {
-            this.game.events.emit(EVENTS_NAME.openComputer, '', 'sponsors');
+            this.game.events.emit(EVENTS_NAME.openComputer, '', 'Sponsors');
           })
       );
     }
@@ -458,7 +458,7 @@ export class Campus extends Scene {
           })
           // .setDepth(2)
           .on('pointerdown', () => {
-            this.game.events.emit(EVENTS_NAME.openComputer, computer.name, 'event');
+            this.game.events.emit(EVENTS_NAME.openComputer, computer.name, 'Departments');
           })
       );
     });
