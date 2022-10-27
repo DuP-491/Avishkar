@@ -55,7 +55,7 @@ function Simplistic() {
     const token = Cookies.get('token');
     const preference = sessionStorage.getItem('game');
     if (token !== undefined && preference !== 'false') {
-      router('/game');
+      router('/');
       return;
     }
   }, [dimensions]);
@@ -67,7 +67,7 @@ function Simplistic() {
           className="absolute text-2xl text-white bottom-5 left-5 font-pfeffer"
           onClick={() => {
             sessionStorage.setItem('game', 'true');
-            router('/game');
+            router('/');
           }}>
           Continue in MNNIT Game Campus
         </div>

@@ -48,7 +48,7 @@ export const gameConfig: GameConfigExtended = {
 
 // SUPABASE CONFIG
 
-console.log(process.env);
+// console.log(process.env);
 
 const supabaseUrl: string = process.env.REACT_APP_SUPABASE_APP_URL as string;
 const supabaseKey: string = process.env.REACT_APP_SUPABASE_ANON_KEY as string;

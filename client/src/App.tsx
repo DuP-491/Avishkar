@@ -29,9 +29,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          <Route index element={<Simplistic />} />
+          <Route path="simplistic" element={<Simplistic />} />
           <Route path="reset-password" element={<Simplistic />} />
-          <Route path="game" element={<GameLayout />} />
+          <Route index element={<GameLayout />} />
           <Route
             path="tab"
             element={

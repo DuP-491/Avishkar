@@ -88,8 +88,6 @@ function GameComponent(props: Props) {
     last_qid: -1
   });
 
-  const triviaText = `Which is the best college in the world?`;
-  const triviaAnswer = `MNNIT Allahabd`;
   // Auto Initialize the game when the component is mounted
   // useEffect(() => {
   //   setInitialize(true);
@@ -105,10 +103,10 @@ function GameComponent(props: Props) {
         const token = Cookies.get('token');
         const authenticated = token !== undefined && token !== null;
         if (authenticated) {
+          fetchUserDetails();
           setTimeout(() => {
             game?.instance?.events.emit(EVENTS_NAME.login);
-          }, 1000);
-          fetchUserDetails();
+          }, 2500);
         }
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
@@ -139,6 +137,9 @@ function GameComponent(props: Props) {
           }
           if (gameObject.npcType == 'notice') {
             setTriviaFunction(() => openNotice);
+          }
+          if (gameObject.npcType == 'sponsor') {
+            setTriviaFunction(() => openSponsor);
           }
         });
         game.instance?.events.on(
@@ -233,7 +234,7 @@ function GameComponent(props: Props) {
     gameConfig.scale!.width = window.innerWidth;
     gameConfig.scale!.height = window.innerHeight;
     if (dimensions.width < 768) {
-      navigator('/');
+      navigator('/simplistic');
     }
     setInitialize(true);
   }, [dimensions]);
@@ -319,7 +320,7 @@ function GameComponent(props: Props) {
   const signUpSuccessCallback = () => {
     // TOAST: Please check your email to verify your account
     toast.warning('Please check your email to verify your account');
-    navigator('/');
+    navigator('/simplistic');
   };
 
   const onAuthFailure = () => {
@@ -380,6 +381,11 @@ function GameComponent(props: Props) {
     }
     setStopInteract(true);
     setShowNotice(true);
+  };
+
+  const openSponsor = () => {
+    setComputerType('Sponsors');
+    setShowComputer(true);
   };
 
   const closeNotice = () => {
@@ -446,13 +452,7 @@ function GameComponent(props: Props) {
         />
       )}
       {showTrivia && (
-        <Trivia
-          question={triviaText}
-          answer={triviaAnswer}
-          onClose={closeTrivia}
-          user={userDetails}
-          lastQid={userCoinDetails.last_qid}
-        />
+        <Trivia onClose={closeTrivia} user={userDetails} userCoinDetails={userCoinDetails} />
       )}
       {showMap && (
         <Map

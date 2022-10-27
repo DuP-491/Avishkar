@@ -9,9 +9,14 @@ import { toast } from 'react-toastify';
 import { supabase } from '../game/config';
 
 function Trivia(props: Props) {
-  const { question, answer, onClose, user, lastQid } = props;
+  const { onClose, user, userCoinDetails } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
+  const [question, setQuestion] = React.useState('');
+  const [answer, setAnswer] = React.useState('');
+  const [points, setPoints] = React.useState(0);
+  const [userAnswer, setUserAnswer] = React.useState('');
+  const [qid, setQid] = React.useState(-1);
 
   const handleClick = () => {
     if (baseDiv.current) {
@@ -24,10 +29,45 @@ function Trivia(props: Props) {
     }
   };
 
-  const handleSubmit = () => {
-    console.log(answer);
+  const handleSubmit = async () => {
+    // console.log(answer);
+    if (userCoinDetails?.last_qid == qid) {
+      toast.error('You already answered this question!');
+      handleClick();
+      setTimeout(() => {
+        onClose();
+      }, 500);
+      return;
+    }
+    if (userAnswer.toLowerCase() === answer.toLowerCase()) {
+      toast.success(`Correct! You have been awarded ${points} points!`);
+      const { data: _data, error } = await supabase
+        .from('leaderboard')
+        .update({ points: userCoinDetails.coins + points, last_qid: qid })
+        .eq('user_id', user.id);
+      if (error) {
+        toast.error(error.message);
+        handleClick();
+        setTimeout(() => {
+          onClose();
+        }, 500);
+      }
+    } else {
+      toast.error(`Incorrect! Please try again tomorrow!`);
+      const { data: _data, error } = await supabase
+        .from('leaderboard')
+        .update({ last_qid: qid })
+        .eq('user_id', user.id);
+      if (error) {
+        toast.error(error.message);
+        handleClick();
+        setTimeout(() => {
+          onClose();
+        }, 500);
+      }
+    }
+
     // handle given answer here
-    toast.success('Correct! You have been awarded 1000 points!');
     sessionStorage.setItem('dailyTrivia', 'true');
     handleClick();
     setTimeout(() => {
@@ -40,15 +80,24 @@ function Trivia(props: Props) {
     (async function _() {
       const { data: question, error } = await supabase
         .from('trivia')
-        .select('question, answer')
+        .select('id,question,answer,coins')
         .order('id', { ascending: false })
         .limit(1)
         .single();
       if (error) {
         console.log(error);
+        toast.error('No trivia questions found! Please try again later!');
+        handleClick();
+        setTimeout(() => {
+          onClose();
+        }, 500);
       }
       if (question) {
         console.log(question);
+        setQid(question.id);
+        setQuestion(question.question);
+        setAnswer(rot13(question.answer));
+        setPoints(question.coins);
       }
     })();
   }, []);
@@ -67,6 +116,94 @@ function Trivia(props: Props) {
       }
     }, 500);
   }, [baseDiv]);
+
+  const rot13 = (str: string) => {
+    var alphabets = [
+      'A',
+      'B',
+      'C',
+      'D',
+      'E',
+      'F',
+      'G',
+      'H',
+      'I',
+      'J',
+      'K',
+      'L',
+      'M',
+      'N',
+      'O',
+      'P',
+      'Q',
+      'R',
+      'S',
+      'T',
+      'U',
+      'V',
+      'W',
+      'X',
+      'Y',
+      'Z',
+      ' ',
+      '-',
+      '_',
+      '.',
+      '&',
+      '?',
+      '!',
+      '@',
+      '#',
+      '/'
+    ];
+    var alphabets13 = [
+      'N',
+      'O',
+      'P',
+      'Q',
+      'R',
+      'S',
+      'T',
+      'U',
+      'V',
+      'W',
+      'X',
+      'Y',
+      'Z',
+      'A',
+      'B',
+      'C',
+      'D',
+      'E',
+      'F',
+      'G',
+      'H',
+      'I',
+      'J',
+      'K',
+      'L',
+      'M',
+      ' ',
+      '-',
+      '_',
+      '.',
+      '&',
+      '?',
+      '!',
+      '@',
+      '#',
+      '/'
+    ];
+    var resultStr = [];
+    for (let i = 0; i < str.length; i++) {
+      for (let j = 0; j < alphabets.length; j++) {
+        if (str[i] === alphabets[j]) {
+          resultStr.push(alphabets13[j]);
+        }
+      }
+    }
+    return resultStr.join('');
+  };
 
   return (
     <>
@@ -97,6 +234,8 @@ function Trivia(props: Props) {
           {/* Input to accept answer */}
           <input
             type="text"
+            value={userAnswer}
+            onChange={(e) => setUserAnswer(e.target.value)}
             className="w-1/2 px-2 py-1 text-black bg-yellow-100 border-2 border-yellow-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent"
           />
           {/* Submit button */}
@@ -114,11 +253,9 @@ function Trivia(props: Props) {
 }
 
 Trivia.propTypes = {
-  question: PropTypes.string.isRequired,
-  answer: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   user: PropTypes.any.isRequired,
-  lastQid: PropTypes.number.isRequired
+  userCoinDetails: PropTypes.any.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof Trivia.propTypes>;

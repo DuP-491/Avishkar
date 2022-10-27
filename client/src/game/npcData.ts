@@ -30,7 +30,7 @@ export const npcData: {
   'campus-34': {
     name: 'Mitsuka',
     location: 'Near Ganga Gate spawn point',
-    type: 'text',
+    type: 'sponsor',
     character: 'Guard',
     text: 'Welcome to MNNIT Allahabad! I am Mr. Sanjay Kumar, the guard of Ganga Gate. I am here to help you.~There are many guards like me in the campus to help you out. They will tell you about various buildings of campus.'
   },
