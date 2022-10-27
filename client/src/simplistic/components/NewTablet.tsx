@@ -83,6 +83,7 @@ function NewTablet(props: Props) {
     deptEventId: ''
   });
   const [delDeptCoordie, setDelDeptCoordie] = useState('');
+  const [currEUDDept, setCurrEUDDept] = useState('');
   const [showDeptCoordieDetails, setShowDeptCoordieDetails] = useState(false);
 
   const [teams, setTeams] = useState([]);
@@ -115,15 +116,7 @@ function NewTablet(props: Props) {
 
   useEffect(() => {
     if (selectedDeptID !== -1) {
-      MainService.getAllEventsOfDepartment(departments[selectedDeptID]['id'])
-        .then((data) => {
-          if (data['success']) {
-            setEvents(data['events']);
-          } else logout();
-        })
-        .catch(() => {
-          logout();
-        });
+      fetchEvents(departments[selectedDeptID]['id']);
       fetchDepartmentCoordies(departments[selectedDeptID]['id']);
     }
   }, [selectedDeptID]);
@@ -133,6 +126,12 @@ function NewTablet(props: Props) {
       fetchDepartmentCoordies(delDeptCoordie);
     }
   }, [delDeptCoordie]);
+
+  useEffect(() => {
+    if (currEUDDept !== '') {
+      fetchEvents(currEUDDept);
+    }
+  }, [currEUDDept]);
 
   useEffect(() => {
     if (selectedEventID !== -1) {
@@ -163,6 +162,7 @@ function NewTablet(props: Props) {
         if (data['success']) {
           if (data['departmentEvents'].length !== 0) {
             setDelDeptCoordie(data['departmentEvents'][0]['id']);
+            setCurrEUDDept(data['departmentEvents'][0]['id']);
             setNewEvent({ ...newEvent, deptEventId: data['departmentEvents'][0]['id'] });
           }
 
@@ -171,6 +171,18 @@ function NewTablet(props: Props) {
             parsedDepartments[dept['id']] = dept;
           });
           setDepartments(parsedDepartments);
+        } else logout();
+      })
+      .catch(() => {
+        logout();
+      });
+  };
+
+  const fetchEvents = (deptEventId: string) => {
+    MainService.getAllEventsOfDepartment(deptEventId)
+      .then((data) => {
+        if (data['success']) {
+          setEvents(data['events']);
         } else logout();
       })
       .catch(() => {
@@ -532,6 +544,26 @@ function NewTablet(props: Props) {
             minTeamSize: 1,
             deptEventId: ''
           });
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleDeleteEvent = (id: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    CoordieService.removeEvent(token, id)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Deleted Event Successfully');
+          fetchEvents(currEUDDept);
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -1720,6 +1752,62 @@ function NewTablet(props: Props) {
                           )
                         }>
                         <p className="w-full px-2 py-2 text-center text-blue-800">Create Event</p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 10 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currEUDDept}
+                            onChange={(e) => setCurrEUDDept(e.target.value)}>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div className="overflow-y-auto"></div>
+                    </>
+                  )}
+                  {profileSection === 11 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currEUDDept}
+                            onChange={(e) => setCurrEUDDept(e.target.value)}>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div className="overflow-y-auto">
+                        {events.map((event) => (
+                          <div
+                            key={event['id']}
+                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                              <span>Name</span>
+                              <span>{event['name']}</span>
+                            </p>
+                            <p
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              onClick={() => handleDeleteEvent(event['id'])}>
+                              Delete Event
+                            </p>
+                          </div>
+                        ))}
                       </div>
                     </>
                   )}
