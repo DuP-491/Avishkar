@@ -10,8 +10,6 @@ import {
 
 import { EVENTS_NAME, TELEPORT_LOCATIONS_DATA } from '../../consts';
 import { NPC } from '../../classes/npc';
-import { GameConfigExtended } from '../../config';
-import Cookies from 'js-cookie';
 
 export class Campus extends Scene {
   // private loggedIn = false;
@@ -100,14 +98,6 @@ export class Campus extends Scene {
     // this.layer6.renderDebug(this.debug);
     // this.layer7.renderDebug(this.debug);
     // this.showDebug();
-
-    const token = Cookies.get('token');
-    const authenticated = token !== undefined && token !== null;
-    if (authenticated) {
-      setTimeout(() => {
-        this.game.events.emit(EVENTS_NAME.login);
-      }, 1000);
-    }
   }
 
   update(): void {
@@ -340,6 +330,9 @@ export class Campus extends Scene {
     const teamPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'team')
     );
+    const sponsorPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'sponsor')
+    );
     const computers = gameObjectsToObjectPoints(
       this.map.filterObjects('Events', () => {
         return true;
@@ -401,18 +394,34 @@ export class Campus extends Scene {
           this.scene.switch('cafe96');
         })
     );
-    this.interactables.push(
-      this.physics.add
-        .sprite(teamPoint.x, teamPoint.y, 'tiles_sports', 43) // Team
-        .setOrigin(0.5, 0.5)
-        .setScale(1.5)
-        .setInteractive({
-          useHandCursor: true
-        })
-        .on('pointerdown', (e: any) => {
-          this.game.events.emit(EVENTS_NAME.openTeam);
-        })
-    );
+    if (teamPoint) {
+      this.interactables.push(
+        this.physics.add
+          .sprite(teamPoint.x, teamPoint.y, 'tiles_sports', 43) // Team
+          .setOrigin(0.5, 0.5)
+          .setScale(1.5)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .on('pointerdown', (e: any) => {
+            this.game.events.emit(EVENTS_NAME.openComputer, '', 'teams');
+          })
+      );
+    }
+    if (sponsorPoint) {
+      this.interactables.push(
+        this.physics.add
+          .sprite(sponsorPoint.x, sponsorPoint.y, 'tiles_sports', 43) // Sponsors
+          .setOrigin(0.5, 0.5)
+          .setScale(1.5)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .on('pointerdown', (e: any) => {
+            this.game.events.emit(EVENTS_NAME.openComputer, '', 'sponsors');
+          })
+      );
+    }
     this.game.events.on(EVENTS_NAME.login, () => {
       console.log(this.interactables);
       this.interactables[0].setFrame(1);
@@ -435,7 +444,7 @@ export class Campus extends Scene {
           })
           // .setDepth(2)
           .on('pointerdown', () => {
-            this.game.events.emit(EVENTS_NAME.openComputer, computer.name);
+            this.game.events.emit(EVENTS_NAME.openComputer, computer.name, 'event');
           })
       );
     });

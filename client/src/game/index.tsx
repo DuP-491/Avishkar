@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Phaser from 'phaser';
 import { GameInstance, IonPhaser } from '@ion-phaser/react';
-import { gameConfig } from './config';
+import { gameConfig, supabase } from './config';
 import { EVENTS_NAME, TELEPORT_LOCATIONS } from './consts';
 import InfoPrompt from '../components/InfoPrompt';
 import AuthPrompt from '../components/AuthPrompt';
@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Trivia from '../components/Trivia';
 import NoticeBoard from '../components/NoticeBoard';
+import UserService from '../simplistic/services/UserService';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -61,6 +62,7 @@ function GameComponent(props: Props) {
   const [infoPromptType, setInfoPromptType] = useState('text');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
+  const [computerType, setComputerType] = useState('event');
   const [department, setDepartment] = useState('');
   const [showMap, setShowMap] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -68,6 +70,19 @@ function GameComponent(props: Props) {
   const [showTrivia, setShowTrivia] = useState(false);
   const [showNotice, setShowNotice] = useState(false);
   const [triviaFunction, setTriviaFunction] = useState(() => () => {});
+
+  const [userDetails, setUserDetails] = useState({
+    id: '',
+    name: '',
+    email: '',
+    username: '',
+    role: 'USER',
+    mobile: '',
+    collegeName: '',
+    score: '',
+    resumeLink: '',
+    isFeePaid: false
+  });
 
   const triviaText = `Which is the best college in the world?`;
   const triviaAnswer = `MNNIT Allahabd`;
@@ -83,7 +98,15 @@ function GameComponent(props: Props) {
     }
     if (game) {
       setTimeout(() => {
-        // TODO: CHECK AUTH STATUS HERE
+        const token = Cookies.get('token');
+        const authenticated = token !== undefined && token !== null;
+        if (authenticated) {
+          setTimeout(() => {
+            game?.instance?.events.emit(EVENTS_NAME.login);
+          }, 1000);
+          fetchUserDetails();
+          fetchUserScore();
+        }
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
@@ -127,11 +150,15 @@ function GameComponent(props: Props) {
           // console.log('resetInteract', showInteractPrompt);
           setStopInteract(true);
         });
-        game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
-          console.log(_department);
-          setDepartment(_department);
-          setShowComputer(true);
-        });
+        game.instance?.events.on(
+          EVENTS_NAME.openComputer,
+          (department: string, computerType: string) => {
+            console.log(department);
+            setDepartment(department);
+            setComputerType(computerType);
+            setShowComputer(true);
+          }
+        );
         game.instance?.events.on(EVENTS_NAME.openMap, () => {
           setShowMap(true);
         });
@@ -221,8 +248,42 @@ function GameComponent(props: Props) {
     }
   };
 
+  const fetchUserDetails = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      return;
+    }
+    UserService.getUserDetails(token)
+      .then((data) => {
+        if (data['success']) {
+          if (data['details']['resumeLink'] !== null) data['details']['resumeLink'] = '';
+          setUserDetails(data['details']);
+        }
+      })
+      .catch(() => {
+        console.log("Unable to fetch user's details");
+      });
+  };
+
+  const fetchUserScore = async () => {
+    const userId = userDetails.id;
+    if (userId === undefined) return;
+    const { data, error } = await supabase
+      .from('leaderboard')
+      .select('coins,last_qid')
+      .eq('userId', userId);
+    if (error) {
+      console.log(error);
+      toast.error('Unable to fetch user score');
+      return;
+    }
+    console.log(data);
+    // setUserScore(data);
+  };
+
   const signUpSuccessCallback = () => {
     // TOAST: Please check your email to verify your account
+    toast.warning('Please check your email to verify your account');
     navigator('/');
   };
 
@@ -333,7 +394,12 @@ function GameComponent(props: Props) {
         />
       )}
       {showComputer && (
-        <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
+        <Computer
+          closePopup={closeComputer}
+          department={department}
+          logout={onAuthFailure}
+          computerType={computerType}
+        />
       )}
       {showInfo && <Info setShowInfo={setShowInfo} />}
       {showInteractPrompt && (

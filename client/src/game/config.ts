@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
+import { createClient } from '@supabase/supabase-js';
 import { Scale, Types, WEBGL } from 'phaser';
-
 import { Campus, LoadingScene, UIScene, Cafe96Scene } from './scenes';
 
 export type GameConfigExtended = Types.Core.GameConfig & {
@@ -44,6 +45,13 @@ export const gameConfig: GameConfigExtended = {
   scene: [LoadingScene, Campus, UIScene, Cafe96Scene],
   winScore: 40
 };
+
+// SUPABASE CONFIG
+
+const supabaseUrl: string = process.env.REACT_APP_SUPABASE_APP_URL as string;
+const supabaseKey: string = process.env.REACT_APP_SUPABASE_APP_KEY as string;
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // window.sizeChanged = () => {
 //   if (window.game.isBooted) {

@@ -2,3 +2,4 @@
 postcss.config.js
 tailwind.config.js
 public/assets/*
+lib/*
