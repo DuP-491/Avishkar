@@ -36,11 +36,6 @@ function NewTablet(props: Props) {
   const [selectedEventID, setSelectedEventID] = useState(-1);
   const [eventSection, setEventSection] = useState(0);
   const [profileSection, setProfileSection] = useState(0);
-  const [selectedDeptCoordie, setSelectedDeptCoordie] = useState({
-    name: '',
-    email: '',
-    mobile: ''
-  });
   const [userDetails, setUserDetails] = useState({
     id: '',
     name: '',
@@ -96,7 +91,6 @@ function NewTablet(props: Props) {
     deptEventId: '',
     eventId: ''
   });
-  const [showDeptCoordieDetails, setShowDeptCoordieDetails] = useState(false);
 
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState({});
@@ -759,15 +753,6 @@ function NewTablet(props: Props) {
     setSelectedDeptID(i);
   };
 
-  const handleSelectDeptCoordie = (i: number) => {
-    setSelectedDeptCoordie({
-      name: deptCoordies[i]['user']['name'],
-      email: deptCoordies[i]['user']['email'],
-      mobile: deptCoordies[i]['user']['mobile']
-    });
-    setShowDeptCoordieDetails(true);
-  };
-
   const handleSelectEvent = (i: number) => {
     setTab('Event');
     setEventSection(0);
@@ -807,7 +792,10 @@ function NewTablet(props: Props) {
             />
           )}
 
-          <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-gray-200 rounded-md border-2 border-zinc-800">
+          <div
+            className={`absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-gray-200 rounded-md border-zinc-800${
+              tab === 'Departments' || tab === 'Events' ? '' : ' border-2'
+            }`}>
             {tab === 'Departments' && (
               <div className="flex flex-col h-full">
                 <h1 className="mt-10 text-3xl text-center">Departments</h1>
@@ -842,7 +830,7 @@ function NewTablet(props: Props) {
                 <p className="mt-3 text-xl italic text-center">
                   {departments[selectedDeptID]['desc']}
                 </p>
-                <div className="flex flex-wrap items-center justify-center flex-1 overflow-y-auto">
+                <div className="flex flex-wrap items-center justify-center flex-1 my-4 overflow-y-auto">
                   {events.map((event, i) => (
                     <button
                       key={event['id']}
@@ -856,40 +844,28 @@ function NewTablet(props: Props) {
                     </button>
                   ))}
                 </div>
-                <div className="flex rounded-xl items-center justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
+                <div className="flex flex-nowrap rounded-xl justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
                   {deptCoordies.map((deptCoordie, i) => (
-                    <button
+                    <div
                       key={deptCoordie['user']['id']}
-                      className="flex flex-col items-center w-36"
-                      onClick={() => handleSelectDeptCoordie(i)}>
-                      <img
-                        className="w-20 h-20 m-1 bg-orange-500 rounded-xl shrink-0"
-                        src={APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]}
-                      />
-                      <span className="text-sm font-bold">{deptCoordie['user']['name']}</span>
-                    </button>
-                  ))}
-                </div>
-                {showDeptCoordieDetails && (
-                  <div
-                    className="absolute top-0 left-0 w-full h-full backdrop-blur"
-                    onClick={() => setShowDeptCoordieDetails(false)}>
-                    <div className="relative w-1/3 mx-auto text-sm text-gray-200 border-zinc-800 rounded-lg top-[40%]">
+                      className={`flex-none w-1/3 text-sm text-gray-200 rounded-lg bg-zinc-800/[0.8] mx-4${
+                        i == 0 ? '' : ' ml-3'
+                      }`}>
                       <p className="flex justify-between px-2 py-2 border-gray-500">
                         <span>Name</span>
-                        <span>{selectedDeptCoordie['name']}</span>
+                        <span>{deptCoordie['user']['name']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                      <p className="flex justify-between px-2 py-2 border-zinc-800/[0.8]">
                         <span>Email</span>
-                        <span>{selectedDeptCoordie['email']}</span>
+                        <span>{deptCoordie['user']['email']}</span>
                       </p>
-                      <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                      <p className="flex justify-between px-2 py-2 border-zinc-800/[0.8]">
                         <span>Mobile</span>
-                        <span>{selectedDeptCoordie['mobile']}</span>
+                        <span>{deptCoordie['user']['mobile']}</span>
                       </p>
                     </div>
-                  </div>
-                )}
+                  ))}
+                </div>
               </div>
             )}
             {tab === 'Event' && selectedEventID !== -1 && (
