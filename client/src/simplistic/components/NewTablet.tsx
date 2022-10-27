@@ -172,6 +172,7 @@ function NewTablet(props: Props) {
     if (selectedEventID !== -1) {
       fetchEventCoordies(events[selectedEventID]['id']);
       fetchEventSponsors(events[selectedEventID]['id']);
+      fetchParticipation(events[selectedEventID]['id']);
     }
   }, [selectedEventID]);
 
@@ -248,6 +249,22 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setEventCoordies(data['eventCoordies']);
+        } else logout();
+      })
+      .catch(() => {
+        logout();
+      });
+  };
+
+  const fetchParticipation = (eventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      return;
+    }
+    UserService.checkEventParticipation(token, eventId)
+      .then((data) => {
+        if (data['success']) {
+          console.log('fwefewwfwefewf', data['participatingTeam']);
         } else logout();
       })
       .catch(() => {
@@ -463,12 +480,13 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setEventSection(0);
+          toast.success('Registered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
           logout();
-        } else logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        logout();
+        toast.error('Please try again later!');
       });
   };
 
@@ -1013,7 +1031,9 @@ function NewTablet(props: Props) {
                                     &emsp;&emsp;{i + 1}. {teamMember['user']['name']}{' '}
                                     {teamMember['user']['id'] === team['team']['leader']
                                       ? '(Leader)'
-                                      : ''}
+                                      : teamMember['status'] === 'ACCEPTED'
+                                      ? ''
+                                      : '(Invitation Pending)'}
                                   </span>
                                   {teamMember['user']['id'] !== team['team']['leader'] && (
                                     <span
