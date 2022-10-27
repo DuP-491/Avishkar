@@ -84,6 +84,11 @@ function NewTablet(props: Props) {
   });
   const [delDeptCoordie, setDelDeptCoordie] = useState('');
   const [currEUDDept, setCurrEUDDept] = useState('');
+  const [currECUD, setCurrECUD] = useState({
+    email: '',
+    deptEventId: '',
+    eventId: ''
+  });
   const [showDeptCoordieDetails, setShowDeptCoordieDetails] = useState(false);
 
   const [teams, setTeams] = useState([]);
@@ -134,16 +139,20 @@ function NewTablet(props: Props) {
   }, [currEUDDept]);
 
   useEffect(() => {
+    if (currECUD['deptEventId'] !== '') {
+      fetchEvents(currECUD['deptEventId']);
+    }
+  }, [currECUD['deptEventId']]);
+
+  useEffect(() => {
+    if (currECUD['eventId'] !== '') {
+      fetchEventCoordies(currECUD['eventId']);
+    }
+  }, [currECUD['eventId']]);
+
+  useEffect(() => {
     if (selectedEventID !== -1) {
-      MainService.getEventCoordies(events[selectedEventID]['id'])
-        .then((data) => {
-          if (data['success']) {
-            setEventCoordies(data['eventCoordies']);
-          } else logout();
-        })
-        .catch(() => {
-          logout();
-        });
+      fetchEventCoordies(events[selectedEventID]['id']);
       MainService.getEventSponsors(events[selectedEventID]['id'])
         .then((data) => {
           if (data['success']) {
@@ -163,6 +172,7 @@ function NewTablet(props: Props) {
           if (data['departmentEvents'].length !== 0) {
             setDelDeptCoordie(data['departmentEvents'][0]['id']);
             setCurrEUDDept(data['departmentEvents'][0]['id']);
+            setCurrECUD({ ...currECUD, deptEventId: data['departmentEvents'][0]['id'] });
             setNewEvent({ ...newEvent, deptEventId: data['departmentEvents'][0]['id'] });
           }
 
@@ -182,6 +192,9 @@ function NewTablet(props: Props) {
     MainService.getAllEventsOfDepartment(deptEventId)
       .then((data) => {
         if (data['success']) {
+          if (data['events'].length !== 0) {
+            setCurrECUD({ ...currECUD, eventId: data['events'][0]['id'] });
+          }
           setEvents(data['events']);
         } else logout();
       })
@@ -200,6 +213,18 @@ function NewTablet(props: Props) {
       })
       .catch(() => {
         // logout();
+      });
+  };
+
+  const fetchEventCoordies = (eventId: string) => {
+    MainService.getEventCoordies(eventId)
+      .then((data) => {
+        if (data['success']) {
+          setEventCoordies(data['eventCoordies']);
+        } else logout();
+      })
+      .catch(() => {
+        logout();
       });
   };
 
@@ -470,6 +495,9 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           toast.success('Created Department Event Coordie Successfully');
+          if (delDeptCoordie !== '') {
+            fetchDepartmentCoordies(delDeptCoordie);
+          }
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -564,6 +592,47 @@ function NewTablet(props: Props) {
         if (data['success']) {
           toast.success('Deleted Event Successfully');
           fetchEvents(currEUDDept);
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleAddEventCoordie = (userId: string, eventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    CoordieService.addEventCoordie(token, userId, eventId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Created Event Coordie Successfully');
+          fetchEventCoordies(currECUD['eventId']);
+          setCurrECUD({ ...currECUD, email: '' });
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleRemoveEventCoordie = (userId: string, eventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    CoordieService.removeEventCoordie(token, userId, eventId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Deleted Event Coordie Successfully');
+          fetchEventCoordies(currECUD['eventId']);
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -1805,6 +1874,114 @@ function NewTablet(props: Props) {
                               className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
                               onClick={() => handleDeleteEvent(event['id'])}>
                               Delete Event
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 12 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Email</span>
+                          <input
+                            placeholder="Enter email of user"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currECUD['email']}
+                            onChange={(e) => setCurrECUD({ ...currECUD, email: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currECUD['deptEventId']}
+                            onChange={(e) =>
+                              setCurrECUD({ ...currECUD, deptEventId: e.target.value })
+                            }>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currECUD['eventId']}
+                            onChange={(e) => setCurrECUD({ ...currECUD, eventId: e.target.value })}>
+                            {events.map((event) => (
+                              <option key={event['id']} value={event['id']}>
+                                {event['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div
+                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        onClick={() =>
+                          handleAddEventCoordie(currECUD['email'], currECUD['eventId'])
+                        }>
+                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                          Add Event Coordie
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 13 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currECUD['deptEventId']}
+                            onChange={(e) =>
+                              setCurrECUD({ ...currECUD, deptEventId: e.target.value })
+                            }>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currECUD['eventId']}
+                            onChange={(e) => setCurrECUD({ ...currECUD, eventId: e.target.value })}>
+                            {events.map((event) => (
+                              <option key={event['id']} value={event['id']}>
+                                {event['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div className="overflow-y-auto">
+                        {eventCoordies.map((eventCoordie) => (
+                          <div
+                            key={eventCoordie['user']['id']}
+                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                              <span>Name</span>
+                              <span>{eventCoordie['user']['name']}</span>
+                            </p>
+                            <p
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              onClick={() =>
+                                handleRemoveEventCoordie(
+                                  eventCoordie['user']['email'],
+                                  currECUD['eventId']
+                                )
+                              }>
+                              Delete Event Coordie
                             </p>
                           </div>
                         ))}

@@ -97,7 +97,7 @@ export default {
     }
   },
 
-  addEventCoordie: async function (token: string, userId: string, eventId: string) {
+  addEventCoordie: async function (token: string, email: string, eventId: string) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/event-coordie/`, {
         method: 'POST',
@@ -105,7 +105,7 @@ export default {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ userId, eventId })
+        body: JSON.stringify({ email, eventId })
       });
       switch (res.status) {
         case 200:
@@ -142,7 +142,7 @@ export default {
     }
   },
 
-  removeEventCoordie: async function (token: string, userId: string, eventId: string) {
+  removeEventCoordie: async function (token: string, email: string, eventId: string) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/event-coordie/`, {
         method: 'DELETE',
@@ -150,7 +150,7 @@ export default {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ userId, eventId })
+        body: JSON.stringify({ email, eventId })
       });
       switch (res.status) {
         case 200:
