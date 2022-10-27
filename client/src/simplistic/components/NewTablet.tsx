@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import AdminService from '../services/AdminService';
 import CoordieService from '../services/CoordieService';
+import TeamAvishkar from './TeamAvishkar';
+import Sponsors from './Sponsors';
 
 function NewTablet(props: Props) {
   const { deptId, currTab, logout, closePopup } = props;
@@ -694,6 +696,16 @@ function NewTablet(props: Props) {
           />
 
           <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-white rounded-md">
+            {tab === 'Team' && (
+              <div className="h-full overflow-scroll no-scroll">
+                <TeamAvishkar />
+              </div>
+            )}
+            {tab === 'Sponsors' && (
+              <div className="h-full overflow-scroll no-scroll">
+                <Sponsors />
+              </div>
+            )}
             {tab === 'Departments' && (
               <div className="flex flex-col h-full">
                 <h1 className="mt-10 text-3xl text-center">Departments</h1>

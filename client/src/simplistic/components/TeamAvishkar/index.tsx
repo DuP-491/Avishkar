@@ -39,10 +39,7 @@ import DividerLine from '../Common/DividerLine';
 /* eslint-enable */
 
 /* eslint-disable */
-interface TeamAvishkarPropType {
-  onCrossPress: (e: any) => void;
-}
-function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
+function TeamAvishkar() {
   function DisplayCard(prop: Array<Array<string>>) {
     return (
       <div className="flex flex-wrap justify-around mt-10">
@@ -50,10 +47,10 @@ function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
           return (
             <div
               style={{ width: '20vw', minWidth: '200px', aspectRatio: '1' }}
-              className="group relative block overflow-hidden rounded-md transition-all duration-500 h-fit bg-gray-100/[0.2] p-1 m-2 rounded-lg justify-center text-white">
+              className="group relative block overflow-hidden  text-base rounded-md transition-all duration-500 h-fit bg-gray-100/[0.2] p-1 m-2 rounded-lg justify-center text-white">
               <img src={p[0]} className="object-cover aspect-square" />
               <div className="absolute text-center transition-all duration-300 rounded -bottom-52 group-hover:bottom-2 right-2 left-2 bg-slate-900 shadow-gray-700">
-                <span className="text-lg font-medium transition duration-500 hover:text-primary-600">
+                <span className="text-sm font-medium transition duration-500 h-fit">
                   {p[1]}
                   {p[2] != '' ? <br /> : ''}
                   {p[2] != '' ? p[2] : ''}
@@ -106,11 +103,6 @@ function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
 
   return (
     <>
-      {/* <Tablet
-        bgrd={TeamAvishkarBGIMG}
-        onBackPress={() => {}}
-        onCrossPress={onCrossPress}
-        onHomePress={() => {}}> */}
       <div className="flex justify-center pt-3">
         <span className="animating-event-title">T</span>
         <span className="animating-event-title">E</span>
@@ -193,7 +185,6 @@ function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
           [PVVarunKumarIMG, 'Varun Kumar', '', '', '', '']
         ])}
       </div>
-      {/* </Tablet> */}
     </>
   );
 }
