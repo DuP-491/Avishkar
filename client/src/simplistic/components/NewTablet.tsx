@@ -98,13 +98,12 @@ function NewTablet(props: Props) {
   // console.log(deptIdNameMapper);
 
   useEffect(() => {
+    fetchDepartmentEvents();
     fetchUserDetails();
     fetchTeamInvites();
     setLoading(false);
     if (tab === 'Profile') {
       setProfileSection(0);
-    } else {
-      fetchDepartmentEvents();
     }
   }, []);
 
