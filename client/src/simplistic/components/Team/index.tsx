@@ -37,7 +37,7 @@ const index = () => {
     <>
       <section className="bg-white dark:bg-gray-900">
         <div className="bg-gray-100 dark:bg-gray-800">
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <h1 className="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-6xl dark:text-white">
               Team Avishkar
             </h1>
@@ -49,7 +49,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="DIRECTOR" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -63,7 +63,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="SAC President" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -77,7 +77,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="faculty" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -123,7 +123,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Festival Secretary" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -193,7 +193,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Public Relations" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -263,7 +263,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Gnosiomania Team" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -301,7 +301,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Tech Team" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -363,7 +363,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Design Team" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -408,7 +408,7 @@ const index = () => {
               />
             </div>
           </div>
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Tech Team" />
             <div className="flex flex-wrap justify-around">
               <Card
