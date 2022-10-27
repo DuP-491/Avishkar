@@ -102,6 +102,12 @@ function MiniMap(props: Props) {
         />
       </svg>
       {/* Noticeboard SVG */}
+      <div
+        className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-sky-400 animate-ping"
+        style={{
+          top: 39 + '%',
+          left: 29 + '%'
+        }}></div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 150 150"
@@ -255,12 +261,6 @@ function MiniMap(props: Props) {
           </g>
         </g>
       </svg>
-      <div
-        className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-sky-400 animate-ping"
-        style={{
-          top: 39 + '%',
-          left: 29 + '%'
-        }}></div>
       {/* gnoTalks */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -302,6 +302,21 @@ function MiniMap(props: Props) {
           </g>
         </g>
       </svg>
+      {/* Sponsors */}
+      <div
+        className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
+        style={{
+          top: 40 + '%',
+          left: 3 + '%'
+        }}></div>
+      <img
+        src={require('../images/sponsor.png')}
+        className="absolute w-4 h-4 cursor-pointer text-amber-400"
+        style={{
+          top: 40 + '%',
+          left: 3 + '%'
+        }}
+      />
       <img src={require('../images/try5.png')} width={300} />
     </div>
   );

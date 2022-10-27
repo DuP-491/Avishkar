@@ -273,7 +273,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
       onInvalidToken();
       return;
     }
-    AdminService.addDepartmentEvent(token, name, organizer)
+    AdminService.addDepartmentEvent(token, name, organizer, '')
       .then((data) => {
         if (data['success']) {
           console.log('Created Department Event Successfully');
@@ -473,6 +473,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
       criteria,
       rules,
       psLink,
+      '',
       maxTeamSize,
       minTeamSize,
       coordieCurrEvent

@@ -228,7 +228,7 @@ export const npcData: {
     location: 'Near ganga gate outside campus',
     type: 'text',
     character: 'Guard',
-    text: `You will need to show pass before entering the campus.`
+    text: `Do you want to see the generous sponsors for AVISHKAR 2k22?`
   },
   'campus-84': {
     name: 'Jack Sparrow',

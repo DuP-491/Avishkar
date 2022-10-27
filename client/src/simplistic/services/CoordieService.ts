@@ -7,6 +7,7 @@ export default {
     criteria: string,
     rules: string,
     psLink: string,
+    poster: string,
     maxTeamSize: number,
     minTeamSize: number,
     deptEventId: string
@@ -25,6 +26,7 @@ export default {
           criteria,
           rules,
           psLink,
+          poster,
           maxTeamSize,
           minTeamSize,
           deptEventId
@@ -95,7 +97,7 @@ export default {
     }
   },
 
-  addEventCoordie: async function (token: string, userId: string, eventId: string) {
+  addEventCoordie: async function (token: string, email: string, eventId: string) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/event-coordie/`, {
         method: 'POST',
@@ -103,7 +105,7 @@ export default {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ userId, eventId })
+        body: JSON.stringify({ email, eventId })
       });
       switch (res.status) {
         case 200:
@@ -115,6 +117,11 @@ export default {
           return {
             success: false,
             message: 'Invalid token!'
+          };
+        case 404:
+          return {
+            success: false,
+            message: "User Id doesn't belong to a user!"
           };
         case 409:
           return {
@@ -135,7 +142,7 @@ export default {
     }
   },
 
-  removeEventCoordie: async function (token: string, userId: string, eventId: string) {
+  removeEventCoordie: async function (token: string, email: string, eventId: string) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/event-coordie/`, {
         method: 'DELETE',
@@ -143,7 +150,7 @@ export default {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ userId, eventId })
+        body: JSON.stringify({ email, eventId })
       });
       switch (res.status) {
         case 200:

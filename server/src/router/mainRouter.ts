@@ -5,7 +5,6 @@ import {
     getDepartmentEvents,
     getEventCoordinators,
     getEventSponsors,
-    getUserLeaderboard,
 } from "../controller/mainController";
 
 const router = express.Router();
@@ -25,7 +24,5 @@ router.post("/dept-coordie", getDepartmentCoordinators);
 router.post("/event-coordie", getEventCoordinators);
 
 router.post("/event-sponsor", getEventSponsors);
-
-router.get("/leaderboard", getUserLeaderboard);
 
 export default router;

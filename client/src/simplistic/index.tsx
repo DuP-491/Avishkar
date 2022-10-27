@@ -33,9 +33,9 @@ function Simplistic() {
       case 'Events':
         return <EventsTab defaultDepartment="null" onCrossPress={onCrossPress} />;
       case 'Sponsors':
-        return <Sponsors onCrossPress={onCrossPress} />;
+        return <Sponsors />;
       case 'TeamAvishkar':
-        return <TeamAvishkar onCrossPress={onCrossPress} />;
+        return <TeamAvishkar />;
       case 'FAQ':
         return <FAQ />;
       case 'Profile':

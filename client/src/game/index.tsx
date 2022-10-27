@@ -62,7 +62,7 @@ function GameComponent(props: Props) {
   const [infoPromptType, setInfoPromptType] = useState('text');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
-  const [computerType, setComputerType] = useState('event');
+  const [computerType, setComputerType] = useState('Departments');
   const [department, setDepartment] = useState('');
   const [showMap, setShowMap] = useState(false);
   const [showInfo, setShowInfo] = useState(false);

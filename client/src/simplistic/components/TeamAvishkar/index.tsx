@@ -1,6 +1,4 @@
 import React from 'react';
-import Tablet from '../Tablet';
-import TeamAvishkarBGIMG from './../../../images/tablet_bg.png';
 /* eslint-disable */
 /* Images Imports */
 import PlaceholderIMG from '../Team/Assets/Placeholder.jpg';
@@ -12,11 +10,16 @@ import DesignMradulYadavIMG from '../Team/Assets/DesignMradulYadav.jpg';
 import DirectorRajeevTripathiIMG from '../Team/Assets/DirectorRajeevTripathi.jpg';
 import FSAdityaRajuDarjiIMG from '../Team/Assets/FSAdityaRajuDarji.jpg';
 import FSAnushreeIMG from '../Team/Assets/FSAnushree.jpeg';
+import FSDivyanshUpdhyayIMG from '../Team/Assets/FSDivyanshUpadhyay.jpeg';
 import FSOmVijayGuptaIMG from '../Team/Assets/FSOmVijayGupta.jpg';
+import FSShamoyeetaSahaIMG from '../Team/Assets/FSShamoyeetaSaha.jpeg';
 import FSShivanshiMaheshwariIMG from '../Team/Assets/FSShivanshiMaheshwari.jpg';
 import FSShreyaYadavIMG from '../Team/Assets/FSShreyaYadav.jpg';
 import FSVibhanshuVaibhavIMG from '../Team/Assets/FSVibhanshuVaibhav.jpg';
+import GnosomaniaBhaviKhatorIMG from '../Team/Assets/GnosomaniaBhaviKhator.jpg';
+import GnosomaniaShristiSinghIMG from '../Team/Assets/GnosomaniaShristiSingh.jpg';
 import GnosomaniaVanshAmbashtaIMG from '../Team/Assets/GnosomaniaVanshAmbashta.jpg';
+import PRAashirwadSharmaIMG from '../Team/Assets/PRAashirwadSharma.jpg';
 import PRAdityaGuptaIMG from '../Team/Assets/PRAdityaGupta.jpeg';
 import PRGaurikaSharmaIMG from '../Team/Assets/PRGaurikaSharma.jpg';
 import PRHimanshuGoyalIMG from '../Team/Assets/PRHimanshuGoyal.jpg';
@@ -24,8 +27,11 @@ import PRPrakharJainIMG from '../Team/Assets/PRPrakharJain.jpg';
 import PRRishiGargIMG from '../Team/Assets/PRRishiGarg.jpeg';
 import PRSiddharthDubeyIMG from '../Team/Assets/PRSiddharthDubey.jpg';
 import SACAnilKumarSinghIMG from '../Team/Assets/SACAnilKumarSingh.jpg';
+import TechAmitKumarIMG from '../Team/Assets/TechAmitKumar.jpg';
 import TechDennisThomasIMG from '../Team/Assets/TechDennisThomas.jpg';
+import TechHiteshMitrukaIMG from '../Team/Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from '../Team/Assets/TechMohitPandey.jpg';
+import TechParthMittalIMG from '../Team/Assets/TechParthMittal.jpg';
 import TechSanskarOmarIMG from '../Team/Assets/TechSanskarOmar.jpg';
 import PVSumitYadavIMG from '../Team/Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from '../Team/Assets/PVVarunKumar.jpg';
@@ -33,10 +39,7 @@ import DividerLine from '../Common/DividerLine';
 /* eslint-enable */
 
 /* eslint-disable */
-interface TeamAvishkarPropType {
-  onCrossPress: (e: any) => void;
-}
-function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
+function TeamAvishkar() {
   function DisplayCard(prop: Array<Array<string>>) {
     return (
       <div className="flex flex-wrap justify-around mt-10">
@@ -44,10 +47,10 @@ function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
           return (
             <div
               style={{ width: '20vw', minWidth: '200px', aspectRatio: '1' }}
-              className="group relative block overflow-hidden rounded-md transition-all duration-500 h-fit bg-gray-100/[0.2] p-1 m-2 rounded-lg justify-center text-white">
+              className="group relative block overflow-hidden  text-base rounded-md transition-all duration-500 h-fit bg-gray-100/[0.2] p-1 m-2 rounded-lg justify-center text-white">
               <img src={p[0]} className="object-cover aspect-square" />
               <div className="absolute text-center transition-all duration-300 rounded -bottom-52 group-hover:bottom-2 right-2 left-2 bg-slate-900 shadow-gray-700">
-                <span className="text-lg font-medium transition duration-500 hover:text-primary-600">
+                <span className="text-sm font-medium transition duration-500 h-fit">
                   {p[1]}
                   {p[2] != '' ? <br /> : ''}
                   {p[2] != '' ? p[2] : ''}
@@ -100,93 +103,88 @@ function TeamAvishkar({ onCrossPress }: TeamAvishkarPropType) {
 
   return (
     <>
-      <Tablet
-        bgrd={TeamAvishkarBGIMG}
-        onBackPress={() => {}}
-        onCrossPress={onCrossPress}
-        onHomePress={() => {}}>
-        <div className="flex justify-center pt-3">
-          <span className="animating-event-title">T</span>
-          <span className="animating-event-title">E</span>
-          <span className="animating-event-title">A</span>
-          <span className="animating-event-title">M</span>
-        </div>
-        <div className="flex flex-col items-center px-10 pb-10">
-          <DividerLine alignmentCenter={true} text="DIRECTOR MNNIT" />
-          {DisplayCard([
-            [DirectorRajeevTripathiIMG, 'PROF. RAJEEV TRIPATHI', 'Director', '', '', '']
-          ])}
-          <DividerLine alignmentCenter={true} text="SAC President" />
-          {DisplayCard([
-            [SACAnilKumarSinghIMG, 'Prof. Anil Kumar Singh', 'SAC President', '', '', '']
-          ])}
-          <DividerLine alignmentCenter={true} text="FACULTIES" />
-          {DisplayCard([
-            [PlaceholderIMG, 'Faculty 1', 'Designation 1', 'fb', 'in', ''],
-            [PlaceholderIMG, 'Faculty 2', 'Designation 2', '', 'as', ''],
-            [PlaceholderIMG, 'Faculty 3', 'Designation 3', 'asd', 'sa', 'as'],
-            [PlaceholderIMG, 'Faculty 4', 'Designation 4', '', '', ''],
-            [PlaceholderIMG, 'Faculty 5', 'Designation 5', '', '', '']
-          ])}
-          <DividerLine alignmentCenter={true} text="FESTIVAL SECRETARY" />
-          {DisplayCard([
-            [FSAdityaRajuDarjiIMG, 'Aditya Raju Darji', '', '', '', ''],
-            [FSAnushreeIMG, 'Anushree', '', '', '', ''],
-            [FSOmVijayGuptaIMG, 'Om Vijay Gupta', '', '', '', ''],
-            [FSShivanshiMaheshwariIMG, 'Shivanshi Maheshwari', '', '', '', ''],
-            [FSShreyaYadavIMG, 'Shreya Yadav', '', '', '', ''],
-            [FSVibhanshuVaibhavIMG, 'Vibhanshu Vaibhav', '', '', '', ''],
-            [PlaceholderIMG, 'Divyansh Upadhyay', '', '', '', ''],
-            [PlaceholderIMG, '---', '', '', '', '']
-          ])}
+      <div className="flex justify-center pt-3">
+        <span className="animating-event-title">T</span>
+        <span className="animating-event-title">E</span>
+        <span className="animating-event-title">A</span>
+        <span className="animating-event-title">M</span>
+      </div>
+      <div className="flex flex-col items-center px-10 pb-10">
+        <DividerLine alignmentCenter={true} text="DIRECTOR MNNIT" />
+        {DisplayCard([
+          [DirectorRajeevTripathiIMG, 'PROF. RAJEEV TRIPATHI', 'Director', '', '', '']
+        ])}
+        <DividerLine alignmentCenter={true} text="SAC President" />
+        {DisplayCard([
+          [SACAnilKumarSinghIMG, 'Prof. Anil Kumar Singh', 'SAC President', '', '', '']
+        ])}
+        <DividerLine alignmentCenter={true} text="FACULTIES" />
+        {DisplayCard([
+          [PlaceholderIMG, 'Faculty 1', 'Designation 1', '', '', ''],
+          [PlaceholderIMG, 'Faculty 2', 'Designation 2', '', '', ''],
+          [PlaceholderIMG, 'Faculty 3', 'Designation 3', '', '', ''],
+          [PlaceholderIMG, 'Faculty 4', 'Designation 4', '', '', ''],
+          [PlaceholderIMG, 'Faculty 5', 'Designation 5', '', '', '']
+        ])}
+        <DividerLine alignmentCenter={true} text="FESTIVAL SECRETARY" />
+        {DisplayCard([
+          [FSAdityaRajuDarjiIMG, 'Aditya Raju Darji', '', '', '', ''],
+          [FSAnushreeIMG, 'Anushree', '', '', '', ''],
+          [FSDivyanshUpdhyayIMG, 'Divyansh Upadhyay', '', '', '', ''],
+          [FSOmVijayGuptaIMG, 'Om Vijay Gupta', '', '', '', ''],
+          [FSShamoyeetaSahaIMG, 'Shamoyeeta Saha', '', '', '', ''],
+          [FSShivanshiMaheshwariIMG, 'Shivanshi Maheshwari', '', '', '', ''],
+          [FSShreyaYadavIMG, 'Shreya Yadav', '', '', '', ''],
+          [FSVibhanshuVaibhavIMG, 'Vibhanshu Vaibhav', '', '', '', '']
+        ])}
 
-          <DividerLine alignmentCenter={true} text="Gnosiomania Team" />
-          {DisplayCard([
-            [PlaceholderIMG, 'Darin Peter Carvalho', '', '', '', ''],
-            [GnosomaniaVanshAmbashtaIMG, 'Vansh Ambashta', '', '', '', ''],
-            [PlaceholderIMG, '---', '', '', '', ''],
-            [PlaceholderIMG, '---', '', '', '', '']
-          ])}
+        <DividerLine alignmentCenter={true} text="Gnosiomania Team" />
+        {DisplayCard([
+          [GnosomaniaBhaviKhatorIMG, 'Bhavi Khator', '', '', '', ''],
+          [PlaceholderIMG, 'Darin Peter Carvalho', '', '', '', ''],
+          [GnosomaniaShristiSinghIMG, 'Shristi Singh', '', '', '', ''],
+          [GnosomaniaVanshAmbashtaIMG, 'Vansh Ambashta', '', '', '', '']
+        ])}
 
-          <DividerLine alignmentCenter={true} text="Public Relations" />
-          {DisplayCard([
-            [PlaceholderIMG, 'Aashirwad Sharma', ''],
-            [PRAdityaGuptaIMG, 'Aditya Gupta', ''],
-            [PlaceholderIMG, 'Devashish Singh Tomar', ''],
-            [PRGaurikaSharmaIMG, 'Gaurika Sharma', ''],
-            [PRHimanshuGoyalIMG, 'Himanshu Goyal', ''],
-            [PRPrakharJainIMG, 'Prakhar Jain', ''],
-            [PRRishiGargIMG, 'Rishi Garg', ''],
-            [PRSiddharthDubeyIMG, 'Siddharth Dubey', '']
-          ])}
+        <DividerLine alignmentCenter={true} text="Public Relations" />
+        {DisplayCard([
+          [PRAashirwadSharmaIMG, 'Aashirwad Sharma', ''],
+          [PRAdityaGuptaIMG, 'Aditya Gupta', ''],
+          [PlaceholderIMG, 'Devashish Singh Tomar', ''],
+          [PRGaurikaSharmaIMG, 'Gaurika Sharma', ''],
+          [PRHimanshuGoyalIMG, 'Himanshu Goyal', ''],
+          [PRPrakharJainIMG, 'Prakhar Jain', ''],
+          [PRRishiGargIMG, 'Rishi Garg', ''],
+          [PRSiddharthDubeyIMG, 'Siddharth Dubey', '']
+        ])}
 
-          <DividerLine alignmentCenter={true} text="Tech Team" />
-          {DisplayCard([
-            [TechDennisThomasIMG, 'Dennis Thomas', '', '', '', ''],
-            [PlaceholderIMG, 'Ishan Gupta', '', '', '', ''],
-            [PlaceholderIMG, 'Lovedeep Singh Kamal', '', '', '', ''],
-            [TechMohitPandeyIMG, 'Mohit Pandey', '', '', '', ''],
-            [PlaceholderIMG, 'Parth Mittal', '', '', '', ''],
-            [PlaceholderIMG, 'Priyav K Kaneria', '', '', '', ''],
-            [TechSanskarOmarIMG, 'Sanskar Omar', '', '', '', ''],
-            [PlaceholderIMG, '', '', '', '', '']
-          ])}
-          <DividerLine alignmentCenter={true} text="Design Team" />
-          {DisplayCard([
-            [DesignAnchalYadavIMG, 'Anchal Yadav', '', '', '', ''],
-            [DesignDarpanMittalIMG, 'Darpan Mittal', '', '', '', ''],
-            [DesignHardikMittalIMG, 'Hardik Mittal', '', '', '', ''],
-            [DesignKushagraSaxenaIMG, 'Kushagra Saxena', '', '', '', ''],
-            [DesignMradulYadavIMG, 'Mradul Yadav', '', '', '', '']
-          ])}
-          <DividerLine alignmentCenter={true} text="Photos and Videos" />
-          {DisplayCard([
-            [PRAdityaGuptaIMG, 'Aditya Gupta', '', '', '', ''],
-            [PVSumitYadavIMG, 'Sumit Yadav', '', '', '', ''],
-            [PVVarunKumarIMG, 'Varun Kumar', '', '', '', '']
-          ])}
-        </div>
-      </Tablet>
+        <DividerLine alignmentCenter={true} text="Tech Team" />
+        {DisplayCard([
+          [TechAmitKumarIMG, 'Amit Kumar', '', '', '', ''],
+          [TechDennisThomasIMG, 'Dennis Thomas', '', '', '', ''],
+          [TechHiteshMitrukaIMG, 'Hitesh Mitruka', '', '', '', ''],
+          [PlaceholderIMG, 'Ishan Gupta', '', '', '', ''],
+          [PlaceholderIMG, 'Lovedeep Singh Kamal', '', '', '', ''],
+          [TechMohitPandeyIMG, 'Mohit Pandey', '', '', '', ''],
+          [TechParthMittalIMG, 'Parth Mittal', '', '', '', ''],
+          [PlaceholderIMG, 'Priyav K Kaneria', '', '', '', ''],
+          [TechSanskarOmarIMG, 'Sanskar Omar', '', '', '', '']
+        ])}
+        <DividerLine alignmentCenter={true} text="Design Team" />
+        {DisplayCard([
+          [DesignAnchalYadavIMG, 'Anchal Yadav', '', '', '', ''],
+          [DesignDarpanMittalIMG, 'Darpan Mittal', '', '', '', ''],
+          [DesignHardikMittalIMG, 'Hardik Mittal', '', '', '', ''],
+          [DesignKushagraSaxenaIMG, 'Kushagra Saxena', '', '', '', ''],
+          [DesignMradulYadavIMG, 'Mradul Yadav', '', '', '', '']
+        ])}
+        <DividerLine alignmentCenter={true} text="Photos and Videos" />
+        {DisplayCard([
+          [PRAdityaGuptaIMG, 'Aditya Gupta', '', '', '', ''],
+          [PVSumitYadavIMG, 'Sumit Yadav', '', '', '', ''],
+          [PVVarunKumarIMG, 'Varun Kumar', '', '', '', '']
+        ])}
+      </div>
     </>
   );
 }

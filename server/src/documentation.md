@@ -71,19 +71,6 @@
     > { eventSponsors, success } - OK reponse
     > { error, message, success } - ERROR response
 
-    ***
-
-6. **Get Score Leaderboard**
-   **API Path :** /leaderboard
-   **API Method :** GET
-
-    > REQUEST BODY &nbsp;&nbsp;:
-    > {  }
-
-    > RESPONSE BODY :
-    > { topScores, success } - OK reponse
-    > { error, message, success } - ERROR response
-
 ---
 
 ### Authentication APIs
@@ -307,6 +294,23 @@
 
     > REQUEST BODY &nbsp;&nbsp;:
     > { teamId (int), eventId (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+13. **Get Team Participating In An Event**
+    **API Path :** /participate/:id
+    **API Method :** GET
+    **API Extras :** for the user get the team participating in event with {id}
+
+    > REQUEST QUERY PARAMS &nbsp;&nbsp;:
+    > { id (string) }
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > {  }
 
     > RESPONSE BODY :
     > { message, success } - OK response

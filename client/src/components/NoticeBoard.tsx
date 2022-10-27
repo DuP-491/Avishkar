@@ -83,7 +83,7 @@ function NoticeBoard(props: Props) {
           </div>
           <img
             src={require('../images/cross-icon.png')}
-            className="absolute cursor-pointer right-4 top-4"
+            className="absolute hidden cursor-pointer right-4 top-4"
             onClick={handleClick}
           />
         </>

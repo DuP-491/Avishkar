@@ -21,6 +21,7 @@ import ResetPassword from './simplistic/components/Authentication/ResetPassword'
 import ForgotPassword from './simplistic/components/Authentication/ForgotPassword';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import TeamAvishkar from './simplistic/components/TeamAvishkar';
 /* eslint-enable */
 
 function App() {
@@ -34,13 +35,13 @@ function App() {
           <Route
             path="tab"
             element={
-              <NewTablet is_profile={false} logout={() => {}} closePopup={() => {}} deptId="" />
+              <NewTablet currTab="Departments" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
           <Route
             path="profile"
             element={
-              <NewTablet is_profile={true} logout={() => {}} closePopup={() => {}} deptId="" />
+              <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
         </Route>
@@ -48,8 +49,17 @@ function App() {
         <Route path="/team" element={<TeamPage />} />
         <Route path="/sponsors" element={<SponsorPage />} />
         {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
-        <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
-        <Route path="/tbtm" element={<TabletTeam onCrossPress={() => {}} />} />
+        <Route
+          path="/tbsp"
+          element={
+            <NewTablet deptId="" currTab="Sponsors" logout={() => {}} closePopup={() => {}} />
+          }
+        />
+        <Route
+          path="/tbtm"
+          element={<NewTablet deptId="" currTab="Team" logout={() => {}} closePopup={() => {}} />}
+        />
+        {/* <Route path="/tbtm" element={<TeamAvishkar />} /> */}
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset/:token" element={<ResetPassword />} />

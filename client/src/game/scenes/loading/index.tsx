@@ -110,6 +110,10 @@ export class LoadingScene extends Scene {
       key: 'tileBigTreeChan',
       url: 'tilemaps/tiles/BigTreeChan.png'
     });
+    this.load.image({
+      key: 'tilelogo',
+      url: 'tilemaps/tiles/logo.png'
+    });
     // this.load.image({
     //   key: 'tileUI',
     //   url: 'spritesheets/UI.png'

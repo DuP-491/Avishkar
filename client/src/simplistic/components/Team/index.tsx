@@ -5,29 +5,45 @@ import DividerLine from '../Common/DividerLine';
 /* eslint-disable */
 /* Images Imports */
 import PlaceholderIMG from './Assets/Placeholder.jpg';
+
 import DesignAnchalYadavIMG from './Assets/DesignAnchalYadav.jpeg';
 import DesignDarpanMittalIMG from './Assets/DesignDarpanMittal.jpg';
 import DesignHardikMittalIMG from './Assets/DesignHardikMittal.jpg';
 import DesignKushagraSaxenaIMG from './Assets/DesignKushagraSaxena.jpeg';
 import DesignMradulYadavIMG from './Assets/DesignMradulYadav.jpg';
+
 import DirectorRajeevTripathiIMG from './Assets/DirectorRajeevTripathi.jpg';
+
 import FSAdityaRajuDarjiIMG from './Assets/FSAdityaRajuDarji.jpg';
 import FSAnushreeIMG from './Assets/FSAnushree.jpeg';
+import FSDivyanshUpdhyayIMG from './Assets/FSDivyanshUpadhyay.jpeg';
 import FSOmVijayGuptaIMG from './Assets/FSOmVijayGupta.jpg';
+import FSShamoyeetaSahaIMG from './Assets/FSShamoyeetaSaha.jpeg';
 import FSShivanshiMaheshwariIMG from './Assets/FSShivanshiMaheshwari.jpg';
 import FSShreyaYadavIMG from './Assets/FSShreyaYadav.jpg';
 import FSVibhanshuVaibhavIMG from './Assets/FSVibhanshuVaibhav.jpg';
+
+import GnosomaniaBhaviKhatorIMG from './Assets/GnosomaniaBhaviKhator.jpg';
+import GnosomaniaShristiSinghIMG from './Assets/GnosomaniaShristiSingh.jpg';
 import GnosomaniaVanshAmbashtaIMG from './Assets/GnosomaniaVanshAmbashta.jpg';
+
+import PRAashirwadSharmaIMG from './Assets/PRAashirwadSharma.jpg';
 import PRAdityaGuptaIMG from './Assets/PRAdityaGupta.jpeg';
 import PRGaurikaSharmaIMG from './Assets/PRGaurikaSharma.jpg';
 import PRHimanshuGoyalIMG from './Assets/PRHimanshuGoyal.jpg';
 import PRPrakharJainIMG from './Assets/PRPrakharJain.jpg';
 import PRRishiGargIMG from './Assets/PRRishiGarg.jpeg';
 import PRSiddharthDubeyIMG from './Assets/PRSiddharthDubey.jpg';
+
 import SACAnilKumarSinghIMG from './Assets/SACAnilKumarSingh.jpg';
+
+import TechAmitKumarIMG from './Assets/TechAmitKumar.jpg';
 import TechDennisThomasIMG from './Assets/TechDennisThomas.jpg';
+import TechHiteshMitrukaIMG from './Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
+import TechParthMittalIMG from './Assets/TechParthMittal.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
+
 import PVSumitYadavIMG from './Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from './Assets/PVVarunKumar.jpg';
 /* eslint-enable */
@@ -37,7 +53,7 @@ const index = () => {
     <>
       <section className="bg-white dark:bg-gray-900">
         <div className="bg-gray-100 dark:bg-gray-800">
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <h1 className="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-6xl dark:text-white">
               Team Avishkar
             </h1>
@@ -49,7 +65,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="DIRECTOR" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -63,7 +79,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="SAC President" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -77,7 +93,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="faculty" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -123,7 +139,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Festival Secretary" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -135,8 +151,32 @@ const index = () => {
                 linkedin=""
               />
               <Card
+                imgsrc={FSAnushreeIMG}
+                name="Anushree"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={FSDivyanshUpdhyayIMG}
+                name="Divyansh Upadhyay"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
                 imgsrc={FSOmVijayGuptaIMG}
                 name="Om Vijay Gupta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={FSShamoyeetaSahaIMG}
+                name="Shamoyeeta Saha"
                 designation=""
                 facebook=""
                 instagram=""
@@ -166,38 +206,14 @@ const index = () => {
                 instagram=""
                 linkedin=""
               />
-              <Card
-                imgsrc={FSAnushreeIMG}
-                name="Anushree"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
-              <Card
-                imgsrc={PlaceholderIMG}
-                name="---"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
-              <Card
-                imgsrc={PlaceholderIMG}
-                name="---"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Public Relations" />
             <div className="flex flex-wrap justify-around">
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={PRAashirwadSharmaIMG}
                 name="Aashirwad Sharma"
                 designation=""
                 facebook=""
@@ -263,12 +279,28 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Gnosiomania Team" />
             <div className="flex flex-wrap justify-around">
               <Card
+                imgsrc={GnosomaniaBhaviKhatorIMG}
+                name="Bhavi Khator"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
                 imgsrc={PlaceholderIMG}
                 name="Darin Peter Carvalho"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={GnosomaniaShristiSinghIMG}
+                name="Shristi Singh"
                 designation=""
                 facebook=""
                 instagram=""
@@ -282,31 +314,31 @@ const index = () => {
                 instagram=""
                 linkedin=""
               />
-              <Card
-                imgsrc={PlaceholderIMG}
-                name="---"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
-              <Card
-                imgsrc={PlaceholderIMG}
-                name="---"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Tech Team" />
             <div className="flex flex-wrap justify-around">
               <Card
+                imgsrc={TechAmitKumarIMG}
+                name="Amit Kumar"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
                 imgsrc={TechDennisThomasIMG}
                 name="Dennis Thomas"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={TechHiteshMitrukaIMG}
+                name="Hitesh Mitruka"
                 designation=""
                 facebook=""
                 instagram=""
@@ -337,7 +369,7 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={TechParthMittalIMG}
                 name="Parth Mittal"
                 designation=""
                 facebook=""
@@ -363,7 +395,7 @@ const index = () => {
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Design Team" />
             <div className="flex flex-wrap justify-around">
               <Card
@@ -408,7 +440,7 @@ const index = () => {
               />
             </div>
           </div>
-          <div className="container px-6 py-10 mx-auto">
+          <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Tech Team" />
             <div className="flex flex-wrap justify-around">
               <Card
