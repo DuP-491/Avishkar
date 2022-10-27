@@ -34,13 +34,13 @@ function App() {
           <Route
             path="tab"
             element={
-              <NewTablet is_profile={false} logout={() => {}} closePopup={() => {}} deptId="" />
+              <NewTablet currTab="Departments" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
           <Route
             path="profile"
             element={
-              <NewTablet is_profile={true} logout={() => {}} closePopup={() => {}} deptId="" />
+              <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
         </Route>

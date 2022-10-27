@@ -10,7 +10,7 @@ function Computer(props: Props) {
     <div className="z-40 flex items-center justify-center w-full h-full backdrop-blur-sm">
       <NewTablet
         deptId={deptId}
-        is_profile={department == 'profile'}
+        currTab={department == 'profile' ? 'Profile' : 'Departments'}
         logout={logout}
         closePopup={closePopup}
       />

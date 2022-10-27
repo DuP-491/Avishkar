@@ -10,7 +10,7 @@ import AdminService from '../services/AdminService';
 import CoordieService from '../services/CoordieService';
 
 function NewTablet(props: Props) {
-  const { deptId, is_profile, logout, closePopup } = props;
+  const { deptId, currTab, logout, closePopup } = props;
   const APP_ICONS = [
     'https://i.imgur.com/vSvFDH7.jpg',
     'https://i.imgur.com/M6LcSPu.jpg',
@@ -24,7 +24,7 @@ function NewTablet(props: Props) {
   ];
 
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState(is_profile ? 'Profile' : 'Departments');
+  const [tab, setTab] = useState(currTab);
   const [departments, setDepartments] = useState<{
     [key: string]: any;
   }>({});
@@ -2000,7 +2000,7 @@ function NewTablet(props: Props) {
 
 NewTablet.propTypes = {
   deptId: PropTypes.string.isRequired,
-  is_profile: PropTypes.bool.isRequired,
+  currTab: PropTypes.oneOf(['Departments', 'Profile', 'Team', 'Sponsors']).isRequired,
   logout: PropTypes.func.isRequired,
   closePopup: PropTypes.func.isRequired
 };
