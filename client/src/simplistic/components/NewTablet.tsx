@@ -103,7 +103,7 @@ function NewTablet(props: Props) {
   const [participatingTeam, setParticipatingTeam] = useState(null);
   const [showInviteUsernames, setShowInviteUsernames] = useState({});
   const [inviteUsernames, setInviteUsernames] = useState({});
-  console.log(participatingTeam);
+  // console.log(participatingTeam);
 
   useEffect(() => {
     fetchDepartmentEvents();
@@ -484,6 +484,7 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setEventSection(0);
+          fetchParticipation(events[selectedEventID]['id']);
           toast.success('Registered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
           logout();
@@ -1035,7 +1036,7 @@ function NewTablet(props: Props) {
                           .map((team) => (
                             <div
                               key={team['team']['id']}
-                              className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800">
+                              className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                               <p className="flex justify-between px-2 py-2 border-gray-500">
                                 <span>Name</span>
                                 <span>{team['team']['name']}</span>
@@ -1096,7 +1097,7 @@ function NewTablet(props: Props) {
                         {
                           <div
                             key={participatingTeam['id']}
-                            className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800">
+                            className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
                               <span>{participatingTeam['name']}</span>
@@ -1157,7 +1158,7 @@ function NewTablet(props: Props) {
                         {
                           <div
                             key={participatingTeam['id']}
-                            className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800">
+                            className="relative m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                             <p className="flex justify-between px-2 py-2">
                               <span>Name</span>
                               <span>{participatingTeam['name']}</span>
