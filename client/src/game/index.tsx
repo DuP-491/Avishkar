@@ -83,6 +83,10 @@ function GameComponent(props: Props) {
     resumeLink: '',
     isFeePaid: false
   });
+  const [userCoinDetails, setUserCoinDetails] = useState({
+    coins: 0,
+    last_qid: -1
+  });
 
   const triviaText = `Which is the best college in the world?`;
   const triviaAnswer = `MNNIT Allahabd`;
@@ -105,7 +109,6 @@ function GameComponent(props: Props) {
             game?.instance?.events.emit(EVENTS_NAME.login);
           }, 1000);
           fetchUserDetails();
-          fetchUserScore();
         }
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
@@ -235,10 +238,17 @@ function GameComponent(props: Props) {
     setInitialize(true);
   }, [dimensions]);
 
+  useEffect(() => {
+    if (!userDetails.id) return;
+    // console.log(userDetails);
+    fetchUserScore();
+  }, [userDetails]);
+
   const onAuthSuccess = () => {
     if (game) {
       toast.success('Logged in successfully!');
       game?.instance?.events.emit(EVENTS_NAME.login);
+      fetchUserDetails();
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
       setTimeout(() => {
@@ -267,17 +277,42 @@ function GameComponent(props: Props) {
 
   const fetchUserScore = async () => {
     const userId = userDetails.id;
+    // console.log(userDetails);
     if (userId === undefined) return;
-    const { data, error } = await supabase
+    // const { data, error } = await supabase
+    //   .from('leaderboard')
+    //   .select('coins,last_qid')
+    //   .eq('user_id', userId);
+    let { data: userCoins, error } = await supabase
       .from('leaderboard')
-      .select('coins,last_qid')
-      .eq('userId', userId);
+      .select('user_id,coins,last_qid')
+      .eq('user_id', userId)
+      .limit(1)
+      .single();
     if (error) {
       console.log(error);
       toast.error('Unable to fetch user score');
       return;
     }
-    console.log(data);
+    if (!userCoins) {
+      let { data: newuserCoins, error } = await supabase
+        .from('leaderboard')
+        .insert([{ user_id: userId, name: userDetails.username, coins: 0, last_qid: -1 }])
+        .single();
+      if (error || !newuserCoins) {
+        console.log(error);
+        toast.error('Unable to fetch user score');
+        return;
+      }
+      userCoins = newuserCoins;
+    }
+    if (!userCoins) return;
+    // console.log(userCoins);
+    setUserCoinDetails({
+      ...userCoinDetails,
+      coins: userCoins.coins,
+      last_qid: userCoins.last_qid
+    });
     // setUserScore(data);
   };
 
@@ -410,7 +445,15 @@ function GameComponent(props: Props) {
           interactText={interactText}
         />
       )}
-      {showTrivia && <Trivia question={triviaText} answer={triviaAnswer} onClose={closeTrivia} />}
+      {showTrivia && (
+        <Trivia
+          question={triviaText}
+          answer={triviaAnswer}
+          onClose={closeTrivia}
+          user={userDetails}
+          lastQid={userCoinDetails.last_qid}
+        />
+      )}
       {showMap && (
         <Map
           playerPosition={playerPosition}
@@ -419,6 +462,9 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
+      <div className="absolute top-0 left-0 z-10 m-5 text-xl">
+        Score: {userCoinDetails.coins ? 'N/A' : userCoinDetails.coins}
+      </div>
       <div className="absolute w-full h-full top-0 pt-[7%]">
         {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
       </div>

@@ -11,25 +11,25 @@ export interface Database {
     Tables: {
       leaderboard: {
         Row: {
-          user_id: number
+          user_id: string
           name: string | null
           coins: number | null
-          kills: number | null
           last_qid: number | null
+          kills: number | null
         }
         Insert: {
-          user_id?: number
+          user_id: string
           name?: string | null
           coins?: number | null
-          kills?: number | null
           last_qid?: number | null
+          kills?: number | null
         }
         Update: {
-          user_id?: number
+          user_id?: string
           name?: string | null
           coins?: number | null
-          kills?: number | null
           last_qid?: number | null
+          kills?: number | null
         }
       }
       trivia: {

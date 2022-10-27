@@ -6,9 +6,10 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typewriter from 'typewriter-effect';
 import { toast } from 'react-toastify';
+import { supabase } from '../game/config';
 
 function Trivia(props: Props) {
-  const { question, answer, onClose } = props;
+  const { question, answer, onClose, user, lastQid } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
 
@@ -33,6 +34,24 @@ function Trivia(props: Props) {
       onClose();
     }, 500);
   };
+
+  useEffect(() => {
+    // Get latest trivia question
+    (async function _() {
+      const { data: question, error } = await supabase
+        .from('trivia')
+        .select('question, answer')
+        .order('id', { ascending: false })
+        .limit(1)
+        .single();
+      if (error) {
+        console.log(error);
+      }
+      if (question) {
+        console.log(question);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -97,7 +116,9 @@ function Trivia(props: Props) {
 Trivia.propTypes = {
   question: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  user: PropTypes.any.isRequired,
+  lastQid: PropTypes.number.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof Trivia.propTypes>;
