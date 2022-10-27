@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 
 /* eslint-disable */
@@ -14,7 +15,6 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
     e.preventDefault();
     const name = NameRef.current.value;
     const email = EmailRef.current.value;
-    const collegeName = CollegeNameRef.current.value;
     const gender = GenderRef.current.value;
     const mobile = MobileRef.current.value;
     AuthService.signIn(name, email, collegeName, gender, mobile)
@@ -22,18 +22,23 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
         if (data['success']) {
           onSignup(e);
           onCrossPress(e);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   }
 
   const NameRef = useRef(document.createElement('input'));
   const EmailRef = useRef(document.createElement('input'));
-  const CollegeNameRef = useRef(document.createElement('input'));
   const GenderRef = useRef(document.createElement('select'));
   const MobileRef = useRef(document.createElement('input'));
+
+  const [collegeName, setCollegeName] = useState('');
+
+  useEffect(() => {
+    if (EmailRef.current.value.endsWith('@mnnit.ac.in')) setCollegeName('MNNIT');
+  }, [EmailRef.current.value]);
 
   return (
     <>
@@ -98,9 +103,13 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
                     name="college"
                     type="text"
                     autoComplete="college"
-                    ref={CollegeNameRef}
+                    value={collegeName}
+                    onChange={(e) => setCollegeName(e.target.value)}
+                    disabled={EmailRef.current.value.endsWith('@mnnit.ac.in')}
                     required
-                    className="block w-full min-w-[22rem] bg-gray-200 bg-opacity-50 appearance-none rounded-md border border-gray-200 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-100 focus:outline-none focus:ring-slate-100 sm:text-sm"
+                    className={`${
+                      EmailRef.current.value.endsWith('@mnnit.ac.in') ? 'cursor-not-allowed ' : ''
+                    }block w-full min-w-[22rem] bg-gray-200 bg-opacity-50 appearance-none rounded-md border border-gray-200 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-slate-100 focus:outline-none focus:ring-slate-100 sm:text-sm`}
                   />
                 </div>
               </div>

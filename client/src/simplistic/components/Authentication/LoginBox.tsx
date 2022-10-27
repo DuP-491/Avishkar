@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Cookies from 'js-cookie';
 import AuthService from '../../services/AuthService';
+import { toast } from 'react-toastify';
 
 /* eslint-disable */
 interface LoginBoxPropType {
@@ -23,10 +24,10 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
           Cookies.set('token', data['token']);
           onLogin(e);
           onCrossPress(e);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   }
   const NameRef = useRef(document.createElement('input'));
@@ -34,24 +35,24 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8">
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-gray-900 bg-opacity-50 backdrop-blur-sm py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="px-4 py-8 bg-gray-900 bg-opacity-50 shadow backdrop-blur-sm sm:rounded-lg sm:px-10">
             <img
               // eslint-disable-next-line no-undef
               src={require('../../../images/cross-icon.png')}
               className="absolute cursor-pointer right-4 top-4 invert"
               onClick={onCrossPress}
             />
-            <div className="flex space-x-4 justify-center items-center sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="flex items-center justify-center space-x-4 sm:mx-auto sm:w-full sm:max-w-md">
               <img
-                className="h-12 w-auto"
+                className="w-auto h-12"
                 src="https://i.imgur.com/cHH4xIh.png"
                 alt="Avishkar Logo"
               />
-              <h2 className="text-center text-2xl font-bold tracking-tight text-white">Login</h2>
+              <h2 className="text-2xl font-bold tracking-tight text-center text-white">Login</h2>
             </div>
-            <form className="space-y-6 mt-6" onSubmit={LoggingIn} method="POST">
+            <form className="mt-6 space-y-6" onSubmit={LoggingIn} method="POST">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-50">
                   Email address
@@ -97,12 +98,12 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
               <div className="flex justify-between">
                 <button
                   type="submit"
-                  className="flex w-fit justify-center rounded-md border border-transparent bg-slate-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
+                  className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
                   Sign in
                 </button>
                 <button
                   onClick={onToggle}
-                  className="flex w-fit justify-center rounded-md border border-transparent bg-slate-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
+                  className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
                   Register?
                 </button>
               </div>
@@ -111,7 +112,7 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
         </div>
       </div>
       {/* <div className="w-2/3 max-w-xl bg-gray-900/[0.5] h-3/5 rounded-lg flex flex-col p-10 filter backdrop-blur-md">
-        <button className="text-white self-end" onClick={onCrossPress}>
+        <button className="self-end text-white" onClick={onCrossPress}>
           X
         </button>
         <img
@@ -122,19 +123,19 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
             width: '4rem'
           }}
         />
-        <span className="text-white m-4 text-xl self-center font-black">LOGIN</span>
+        <span className="self-center m-4 text-xl font-black text-white">LOGIN</span>
         <form className="w-full">
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-full-name">
                 Email/Username
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-user-name"
                 type="text"
                 placeholder="Email/Username"
@@ -142,17 +143,17 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-password">
                 Password
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-password"
                 type="password"
                 placeholder="***********"
@@ -164,13 +165,13 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
             <div className="md:w-1/3"></div>
             <div className="md:w-2/3">
               <button
-                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-10"
+                className="px-4 py-2 mr-10 font-bold text-white bg-purple-500 rounded shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={LoggingIn}>
                 Log In
               </button>
               <button
-                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="px-4 py-2 font-bold text-white bg-purple-500 rounded shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={onToggle}>
                 Register?
