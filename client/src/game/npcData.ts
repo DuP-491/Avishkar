@@ -60,7 +60,7 @@ export const npcData: {
     location: 'outside csed | CYBERQUEST',
     type: 'text',
     character: 'Guard | Building NPC',
-    text: `Welcome to the realm of computer science and technology. CSED spotlights the CYBERQUEST event during Avishkar and is also where our 36-hour hackathon takes place. It houses CISCO ThingQbator and many labs to suit your geeky needs.`
+    text: `Welcome to the realm of computer science and technology.~CSED spotlights the CYBERQUEST event during Avishkar and is also where our 36-hour hackathon takes place.~It houses CISCO ThingQbator and many labs to suit your geeky needs.`
   },
   'campus-59': {
     name: 'Mr. Raman Singh',
@@ -158,7 +158,7 @@ export const npcData: {
     location: 'Dean Academic Building',
     type: 'text',
     character: 'Guard | Building NPC',
-    text: `Make sure you bring your ID card! This building is for all official paperwork. Collect your marksheets and submit applications here and don't worry, there isn't a long queue.`
+    text: `Make sure you bring your ID card! This building is for all official paperwork.~Collect your marksheets and submit applications here and don't worry, there isn't a long queue.`
   },
   'campus-74': {
     name: 'Mr. Sanjay',

@@ -26,7 +26,8 @@ export enum TELEPORT_LOCATIONS {
   csed = 'csed',
   mpHall = 'mpHall',
   noticeBoard = 'noticeBoard',
-  boysHostel = 'boysHostel'
+  boysHostel = 'boysHostel',
+  sponser = 'sponser'
 }
 
 export const TELEPORT_LOCATIONS_DATA: {
@@ -59,6 +60,10 @@ export const TELEPORT_LOCATIONS_DATA: {
   boysHostel: {
     x: 5900,
     y: 860
+  },
+  sponser: {
+    x: 450,
+    y: 2750
   }
 };
 

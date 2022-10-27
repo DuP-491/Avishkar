@@ -366,12 +366,13 @@ function Map(props: Props) {
                 left: 5 + '%'
               }}></div>
             <img
-              src={require('../images/sponsor.png')}
+              src={require('../images/sponser.png')}
               className="absolute w-4 h-4 cursor-pointer text-amber-400"
               style={{
                 top: 42 + '%',
                 left: 5 + '%'
               }}
+              onClick={() => teleport(TELEPORT_LOCATIONS.sponser)}
             />
 
             <Tooltip.Provider delayDuration={500} skipDelayDuration={400}>

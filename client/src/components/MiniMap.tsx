@@ -310,12 +310,13 @@ function MiniMap(props: Props) {
           left: 3 + '%'
         }}></div>
       <img
-        src={require('../images/sponsor.png')}
+        src={require('../images/sponser.png')}
         className="absolute w-4 h-4 cursor-pointer text-amber-400"
         style={{
           top: 40 + '%',
           left: 3 + '%'
         }}
+        onClick={() => teleport(TELEPORT_LOCATIONS.sponser)}
       />
       <img src={require('../images/try5.png')} width={300} />
     </div>
