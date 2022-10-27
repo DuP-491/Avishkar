@@ -89,6 +89,13 @@ function NewTablet(props: Props) {
     deptEventId: '',
     eventId: ''
   });
+  const [currSponsorAUD, setCurrSponsorAUD] = useState({
+    name: '',
+    poster: '',
+    title: 'No',
+    deptEventId: '',
+    eventId: ''
+  });
   const [showDeptCoordieDetails, setShowDeptCoordieDetails] = useState(false);
 
   const [teams, setTeams] = useState([]);
@@ -115,7 +122,7 @@ function NewTablet(props: Props) {
 
   useEffect(() => {
     if (tab === 'Profile' && 2 <= profileSection && profileSection <= 4) fetchTeamInvites();
-    if (tab === 'Profile' && 6 <= profileSection && profileSection <= 8) fetchDepartmentEvents();
+    fetchDepartmentEvents();
   }, [profileSection]);
 
   useEffect(() => {
@@ -150,17 +157,21 @@ function NewTablet(props: Props) {
   }, [currECUD['eventId']]);
 
   useEffect(() => {
+    if (currSponsorAUD['deptEventId'] !== '') {
+      fetchEvents(currSponsorAUD['deptEventId']);
+    }
+  }, [currSponsorAUD['deptEventId']]);
+
+  useEffect(() => {
+    if (currSponsorAUD['eventId'] !== '') {
+      fetchEventSponsors(currSponsorAUD['eventId']);
+    }
+  }, [currSponsorAUD['eventId']]);
+
+  useEffect(() => {
     if (selectedEventID !== -1) {
       fetchEventCoordies(events[selectedEventID]['id']);
-      MainService.getEventSponsors(events[selectedEventID]['id'])
-        .then((data) => {
-          if (data['success']) {
-            setSponsors(data['eventSponsors']);
-          } else logout();
-        })
-        .catch(() => {
-          logout();
-        });
+      fetchEventSponsors(events[selectedEventID]['id']);
     }
   }, [selectedEventID]);
 
@@ -172,6 +183,10 @@ function NewTablet(props: Props) {
             setDelDeptCoordie(data['departmentEvents'][0]['id']);
             setCurrEUDDept(data['departmentEvents'][0]['id']);
             setCurrECUD({ ...currECUD, deptEventId: data['departmentEvents'][0]['id'] });
+            setCurrSponsorAUD({
+              ...currSponsorAUD,
+              deptEventId: data['departmentEvents'][0]['id']
+            });
             setNewEvent({ ...newEvent, deptEventId: data['departmentEvents'][0]['id'] });
           }
 
@@ -193,8 +208,21 @@ function NewTablet(props: Props) {
         if (data['success']) {
           if (data['events'].length !== 0) {
             setCurrECUD({ ...currECUD, eventId: data['events'][0]['id'] });
+            setCurrSponsorAUD({ ...currSponsorAUD, eventId: data['events'][0]['id'] });
           }
           setEvents(data['events']);
+        } else logout();
+      })
+      .catch(() => {
+        logout();
+      });
+  };
+
+  const fetchEventSponsors = (eventId: string) => {
+    MainService.getEventSponsors(eventId)
+      .then((data) => {
+        if (data['success']) {
+          setSponsors(data['eventSponsors']);
         } else logout();
       })
       .catch(() => {
@@ -632,6 +660,47 @@ function NewTablet(props: Props) {
         if (data['success']) {
           toast.success('Deleted Event Coordie Successfully');
           fetchEventCoordies(currECUD['eventId']);
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleAddEventSponsor = (name: string, poster: string, title: Boolean, eventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    CoordieService.addEventSponsor(token, name, poster, title, eventId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Created Event Sponsor Successfully');
+          fetchEventSponsors(currSponsorAUD['eventId']);
+          setCurrSponsorAUD({ ...currSponsorAUD, name: '', poster: '', title: 'No' });
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleRemoveEventSponsor = (name: string, eventId: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    CoordieService.removeEventSponsor(token, name, eventId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Deleted Event Sponsor Successfully');
+          fetchEventSponsors(currSponsorAUD['eventId']);
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -1981,6 +2050,148 @@ function NewTablet(props: Props) {
                                 )
                               }>
                               Delete Event Coordie
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 14 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Name</span>
+                          <input
+                            placeholder="Enter name of sponsor"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currSponsorAUD['name']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, name: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Poster</span>
+                          <input
+                            placeholder="Enter poster link of sponsor"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currSponsorAUD['poster']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, poster: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Is Title Sponsor?</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currSponsorAUD['title']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, title: e.target.value })
+                            }>
+                            {['Yes', 'No'].map((op) => (
+                              <option key={op} value={op}>
+                                {op}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currSponsorAUD['deptEventId']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, deptEventId: e.target.value })
+                            }>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currSponsorAUD['eventId']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, eventId: e.target.value })
+                            }>
+                            {events.map((event) => (
+                              <option key={event['id']} value={event['id']}>
+                                {event['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div
+                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        onClick={() =>
+                          handleAddEventSponsor(
+                            currSponsorAUD['name'],
+                            currSponsorAUD['poster'],
+                            currSponsorAUD['title'] === 'Yes',
+                            currSponsorAUD['eventId']
+                          )
+                        }>
+                        <p className="w-full px-2 py-2 text-center text-blue-800">
+                          Add Event Sponsor
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 16 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currSponsorAUD['deptEventId']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, deptEventId: e.target.value })
+                            }>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={currSponsorAUD['eventId']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, eventId: e.target.value })
+                            }>
+                            {events.map((event) => (
+                              <option key={event['id']} value={event['id']}>
+                                {event['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div className="overflow-y-auto">
+                        {sponsors.map((sponsor) => (
+                          <div
+                            key={sponsor['id']}
+                            className="m-5 text-sm text-black bg-white rounded-lg">
+                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                              <span>Name</span>
+                              <span>{sponsor['name']}</span>
+                            </p>
+                            <p
+                              className="w-full px-2 py-2 text-center text-red-800 border-t-2 border-gray-300 cursor-pointer"
+                              onClick={() =>
+                                handleRemoveEventSponsor(sponsor['name'], currSponsorAUD['eventId'])
+                              }>
+                              Delete Event Sponsor
                             </p>
                           </div>
                         ))}
