@@ -1234,7 +1234,7 @@ function NewTablet(props: Props) {
                         .map((sponsor) => (
                           <div
                             key={sponsor['name']}
-                            className="flex flex-col m-5 text-sm text-gray-200 rounded-lg max-w-[30%] mx-auto items-center">
+                            className="flex flex-col m-5 text-sm text-gray-200 rounded-lg max-w-[30%] mx-auto items-center bg-zinc-900">
                             <img src={sponsor['poster']} />
                             <p className="flex justify-between px-2 py-2 text-lg">
                               <span>{sponsor['name']}</span>
@@ -1249,7 +1249,7 @@ function NewTablet(props: Props) {
                         .map((sponsor) => (
                           <div
                             key={sponsor['name']}
-                            className="flex flex-col m-5 text-sm text-gray-200 rounded-lg max-w-[30%] mx-auto items-center">
+                            className="flex flex-col m-5 text-sm text-gray-200 rounded-lg max-w-[30%] mx-auto items-center bg-zinc-900">
                             <img src={sponsor['poster']} />
                             <p className="flex justify-between px-2 py-2 text-lg">
                               <span>{sponsor['name']}</span>
