@@ -39,11 +39,12 @@ function Trivia(props: Props) {
       }, 500);
       return;
     }
+    console.log(userAnswer, answer);
     if (userAnswer.toLowerCase() === answer.toLowerCase()) {
       toast.success(`Correct! You have been awarded ${points} points!`);
       const { data: _data, error } = await supabase
         .from('leaderboard')
-        .update({ points: userCoinDetails.coins + points, last_qid: qid })
+        .update({ coins: userCoinDetails.coins + points, last_qid: qid })
         .eq('user_id', user.id);
       if (error) {
         toast.error(error.message);
@@ -93,10 +94,12 @@ function Trivia(props: Props) {
         }, 500);
       }
       if (question) {
-        console.log(question);
+        // console.log(question);
         setQid(question.id);
         setQuestion(question.question);
-        setAnswer(rot13(question.answer));
+        const decrypted = rot13(question.answer);
+        // console.log(decrypted);
+        setAnswer(decrypted);
         setPoints(question.coins);
       }
     })();
@@ -118,91 +121,15 @@ function Trivia(props: Props) {
   }, [baseDiv]);
 
   const rot13 = (str: string) => {
-    var alphabets = [
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z',
-      ' ',
-      '-',
-      '_',
-      '.',
-      '&',
-      '?',
-      '!',
-      '@',
-      '#',
-      '/'
-    ];
-    var alphabets13 = [
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z',
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M',
-      ' ',
-      '-',
-      '_',
-      '.',
-      '&',
-      '?',
-      '!',
-      '@',
-      '#',
-      '/'
-    ];
-    var resultStr = [];
+    const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+    let encoded = '';
     for (let i = 0; i < str.length; i++) {
-      for (let j = 0; j < alphabets.length; j++) {
-        if (str[i] === alphabets[j]) {
-          resultStr.push(alphabets13[j]);
-        }
-      }
+      const index = input.indexOf(str[i]);
+      encoded += output[index];
     }
-    return resultStr.join('');
+
+    return encoded;
   };
 
   return (
@@ -245,8 +172,6 @@ function Trivia(props: Props) {
             Submit
           </button>
         </div>
-
-        {/* TODO: toaster for correct / incorrect answer */}
       </div>
     </>
   );
