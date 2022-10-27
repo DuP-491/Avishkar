@@ -787,7 +787,7 @@ function NewTablet(props: Props) {
           />
 
           {/* Background Image */}
-          {(tab === 'Departments' || tab === 'Events') && (
+          {tab !== 'Profile' && tab !== 'Event' && (
             <div
               className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center blur brightness-75 h-[90vh] text-[50px] rounded-md"
               style={{ backgroundImage: `url(${tabletBg})` }}
