@@ -358,6 +358,21 @@ function Map(props: Props) {
                 </g>
               </g>
             </svg>
+            {/* Sponsors */}
+            <div
+              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
+              style={{
+                top: 42 + '%',
+                left: 5 + '%'
+              }}></div>
+            <img
+              src={require('../images/sponsor.png')}
+              className="absolute w-4 h-4 cursor-pointer text-amber-400"
+              style={{
+                top: 42 + '%',
+                left: 5 + '%'
+              }}
+            />
 
             <Tooltip.Provider delayDuration={500} skipDelayDuration={400}>
               <Tooltip.Root>

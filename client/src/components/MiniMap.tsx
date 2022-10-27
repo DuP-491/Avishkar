@@ -302,6 +302,21 @@ function MiniMap(props: Props) {
           </g>
         </g>
       </svg>
+      {/* Sponsors */}
+      <div
+        className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
+        style={{
+          top: 40 + '%',
+          left: 3 + '%'
+        }}></div>
+      <img
+        src={require('../images/sponsor.png')}
+        className="absolute w-4 h-4 cursor-pointer text-amber-400"
+        style={{
+          top: 40 + '%',
+          left: 3 + '%'
+        }}
+      />
       <img src={require('../images/try5.png')} width={300} />
     </div>
   );
