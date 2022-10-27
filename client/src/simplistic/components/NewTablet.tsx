@@ -1701,7 +1701,7 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 9 && (
                     <>
-                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                      <div className="m-5 overflow-y-auto text-sm text-black bg-white rounded-lg">
                         <p className="flex justify-between px-2 py-2 border-gray-300">
                           <span>Name</span>
                           <input
