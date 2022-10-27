@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import AdminService from '../services/AdminService';
+import CoordieService from '../services/CoordieService';
 
 function NewTablet(props: Props) {
   const { deptId, is_profile, logout, closePopup } = props;
@@ -64,6 +65,18 @@ function NewTablet(props: Props) {
     name: '',
     organizer: '',
     desc: ''
+  });
+  const [newEvent, setNewEvent] = useState({
+    name: '',
+    tagline: '',
+    details: '',
+    criteria: '',
+    rules: '',
+    psLink: '',
+    poster: '',
+    maxTeamSize: 1,
+    minTeamSize: 1,
+    deptEventId: ''
   });
   const [newDeptCoordie, setNewDeptCoordie] = useState({
     userId: '',
@@ -148,6 +161,11 @@ function NewTablet(props: Props) {
     MainService.getAllDepartmentEvents()
       .then((data) => {
         if (data['success']) {
+          if (data['departmentEvents'].length !== 0) {
+            setDelDeptCoordie(data['departmentEvents'][0]['id']);
+            setNewEvent({ ...newEvent, deptEventId: data['departmentEvents'][0]['id'] });
+          }
+
           let parsedDepartments: any = {};
           data['departmentEvents'].forEach((dept: any) => {
             parsedDepartments[dept['id']] = dept;
@@ -460,6 +478,60 @@ function NewTablet(props: Props) {
         if (data['success']) {
           toast.success('Deleted Department Event Coordie Successfully');
           fetchDepartmentCoordies(delDeptCoordie);
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleAddEvent = (
+    name: string,
+    tagline: string,
+    details: string,
+    criteria: string,
+    rules: string,
+    psLink: string,
+    poster: string,
+    maxTeamSize: number,
+    minTeamSize: number,
+    deptEventId: string
+  ) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    CoordieService.addEvent(
+      token,
+      name,
+      tagline,
+      details,
+      criteria,
+      rules,
+      psLink,
+      poster,
+      maxTeamSize,
+      minTeamSize,
+      deptEventId
+    )
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Added Event Successfully');
+          setNewEvent({
+            name: '',
+            tagline: '',
+            details: '',
+            criteria: '',
+            rules: '',
+            psLink: '',
+            poster: '',
+            maxTeamSize: 1,
+            minTeamSize: 1,
+            deptEventId: ''
+          });
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else toast.error(data['message']);
@@ -1065,6 +1137,10 @@ function NewTablet(props: Props) {
                         <span>Email</span>
                         <span>{userDetails['email']}</span>
                       </p>
+                      <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                        <span>Score</span>
+                        <span>{userDetails['score']}</span>
+                      </p>
                       {/* <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                       <span>Gender</span>
                       <span>
@@ -1373,7 +1449,7 @@ function NewTablet(props: Props) {
                         <p className="flex justify-between px-2 py-2 border-gray-300">
                           <span>Name</span>
                           <input
-                            placeholder="Enter event name"
+                            placeholder="Enter department name"
                             className="flex-1 ml-1 text-right outline-none"
                             value={newDeptEvent['name']}
                             onChange={(e) =>
@@ -1384,7 +1460,7 @@ function NewTablet(props: Props) {
                         <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                           <span>Organizer</span>
                           <input
-                            placeholder="Enter event organizer"
+                            placeholder="Enter department organizer"
                             className="flex-1 ml-1 text-right outline-none"
                             value={newDeptEvent['organizer']}
                             onChange={(e) =>
@@ -1395,7 +1471,7 @@ function NewTablet(props: Props) {
                         <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                           <span>Description</span>
                           <input
-                            placeholder="Enter event description"
+                            placeholder="Enter department description"
                             className="flex-1 ml-1 text-right outline-none"
                             value={newDeptEvent['desc']}
                             onChange={(e) =>
@@ -1520,6 +1596,130 @@ function NewTablet(props: Props) {
                             </p>
                           </div>
                         ))}
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 9 && (
+                    <>
+                      <div className="m-5 text-sm text-black bg-white rounded-lg">
+                        <p className="flex justify-between px-2 py-2 border-gray-300">
+                          <span>Name</span>
+                          <input
+                            placeholder="Enter event name"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['name']}
+                            onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Tagline</span>
+                          <input
+                            placeholder="Enter event tagline"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['tagline']}
+                            onChange={(e) => setNewEvent({ ...newEvent, tagline: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Details</span>
+                          <textarea
+                            placeholder="Enter event details"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['details']}
+                            onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Criteria</span>
+                          <textarea
+                            placeholder="Enter event criteria"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['criteria']}
+                            onChange={(e) => setNewEvent({ ...newEvent, criteria: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Rules</span>
+                          <textarea
+                            placeholder="Enter event rules"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['rules']}
+                            onChange={(e) => setNewEvent({ ...newEvent, rules: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Problem Statement link</span>
+                          <input
+                            placeholder="Enter event problem statement link (if any)"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['psLink']}
+                            onChange={(e) => setNewEvent({ ...newEvent, psLink: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Poster Link</span>
+                          <input
+                            placeholder="Enter event poster link"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['poster']}
+                            onChange={(e) => setNewEvent({ ...newEvent, poster: e.target.value })}
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Min Team Size</span>
+                          <input
+                            type="number"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['minTeamSize']}
+                            onChange={(e) =>
+                              setNewEvent({ ...newEvent, minTeamSize: parseInt(e.target.value) })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Max Team Size</span>
+                          <input
+                            type="number"
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['maxTeamSize']}
+                            onChange={(e) =>
+                              setNewEvent({ ...newEvent, maxTeamSize: parseInt(e.target.value) })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none"
+                            value={newEvent['deptEventId']}
+                            onChange={(e) =>
+                              setNewEvent({ ...newEvent, deptEventId: e.target.value })
+                            }>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div
+                        className="m-5 text-sm text-black bg-white rounded-lg cursor-pointer"
+                        onClick={() =>
+                          handleAddEvent(
+                            newEvent['name'],
+                            newEvent['tagline'],
+                            newEvent['details'],
+                            newEvent['criteria'],
+                            newEvent['rules'],
+                            newEvent['psLink'] === '' ? '#' : newEvent['psLink'],
+                            newEvent['poster'],
+                            newEvent['maxTeamSize'],
+                            newEvent['minTeamSize'],
+                            newEvent['deptEventId']
+                          )
+                        }>
+                        <p className="w-full px-2 py-2 text-center text-blue-800">Create Event</p>
                       </div>
                     </>
                   )}

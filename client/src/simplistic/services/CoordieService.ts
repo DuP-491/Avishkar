@@ -7,6 +7,7 @@ export default {
     criteria: string,
     rules: string,
     psLink: string,
+    poster: string,
     maxTeamSize: number,
     minTeamSize: number,
     deptEventId: string
@@ -25,6 +26,7 @@ export default {
           criteria,
           rules,
           psLink,
+          poster,
           maxTeamSize,
           minTeamSize,
           deptEventId

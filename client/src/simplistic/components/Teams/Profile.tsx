@@ -473,6 +473,7 @@ function Profile({ onInvalidToken }: ProfileProps) {
       criteria,
       rules,
       psLink,
+      '',
       maxTeamSize,
       minTeamSize,
       coordieCurrEvent
