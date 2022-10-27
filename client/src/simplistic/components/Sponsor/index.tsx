@@ -62,6 +62,9 @@ const index = () => {
             <DividerLine alignmentCenter={true} text="SPONSORS" />
             <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
               <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="white" />
+              <Card imgsrc={PolygonIMG} name="Polygon" bgc="white" />
+              <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="white" />
+              <Card imgsrc={TezosIMG} name="Tezos" bgc="white" />
             </div>
           </div>
 
@@ -93,9 +96,6 @@ const index = () => {
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="past sponsors" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={PolygonIMG} name="Polygon" bgc="white" />
-              <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="white" />
-              <Card imgsrc={TezosIMG} name="Tezos" bgc="white" />
               <Card imgsrc={CeloIMG} name="Celo" bgc="white" />
               <Card imgsrc={CodechefIMG} name="Codechef" bgc="white" />
               <Card imgsrc={BuyTheValueIMG} name="BuyTheValue" bgc="white" />

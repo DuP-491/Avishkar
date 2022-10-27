@@ -71,7 +71,7 @@ function Sponsors() {
       <div className="flex flex-col items-center px-10 pb-10">
         <>
           <DividerLine alignmentCenter={true} text="SPONSORS" />
-          {DisplayCard([DevfolioIMG])}
+          {DisplayCard([DevfolioIMG, FilecoinIMG, TezosIMG, PolygonIMG])}
         </>
       </div>
       <div className="flex flex-col items-center px-10 pb-10">
@@ -90,7 +90,6 @@ function Sponsors() {
             CreativeTimIMG,
             Dare2CompeteIMG,
             DellIMG,
-            FilecoinIMG,
             GithubIMG,
             GrowwIMG,
             HackerEarthIMG,
@@ -102,7 +101,6 @@ function Sponsors() {
             MHMIMG,
             MyLocIMG,
             PayTMIMG,
-            PolygonIMG,
             ProtoioIMG,
             RedIMG,
             ScalerEdgeIMG,
@@ -110,7 +108,6 @@ function Sponsors() {
             SkillenzaIMG,
             SkillLyncIMG,
             SSGIMG,
-            TezosIMG,
             TIMEIMG,
             UltratechIMG,
             YouthIMG
