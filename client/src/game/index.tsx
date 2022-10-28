@@ -290,12 +290,7 @@ function GameComponent(props: Props) {
       .eq('user_id', userId)
       .limit(1)
       .single();
-    if (error) {
-      // console.log(error);
-      toast.error('Unable to fetch user score');
-      return;
-    }
-    if (!userCoins) {
+    if (!userCoins || error) {
       let { data: newuserCoins, error } = await supabase
         .from('leaderboard')
         .insert([{ user_id: userId, name: userDetails.username, coins: 0, last_qid: -1 }])

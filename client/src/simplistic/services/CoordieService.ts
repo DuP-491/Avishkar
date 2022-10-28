@@ -62,6 +62,69 @@ export default {
     }
   },
 
+  updateEvent: async function (
+    token: string,
+    id: string,
+    name: string,
+    tagline: string,
+    details: string,
+    criteria: string,
+    rules: string,
+    psLink: string,
+    poster: string,
+    maxTeamSize: number,
+    minTeamSize: number
+  ) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/event/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          id,
+          name,
+          tagline,
+          details,
+          criteria,
+          rules,
+          psLink,
+          poster,
+          maxTeamSize,
+          minTeamSize
+        })
+      });
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Success'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        case 409:
+          return {
+            success: false,
+            message: 'Event with same name already exists!'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
+  },
+
   removeEvent: async function (token: string, id: string) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/event/`, {
