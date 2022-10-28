@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import tabletBg from '../../../images/tablet_bg.png';
 import AuthService from '../../services/AuthService';
 
 const ResetPassword = () => {
@@ -25,7 +26,7 @@ const ResetPassword = () => {
       .then((data) => {
         if (data['success']) {
           console.log('Success');
-          navigate('/game');
+          navigate('/');
         } else if (data['message'] === 'Invalid token!') {
           // Invalid Token
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -39,10 +40,9 @@ const ResetPassword = () => {
 
   return (
     <div
-      className="flex items-center justify-center w-full h-screen"
+      className="flex items-center justify-center w-full h-screen bg-center bg-no-repeat bg-cover"
       style={{
-        background:
-          'url(https://assets.nflxext.com/ffe/siteui/vlv3/79fe83d4-7ef6-4181-9439-46db72599559/bd05b4ed-7e37-4be9-85c8-078f067bd150/IN-en-20221017-popsignuptwoweeks-perspective_alpha_website_large.jpg)'
+        backgroundImage: `url(${tabletBg})`
       }}>
       <div className="flex flex-col items-center justify-center w-full px-6 py-8 lg:py-0">
         <a
@@ -86,7 +86,7 @@ const ResetPassword = () => {
                 <input
                   type="password"
                   name="password"
-                  id="password"
+                  id="Confirmpassword"
                   placeholder="••••••••"
                   ref={ConfirmPasswordRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
