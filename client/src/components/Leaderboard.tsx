@@ -79,25 +79,25 @@ function Leaderboard(props: Props) {
   return (
     <>
       <div
-        className="absolute top-0 left-0 w-screen h-screen filter backdrop-blur-sm z-10"
+        className="absolute top-0 left-0 z-20 w-screen h-screen filter backdrop-blur-sm"
         onClick={closePopup}></div>
-      <div className="w-fit h-fit flex flex-col space-y-6 py-6 z-20 mx-auto my-auto">
+      <div className="z-20 flex flex-col py-6 mx-auto my-auto space-y-6 w-fit h-fit">
         {noData && (
-          <div className="w-full text-center mx-auto">
+          <div className="w-full mx-auto text-center">
             <h1 className="text-2xl font-bold text-gray-200">No one solved it yet 🤯</h1>
           </div>
         )}
         {!noData && (
-          <div className="w-full flex flex-col bg-yellow1 rounded-lg p-3 space-y-2 max-w-xl mx-auto">
-            <div className="sticky top-0 w-full flex flex-row justify-between px-3 bg-yellow1 py-2">
-              <h1 className="text-2xl font-bold text-white w-48 flex-initial">Rank</h1>
-              <h1 className="text-2xl font-bold text-white w-full">Name</h1>
-              <h1 className="text-2xl font-bold text-white w-full text-right">Score</h1>
+          <div className="flex flex-col w-full max-w-xl p-3 mx-auto space-y-2 rounded-lg bg-yellow1">
+            <div className="sticky top-0 flex flex-row justify-between w-full px-3 py-2 bg-yellow1">
+              <h1 className="flex-initial w-48 text-2xl font-bold text-white">Rank</h1>
+              <h1 className="w-full text-2xl font-bold text-white">Name</h1>
+              <h1 className="w-full text-2xl font-bold text-right text-white">Score</h1>
             </div>
             {userRank != 0 && (page - 1) * 10 + 1 > userRank && (
               <div
                 className={`w-full flex flex-row justify-between items-center rounded-lg p-2 px-4 border-b-2 bg-blue-300 text-white border-green-500"`}>
-                <div className="w-48 flex-initial">
+                <div className="flex-initial w-48">
                   <span>{userRank}</span>
                 </div>
                 <div className="w-full">
@@ -117,7 +117,7 @@ function Leaderboard(props: Props) {
                       : 'bg-blue-300 text-white border-green-500'
                   }`}
                   key={index}>
-                  <div className="w-48 flex-initial">
+                  <div className="flex-initial w-48">
                     <span>{(page - 1) * 10 + index + 1}</span>
                   </div>
                   <div className="w-full">
@@ -132,7 +132,7 @@ function Leaderboard(props: Props) {
             {userRank != 0 && page * 10 < userRank && (
               <div
                 className={`w-full flex flex-row justify-between items-center rounded-lg p-2 px-4 border-b-2 bg-blue-300 text-white border-green-500"`}>
-                <div className="w-48 flex-initial">
+                <div className="flex-initial w-48">
                   <span>{userRank}</span>
                 </div>
                 <div className="w-full">
