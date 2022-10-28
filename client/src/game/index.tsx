@@ -497,6 +497,14 @@ function GameComponent(props: Props) {
             width={64}
             onClick={handleOnInfoIconClick}
           />
+          <img
+            // eslint-disable-next-line no-undef
+            src={require('../images/leaderboard-icon.png')}
+            className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-[148px] bottom-[17.5rem] ${
+              !showMap ? `cursor-zoom-in` : `cursor-zoom-out`
+            }`}
+            width={64}
+          />
         </div>
       </div>
       <div className="hidden"></div>
