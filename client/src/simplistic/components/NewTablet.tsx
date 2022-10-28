@@ -985,21 +985,19 @@ function NewTablet(props: Props) {
               <div className="flex flex-col h-full">
                 <h1 className="mt-10 text-3xl text-center">Departments</h1>
                 <div className="flex flex-wrap items-center justify-center flex-1">
-                  {Object.keys(departments).map((department) => (
+                  {Object.keys(departments).map((department, i) => (
                     <button
                       key={department}
                       className="flex flex-col items-center m-2 w-36 h-1/3"
                       onClick={() => handleSelectDept(department)}>
                       <div className="flex flex-wrap justify-around w-32 h-32 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
-                        {[...Array(4)]
-                          .map(() => APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)])
-                          .map((APP_ICON, j) => (
-                            <img
-                              key={`${department}-${j}`}
-                              className="m-1 w-11 h-11 rounded-xl shrink-0"
-                              src={`/event-icons/${APP_ICON}`}
-                            />
-                          ))}
+                        {[0, 1, 2, 3].map((j) => (
+                          <img
+                            key={`${department}-${j}`}
+                            className="m-1 w-11 h-11 rounded-xl shrink-0"
+                            src={`/event-icons/${APP_ICONS[(i * 4 + j) % APP_ICONS.length]}`}
+                          />
+                        ))}
                       </div>
                       <span className="text-sm font-bold">{departments[department]['name']}</span>
                     </button>
@@ -1023,9 +1021,7 @@ function NewTablet(props: Props) {
                       onClick={() => handleSelectEvent(i)}>
                       <img
                         className="w-20 h-20 m-1 rounded-xl shrink-0"
-                        src={`/event-icons/${
-                          APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]
-                        }`}
+                        src={`/event-icons/${APP_ICONS[i % APP_ICONS.length]}`}
                       />
                       <span className="text-sm font-bold">{event['name']}</span>
                     </button>
