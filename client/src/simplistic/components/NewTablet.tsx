@@ -1127,14 +1127,14 @@ function NewTablet(props: Props) {
     <>
       {loading && <div className="flex items-center justify-center">Loading...</div>}
       {!loading && (
-        <div className="absolute top-0 left-0 w-screen h-screen bg-black rounded-3xl">
+        <div className="absolute top-0 left-0 w-screen h-screen scale-95 bg-zinc-900 rounded-3xl">
           {/* Front Camera */}
           <div className="absolute top-[50vh] left-[2.5%] rounded-full bg-zinc-800 w-3 h-3" />
           <div className="absolute top-[50.5vh] left-[2.7%] rounded-full bg-blue-900 w-1 h-1" />
 
           {/* Home Button */}
           <div
-            className="absolute top-[48.5vh] right-[1.5%] cursor-pointer rounded-full bg-zinc-900 w-10 h-10"
+            className="absolute top-[48.5vh] right-[1.5%] cursor-pointer rounded-full bg-zinc-800 w-10 h-10"
             onClick={handleGoBack}
           />
           <div
@@ -1150,10 +1150,7 @@ function NewTablet(props: Props) {
             />
           )}
 
-          <div
-            className={`absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-gray-200 rounded-md border-zinc-800${
-              tab === 'Departments' || tab === 'Events' ? '' : ' border-2'
-            }`}>
+          <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-gray-200 rounded-md border-zinc-900">
             {tab === 'Team' && (
               <div className="h-full overflow-scroll no-scroll">
                 <TeamAvishkar />
