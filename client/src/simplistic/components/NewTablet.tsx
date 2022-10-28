@@ -689,8 +689,10 @@ function NewTablet(props: Props) {
                     <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">
                       <span>Gender</span>
                       <span>
-                        {userDetails['gender'].charAt(0).toUpperCase() +
-                          userDetails['gender'].slice(1)}
+                        {userDetails['gender']
+                          ? userDetails['gender'].charAt(0).toUpperCase() +
+                            userDetails['gender'].slice(1)
+                          : ''}
                       </span>
                     </p>
                     <p className="flex justify-between px-2 py-2 border-t-2 border-gray-300">

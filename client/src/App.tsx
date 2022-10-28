@@ -47,7 +47,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset/:token" element={<ResetPassword />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/profile" element={<UserProfile logout={() => {}} />} />
         <Route path="/department">
           <Route index element={<DepartmentList />} />
           <Route path=":dept">
