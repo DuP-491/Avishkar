@@ -466,9 +466,9 @@ function GameComponent(props: Props) {
       <div className="absolute top-0 left-0 z-10 px-2 py-1 m-5 text-xl tracking-wide bg-gray-400 rounded shadow-lg opacity-90 slashed-zero tabular-nums">
         Score: {!userCoinDetails ? 'N/A' : userCoinDetails.coins}
       </div>
-      <div className="absolute w-full h-full top-0 pt-[7%]">
-        {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
-      </div>
+      {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
+      {/* <div className="absolute w-full h-full top-0 pt-[7%]">
+      </div> */}
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
