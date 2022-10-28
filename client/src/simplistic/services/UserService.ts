@@ -433,7 +433,7 @@ export default {
         case 400:
           return {
             success: false,
-            message: 'Team is not ready to participate!'
+            message: "Team with pending invitations can't register for event!"
           };
         case 401:
           return {

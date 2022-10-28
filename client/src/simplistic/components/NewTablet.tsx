@@ -1366,19 +1366,28 @@ function NewTablet(props: Props) {
                   )}
                   {eventSection === 4 &&
                     participatingTeam === null &&
-                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length ===
-                      0 && (
+                    teams.filter(
+                      (team) =>
+                        team['team']['leader'] === userDetails['id'] &&
+                        events[selectedEventID]['minTeamSize'] <= team['team']['size'] &&
+                        team['team']['size'] <= events[selectedEventID]['maxTeamSize']
+                    ).length === 0 && (
                       <div>
                         <p className="text-3xl text-center mt-[45vh] translate-y-[-50%] px-4">
-                          To register for the event, either create a team and register for the event
-                          or join a team and tell the leader to register for the event
+                          To register for the event, either create a team, invite members (within
+                          team size constraints) and register for the event or join a team and tell
+                          the leader to register for the event
                         </p>
                       </div>
                     )}
                   {eventSection === 4 &&
                     participatingTeam === null &&
-                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
-                      0 && (
+                    teams.filter(
+                      (team) =>
+                        team['team']['leader'] === userDetails['id'] &&
+                        events[selectedEventID]['minTeamSize'] <= team['team']['size'] &&
+                        team['team']['size'] <= events[selectedEventID]['maxTeamSize']
+                    ).length !== 0 && (
                       <div className="mt-[15vh] overflow-y-auto">
                         {teams
                           .filter((team) => team['team']['leader'] === userDetails['id'])
