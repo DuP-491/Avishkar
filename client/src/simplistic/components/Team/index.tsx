@@ -49,7 +49,7 @@ import TechHiteshMitrukaIMG from './Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
 import TechParthMittalIMG from './Assets/TechParthMittal.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
-import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.jpg';
+import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.png';
 
 import PVSumitYadavIMG from './Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from './Assets/PVVarunKumar.jpg';
