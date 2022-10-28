@@ -49,6 +49,7 @@ import TechHiteshMitrukaIMG from './Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
 import TechParthMittalIMG from './Assets/TechParthMittal.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
+import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.jpg';
 
 import PVSumitYadavIMG from './Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from './Assets/PVVarunKumar.jpg';
@@ -383,7 +384,7 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={TechPriyavKaneriaIMG}
                 name="Priyav K Kaneria"
                 designation=""
                 facebook=""
