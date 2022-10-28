@@ -156,10 +156,10 @@ function GameComponent(props: Props) {
         });
         game.instance?.events.on(
           EVENTS_NAME.openComputer,
-          (department: string, computerType: string) => {
-            console.log(department);
-            setDepartment(department);
-            setComputerType(computerType);
+          (department_: string, computerType_: string) => {
+            console.log(department_);
+            setDepartment(department_);
+            setComputerType(computerType_);
             setShowComputer(true);
           }
         );
@@ -326,7 +326,7 @@ function GameComponent(props: Props) {
   const onAuthFailure = () => {
     if (game) {
       toast.success('Could not authenticate! Please login again.');
-      game.instance?.scene.switch('cafe96', 'campus');
+      // game.instance?.scene.switch('cafe96', 'campus');
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
       game.instance?.events.emit(EVENTS_NAME.logout);

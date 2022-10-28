@@ -8,7 +8,15 @@ function Computer(props: Props) {
 
   return (
     <div className="z-40 flex items-center justify-center w-full h-full backdrop-blur-sm">
-      <NewTablet deptId={deptId} currTab={computerType} logout={logout} closePopup={closePopup} />
+      <NewTablet
+        deptId={deptId}
+        currTab={computerType}
+        logout={() => {
+          closePopup();
+          logout();
+        }}
+        closePopup={closePopup}
+      />
     </div>
   );
 }

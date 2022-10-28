@@ -159,10 +159,11 @@ function NewTablet(props: Props) {
         .then((data) => {
           if (data['success']) {
             setSponsors(data['eventSponsors']);
-          } else logout();
+          }
+          // else logout();
         })
         .catch(() => {
-          logout();
+          // logout();
         });
     }
   }, [selectedEventID]);
@@ -183,10 +184,11 @@ function NewTablet(props: Props) {
             parsedDepartments[dept['id']] = dept;
           });
           setDepartments(parsedDepartments);
-        } else logout();
+        }
+        // else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -198,10 +200,11 @@ function NewTablet(props: Props) {
             setCurrECUD({ ...currECUD, eventId: data['events'][0]['id'] });
           }
           setEvents(data['events']);
-        } else logout();
+        }
+        // else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -223,10 +226,11 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setEventCoordies(data['eventCoordies']);
-        } else logout();
+        }
+        //  else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -242,18 +246,20 @@ function NewTablet(props: Props) {
           if (data['details']['resumeLink'] === null) data['details']['resumeLink'] = '';
           setUserDetails(data['details']);
           setNewUserDetails(data['details']);
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleEditDetails = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -269,19 +275,23 @@ function NewTablet(props: Props) {
         if (data['success']) {
           fetchUserDetails();
           setProfileSection(0);
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const fetchTeamInvites = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      if (tab === 'Profile') logout();
+      if (tab === 'Profile') {
+        closePopup();
+        logout();
+      }
       return;
     }
     UserService.getTeamInvites(token)
@@ -297,18 +307,20 @@ function NewTablet(props: Props) {
           setInviteUsernames(
             Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
           );
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const fetchTeamMembers = (teamId: number) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -316,18 +328,20 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setTeamMembers({ ...teamMembers, [teamId]: data['members'] });
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleCreateTeam = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -335,18 +349,20 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleDeleteTeam = (teamId: number) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -354,12 +370,13 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -370,6 +387,7 @@ function NewTablet(props: Props) {
     }
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -381,6 +399,7 @@ function NewTablet(props: Props) {
           setInviteUsernames({ ...inviteUsernames, [teamId]: '' });
         } else if (data['message'] === 'Invalid token!') {
           toast.error('Please login again!');
+          closePopup();
           logout();
         } else toast.error(data['message']);
       })
@@ -392,6 +411,7 @@ function NewTablet(props: Props) {
   const handleRespondTeamInvite = (teamId: number, status: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -399,18 +419,20 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleRemoveMember = (teamId: number, userId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -419,18 +441,20 @@ function NewTablet(props: Props) {
         if (data['success']) {
           setProfileSection(2);
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleParticipate = (teamId: number, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -438,18 +462,20 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setEventSection(0);
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleAddDepartmentEvent = (name: string, organizer: string, desc: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -470,6 +496,7 @@ function NewTablet(props: Props) {
   const handleDeleteDepartmentEvent = (id: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -490,6 +517,7 @@ function NewTablet(props: Props) {
   const handleAddDepartmentEventCoordie = (userId: string, deptEventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -512,6 +540,7 @@ function NewTablet(props: Props) {
   const handleRemoveDepartmentEventCoordie = (userId: string, deptEventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -543,6 +572,7 @@ function NewTablet(props: Props) {
   ) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -586,6 +616,7 @@ function NewTablet(props: Props) {
   const handleDeleteEvent = (id: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -606,6 +637,7 @@ function NewTablet(props: Props) {
   const handleAddEventCoordie = (userId: string, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -627,6 +659,7 @@ function NewTablet(props: Props) {
   const handleRemoveEventCoordie = (userId: string, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
