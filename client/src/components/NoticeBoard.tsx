@@ -7,8 +7,8 @@ function NoticeBoard(props: Props) {
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
   const notices = [
-    'Abstract submission for Webster has begun.',
-    'The deadline for form submission is 2:00 PM today'
+    'Operaomina puzzles are now available on its facebook page!',
+    'Devfolio is one of the sponser for webster.'
   ];
 
   const handleClick = () => {
@@ -57,15 +57,7 @@ function NoticeBoard(props: Props) {
             className="w-1/2 h-0 ml-4 -mt-40 overflow-auto whitespace-pre-line transition-all duration-500 noscroll">
             <p className="text-xl font-bold text-center">Notices</p>
             <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas
-            vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum
-            quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident
-            similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut
-            molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit
-            sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid.
-            Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
-            sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam recusandae alias
-            error harum maxime adipisci amet laborum. Important Notices -
+            Important Notices Coming soon...
             <ul>
               {notices.map((notice, index) => (
                 <li key={index}>{notice}</li>
