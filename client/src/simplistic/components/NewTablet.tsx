@@ -247,6 +247,13 @@ function NewTablet(props: Props) {
     deptEventId: '',
     eventId: ''
   });
+  const [updatedSponsor, setUpdatedSponsor] = useState({
+    name: '',
+    poster: '',
+    title: 'No',
+    deptEventId: '',
+    eventId: ''
+  });
 
   const [teams, setTeams] = useState([]);
   const [teamMembers, setTeamMembers] = useState({});
@@ -999,6 +1006,32 @@ function NewTablet(props: Props) {
       });
   };
 
+  const handleUpdateEventSponsor = (
+    name: string,
+    poster: string,
+    title: Boolean,
+    eventId: string
+  ) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    CoordieService.updateEventSponsor(token, name, poster, title, eventId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Updated Event Sponsor Successfully');
+          fetchEventSponsors(currSponsorAUD['eventId']);
+          setUpdatedSponsor({ ...updatedSponsor, name: '', poster: '', title: 'No' });
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
   const handleRemoveEventSponsor = (name: string, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
@@ -1675,7 +1708,7 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(14)}>
                           Add Event Sponsor
                         </p>
-                        {/* <p
+                        <p
                           className={
                             profileSection === 15
                               ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
@@ -1683,7 +1716,7 @@ function NewTablet(props: Props) {
                           }
                           onClick={() => setProfileSection(15)}>
                           Update Event Sponsor
-                        </p> */}
+                        </p>
                         <p
                           className={
                             profileSection === 16
@@ -2730,6 +2763,117 @@ function NewTablet(props: Props) {
                         <p className="w-full px-2 py-2 text-center text-blue-900">
                           Add Event Sponsor
                         </p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 15 && updatedSponsor['name'] !== '' && (
+                    <>
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
+                          <span>Name</span>
+                          <span>{updatedSponsor['name']}</span>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Poster</span>
+                          <input
+                            placeholder="Enter poster link of sponsor"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={updatedSponsor['poster']}
+                            onChange={(e) =>
+                              setUpdatedSponsor({ ...updatedSponsor, poster: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Is Title Sponsor?</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={updatedSponsor['title']}
+                            onChange={(e) =>
+                              setUpdatedSponsor({ ...updatedSponsor, title: e.target.value })
+                            }>
+                            {['Yes', 'No'].map((op) => (
+                              <option key={op} value={op}>
+                                {op}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div
+                        className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer border-zinc-800 bg-zinc-900"
+                        onClick={() =>
+                          handleUpdateEventSponsor(
+                            updatedSponsor['name'],
+                            updatedSponsor['poster'],
+                            updatedSponsor['title'] === 'Yes',
+                            updatedSponsor['eventId']
+                          )
+                        }>
+                        <p className="w-full px-2 py-2 text-center text-blue-900">
+                          Update Event Sponsor
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 15 && updatedSponsor['name'] === '' && (
+                    <>
+                      <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
+                          <span>Department Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={currSponsorAUD['deptEventId']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, deptEventId: e.target.value })
+                            }>
+                            {Object.keys(departments).map((department) => (
+                              <option key={department} value={department}>
+                                {departments[department]['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Event</span>
+                          <select
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={currSponsorAUD['eventId']}
+                            onChange={(e) =>
+                              setCurrSponsorAUD({ ...currSponsorAUD, eventId: e.target.value })
+                            }>
+                            {events.map((event) => (
+                              <option key={event['id']} value={event['id']}>
+                                {event['name']}
+                              </option>
+                            ))}
+                          </select>
+                        </p>
+                      </div>
+                      <div className="overflow-y-auto">
+                        {sponsors.map((sponsor) => (
+                          <div
+                            key={sponsor['id']}
+                            className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                              <span>Name</span>
+                              <span>{sponsor['name']}</span>
+                            </p>
+                            <p
+                              className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
+                              onClick={() =>
+                                setUpdatedSponsor({
+                                  name: sponsor['name'],
+                                  poster: sponsor['poster'],
+                                  title: sponsor['title'] ? 'Yes' : 'No',
+                                  deptEventId: sponsor['deptEventId'],
+                                  eventId: sponsor['eventId']
+                                })
+                              }>
+                              Update Event Sponsor
+                            </p>
+                          </div>
+                        ))}
                       </div>
                     </>
                   )}
