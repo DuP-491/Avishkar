@@ -1422,15 +1422,17 @@ function NewTablet(props: Props) {
             )}
             {tab === 'Profile' && (
               <div className="flex h-full text-gray-200">
-                <div className="w-1/3 pl-5 bg-black border-r-2 border-zinc-900 rounded-l-md">
-                  <div className="border-zinc-800 bg-zinc-900 rounded-md mt-5 w-[95%] flex p-3">
-                    <img className="w-20 h-20 m-1 rounded-full shrink-0" src={defaultPfp} />
-                    <div className="flex flex-col justify-center ml-3">
-                      <h2 className="text-2xl">{userDetails['name']}</h2>
-                      <p className="text-lg ">{userDetails['username']}</p>
+                <div className="w-1/3 bg-black border-r-2 border-zinc-900 rounded-l-md">
+                  <div className="mx-5 mt-5">
+                    <div className="flex w-full p-3 rounded-md border-zinc-800 bg-zinc-900">
+                      <img className="w-20 h-20 m-1 rounded-full shrink-0" src={defaultPfp} />
+                      <div className="flex flex-col justify-center ml-3">
+                        <h2 className="text-2xl">{userDetails['name']}</h2>
+                        <p className="text-lg ">{userDetails['username']}</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="overflow-y-auto h-[70vh] mt-4 mr-5">
+                  <div className="overflow-y-auto h-[70vh] mt-4">
                     <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Details</p>
                     <p
                       className={
