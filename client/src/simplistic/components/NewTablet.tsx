@@ -241,6 +241,8 @@ function NewTablet(props: Props) {
   const [participatingTeam, setParticipatingTeam] = useState(null);
   const [showInviteUsernames, setShowInviteUsernames] = useState({});
   const [inviteUsernames, setInviteUsernames] = useState({});
+  const [showUpdateTeamnames, setShowUpdateTeamnames] = useState({});
+  const [updateTeamnames, setUpdateTeamnames] = useState({});
 
   useEffect(() => {
     fetchDepartmentEvents();
@@ -488,6 +490,12 @@ function NewTablet(props: Props) {
           setInviteUsernames(
             Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
           );
+          setShowUpdateTeamnames(
+            Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], false]))
+          );
+          setUpdateTeamnames(
+            Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
+          );
         }
         // else if (data['message'] === 'Invalid token!') {
         //   logout();
@@ -530,10 +538,34 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        // logout();
+      });
+  };
+
+  const handleUpdateTeam = (teamId: number) => {
+    if (!(showUpdateTeamnames as { [key: number]: Boolean })[teamId]) {
+      setShowUpdateTeamnames({ ...showUpdateTeamnames, [teamId]: true });
+      return;
+    }
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      closePopup();
+      logout();
+      return;
+    }
+    UserService.updateTeam(token, teamId, (updateTeamnames as { [key: number]: string })[teamId])
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Changed Team Name Successfully!');
+          fetchTeamInvites();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
         // logout();
@@ -551,10 +583,9 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
         // logout();
@@ -601,10 +632,9 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
         // logout();
@@ -623,10 +653,9 @@ function NewTablet(props: Props) {
         if (data['success']) {
           setProfileSection(2);
           fetchTeamInvites();
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
         // logout();
@@ -646,10 +675,9 @@ function NewTablet(props: Props) {
           setEventSection(0);
           fetchParticipation(events[selectedEventID]['id']);
           toast.success('Registered for Event Successfully!');
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else toast.error(data['message']);
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
         toast.error('Please try again later!');
@@ -1780,7 +1808,22 @@ function NewTablet(props: Props) {
                             className="relative m-5 text-sm text-gray-200 rounded-lg bg-zinc-900 border-zinc-800">
                             <p className="flex justify-between px-2 py-2 border-gray-500">
                               <span>Name</span>
-                              <span>{team['team']['name']}</span>
+                              {!showUpdateTeamnames[team['team']['id']] && (
+                                <span>{team['team']['name']}</span>
+                              )}
+                              {showUpdateTeamnames[team['team']['id']] && (
+                                <input
+                                  placeholder="Enter new name for team"
+                                  className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                                  value={updateTeamnames[team['team']['id']]}
+                                  onChange={(e) =>
+                                    setUpdateTeamnames({
+                                      ...updateTeamnames,
+                                      [team['team']['id']]: e.target.value
+                                    })
+                                  }
+                                />
+                              )}
                             </p>
                             <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
                               <span>Number of members</span>
@@ -1849,6 +1892,11 @@ function NewTablet(props: Props) {
                               className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
                               onClick={() => handleInviteUser(team['team']['id'])}>
                               Invite User
+                            </p>
+                            <p
+                              className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
+                              onClick={() => handleUpdateTeam(team['team']['id'])}>
+                              Change Team Name
                             </p>
                             <p
                               className="w-full px-2 py-2 text-center text-red-800 border-t-2 cursor-pointer border-zinc-800"
