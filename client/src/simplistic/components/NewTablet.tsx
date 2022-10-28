@@ -1166,23 +1166,23 @@ function NewTablet(props: Props) {
             )}
             {tab === 'Departments' && (
               <div className="flex flex-col h-full">
-                <h1 className="mt-10 text-3xl text-center">Departments</h1>
+                <h1 className="mt-10 mb-3 text-3xl text-center">Departments</h1>
                 <div className="flex flex-wrap items-center justify-center flex-1">
                   {Object.keys(departments).map((department, i) => (
                     <button
                       key={department}
-                      className="flex flex-col items-center m-2 w-36 h-1/3"
+                      className="flex flex-col items-center m-2 mx-6 cursor-default w-36 h-1/3"
                       onClick={() => handleSelectDept(department)}>
-                      <div className="flex flex-wrap justify-around w-32 h-32 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
+                      <div className="flex flex-wrap justify-around w-40 h-40 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
                         {[0, 1, 2, 3].map((j) => (
                           <img
                             key={`${department}-${j}`}
-                            className="m-1 w-11 h-11 rounded-xl shrink-0"
+                            className="w-16 h-16 m-1 cursor-pointer rounded-xl shrink-0"
                             src={`/event-icons/${APP_ICONS[(i * 4 + j) % APP_ICONS.length]}`}
                           />
                         ))}
                       </div>
-                      <span className="text-sm font-bold">{departments[department]['name']}</span>
+                      <span className="text-lg font-bold">{departments[department]['name']}</span>
                     </button>
                   ))}
                 </div>
