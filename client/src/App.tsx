@@ -8,6 +8,8 @@ import NewTablet from './simplistic/components/NewTablet';
 import FaqPage from './simplistic/components/FAQ';
 import TeamPage from './simplistic/components/Team';
 import SponsorPage from './simplistic/components/Sponsor';
+import TabletSponsors from './simplistic/components/Sponsors';
+import TabletTeam from './simplistic/components/TeamAvishkar';
 import DepartmentList from './simplistic/components/Department';
 import EventList from './simplistic/components/Event';
 import UserProfile from './simplistic/components/Profile';
@@ -19,6 +21,7 @@ import ResetPassword from './simplistic/components/Authentication/ResetPassword'
 import ForgotPassword from './simplistic/components/Authentication/ForgotPassword';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import TeamAvishkar from './simplistic/components/TeamAvishkar';
 /* eslint-enable */
 
 function App() {
@@ -26,23 +29,37 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          <Route index element={<Simplistic />} />
+          <Route path="simplistic" element={<Simplistic />} />
           <Route path="reset-password" element={<Simplistic />} />
-          <Route path="game" element={<GameLayout />} />
+          <Route index element={<GameLayout />} />
           <Route
             path="tab"
             element={
-              <NewTablet is_profile={false} logout={() => {}} closePopup={() => {}} key="" />
+              <NewTablet currTab="Departments" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
           <Route
             path="profile"
-            element={<NewTablet is_profile={true} logout={() => {}} closePopup={() => {}} key="" />}
+            element={
+              <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
+            }
           />
         </Route>
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/sponsors" element={<SponsorPage />} />
+        {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
+        <Route
+          path="/tbsp"
+          element={
+            <NewTablet deptId="" currTab="Sponsors" logout={() => {}} closePopup={() => {}} />
+          }
+        />
+        <Route
+          path="/tbtm"
+          element={<NewTablet deptId="" currTab="Team" logout={() => {}} closePopup={() => {}} />}
+        />
+        {/* <Route path="/tbtm" element={<TeamAvishkar />} /> */}
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset/:token" element={<ResetPassword />} />
@@ -55,7 +72,6 @@ function App() {
             <Route path=":event" element={<EventPage />} />
           </Route>
         </Route>
-
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer />

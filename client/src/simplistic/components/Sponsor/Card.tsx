@@ -8,9 +8,9 @@ interface CardProps {
 
 const Card = ({ imgsrc, name, bgc }: CardProps) => {
   return (
-    <div className="flex flex-col items-center p-4 scale-75 sm:p-6 rounded-xl hover:scale-100 duration-75 hover:shadow-2xl">
+    <div className="flex flex-col items-center p-4 duration-75 scale-75 sm:p-6 rounded-xl hover:scale-100 hover:shadow-2xl">
       <img
-        className="object-fit w-full rounded-xl p-4"
+        className="w-full p-4 object-fit rounded-xl"
         src={imgsrc}
         style={{ backgroundColor: bgc }}
       />

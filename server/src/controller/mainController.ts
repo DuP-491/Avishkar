@@ -38,7 +38,7 @@ const getDepartmentCoordinators = async (req: Request, res: Response, next) => {
     try {
         const deptEventCoordies = await prisma.departmentCoordinator.findMany({
             where: { deptEventId },
-            include: { user: true },
+            include: { user: { select: { name: true, email: true, mobile: true, username: true } } },
         });
 
         res.statusCode = 200;
@@ -55,7 +55,7 @@ const getEventCoordinators = async (req: Request, res: Response, next) => {
     try {
         const eventCoordies = await prisma.eventCoordinator.findMany({
             where: { eventId },
-            include: { user: true },
+            include: { user: { select: { name: true, email: true, mobile: true, username: true } } },
         });
 
         res.statusCode = 200;
@@ -80,30 +80,10 @@ const getEventSponsors = async (req: Request, res: Response, next) => {
     }
 };
 
-const getUserLeaderboard = async (req: Request, res: Response, next) => {
-    // get the user leaderboard with top scores in the daily puzzles
-    try {
-        const topScores = await prisma.user.findMany({
-            select: { id: true, name: true, score: true, username: true, email: true, role: true },
-            take: 10,
-            orderBy: {
-                score: "desc",
-            },
-        });
-
-        res.statusCode = 200;
-        res.json({ topScores, success: true });
-    } catch (error) {
-        console.log("error occured in the getUserLeaderboard() controller!");
-        next(error);
-    }
-};
-
 export {
     getAllDepartmentEvents,
     getDepartmentEvents,
     getDepartmentCoordinators,
     getEventCoordinators,
     getEventSponsors,
-    getUserLeaderboard,
 };

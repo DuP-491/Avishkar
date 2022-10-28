@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Phaser from 'phaser';
 import { GameInstance, IonPhaser } from '@ion-phaser/react';
-import { gameConfig } from './config';
+import { gameConfig, supabase } from './config';
 import { EVENTS_NAME, TELEPORT_LOCATIONS } from './consts';
 import InfoPrompt from '../components/InfoPrompt';
 import AuthPrompt from '../components/AuthPrompt';
@@ -15,6 +15,9 @@ import Computer from '../components/Computer';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Trivia from '../components/Trivia';
+import NoticeBoard from '../components/NoticeBoard';
+import UserService from '../simplistic/services/UserService';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -59,10 +62,31 @@ function GameComponent(props: Props) {
   const [infoPromptType, setInfoPromptType] = useState('text');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const [showComputer, setShowComputer] = useState(false);
+  const [computerType, setComputerType] = useState('Departments');
   const [department, setDepartment] = useState('');
   const [showMap, setShowMap] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
+  const [showTrivia, setShowTrivia] = useState(false);
+  const [showNotice, setShowNotice] = useState(false);
+  const [triviaFunction, setTriviaFunction] = useState(() => () => {});
+
+  const [userDetails, setUserDetails] = useState({
+    id: '',
+    name: '',
+    email: '',
+    username: '',
+    role: 'USER',
+    mobile: '',
+    collegeName: '',
+    score: '',
+    resumeLink: '',
+    isFeePaid: false
+  });
+  const [userCoinDetails, setUserCoinDetails] = useState({
+    coins: 0,
+    last_qid: -1
+  });
 
   // Auto Initialize the game when the component is mounted
   // useEffect(() => {
@@ -76,7 +100,14 @@ function GameComponent(props: Props) {
     }
     if (game) {
       setTimeout(() => {
-        // TODO: CHECK AUTH STATUS HERE
+        const token = Cookies.get('token');
+        const authenticated = token !== undefined && token !== null;
+        if (authenticated) {
+          fetchUserDetails();
+          setTimeout(() => {
+            game?.instance?.events.emit(EVENTS_NAME.login);
+          }, 2500);
+        }
         game.instance?.events.on(EVENTS_NAME.infoPopup, (scene: string, gameObject: any) => {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
@@ -91,6 +122,25 @@ function GameComponent(props: Props) {
           setInfoPromptText(data.text);
           setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
+
+          if (gameObject.npcType == 'trivia') {
+            if (
+              sessionStorage.getItem('dailyTrivia') == null ||
+              sessionStorage.getItem('dailyTrivia') == 'false'
+            ) {
+              setTriviaFunction(() => openTrivia);
+            } else {
+              setTriviaFunction(() => () => {
+                toast.error('You have already attempted the trivia for today!');
+              });
+            }
+          } else if (gameObject.npcType == 'notice') {
+            setTriviaFunction(() => openNotice);
+          } else if (gameObject.npcType == 'sponsor') {
+            setTriviaFunction(() => openSponsor);
+          } else {
+            setTriviaFunction(() => () => {});
+          }
         });
         game.instance?.events.on(
           EVENTS_NAME.interact,
@@ -104,11 +154,15 @@ function GameComponent(props: Props) {
           // console.log('resetInteract', showInteractPrompt);
           setStopInteract(true);
         });
-        game.instance?.events.on(EVENTS_NAME.openComputer, (_department: string) => {
-          console.log(_department);
-          setDepartment(_department);
-          setShowComputer(true);
-        });
+        game.instance?.events.on(
+          EVENTS_NAME.openComputer,
+          (department_: string, computerType_: string) => {
+            console.log(department_);
+            setDepartment(department_);
+            setComputerType(computerType_);
+            setShowComputer(true);
+          }
+        );
         game.instance?.events.on(EVENTS_NAME.openMap, () => {
           setShowMap(true);
         });
@@ -180,15 +234,22 @@ function GameComponent(props: Props) {
     gameConfig.scale!.width = window.innerWidth;
     gameConfig.scale!.height = window.innerHeight;
     if (dimensions.width < 768) {
-      navigator('/');
+      navigator('/simplistic');
     }
     setInitialize(true);
   }, [dimensions]);
+
+  useEffect(() => {
+    if (!userDetails.id) return;
+    // console.log(userDetails);
+    fetchUserScore();
+  }, [userDetails]);
 
   const onAuthSuccess = () => {
     if (game) {
       toast.success('Logged in successfully!');
       game?.instance?.events.emit(EVENTS_NAME.login);
+      fetchUserDetails();
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
       setTimeout(() => {
@@ -198,15 +259,74 @@ function GameComponent(props: Props) {
     }
   };
 
+  const fetchUserDetails = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      return;
+    }
+    UserService.getUserDetails(token)
+      .then((data) => {
+        if (data['success']) {
+          if (data['details']['resumeLink'] !== null) data['details']['resumeLink'] = '';
+          setUserDetails(data['details']);
+        }
+      })
+      .catch(() => {
+        console.log("Unable to fetch user's details");
+      });
+  };
+
+  const fetchUserScore = async () => {
+    const userId = userDetails.id;
+    // console.log(userDetails);
+    if (userId === undefined) return;
+    // const { data, error } = await supabase
+    //   .from('leaderboard')
+    //   .select('coins,last_qid')
+    //   .eq('user_id', userId);
+    let { data: userCoins, error } = await supabase
+      .from('leaderboard')
+      .select('user_id,coins,last_qid')
+      .eq('user_id', userId)
+      .limit(1)
+      .single();
+    if (error) {
+      console.log(error);
+      toast.error('Unable to fetch user score');
+      return;
+    }
+    if (!userCoins) {
+      let { data: newuserCoins, error } = await supabase
+        .from('leaderboard')
+        .insert([{ user_id: userId, name: userDetails.username, coins: 0, last_qid: -1 }])
+        .single();
+      if (error || !newuserCoins) {
+        console.log(error);
+        toast.error('Unable to fetch user score');
+        return;
+      }
+      userCoins = newuserCoins;
+    }
+    if (!userCoins) return;
+    // console.log(userCoins);
+    setUserCoinDetails({
+      ...userCoinDetails,
+      coins: userCoins.coins,
+      last_qid: userCoins.last_qid
+    });
+    // setUserScore(data);
+  };
+
   const signUpSuccessCallback = () => {
     // TOAST: Please check your email to verify your account
-    navigator('/');
+    toast.warning('Please check your email to verify your account');
+    navigator('/simplistic');
   };
 
   const onAuthFailure = () => {
     if (game) {
       toast.success('Could not authenticate! Please login again.');
-      game.instance?.scene.switch('cafe96', 'campus');
+      // game.instance?.scene.switch('cafe96', 'campus');
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
       game.instance?.events.emit(EVENTS_NAME.logout);
@@ -236,6 +356,45 @@ function GameComponent(props: Props) {
     if (game && authenticated) {
       game?.instance?.events.emit(EVENTS_NAME.teleport, location);
     }
+  };
+
+  const openTrivia = () => {
+    if (game) {
+      game.instance?.scene.pause('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = false;
+    }
+    setShowTrivia(true);
+  };
+
+  const closeTrivia = () => {
+    if (game) {
+      game.instance?.scene.resume('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = true;
+      fetchUserScore();
+    }
+    setShowTrivia(false);
+  };
+
+  const openNotice = () => {
+    if (game) {
+      game.instance?.scene.pause('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = false;
+    }
+    setStopInteract(true);
+    setShowNotice(true);
+  };
+
+  const openSponsor = () => {
+    setComputerType('Sponsors');
+    setShowComputer(true);
+  };
+
+  const closeNotice = () => {
+    if (game) {
+      game.instance?.scene.resume('campus');
+      if (game.instance) game.instance.input.keyboard.enabled = true;
+    }
+    setShowNotice(false);
   };
 
   const handleOnMapIconClick = () => {
@@ -277,7 +436,12 @@ function GameComponent(props: Props) {
         />
       )}
       {showComputer && (
-        <Computer closePopup={closeComputer} department={department} logout={onAuthFailure} />
+        <Computer
+          closePopup={closeComputer}
+          department={department}
+          logout={onAuthFailure}
+          computerType={computerType}
+        />
       )}
       {showInfo && <Info setShowInfo={setShowInfo} />}
       {showInteractPrompt && (
@@ -288,6 +452,9 @@ function GameComponent(props: Props) {
           interactText={interactText}
         />
       )}
+      {showTrivia && (
+        <Trivia onClose={closeTrivia} user={userDetails} userCoinDetails={userCoinDetails} />
+      )}
       {showMap && (
         <Map
           playerPosition={playerPosition}
@@ -296,12 +463,19 @@ function GameComponent(props: Props) {
           setShowMap={setShowMap}
         />
       )}
+      <div className="absolute top-0 left-0 z-10 px-2 py-1 m-5 text-xl tracking-wide bg-gray-400 rounded shadow-lg opacity-90 slashed-zero tabular-nums">
+        Score: {!userCoinDetails ? 'N/A' : userCoinDetails.coins}
+      </div>
+      <div className="absolute w-full h-full top-0 pt-[7%]">
+        {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
+      </div>
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
             text={infoPromptText}
             setShowInfoPrompt={setShowInfoPrompt}
-            isChoice={infoPromptType === 'ask'}></InfoPrompt>
+            isChoice={infoPromptType === 'ask'}
+            customFunction={triviaFunction}></InfoPrompt>
         )}
         <div className="w-full">
           <MiniMap playerPosition={playerPosition} teleport={teleport} />

@@ -10,7 +10,6 @@ import {
 
 import { EVENTS_NAME, TELEPORT_LOCATIONS_DATA } from '../../consts';
 import { NPC } from '../../classes/npc';
-import { GameConfigExtended } from '../../config';
 import Cookies from 'js-cookie';
 
 export class Campus extends Scene {
@@ -26,6 +25,7 @@ export class Campus extends Scene {
   private tileset5!: Tilemaps.Tileset;
   private tileset6!: Tilemaps.Tileset;
   private tileset7!: Tilemaps.Tileset;
+  private tileset8!: Tilemaps.Tileset;
   private layer!: Tilemaps.TilemapLayer;
   private layer2!: Tilemaps.TilemapLayer;
   private layer3!: Tilemaps.TilemapLayer;
@@ -96,11 +96,6 @@ export class Campus extends Scene {
     });
     this.bgm.play();
 
-    // this.layer5.renderDebug(this.debug);
-    // this.layer6.renderDebug(this.debug);
-    // this.layer7.renderDebug(this.debug);
-    // this.showDebug();
-
     const token = Cookies.get('token');
     const authenticated = token !== undefined && token !== null;
     if (authenticated) {
@@ -108,6 +103,11 @@ export class Campus extends Scene {
         this.game.events.emit(EVENTS_NAME.login);
       }, 1000);
     }
+
+    // this.layer5.renderDebug(this.debug);
+    // this.layer6.renderDebug(this.debug);
+    // this.layer7.renderDebug(this.debug);
+    // this.showDebug();
   }
 
   update(): void {
@@ -134,6 +134,7 @@ export class Campus extends Scene {
     this.tileset5 = this.map.addTilesetImage('RoomChan', 'tileRoomChan', 16, 16, 0, 0);
     this.tileset6 = this.map.addTilesetImage('GoodyChan', 'tileGoodyChan', 16, 16, 0, 0);
     this.tileset7 = this.map.addTilesetImage('BigTreeChan', 'tileBigTreeChan', 16, 16, 0, 0);
+    this.tileset8 = this.map.addTilesetImage('logo', 'tilelogo', 16, 16, 0, 0);
 
     this.layer = this.map.createLayer(
       'Base Tiles Layer',
@@ -144,7 +145,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -158,7 +160,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -172,7 +175,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -186,7 +190,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -200,7 +205,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -214,7 +220,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -228,7 +235,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -242,7 +250,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -256,7 +265,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -270,7 +280,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -284,7 +295,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -298,7 +310,8 @@ export class Campus extends Scene {
         this.tileset4,
         this.tileset5,
         this.tileset6,
-        this.tileset7
+        this.tileset7,
+        this.tileset8
       ],
       0,
       0
@@ -337,6 +350,12 @@ export class Campus extends Scene {
     const enterPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'cafe')
     );
+    const teamPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'team')
+    );
+    // const sponsorPoint = gameObjectToObjectPoint(
+    //   this.map.findObject('Interactables', (obj) => obj.name === 'sponsor')
+    // );
     const computers = gameObjectsToObjectPoints(
       this.map.filterObjects('Events', () => {
         return true;
@@ -398,6 +417,34 @@ export class Campus extends Scene {
           this.scene.switch('cafe96');
         })
     );
+    if (teamPoint) {
+      this.interactables.push(
+        this.physics.add
+          .sprite(teamPoint.x, teamPoint.y, 'tiles_sports', 43) // Team
+          .setOrigin(0.5, 0.5)
+          .setScale(1.5)
+          .setInteractive({
+            useHandCursor: true
+          })
+          .on('pointerdown', (e: any) => {
+            this.game.events.emit(EVENTS_NAME.openComputer, '', 'Team');
+          })
+      );
+    }
+    // if (sponsorPoint) {
+    //   this.interactables.push(
+    //     this.physics.add
+    //       .sprite(sponsorPoint.x, sponsorPoint.y, 'tiles_sports', 43) // Sponsors
+    //       .setOrigin(0.5, 0.5)
+    //       .setScale(1.5)
+    //       .setInteractive({
+    //         useHandCursor: true
+    //       })
+    //       .on('pointerdown', (e: any) => {
+    //         this.game.events.emit(EVENTS_NAME.openComputer, '', 'Sponsors');
+    //       })
+    //   );
+    // }
     this.game.events.on(EVENTS_NAME.login, () => {
       console.log(this.interactables);
       this.interactables[0].setFrame(1);
@@ -420,7 +467,7 @@ export class Campus extends Scene {
           })
           // .setDepth(2)
           .on('pointerdown', () => {
-            this.game.events.emit(EVENTS_NAME.openComputer, computer.name);
+            this.game.events.emit(EVENTS_NAME.openComputer, computer.name, 'Departments');
           })
       );
     });
@@ -449,8 +496,8 @@ export class Campus extends Scene {
         this.player.x = 972;
         this.player.y = 889;
       } else {
-        this.player.x = 722;
-        this.player.y = 2689;
+        this.player.x = 712;
+        this.player.y = 2629;
       }
     });
     this.game.events.on(EVENTS_NAME.teleport, (location: string) => {

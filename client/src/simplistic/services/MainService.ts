@@ -121,5 +121,36 @@ export default {
         message: 'Please try again later!'
       };
     }
+  },
+
+  getEventSponsors: async function (eventId: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/event-sponsor/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ eventId })
+      });
+      const data = await res.json();
+      switch (res.status) {
+        case 200:
+          return {
+            eventSponsors: data['eventSponsors'],
+            success: true,
+            message: 'Success'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch (e) {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
   }
 };

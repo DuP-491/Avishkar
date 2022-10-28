@@ -57,12 +57,6 @@ const index = () => {
               <span className="inline-block w-3 h-1 mx-1 bg-blue-500 rounded-full"></span>
               <span className="inline-block w-1 h-1 bg-blue-500 rounded-full"></span>
             </div>
-            {/* 
-              <p className="max-w-2xl mx-auto mt-6 text-center text-gray-500 dark:text-gray-300">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo incidunt ex placeat modi
-                magni quia error alias, adipisci rem similique, at omnis eligendi optio eos harum.
-              </p>
-            */}
           </div>
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="SPONSORS" />
@@ -71,55 +65,50 @@ const index = () => {
               <Card imgsrc={PolygonIMG} name="Polygon" bgc="white" />
               <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="white" />
               <Card imgsrc={TezosIMG} name="Tezos" bgc="white" />
-              <Card imgsrc={CeloIMG} name="Celo" bgc="white" />
-              <Card imgsrc={CodechefIMG} name="Codechef" bgc="white" />
-              <Card imgsrc={BuyTheValueIMG} name="BuyTheValue" bgc="white" />
-              <Card imgsrc={MHMIMG} name="Media House MNNIT" bgc="black" />
             </div>
           </div>
 
-          <div className="container px-6 py-10 mx-auto">
+          {/* <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="associate Sponsors" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={UltratechIMG} name="Ultratech" bgc="#f9ef2b" />
-              <Card imgsrc={TIMEIMG} name="TIME" bgc="white" />
-              <Card imgsrc={BlueskyIMG} name="Bluesky" bgc="white" />
-              <Card imgsrc={GrowwIMG} name="Groww" bgc="white" />
-            </div>
+            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="RADIO PARTNER" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={RedIMG} name="Red FM 93.5" bgc="black" />
-            </div>
+            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="BLOGGER PARTNER" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={BlogaddaIMG} name="Blogadda" bgc="white" />
-            </div>
+            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="MEDIA PARTNER" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={YouthIMG} name="Youth" bgc="white" />
-            </div>
+            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
           </div>
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="CO TITLE SPONSORS" />
-            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={MyLocIMG} name="MyLoc" bgc="white" />
-              <Card imgsrc={SkillLyncIMG} name="Skill Lync" bgc="white" />
-            </div>
-          </div>
+            <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3"></div>
+          </div> */}
 
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="past sponsors" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
+              <Card imgsrc={CeloIMG} name="Celo" bgc="white" />
+              <Card imgsrc={CodechefIMG} name="Codechef" bgc="white" />
+              <Card imgsrc={BuyTheValueIMG} name="BuyTheValue" bgc="white" />
+              <Card imgsrc={MHMIMG} name="Media House MNNIT" bgc="black" />
+              <Card imgsrc={UltratechIMG} name="Ultratech" bgc="#f9ef2b" />
+              <Card imgsrc={TIMEIMG} name="TIME" bgc="white" />
+              <Card imgsrc={BlueskyIMG} name="Bluesky" bgc="white" />
+              <Card imgsrc={GrowwIMG} name="Groww" bgc="white" />
+              <Card imgsrc={RedIMG} name="Red FM 93.5" bgc="black" />
+              <Card imgsrc={BlogaddaIMG} name="Blogadda" bgc="white" />
+              <Card imgsrc={YouthIMG} name="Youth" bgc="white" />
+              <Card imgsrc={MyLocIMG} name="MyLoc" bgc="white" />
+              <Card imgsrc={SkillLyncIMG} name="Skill Lync" bgc="white" />
               <Card imgsrc={MaticIMG} name="Matic" bgc="white" />
               <Card imgsrc={GithubIMG} name="Github" bgc="white" />
               <Card imgsrc={SkillenzaIMG} name="Skillenza" bgc="#3088f4" />

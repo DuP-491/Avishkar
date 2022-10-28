@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 function DividerLine(props: Props) {
   const { text, alignmentCenter } = props;
   return (
-    <div className="relative w-full" style={{ textAlign: alignmentCenter ? 'center' : 'left' }}>
+    <div
+      className="relative w-full text-base"
+      style={{ textAlign: alignmentCenter ? 'center' : 'left' }}>
       <h2 className="inline-block w-auto p-1 px-10 mb-0 text-xl font-bold text-gray-900 capitalize rounded-t-xl bg-slate-200">
         {text}
       </h2>

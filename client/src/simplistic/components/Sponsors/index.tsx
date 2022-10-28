@@ -1,48 +1,119 @@
 import React from 'react';
-import Tablet from '../Tablet';
-import BGIMG from './../../Assets/p1.jpg';
-import RajeevTripathiIMG from './../../Assets/Prof_Rajeev.jpg';
+import BalsamiqIMG from '../Sponsor/Assets/Balsamiq.png';
+import BlogaddaIMG from '../Sponsor/Assets/Blogadda.png';
+import BlueskyIMG from '../Sponsor/Assets/Bluesky.jpg';
+import BugseeIMG from '../Sponsor/Assets/Bugsee.png';
+import BuyTheValueIMG from '../Sponsor/Assets/BuyTheValue.png';
+import CeloIMG from '../Sponsor/Assets/Celo.png';
+import CodechefIMG from '../Sponsor/Assets/Codechef.png';
+import CodingBlocksIMG from '../Sponsor/Assets/CodingBlocks.png';
+import CodingNinjaIMG from '../Sponsor/Assets/CodingNinja.png';
+import CreativeTimIMG from '../Sponsor/Assets/CreativeTim.png';
+import Dare2CompeteIMG from '../Sponsor/Assets/Dare2Compete.png';
+import DellIMG from '../Sponsor/Assets/Dell.png';
+import DevfolioIMG from '../Sponsor/Assets/Devfolio.png';
+import FilecoinIMG from '../Sponsor/Assets/Filecoin.png';
+import GithubIMG from '../Sponsor/Assets/Github.png';
+import GrowwIMG from '../Sponsor/Assets/Groww.png';
+import HackerEarthIMG from '../Sponsor/Assets/HackerEarth.png';
+import HindustanTimesIMG from '../Sponsor/Assets/HindustanTimes.png';
+import InterviewBuddyIMG from '../Sponsor/Assets/InterviewBuddy.png';
+import JetBrainsIMG from '../Sponsor/Assets/JetBrains.png';
+import KwalityWallsIMG from '../Sponsor/Assets/KwalityWalls.png';
+import MaticIMG from '../Sponsor/Assets/Matic.png';
+import MHMIMG from '../Sponsor/Assets/MHM.png';
+import MyLocIMG from '../Sponsor/Assets/MyLoc.png';
+import PayTMIMG from '../Sponsor/Assets/PayTM.png';
+import PolygonIMG from '../Sponsor/Assets/Polygon.png';
+import ProtoioIMG from '../Sponsor/Assets/Protoio.png';
+import RedIMG from '../Sponsor/Assets/Red.png';
+import ScalerEdgeIMG from '../Sponsor/Assets/ScalerEdge.png';
+import SketchIMG from '../Sponsor/Assets/Sketch.png';
+import SkillenzaIMG from '../Sponsor/Assets/Skillenza.png';
+import SkillLyncIMG from '../Sponsor/Assets/SkillLync.png';
+import SSGIMG from '../Sponsor/Assets/SSG.png';
+import TezosIMG from '../Sponsor/Assets/Tezos.png';
+import TIMEIMG from '../Sponsor/Assets/TIME.png';
+import UltratechIMG from '../Sponsor/Assets/Ultratech.png';
+import YouthIMG from '../Sponsor/Assets/Youth.png';
+import DividerLine from '../Common/DividerLine';
 
 /* eslint-disable */
-interface TeamAvishkarPropType {
-  onCrossPress: (e: any) => void;
-}
-function Sponsors({ onCrossPress }: TeamAvishkarPropType) {
-  function DisplayCard(name: string, img: string) {
+function Sponsors() {
+  function DisplayCard(prop: Array<string>) {
     return (
-      <div
-        style={{ width: '20vw', minWidth: '200px' }}
-        className="group relative block overflow-hidden rounded-md transition-all duration-500 bg-gray-100/[0.2] p-1 rounded-lg justify-center text-white">
-        <span className="transition-all duration-500">
-          <img src={img} />
-        </span>
-        <div className="absolute -bottom-52 group-hover:bottom-2 right-2 left-2 transition-all duration-300 bg-slate-900 rounded text-center shadow-gray-700">
-          <span className="hover:text-primary-600 text-lg transition duration-500 font-medium">
-            {name}
-          </span>
-        </div>
+      <div className="flex flex-wrap justify-around mt-10">
+        {prop.map((p) => {
+          return (
+            <div
+              style={{ width: '20vw', minWidth: '200px' }}
+              className="justify-center p-1 text-white transition-all duration-500 rounded-md rounded-lg height-fit">
+              <img src={p} className="object-contain p-2 rounded-xl aspect-square" />
+            </div>
+          );
+        })}
       </div>
     );
   }
 
   return (
     <>
-      <Tablet
-        bgrd={BGIMG}
-        onBackPress={() => {}}
-        onCrossPress={onCrossPress}
-        onHomePress={() => {}}>
-        <div className="flex justify-center pt-3">
-          <span className="animating-event-title">T</span>
-          <span className="animating-event-title">E</span>
-          <span className="animating-event-title">A</span>
-          <span className="animating-event-title">M</span>
-        </div>
-        <div className="px-10 flex flex-col items-center pb-10">
-          <div className="text-white text-xl font-black text-center">RED BULL</div>
-          {DisplayCard('Gives You Wings', RajeevTripathiIMG)}
-        </div>
-      </Tablet>
+      <div className="flex justify-center pt-3">
+        <span className="animating-event-title">S</span>
+        <span className="animating-event-title">P</span>
+        <span className="animating-event-title">O</span>
+        <span className="animating-event-title">N</span>
+        <span className="animating-event-title">S</span>
+        <span className="animating-event-title">O</span>
+        <span className="animating-event-title">R</span>
+        <span className="animating-event-title">S</span>
+      </div>
+      <div className="flex flex-col items-center px-10 pb-10">
+        <>
+          <DividerLine alignmentCenter={true} text="SPONSORS" />
+          {DisplayCard([DevfolioIMG, FilecoinIMG, TezosIMG, PolygonIMG])}
+        </>
+      </div>
+      <div className="flex flex-col items-center px-10 pb-10">
+        <>
+          <DividerLine alignmentCenter={true} text="PAST SPONSORS" />
+          {DisplayCard([
+            BalsamiqIMG,
+            BlogaddaIMG,
+            BlueskyIMG,
+            BugseeIMG,
+            BuyTheValueIMG,
+            CeloIMG,
+            CodechefIMG,
+            CodingBlocksIMG,
+            CodingNinjaIMG,
+            CreativeTimIMG,
+            Dare2CompeteIMG,
+            DellIMG,
+            GithubIMG,
+            GrowwIMG,
+            HackerEarthIMG,
+            HindustanTimesIMG,
+            InterviewBuddyIMG,
+            JetBrainsIMG,
+            KwalityWallsIMG,
+            MaticIMG,
+            MHMIMG,
+            MyLocIMG,
+            PayTMIMG,
+            ProtoioIMG,
+            RedIMG,
+            ScalerEdgeIMG,
+            SketchIMG,
+            SkillenzaIMG,
+            SkillLyncIMG,
+            SSGIMG,
+            TIMEIMG,
+            UltratechIMG,
+            YouthIMG
+          ])}
+        </>
+      </div>
     </>
   );
 }

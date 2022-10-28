@@ -24,7 +24,10 @@ export enum TELEPORT_LOCATIONS {
   yamunaCanteen = 'yamunaCanteen',
   library = 'library',
   csed = 'csed',
-  mpHall = 'mpHall'
+  mpHall = 'mpHall',
+  noticeBoard = 'noticeBoard',
+  boysHostel = 'boysHostel',
+  sponser = 'sponser'
 }
 
 export const TELEPORT_LOCATIONS_DATA: {
@@ -49,6 +52,18 @@ export const TELEPORT_LOCATIONS_DATA: {
   mpHall: {
     x: 6030,
     y: 3934
+  },
+  noticeBoard: {
+    x: 2280,
+    y: 2600
+  },
+  boysHostel: {
+    x: 5900,
+    y: 860
+  },
+  sponser: {
+    x: 450,
+    y: 2750
   }
 };
 

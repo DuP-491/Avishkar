@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,9 +7,10 @@ function Info(props: Props) {
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
   const howTOPlay = [
+    'A tablet is placed at the departments conducting various events, you can use the tablet for creating teams and regitering for events.',
+    'Please Click on tablet to Register for any Event.',
     'You can use space key to attack.',
     'You can use E key to interact with interactable NPCs.',
-    'A tablet is placed at the demartments conducting various events, you can use the tablet for creating teams and regitering for events.',
     'You can visit cafe 96 for team creation.'
   ];
   const events = [
@@ -88,21 +90,36 @@ function Info(props: Props) {
           <div
             ref={textDiv}
             className="w-1/2 h-0 overflow-auto whitespace-pre-line transition-all duration-500 noscroll">
-            Hello, Player!
+            Hello technogeeks!
             <p className="text-2xl font-bold text-center">Welcome to MNNIT</p>
             <p className="text-xs font-bold text-center">(Avishkar 2022)</p>
             <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas
-            vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum
-            quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident
-            similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut
-            molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit
-            sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid.
-            Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
-            sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam recusandae alias
-            error harum maxime adipisci amet laborum.
+            Welcome to Prayagraj, The city of Sangam, home to Uttar Pradesh’s educational hub, known
+            for its rich history and vibrant culture, Prayagraj is not just an ordinary dwelling,
+            rather a terminus to humorous people who just can’t stop hustling to achieve their
+            highs! And here is located the Motilal Nehru National Institute of Technology (MNNIT),
+            Allahabad, Prayagraj, an institute of National importance.
             <br />
-            <p className="text-2xl font-bold text-center">How to play:</p>
+            <br />
+            MNNIT was established in 1961 by the government of India, for the enrichment of
+            Engineering and Science with the aim to promote technical innovation and adroitness in
+            the vast multitude of students. MNNIT is alma-mater to various tech-giants and
+            administrative leaders, and continues to produce influential people for the betterment
+            of the nation.
+            <br />
+            <br />
+            Continuing with its legacy of serving as a platform for ideas, innovations and
+            creations, MNNIT is back with its{' '}
+            <span className="font-bold">annual technical fest, Avishkar</span>. One of the best
+            platforms to explore new horizons of multiple technical fields and apply your full
+            expertise for new creations.The event is a chockablock, full of great insights and
+            learning opportunities,innovative events to test one’s proficiency in technical
+            fields,and inspiring speakers with their notable personalities.
+            <br />
+            <br />
+            So gear up yourself, pull up your sleeves, have all the Diwali gifts’ dry fruits, and
+            get yourself zealed up for Avishkar, an extravaganza of technology!
+            <p className="mt-6 mb-2 text-2xl font-bold text-center underline">How to play</p>
             <ul>
               <li className="flex flex-row space-x-2">
                 <svg
@@ -244,8 +261,7 @@ function Info(props: Props) {
                 </li>
               ))}
             </ul>
-            <br />
-            <p className="text-2xl font-bold text-center">Events Location:</p>
+            <p className="mt-6 mb-2 text-2xl font-bold text-center underline">Events Location</p>
             <ul>
               {events.map((name, key) => (
                 <li className="text-center" key={key}>
@@ -253,10 +269,9 @@ function Info(props: Props) {
                 </li>
               ))}
             </ul>
-            <br />
-            <p className="text-sm text-center">
+            <p className="mt-8 text-sm text-center">
               Thank you for playing this game. We hope you enjoy it. If you have any questions or
-              need help, please contact the developers at sampleemail@provider.com
+              need help, please connect with us.
             </p>
           </div>
           <img
