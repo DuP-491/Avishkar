@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import Cookies from 'js-cookie';
 import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
 
@@ -10,7 +9,7 @@ interface ForgotPasswordBoxPropType {
 /* eslint-enable */
 
 // eslint-disable-next-line no-unused-vars
-function ForgotPassword({ onCrossPress }: ForgotPasswordBoxPropType) {
+function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
   // eslint-disable-next-line no-unused-vars
   function ResetPasswordEmail(e: any) {
     e.preventDefault();
@@ -22,6 +21,7 @@ function ForgotPassword({ onCrossPress }: ForgotPasswordBoxPropType) {
         console.log('Sucessfully Email Sent!');
         onCrossPress(e);
       } else {
+        // dsfsfrsecfzdfsfc
         console.log(data);
       }
     });
@@ -44,7 +44,9 @@ function ForgotPassword({ onCrossPress }: ForgotPasswordBoxPropType) {
                 src="https://i.imgur.com/cHH4xIh.png"
                 alt="Avishkar Logo"
               />
-              <h2 className="text-2xl font-bold tracking-tight text-center text-white">Login</h2>
+              <h2 className="text-2xl font-bold tracking-tight text-center text-white">
+                Forgot Password
+              </h2>
             </div>
             <form className="mt-6 space-y-6" onSubmit={ResetPasswordEmail} method="POST">
               <div>
@@ -68,7 +70,7 @@ function ForgotPassword({ onCrossPress }: ForgotPasswordBoxPropType) {
                 <button
                   type="submit"
                   className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-                  Sign in
+                  Send Mail
                 </button>
               </div>
             </form>
@@ -148,4 +150,4 @@ function ForgotPassword({ onCrossPress }: ForgotPasswordBoxPropType) {
   );
 }
 
-export default ForgotPassword;
+export default ForgotPasswordBox;
