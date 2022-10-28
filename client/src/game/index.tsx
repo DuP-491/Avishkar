@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import Trivia from '../components/Trivia';
 import NoticeBoard from '../components/NoticeBoard';
 import UserService from '../simplistic/services/UserService';
+import Leaderboard from '../components/Leaderboard';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -69,6 +70,7 @@ function GameComponent(props: Props) {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
   const [showTrivia, setShowTrivia] = useState(false);
   const [showNotice, setShowNotice] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [triviaFunction, setTriviaFunction] = useState(() => () => {});
 
   const [userDetails, setUserDetails] = useState({
@@ -380,6 +382,7 @@ function GameComponent(props: Props) {
   };
 
   const openSponsor = () => {
+    setDepartment('');
     setComputerType('Sponsors');
     setShowComputer(true);
   };
@@ -392,11 +395,19 @@ function GameComponent(props: Props) {
     setShowNotice(false);
   };
 
+  const closeLeaderboard = () => {
+    setShowLeaderboard(false);
+  };
+
   const handleOnMapIconClick = () => {
     setShowMap(true);
   };
   const handleOnInfoIconClick = () => {
     setShowInfo(true);
+  };
+
+  const handleLeaderboardClick = () => {
+    setShowLeaderboard(true);
   };
 
   return (
@@ -462,6 +473,9 @@ function GameComponent(props: Props) {
         Score: {!userCoinDetails ? 'N/A' : userCoinDetails.coins}
       </div>
       {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
+      {showLeaderboard && (
+        <Leaderboard closePopup={closeLeaderboard} user={userDetails}></Leaderboard>
+      )}
       {/* <div className="absolute w-full h-full top-0 pt-[7%]">
       </div> */}
       <div className="absolute bottom-0 z-10 w-full">
@@ -499,6 +513,7 @@ function GameComponent(props: Props) {
               !showMap ? `cursor-zoom-in` : `cursor-zoom-out`
             }`}
             width={64}
+            onClick={handleLeaderboardClick}
           />
         </div>
       </div>
