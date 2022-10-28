@@ -217,6 +217,18 @@ function NewTablet(props: Props) {
     minTeamSize: 1,
     deptEventId: ''
   });
+  const [newUpdateEvent, setNewUpdateEvent] = useState({
+    id: '',
+    name: '',
+    tagline: '',
+    details: '',
+    criteria: '',
+    rules: '',
+    psLink: '',
+    poster: '',
+    maxTeamSize: 1,
+    minTeamSize: 1
+  });
   const [newDeptCoordie, setNewDeptCoordie] = useState({
     userId: '',
     deptEventId: ''
@@ -836,6 +848,62 @@ function NewTablet(props: Props) {
             maxTeamSize: 1,
             minTeamSize: 1,
             deptEventId: ''
+          });
+        } else if (data['message'] === 'Invalid token!') {
+          logout();
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
+
+  const handleUpdateEvent = (
+    id: string,
+    name: string,
+    tagline: string,
+    details: string,
+    criteria: string,
+    rules: string,
+    psLink: string,
+    poster: string,
+    maxTeamSize: number,
+    minTeamSize: number
+  ) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      closePopup();
+      logout();
+      return;
+    }
+    CoordieService.updateEvent(
+      token,
+      id,
+      name,
+      tagline,
+      details,
+      criteria,
+      rules,
+      psLink,
+      poster,
+      maxTeamSize,
+      minTeamSize
+    )
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Updated Event Successfully');
+          fetchEvents(currEUDDept);
+          setNewUpdateEvent({
+            id: '',
+            name: '',
+            tagline: '',
+            details: '',
+            criteria: '',
+            rules: '',
+            psLink: '',
+            poster: '',
+            maxTeamSize: 1,
+            minTeamSize: 1
           });
         } else if (data['message'] === 'Invalid token!') {
           logout();
@@ -1562,7 +1630,7 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(9)}>
                           Add Event
                         </p>
-                        {/* <p
+                        <p
                           className={
                             profileSection === 10
                               ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
@@ -1570,7 +1638,7 @@ function NewTablet(props: Props) {
                           }
                           onClick={() => setProfileSection(10)}>
                           Update Event
-                        </p> */}
+                        </p>
                         <p
                           className={
                             profileSection === 11
@@ -2262,7 +2330,143 @@ function NewTablet(props: Props) {
                       </div>
                     </>
                   )}
-                  {profileSection === 10 && (
+                  {profileSection === 10 && newUpdateEvent['id'] !== '' && (
+                    <>
+                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
+                          <span>Name</span>
+                          <input
+                            placeholder="Enter event name"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['name']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({ ...newUpdateEvent, name: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Tagline</span>
+                          <input
+                            placeholder="Enter event tagline"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['tagline']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({ ...newUpdateEvent, tagline: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Details</span>
+                          <textarea
+                            placeholder="Enter event details"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['details']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({ ...newUpdateEvent, details: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Criteria</span>
+                          <textarea
+                            placeholder="Enter event criteria"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['criteria']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({ ...newUpdateEvent, criteria: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Rules</span>
+                          <textarea
+                            placeholder="Enter event rules"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['rules']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({ ...newUpdateEvent, rules: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Problem Statement link</span>
+                          <input
+                            placeholder="Enter event problem statement link (if any)"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['psLink']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({ ...newUpdateEvent, psLink: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Poster Link</span>
+                          <input
+                            placeholder="Enter event poster link"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['poster']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({ ...newUpdateEvent, poster: e.target.value })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Min Team Size</span>
+                          <input
+                            type="number"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['minTeamSize']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({
+                                ...newUpdateEvent,
+                                minTeamSize: parseInt(e.target.value)
+                              })
+                            }
+                          />
+                        </p>
+                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                          <span>Max Team Size</span>
+                          <input
+                            type="number"
+                            className="flex-1 ml-1 text-right outline-none bg-zinc-900"
+                            value={newUpdateEvent['maxTeamSize']}
+                            onChange={(e) =>
+                              setNewUpdateEvent({
+                                ...newUpdateEvent,
+                                maxTeamSize: parseInt(e.target.value)
+                              })
+                            }
+                          />
+                        </p>
+                      </div>
+                      <div className="m-5 text-sm text-gray-200 rounded-lg cursor-pointer border-zinc-800 bg-zinc-900">
+                        <p
+                          className="w-full px-2 py-2 text-center text-blue-900"
+                          onClick={() =>
+                            handleUpdateEvent(
+                              newUpdateEvent['id'],
+                              newUpdateEvent['name'],
+                              newUpdateEvent['tagline'],
+                              newUpdateEvent['details'],
+                              newUpdateEvent['criteria'],
+                              newUpdateEvent['rules'],
+                              newUpdateEvent['psLink'] === '' ? '#' : newUpdateEvent['psLink'],
+                              newUpdateEvent['poster'],
+                              newUpdateEvent['maxTeamSize'],
+                              newUpdateEvent['minTeamSize']
+                            )
+                          }>
+                          Update Event
+                        </p>
+                        <p
+                          className="w-full px-2 py-2 text-center text-blue-900 border-t-2 border-zinc-800"
+                          onClick={() => setNewUpdateEvent({ ...newUpdateEvent, id: '' })}>
+                          Back
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {profileSection === 10 && newUpdateEvent['id'] === '' && (
                     <>
                       <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
                         <p className="flex justify-between px-2 py-2 border-zinc-800">
@@ -2279,7 +2483,23 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto"></div>
+                      <div className="overflow-y-auto">
+                        {events.map((event) => (
+                          <div
+                            key={event['id']}
+                            className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                            <p className="flex justify-between px-2 py-2 border-gray-500">
+                              <span>Name</span>
+                              <span>{event['name']}</span>
+                            </p>
+                            <p
+                              className="w-full px-2 py-2 text-center text-blue-900 border-t-2 cursor-pointer border-zinc-800"
+                              onClick={() => setNewUpdateEvent(event)}>
+                              Update Event
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </>
                   )}
                   {profileSection === 11 && (
