@@ -944,7 +944,7 @@ function NewTablet(props: Props) {
     <>
       {loading && <div className="flex items-center justify-center">Loading...</div>}
       {!loading && (
-        <div className="absolute top-0 left-0 w-screen h-screen bg-black rounded-3xl">
+        <div className="absolute top-0 left-0 w-screen h-screen m-4 bg-black rounded-3xl">
           {/* Front Camera */}
           <div className="absolute top-[50vh] left-[2.5%] rounded-full bg-zinc-800 w-3 h-3" />
           <div className="absolute top-[50.5vh] left-[2.7%] rounded-full bg-blue-900 w-1 h-1" />

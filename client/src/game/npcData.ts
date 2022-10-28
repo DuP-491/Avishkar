@@ -271,4 +271,5 @@ export const npcData: {
     type: 'text',
     character: 'Librarian',
     text: `Shhh.. There are people studying.~You weren't here earlier and library has been closed since morning. How did you event geet here?~Anyways... Welcome to the library, explore the infinite books available and sit and study in the study rooms.~Bring in your laptops and notebooks and sit with friends to learn about anything you like.`
+  }
 };
