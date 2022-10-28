@@ -187,7 +187,6 @@ function TeamAvishkar() {
         ])}
         <DividerLine alignmentCenter={true} text="Photos and Videos" />
         {DisplayCard([
-          [PRAdityaGuptaIMG, 'Aditya Gupta', '', '', '', ''],
           [PVSumitYadavIMG, 'Sumit Yadav', '', '', '', ''],
           [PVVarunKumarIMG, 'Varun Kumar', '', '', '', '']
         ])}

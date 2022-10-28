@@ -49,6 +49,7 @@ import TechHiteshMitrukaIMG from './Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
 import TechParthMittalIMG from './Assets/TechParthMittal.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
+import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.png';
 
 import PVSumitYadavIMG from './Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from './Assets/PVVarunKumar.jpg';
@@ -383,7 +384,7 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={TechPriyavKaneriaIMG}
                 name="Priyav K Kaneria"
                 designation=""
                 facebook=""
@@ -447,16 +448,8 @@ const index = () => {
             </div>
           </div>
           <div className="container px-6 py-6 mx-auto">
-            <DividerLine alignmentCenter={true} text="Tech Team" />
+            <DividerLine alignmentCenter={true} text="Photos and Videos" />
             <div className="flex flex-wrap justify-around">
-              <Card
-                imgsrc={PRAdityaGuptaIMG}
-                name="Aditya Gupta"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
               <Card
                 imgsrc={PVSumitYadavIMG}
                 name="Sumit Yadav"
