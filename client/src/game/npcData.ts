@@ -39,7 +39,7 @@ export const npcData: {
     location: 'boys hostel area entry point',
     type: 'text',
     character: 'Guard',
-    text: 'Man this job is boring.~I wish I could do something more interesting. Like coding!'
+    text: 'This is the boys hostel area. You will find a lot of lively chaotic creaatures here.~Everything beyond this point can be referred to as a "man-cave".~So girls, turn around while you still can.'
   },
   'campus-56': {
     name: 'Mr. Sanjeev',
