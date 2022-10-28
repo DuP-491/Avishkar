@@ -447,16 +447,8 @@ const index = () => {
             </div>
           </div>
           <div className="container px-6 py-6 mx-auto">
-            <DividerLine alignmentCenter={true} text="Tech Team" />
+            <DividerLine alignmentCenter={true} text="Photos and Videos" />
             <div className="flex flex-wrap justify-around">
-              <Card
-                imgsrc={PRAdityaGuptaIMG}
-                name="Aditya Gupta"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
               <Card
                 imgsrc={PVSumitYadavIMG}
                 name="Sumit Yadav"
