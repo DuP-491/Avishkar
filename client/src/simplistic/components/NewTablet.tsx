@@ -1534,7 +1534,7 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(9)}>
                           Add Event
                         </p>
-                        <p
+                        {/* <p
                           className={
                             profileSection === 10
                               ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
@@ -1542,7 +1542,7 @@ function NewTablet(props: Props) {
                           }
                           onClick={() => setProfileSection(10)}>
                           Update Event
-                        </p>
+                        </p> */}
                         <p
                           className={
                             profileSection === 11
@@ -1579,7 +1579,7 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(14)}>
                           Add Event Sponsor
                         </p>
-                        <p
+                        {/* <p
                           className={
                             profileSection === 15
                               ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
@@ -1587,7 +1587,7 @@ function NewTablet(props: Props) {
                           }
                           onClick={() => setProfileSection(15)}>
                           Update Event Sponsor
-                        </p>
+                        </p> */}
                         <p
                           className={
                             profileSection === 16
@@ -2325,7 +2325,7 @@ function NewTablet(props: Props) {
                   {profileSection === 13 && (
                     <>
                       <div className="m-5 text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
-                        <p className="flex justify-between px-2 py-2 border-t-2 border-zinc-800">
+                        <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Department Event</span>
                           <select
                             className="flex-1 ml-1 text-right outline-none bg-zinc-900"
