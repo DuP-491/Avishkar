@@ -166,6 +166,8 @@ function NewTablet(props: Props) {
     'youtube.png',
     'zoom.png'
   ];
+  const UNEXPECTED_ERROR_MSG = 'Please try again later!';
+  const LOGIN_AGAIN_PROMPT = 'Please login again!';
 
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState(currTab);
@@ -355,11 +357,10 @@ function NewTablet(props: Props) {
             parsedDepartments[dept['id']] = dept;
           });
           setDepartments(parsedDepartments);
-        }
-        // else logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -372,11 +373,10 @@ function NewTablet(props: Props) {
             setCurrSponsorAUD({ ...currSponsorAUD, eventId: data['events'][0]['id'] });
           }
           setEvents(data['events']);
-        }
-        // else logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -385,10 +385,10 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setSponsors(data['eventSponsors']);
-        } else logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -397,11 +397,10 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setDeptCoordies(data['deptEventCoordies']);
-        }
-        // else logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -410,11 +409,10 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setEventCoordies(data['eventCoordies']);
-        }
-        //  else logout();
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -429,17 +427,24 @@ function NewTablet(props: Props) {
           if (data['participatingTeam'].length !== 0)
             setParticipatingTeam(data['participatingTeam'][0]);
           else setParticipatingTeam(null);
-        } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
   const fetchUserDetails = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      if (tab === 'Profile') logout();
+      if (tab === 'Profile') {
+        closePopup();
+        logout();
+      }
       return;
     }
     UserService.getUserDetails(token)
@@ -448,13 +453,14 @@ function NewTablet(props: Props) {
           if (data['details']['resumeLink'] === null) data['details']['resumeLink'] = '';
           setUserDetails(data['details']);
           setNewUserDetails(data['details']);
-        }
-        // else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else logout();
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -477,13 +483,15 @@ function NewTablet(props: Props) {
         if (data['success']) {
           fetchUserDetails();
           setProfileSection(0);
-        }
-        // else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+          toast.success('Details Edited Successfully!');
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -515,34 +523,38 @@ function NewTablet(props: Props) {
           setUpdateTeamnames(
             Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
           );
-        }
-        // else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
   const fetchTeamMembers = (teamId: number) => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      closePopup();
-      logout();
+      if (tab === 'Profile') {
+        closePopup();
+        logout();
+      }
       return;
     }
     UserService.getTeamMembers(token, teamId)
       .then((data) => {
         if (data['success']) {
           setTeamMembers({ ...teamMembers, [teamId]: data['members'] });
-        }
-        // else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -556,13 +568,16 @@ function NewTablet(props: Props) {
     UserService.createTeam(token)
       .then((data) => {
         if (data['success']) {
+          toast.success('Team Created Successfully!');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -583,11 +598,13 @@ function NewTablet(props: Props) {
           toast.success('Changed Team Name Successfully!');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -601,13 +618,16 @@ function NewTablet(props: Props) {
     UserService.removeTeam(token, teamId)
       .then((data) => {
         if (data['success']) {
+          toast.success('Team Deleted Successfully!');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -630,13 +650,13 @@ function NewTablet(props: Props) {
           setInviteUsernames({ ...inviteUsernames, [teamId]: '' });
           setProfileSection(2);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Please login again!');
           closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -650,13 +670,16 @@ function NewTablet(props: Props) {
     UserService.responseToTeamInvite(token, teamId, status)
       .then((data) => {
         if (data['success']) {
+          toast.success('Responded to Invite Successfully!');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -670,14 +693,17 @@ function NewTablet(props: Props) {
     UserService.deleteMember(token, teamId, userId)
       .then((data) => {
         if (data['success']) {
+          toast.success('Removed Member Successfully!');
           setProfileSection(2);
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -695,11 +721,13 @@ function NewTablet(props: Props) {
           fetchParticipation(events[selectedEventID]['id']);
           toast.success('Registered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -716,11 +744,13 @@ function NewTablet(props: Props) {
           fetchParticipation(events[selectedEventID]['id']);
           toast.success('Unregistered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
-          // logout();
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -737,11 +767,13 @@ function NewTablet(props: Props) {
           toast.success('Created Department Event Successfully');
           fetchDepartmentEvents();
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -758,11 +790,13 @@ function NewTablet(props: Props) {
           toast.success('Deleted Department Event Successfully');
           fetchDepartmentEvents();
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -781,11 +815,13 @@ function NewTablet(props: Props) {
             fetchDepartmentCoordies(delDeptCoordie);
           }
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -802,11 +838,13 @@ function NewTablet(props: Props) {
           toast.success('Deleted Department Event Coordie Successfully');
           fetchDepartmentCoordies(delDeptCoordie);
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -857,11 +895,13 @@ function NewTablet(props: Props) {
             deptEventId: ''
           });
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -913,11 +953,13 @@ function NewTablet(props: Props) {
             minTeamSize: 1
           });
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -934,11 +976,13 @@ function NewTablet(props: Props) {
           toast.success('Deleted Event Successfully');
           fetchEvents(currEUDDept);
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -956,11 +1000,13 @@ function NewTablet(props: Props) {
           fetchEventCoordies(currECUD['eventId']);
           setCurrECUD({ ...currECUD, email: '' });
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -977,11 +1023,13 @@ function NewTablet(props: Props) {
           toast.success('Deleted Event Coordie Successfully');
           fetchEventCoordies(currECUD['eventId']);
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -998,11 +1046,13 @@ function NewTablet(props: Props) {
           fetchEventSponsors(currSponsorAUD['eventId']);
           setCurrSponsorAUD({ ...currSponsorAUD, name: '', poster: '', title: 'No' });
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -1024,11 +1074,13 @@ function NewTablet(props: Props) {
           fetchEventSponsors(currSponsorAUD['eventId']);
           setUpdatedSponsor({ ...updatedSponsor, name: '', poster: '', title: 'No' });
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
@@ -1044,11 +1096,13 @@ function NewTablet(props: Props) {
           toast.success('Deleted Event Sponsor Successfully');
           fetchEventSponsors(currSponsorAUD['eventId']);
         } else if (data['message'] === 'Invalid token!') {
+          closePopup();
           logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Please try again later!');
+        toast.error(UNEXPECTED_ERROR_MSG);
       });
   };
 
