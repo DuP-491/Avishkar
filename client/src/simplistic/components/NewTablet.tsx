@@ -294,37 +294,37 @@ function NewTablet(props: Props) {
   }, [selectedDeptID]);
 
   useEffect(() => {
-    if (delDeptCoordie !== '') {
+    if (delDeptCoordie !== '' && tab === 'Profile') {
       fetchDepartmentCoordies(delDeptCoordie);
     }
   }, [delDeptCoordie]);
 
   useEffect(() => {
-    if (currEUDDept !== '') {
+    if (currEUDDept !== '' && tab === 'Profile') {
       fetchEvents(currEUDDept);
     }
   }, [currEUDDept]);
 
   useEffect(() => {
-    if (currECUD['deptEventId'] !== '') {
+    if (currECUD['deptEventId'] !== '' && tab === 'Profile') {
       fetchEvents(currECUD['deptEventId']);
     }
   }, [currECUD['deptEventId']]);
 
   useEffect(() => {
-    if (currECUD['eventId'] !== '') {
+    if (currECUD['eventId'] !== '' && tab === 'Profile') {
       fetchEventCoordies(currECUD['eventId']);
     }
   }, [currECUD['eventId']]);
 
   useEffect(() => {
-    if (currSponsorAUD['deptEventId'] !== '') {
+    if (currSponsorAUD['deptEventId'] !== '' && tab === 'Profile') {
       fetchEvents(currSponsorAUD['deptEventId']);
     }
   }, [currSponsorAUD['deptEventId']]);
 
   useEffect(() => {
-    if (currSponsorAUD['eventId'] !== '') {
+    if (currSponsorAUD['eventId'] !== '' && tab === 'Profile') {
       fetchEventSponsors(currSponsorAUD['eventId']);
     }
   }, [currSponsorAUD['eventId']]);
