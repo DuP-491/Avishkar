@@ -1297,6 +1297,7 @@ function NewTablet(props: Props) {
                     </p>
                   )}
                   {(events[selectedEventID]['psLink'] !== '#' ||
+                    events[selectedEventID]['name'] === 'Webster' ||
                     Cookies.get('token') !== undefined) && (
                     <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Participate</p>
                   )}
@@ -1317,6 +1318,12 @@ function NewTablet(props: Props) {
                       onClick={() => setEventSection(4)}>
                       {participatingTeam === null ? 'Register' : 'Registered'}
                     </p>
+                  )}
+                  {events[selectedEventID]['name'] === 'Webster' && (
+                    <div
+                      className="apply-button h-[44px] w-[312px] mx-auto my-5"
+                      data-hackathon-slug="CyberQuest"
+                      data-button-theme="light"></div>
                   )}
                 </div>
                 <div className="relative flex flex-col w-2/3 bg-black rounded-r-md">
