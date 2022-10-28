@@ -372,7 +372,7 @@ export class Campus extends Scene {
         })
         .on('pointerdown', (e: any) => {
           // console.log('auth');
-          console.log(this.interactables[0].frame);
+          // console.log(this.interactables[0].frame);
 
           if (this.interactables[0].frame.name == '0') {
             this.loginYamunaGate = false;
@@ -446,7 +446,7 @@ export class Campus extends Scene {
     //   );
     // }
     this.game.events.on(EVENTS_NAME.login, () => {
-      console.log(this.interactables);
+      // console.log(this.interactables);
       this.interactables[0].setFrame(1);
       // this.interactables[1].setFrame(1);
     });
@@ -474,7 +474,7 @@ export class Campus extends Scene {
     computers.forEach((computer) => {
       const compZone = this.add.zone(computer.x, computer.y, 64, 64).setOrigin(0.5, 0.5);
       this.physics.overlap(this.player, compZone, () => {
-        console.log('overlap');
+        // console.log('overlap');
         this.game.events.emit(
           EVENTS_NAME.interact,
           this.scene.key,
@@ -594,7 +594,7 @@ export class Campus extends Scene {
       }
     });
     this.game.events.on(EVENTS_NAME.resetInteract, (scene: string, name: string) => {
-      console.log(scene, name);
+      // console.log(scene, name);
       if (scene == 'campus') {
         this.npcChatSprites.filter((prop) => prop.name === name)[0].setVisible(false);
       }

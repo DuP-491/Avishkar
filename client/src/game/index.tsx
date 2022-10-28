@@ -112,11 +112,11 @@ function GameComponent(props: Props) {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
           // GET NPC DATA
-          console.log(key);
+          // console.log(key);
           /* NICE 😈🥵6️⃣9️⃣ */
           const data = npcData[key];
           if (!data) {
-            console.log('No data found for ' + key);
+            // console.log('No data found for ' + key);
             return;
           }
           setInfoPromptText(data.text);
@@ -157,7 +157,7 @@ function GameComponent(props: Props) {
         game.instance?.events.on(
           EVENTS_NAME.openComputer,
           (department: string, computerType: string) => {
-            console.log(department);
+            // console.log(department);
             setDepartment(department);
             setComputerType(computerType);
             setShowComputer(true);
@@ -170,7 +170,7 @@ function GameComponent(props: Props) {
           setShowMap(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
-          console.log('logout');
+          // console.log('logout');
           Cookies.remove('token');
         });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
@@ -272,7 +272,7 @@ function GameComponent(props: Props) {
         }
       })
       .catch(() => {
-        console.log("Unable to fetch user's details");
+        // console.log("Unable to fetch user's details");
       });
   };
 
@@ -291,7 +291,7 @@ function GameComponent(props: Props) {
       .limit(1)
       .single();
     if (error) {
-      console.log(error);
+      // console.log(error);
       toast.error('Unable to fetch user score');
       return;
     }
@@ -301,7 +301,7 @@ function GameComponent(props: Props) {
         .insert([{ user_id: userId, name: userDetails.username, coins: 0, last_qid: -1 }])
         .single();
       if (error || !newuserCoins) {
-        console.log(error);
+        // console.log(error);
         toast.error('Unable to fetch user score');
         return;
       }
@@ -330,7 +330,7 @@ function GameComponent(props: Props) {
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
       game.instance?.events.emit(EVENTS_NAME.logout);
-      console.log('logout');
+      // console.log('logout');
       setTimeout(() => {
         setShowAuthPrompt(false);
         setShowComputer(false);

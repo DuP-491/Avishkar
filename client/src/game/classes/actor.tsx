@@ -32,7 +32,7 @@ export class Actor extends Physics.Arcade.Sprite {
   }
 
   public getAngry(): void {
-    console.log('angry');
+    // console.log('angry');
     this.scene.cameras.main.shake(50, 0.01);
   }
 
@@ -43,7 +43,7 @@ export class Actor extends Physics.Arcade.Sprite {
 
   public resetInteract(name: string): void {
     this.scene.game.events.emit(EVENTS_NAME.resetInteract, this.scene.scene.key, name);
-    console.log('resetInteract');
+    // console.log('resetInteract');
   }
 
   public getHPValue(): number {

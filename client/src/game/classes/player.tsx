@@ -157,7 +157,7 @@ export class Player extends Actor {
   }
 
   public onGrass(props: any): void {
-    console.log('onGrass', props);
+    // console.log('onGrass', props);
 
     this.speed = 300;
   }

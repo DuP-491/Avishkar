@@ -80,7 +80,7 @@ export class Cafe96Scene extends Scene {
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', function (value: number) {
-      console.log(value);
+      // console.log(value);
       progressBar.clear();
       progressBar.setDepth(50);
       progressBar.fillStyle(0xffffff, 1);
@@ -89,11 +89,11 @@ export class Cafe96Scene extends Scene {
     });
 
     this.load.on('fileprogress', function (file: { src: string }) {
-      console.log(file.src);
+      // console.log(file.src);
       assetText.setText('Loading asset: ' + file.src);
     });
     this.load.on('complete', function () {
-      console.log('complete');
+      // console.log('complete');
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
@@ -164,7 +164,7 @@ export class Cafe96Scene extends Scene {
     this.tileset2 = this.map.addTilesetImage('Interior', 'tileInteriorChan', 16, 16, 0, 0);
     this.tileset3 = this.map.addTilesetImage('Sports', 'tileSports', 16, 16, 0, 0);
     // this.tileset4 = this.map.addTilesetImage('UI', 'tileUI', 16, 16, 0, 0);
-    console.log(this.tileset, this.tileset2, this.tileset3);
+    // console.log(this.tileset, this.tileset2, this.tileset3);
 
     this.layer = this.map.createLayer('Floor', [this.tileset, this.tileset2, this.tileset3], 0, 0);
     this.layer2 = this.map.createLayer(

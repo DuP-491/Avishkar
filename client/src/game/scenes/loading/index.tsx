@@ -64,7 +64,7 @@ export class LoadingScene extends Scene {
       assetText.setText('Loading asset: ' + file.src);
     });
     this.load.on('complete', function () {
-      console.log('loaded');
+      // console.log('loaded');
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();

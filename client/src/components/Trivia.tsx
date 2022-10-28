@@ -39,7 +39,7 @@ function Trivia(props: Props) {
       }, 500);
       return;
     }
-    console.log(userAnswer, answer);
+    // console.log(userAnswer, answer);
     if (userAnswer.toLowerCase() === answer.toLowerCase()) {
       toast.success(`Correct! You have been awarded ${points} points!`);
       const { data: _data, error } = await supabase
@@ -86,7 +86,7 @@ function Trivia(props: Props) {
         .limit(1)
         .single();
       if (error) {
-        console.log(error);
+        // console.log(error);
         toast.error('No trivia questions found! Please try again later!');
         handleClick();
         setTimeout(() => {
