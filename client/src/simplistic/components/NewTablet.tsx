@@ -14,15 +14,157 @@ import Sponsors from './Sponsors';
 function NewTablet(props: Props) {
   const { deptId, currTab, logout, closePopup } = props;
   const APP_ICONS = [
-    'https://i.imgur.com/vSvFDH7.jpg',
-    'https://i.imgur.com/M6LcSPu.jpg',
-    'https://i.imgur.com/7nPBj3Y.jpg',
-    'https://i.imgur.com/VUI6eHd.jpg',
-    'https://i.imgur.com/QkvrLvo.jpg',
-    'https://i.imgur.com/R1Fhzpi.jpg',
-    'https://i.imgur.com/4eU10cM.jpg',
-    'https://i.imgur.com/WMvYR2K.jpg',
-    'https://i.imgur.com/wVwhg2O.jpg'
+    '1password.png',
+    '3-dots.png',
+    '4-dot-menu.png',
+    'add.png',
+    'adjustment.png',
+    'airbnb.png',
+    'alert.png',
+    'amazon.png',
+    'among-us.png',
+    'android-store.png',
+    'android.png',
+    'aperture.png',
+    'apple-logo.png',
+    'battery.png',
+    'bbc-iPlayer.png',
+    'behance.png',
+    'bluetooth.png',
+    'book.png',
+    'bubble-speech.png',
+    'busuu.png',
+    'calculator.png',
+    'calendar.png',
+    'camera-focus.png',
+    'checklist.png',
+    'clock-app.png',
+    'cloud-sun.png',
+    'compass.png',
+    'credit-card.png',
+    'deliveroo.png',
+    'deviantart.png',
+    'digital-camera.png',
+    'discord.png',
+    'disney-plus.png',
+    'dot-list.png',
+    'dotted-bubble-speech.png',
+    'dribbble.png',
+    'dropbox.png',
+    'eject.png',
+    'evernote.png',
+    'excel.png',
+    'facebook-messenger.png',
+    'facebook.png',
+    'facetime.png',
+    'find-my.png',
+    'fitness.png',
+    'flickr.png',
+    'folder.png',
+    'football.png',
+    'forward-icon.png',
+    'foursquare.png',
+    'gallery.png',
+    'gmail.png',
+    'googl-docs.png',
+    'google-authenticator.png',
+    'google-chrome.png',
+    'google-drive.png',
+    'google-meet.png',
+    'google-photos.png',
+    'google.png',
+    'graph.png',
+    'grid-view.png',
+    'hbo-max.png',
+    'heart.png',
+    'home.png',
+    'hulu.png',
+    'inbox.png',
+    'instagram.png',
+    'iOS-store.png',
+    'ios-x.png',
+    'keynote.png',
+    'keynotes.png',
+    'lastpass.png',
+    'letter.png',
+    'linkedin.png',
+    'map-pin.png',
+    'menu-sign.png',
+    'microphone.png',
+    'microsoft-teams.png',
+    'ms-words.png',
+    'music-sign.png',
+    'netflix.png',
+    'news.png',
+    'night.png',
+    'notion.png',
+    'numbers.png',
+    'overcast.png',
+    'padlock.png',
+    'pages.png',
+    'pause.png',
+    'pay.png',
+    'paypal.png',
+    'phone.png',
+    'piano.png',
+    'pinterest.png',
+    'plane.png',
+    'playstation.png',
+    'podcasts.png',
+    'pokemon-go.png',
+    'powerpoint.png',
+    'prime-video.png',
+    'procreate.png',
+    'pubj.png',
+    'radio.png',
+    'recording.png',
+    'reddit.png',
+    'ribbon.png',
+    'safari.png',
+    'search.png',
+    'setting-cog.png',
+    'shield-secure.png',
+    'shopping-cart.png',
+    'shortcuts.png',
+    'skype.png',
+    'slack.png',
+    'slider.png',
+    'smartwatch.png',
+    'snapchat.png',
+    'speaker.png',
+    'spotify.png',
+    'steam.png',
+    'stocks.png',
+    'stop.png',
+    'stumbleupon.png',
+    'telegram.png',
+    'tesla.png',
+    'tiktok.png',
+    'tinder.png',
+    'translate.png',
+    'tumblr.png',
+    'tunein.png',
+    'twitch.png',
+    'twitter.png',
+    'uber-eats.png',
+    'uber.png',
+    'unsafe.png',
+    'user.png',
+    'video-sign.png',
+    'video.png',
+    'vimeo.png',
+    'wallet.png',
+    'watch-video.png',
+    'waze.png',
+    'weather-cloud.png',
+    'wechat.png',
+    'whatsapp.png',
+    'windows.png',
+    'wireless.png',
+    'xbox.png',
+    'xing.png',
+    'youtube.png',
+    'zoom.png'
   ];
 
   const [loading, setLoading] = useState(true);
@@ -99,7 +241,6 @@ function NewTablet(props: Props) {
   const [participatingTeam, setParticipatingTeam] = useState(null);
   const [showInviteUsernames, setShowInviteUsernames] = useState({});
   const [inviteUsernames, setInviteUsernames] = useState({});
-  // console.log(participatingTeam);
 
   useEffect(() => {
     fetchDepartmentEvents();
@@ -193,10 +334,11 @@ function NewTablet(props: Props) {
             parsedDepartments[dept['id']] = dept;
           });
           setDepartments(parsedDepartments);
-        } else logout();
+        }
+        // else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -209,10 +351,11 @@ function NewTablet(props: Props) {
             setCurrSponsorAUD({ ...currSponsorAUD, eventId: data['events'][0]['id'] });
           }
           setEvents(data['events']);
-        } else logout();
+        }
+        // else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -246,10 +389,11 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setEventCoordies(data['eventCoordies']);
-        } else logout();
+        }
+        //  else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -283,18 +427,20 @@ function NewTablet(props: Props) {
           if (data['details']['resumeLink'] === null) data['details']['resumeLink'] = '';
           setUserDetails(data['details']);
           setNewUserDetails(data['details']);
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleEditDetails = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -310,19 +456,23 @@ function NewTablet(props: Props) {
         if (data['success']) {
           fetchUserDetails();
           setProfileSection(0);
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const fetchTeamInvites = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      if (tab === 'Profile') logout();
+      if (tab === 'Profile') {
+        closePopup();
+        logout();
+      }
       return;
     }
     UserService.getTeamInvites(token)
@@ -338,18 +488,20 @@ function NewTablet(props: Props) {
           setInviteUsernames(
             Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], '']))
           );
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const fetchTeamMembers = (teamId: number) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -357,18 +509,20 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setTeamMembers({ ...teamMembers, [teamId]: data['members'] });
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        // else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleCreateTeam = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -376,18 +530,20 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleDeleteTeam = (teamId: number) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -395,12 +551,13 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
@@ -411,6 +568,7 @@ function NewTablet(props: Props) {
     }
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -423,6 +581,7 @@ function NewTablet(props: Props) {
           setProfileSection(2);
         } else if (data['message'] === 'Invalid token!') {
           toast.error('Please login again!');
+          closePopup();
           logout();
         } else toast.error(data['message']);
       })
@@ -434,6 +593,7 @@ function NewTablet(props: Props) {
   const handleRespondTeamInvite = (teamId: number, status: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -441,18 +601,20 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleRemoveMember = (teamId: number, userId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -461,18 +623,20 @@ function NewTablet(props: Props) {
         if (data['success']) {
           setProfileSection(2);
           fetchTeamInvites();
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
   const handleParticipate = (teamId: number, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -482,9 +646,10 @@ function NewTablet(props: Props) {
           setEventSection(0);
           fetchParticipation(events[selectedEventID]['id']);
           toast.success('Registered for Event Successfully!');
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else toast.error(data['message']);
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else toast.error(data['message']);
       })
       .catch(() => {
         toast.error('Please try again later!');
@@ -504,7 +669,7 @@ function NewTablet(props: Props) {
           fetchParticipation(events[selectedEventID]['id']);
           toast.success('Unregistered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
-          logout();
+          // logout();
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -515,6 +680,7 @@ function NewTablet(props: Props) {
   const handleAddDepartmentEvent = (name: string, organizer: string, desc: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -535,6 +701,7 @@ function NewTablet(props: Props) {
   const handleDeleteDepartmentEvent = (id: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -555,6 +722,7 @@ function NewTablet(props: Props) {
   const handleAddDepartmentEventCoordie = (userId: string, deptEventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -577,6 +745,7 @@ function NewTablet(props: Props) {
   const handleRemoveDepartmentEventCoordie = (userId: string, deptEventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -608,6 +777,7 @@ function NewTablet(props: Props) {
   ) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -651,6 +821,7 @@ function NewTablet(props: Props) {
   const handleDeleteEvent = (id: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -671,6 +842,7 @@ function NewTablet(props: Props) {
   const handleAddEventCoordie = (userId: string, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -692,6 +864,7 @@ function NewTablet(props: Props) {
   const handleRemoveEventCoordie = (userId: string, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
+      closePopup();
       logout();
       return;
     }
@@ -823,8 +996,8 @@ function NewTablet(props: Props) {
                           .map((APP_ICON, j) => (
                             <img
                               key={`${department}-${j}`}
-                              className="w-10 h-10 m-1 bg-orange-500 rounded-xl shrink-0"
-                              src={APP_ICON}
+                              className="m-1 w-11 h-11 rounded-xl shrink-0"
+                              src={`/event-icons/${APP_ICON}`}
                             />
                           ))}
                       </div>
@@ -849,8 +1022,10 @@ function NewTablet(props: Props) {
                       className="flex flex-col items-center m-2 w-36 h-1/3"
                       onClick={() => handleSelectEvent(i)}>
                       <img
-                        className="w-20 h-20 m-1 bg-orange-500 rounded-xl shrink-0"
-                        src={APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]}
+                        className="w-20 h-20 m-1 rounded-xl shrink-0"
+                        src={`/event-icons/${
+                          APP_ICONS[Math.floor(Math.random() * APP_ICONS.length)]
+                        }`}
                       />
                       <span className="text-sm font-bold">{event['name']}</span>
                     </button>

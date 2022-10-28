@@ -8,11 +8,12 @@ interface LoginBoxPropType {
   onLogin: (e: any) => void;
   onCrossPress: (e: any) => void;
   onToggle: (e: any) => void;
+  onForgotPassword: (e: any) => void;
 }
 /* eslint-enable */
 
 // eslint-disable-next-line no-unused-vars
-function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
+function LoginBox({ onCrossPress, onLogin, onToggle, onForgotPassword }: LoginBoxPropType) {
   // eslint-disable-next-line no-unused-vars
   function LoggingIn(e: any) {
     e.preventDefault();
@@ -89,7 +90,9 @@ function LoginBox({ onCrossPress, onLogin, onToggle }: LoginBoxPropType) {
 
               <div className="flex items-center justify-end">
                 <div className="text-sm">
-                  <a href="#" className="font-medium text-slate-100 hover:text-slate-200">
+                  <a
+                    onClick={onForgotPassword}
+                    className="font-medium text-slate-100 hover:text-slate-200">
                     Forgot your password?
                   </a>
                 </div>
