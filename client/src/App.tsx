@@ -46,12 +46,12 @@ function App() {
               <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           /> */}
+          <Route path="simplistic" element={<Simplistic />} />
         </Route>
         <Route element={<NavWrapper />}>
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/sponsors" element={<SponsorPage />} />
-          <Route path="simplistic" element={<Simplistic />} />
           <Route path="reset-password" element={<Simplistic />} />
           {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
           {/* <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
