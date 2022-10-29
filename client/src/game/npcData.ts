@@ -53,7 +53,7 @@ export const npcData: {
     location: 'outside csed',
     type: 'text',
     character: 'Guard',
-    text: `I am tired of telling students not to park their bycles here. Oh God! How many times will I have to tell them?`
+    text: `I am tired of telling students not to park their bicycles here. Oh God! How many times will I have to tell them?`
   },
   'campus-58': {
     name: 'Mr. Ratanlal',
