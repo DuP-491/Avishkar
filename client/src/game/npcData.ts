@@ -334,5 +334,12 @@ export const npcData: {
     type: 'text',
     character: 'Random guy',
     text: `All my friends have girlfriends.~And I'm so lonely. I wish I had a girlfriend.`
+  },
+  'campus-102': {
+    name: 'Chirag',
+    location: 'map bottom',
+    type: 'text',
+    character: 'Chirag',
+    text: `I tried so hard and got so far~But in the end it doesn't even matter~I had to fall to lose it all~But in the end it doesn't even matter`
   }
 };
