@@ -19,6 +19,7 @@ import Trivia from '../components/Trivia';
 import NoticeBoard from '../components/NoticeBoard';
 import UserService from '../simplistic/services/UserService';
 import Leaderboard from '../components/Leaderboard';
+import QuickNav from '../components/QuickNav';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -72,6 +73,7 @@ function GameComponent(props: Props) {
   const [showNotice, setShowNotice] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [triviaFunction, setTriviaFunction] = useState(() => () => {});
+  const [showQuickNav, setShowQuickNav] = useState(false);
 
   const [userDetails, setUserDetails] = useState({
     id: '',
@@ -415,6 +417,9 @@ function GameComponent(props: Props) {
   const handleLeaderboardClick = () => {
     setShowLeaderboard(true);
   };
+  const handleQuickNavClick = () => {
+    setShowQuickNav(true);
+  };
 
   return (
     <>
@@ -482,6 +487,7 @@ function GameComponent(props: Props) {
       {showLeaderboard && (
         <Leaderboard closePopup={closeLeaderboard} user={userDetails}></Leaderboard>
       )}
+      {showQuickNav && <QuickNav setShowQuickNav={setShowQuickNav} teleport={teleport} />}
       {/* <div className="absolute w-full h-full top-0 pt-[7%]">
       </div> */}
       <div className="absolute bottom-0 z-10 w-full">
@@ -520,6 +526,15 @@ function GameComponent(props: Props) {
             }`}
             width={64}
             onClick={handleLeaderboardClick}
+          />
+          <img
+            // eslint-disable-next-line no-undef
+            src={require('../images/quickNavigation-icon.png')}
+            className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-[212px] bottom-[17.5rem] opacity-80 ${
+              !showQuickNav ? `cursor-zoom-in` : `cursor-zoom-out`
+            }`}
+            width={58}
+            onClick={handleQuickNavClick}
           />
         </div>
       </div>
