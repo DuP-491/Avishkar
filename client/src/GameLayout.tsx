@@ -1,9 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import GameComponent from './game';
 
 function GameLayout() {
-  const navigator = useNavigate();
+  // const navigator = useNavigate();
   return (
     <div className="w-screen h-screen overflow-hidden">
       <div className="flex w-full h-full">
