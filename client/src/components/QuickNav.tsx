@@ -4,7 +4,7 @@ import { TELEPORT_LOCATIONS } from '../game/consts';
 import PropTypes from 'prop-types';
 
 function QuickNav(props: Props) {
-  const { setShowQuickNav, teleport } = props;
+  const { setShowQuickNav, teleport, handleLogoutClick } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
 
@@ -54,16 +54,31 @@ function QuickNav(props: Props) {
             className="items-center w-1/2 h-0 overflow-auto whitespace-pre-line transition-all duration-500 noscroll ">
             <p className="text-2xl font-bold text-center">Quick Navigation Menu</p>
             {/* <p className="text-xs font-bold text-center">(Avishkar 2022)</p> */}
-            <br />
-            Want to create teams?{' '}
-            <span
-              className="underline cursor-pointer"
-              onClick={() => teleport(TELEPORT_LOCATIONS.quickCafe)}>
-              Visit cafe
-            </span>
-            <br />
-            Want to take a break? <span className="underline cursor-pointer">Log out</span>
-            <p className="mt-8 text-xs font-bold text-center">
+            <ul className="my-8 space-y-4 list-disc list-inside">
+              <li>
+                Want to create teams?{' '}
+                <span
+                  className="underline cursor-pointer"
+                  onClick={() => teleport(TELEPORT_LOCATIONS.quickCafe)}>
+                  Visit cafe
+                </span>
+              </li>
+              <li>
+                Checkout what{`'`}s going on at GnoTalks.
+                <span
+                  className="underline cursor-pointer"
+                  onClick={() => teleport(TELEPORT_LOCATIONS.gnotalks)}>
+                  Visit Mp Hall
+                </span>
+              </li>
+              <li>
+                Want to take a break?{' '}
+                <span className="underline cursor-pointer" onClick={handleLogoutClick}>
+                  Log out
+                </span>
+              </li>
+            </ul>
+            <p className="mt-16 text-xs font-bold text-center">
               (NOTE: You must be logged in before you can access most of the features of Quick
               Navigation Facility.)
             </p>
@@ -81,7 +96,8 @@ function QuickNav(props: Props) {
 
 QuickNav.propTypes = {
   setShowQuickNav: PropTypes.func.isRequired,
-  teleport: PropTypes.func.isRequired
+  teleport: PropTypes.func.isRequired,
+  handleLogoutClick: PropTypes.func.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof QuickNav.propTypes>;

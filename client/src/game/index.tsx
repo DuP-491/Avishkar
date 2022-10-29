@@ -178,6 +178,7 @@ function GameComponent(props: Props) {
           setShowLeaderboard(false);
           setShowNotice(false);
           setShowTrivia(false);
+          setShowQuickNav(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           // console.log('logout');
@@ -420,6 +421,9 @@ function GameComponent(props: Props) {
   const handleQuickNavClick = () => {
     setShowQuickNav(true);
   };
+  const handleLogoutClick = () => {
+    game?.instance?.events.emit(EVENTS_NAME.logout);
+  };
 
   return (
     <>
@@ -487,7 +491,13 @@ function GameComponent(props: Props) {
       {showLeaderboard && (
         <Leaderboard closePopup={closeLeaderboard} user={userDetails}></Leaderboard>
       )}
-      {showQuickNav && <QuickNav setShowQuickNav={setShowQuickNav} teleport={teleport} />}
+      {showQuickNav && (
+        <QuickNav
+          setShowQuickNav={setShowQuickNav}
+          teleport={teleport}
+          handleLogoutClick={handleLogoutClick}
+        />
+      )}
       {/* <div className="absolute w-full h-full top-0 pt-[7%]">
       </div> */}
       <div className="absolute bottom-0 z-10 w-full">
