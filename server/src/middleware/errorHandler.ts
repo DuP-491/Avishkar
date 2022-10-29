@@ -35,7 +35,7 @@ export function prismaErrorHandler(err: Prisma.PrismaClientKnownRequestError, re
     res.statusCode = 409;
     res.json({
         error: `error ${err.code}`,
-        message: "there already exists a user with these details!",
+        message: "there was some error! contact the administrator!",
         success: false,
     });
     next();
