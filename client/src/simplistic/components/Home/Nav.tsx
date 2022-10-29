@@ -1,19 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../Assets/logo-white.png';
+import logo from '../../Assets/logo.png';
 
 const Nav = () => {
   return (
     <div className="flex items-center justify-center pt-10 space-x-4">
       <nav className="flex space-x-8 text-white capitalize list-none">
         <li>
-          <a href="">one</a>
+          <Link to="/department" className="hover:font-bold">
+            Event
+          </Link>
         </li>
         <li>
-          <a href="">two</a>
+          <Link to="/schedule" className="hover:font-bold">
+            Schedule
+          </Link>
         </li>
         <li>
-          <a href="">three</a>
+          <Link to="/team" className="hover:font-bold">
+            team
+          </Link>
         </li>
       </nav>
       <div>
@@ -23,13 +29,19 @@ const Nav = () => {
       </div>
       <nav className="flex space-x-8 text-white capitalize list-none">
         <li>
-          <Link to="/sponsors">Sponsors</Link>
+          <Link to="/sponsors" className="hover:font-bold">
+            Sponsors
+          </Link>
         </li>
         <li>
-          <Link to="/team">team</Link>
+          <Link to="/faq" className="hover:font-bold">
+            faq
+          </Link>
         </li>
         <li>
-          <Link to="/faq">faq</Link>
+          <Link to="/login" className="hover:font-bold">
+            Login
+          </Link>
         </li>
       </nav>
     </div>

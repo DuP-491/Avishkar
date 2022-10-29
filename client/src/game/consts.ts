@@ -16,8 +16,7 @@ export enum EVENTS_NAME {
   sceneCampus = 'scene-campus',
   sceneCafe = 'scene-cafe',
   openMap = 'open-map',
-  closeMap = 'close-map',
-  openTeam = 'open-team'
+  closeMap = 'close-map'
 }
 
 export enum TELEPORT_LOCATIONS {
@@ -27,7 +26,9 @@ export enum TELEPORT_LOCATIONS {
   csed = 'csed',
   mpHall = 'mpHall',
   noticeBoard = 'noticeBoard',
-  boysHostel = 'boysHostel'
+  boysHostel = 'boysHostel',
+  sponser = 'sponser',
+  trivia = 'trivia'
 }
 
 export const TELEPORT_LOCATIONS_DATA: {
@@ -60,6 +61,14 @@ export const TELEPORT_LOCATIONS_DATA: {
   boysHostel: {
     x: 5900,
     y: 860
+  },
+  sponser: {
+    x: 600,
+    y: 2750
+  },
+  trivia: {
+    x: 750,
+    y: 2400
   }
 };
 

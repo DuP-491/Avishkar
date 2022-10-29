@@ -122,6 +122,46 @@ export default {
     }
   },
 
+  updateTeam: async function (token: string, teamId: number, name: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/team/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ teamId, name })
+      });
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Success'
+          };
+        case 400:
+          return {
+            success: false,
+            message: 'Cannot update team name since it is already participating in event!'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
+  },
+
   getTeamMembers: async function (token: string, teamId: number) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/team/${teamId}/`, {
@@ -393,7 +433,7 @@ export default {
         case 400:
           return {
             success: false,
-            message: 'Team is not ready to participate!'
+            message: "Team with pending invitations can't register for event!"
           };
         case 401:
           return {
@@ -449,6 +489,42 @@ export default {
           return {
             success: false,
             message: "Team/Event doesn't exist!"
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
+  },
+
+  checkEventParticipation: async function (token: string, eventId: string) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/user/participate/${eventId}/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = await res.json();
+      switch (res.status) {
+        case 200:
+          return {
+            participatingTeam: data['participatingTeam'],
+            success: true,
+            message: 'Success'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
           };
         default:
           return {

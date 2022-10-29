@@ -6,7 +6,7 @@ function PromptButton(props: Props) {
     <div
       className={props.btnClass}
       onClick={() => {
-        console.log('clicked');
+        // console.log('clicked');
         props.customFunction();
       }}>
       {props.btnText}

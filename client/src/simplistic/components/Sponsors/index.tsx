@@ -1,6 +1,4 @@
 import React from 'react';
-import Tablet from '../Tablet';
-import BGIMG from './../../../images/tablet_bg.png';
 import BalsamiqIMG from '../Sponsor/Assets/Balsamiq.png';
 import BlogaddaIMG from '../Sponsor/Assets/Blogadda.png';
 import BlueskyIMG from '../Sponsor/Assets/Bluesky.jpg';
@@ -29,10 +27,12 @@ import PayTMIMG from '../Sponsor/Assets/PayTM.png';
 import PolygonIMG from '../Sponsor/Assets/Polygon.png';
 import ProtoioIMG from '../Sponsor/Assets/Protoio.png';
 import RedIMG from '../Sponsor/Assets/Red.png';
+import ReplitIMG from '../Sponsor/Assets/Replit.png';
 import ScalerEdgeIMG from '../Sponsor/Assets/ScalerEdge.png';
 import SketchIMG from '../Sponsor/Assets/Sketch.png';
 import SkillenzaIMG from '../Sponsor/Assets/Skillenza.png';
 import SkillLyncIMG from '../Sponsor/Assets/SkillLync.png';
+import SolanaIMG from '../Sponsor/Assets/Solana.png';
 import SSGIMG from '../Sponsor/Assets/SSG.png';
 import TezosIMG from '../Sponsor/Assets/Tezos.png';
 import TIMEIMG from '../Sponsor/Assets/TIME.png';
@@ -41,10 +41,7 @@ import YouthIMG from '../Sponsor/Assets/Youth.png';
 import DividerLine from '../Common/DividerLine';
 
 /* eslint-disable */
-interface TeamAvishkarPropType {
-  onCrossPress: (e: any) => void;
-}
-function Sponsors({ onCrossPress }: TeamAvishkarPropType) {
+function Sponsors() {
   function DisplayCard(prop: Array<string>) {
     return (
       <div className="flex flex-wrap justify-around mt-10">
@@ -63,67 +60,63 @@ function Sponsors({ onCrossPress }: TeamAvishkarPropType) {
 
   return (
     <>
-      <Tablet
-        bgrd={BGIMG}
-        onBackPress={() => {}}
-        onCrossPress={onCrossPress}
-        onHomePress={() => {}}>
-        <div className="flex justify-center pt-3">
-          <span className="animating-event-title">T</span>
-          <span className="animating-event-title">E</span>
-          <span className="animating-event-title">A</span>
-          <span className="animating-event-title">M</span>
-        </div>
-        <div className="flex flex-col items-center px-10 pb-10">
-          <>
-            <DividerLine alignmentCenter={true} text="SPONSORS" />
-            {DisplayCard([DevfolioIMG])}
-          </>
-        </div>
-        <div className="flex flex-col items-center px-10 pb-10">
-          <>
-            <DividerLine alignmentCenter={true} text="PAST SPONSORS" />
-            {DisplayCard([
-              BalsamiqIMG,
-              BlogaddaIMG,
-              BlueskyIMG,
-              BugseeIMG,
-              BuyTheValueIMG,
-              CeloIMG,
-              CodechefIMG,
-              CodingBlocksIMG,
-              CodingNinjaIMG,
-              CreativeTimIMG,
-              Dare2CompeteIMG,
-              DellIMG,
-              FilecoinIMG,
-              GithubIMG,
-              GrowwIMG,
-              HackerEarthIMG,
-              HindustanTimesIMG,
-              InterviewBuddyIMG,
-              JetBrainsIMG,
-              KwalityWallsIMG,
-              MaticIMG,
-              MHMIMG,
-              MyLocIMG,
-              PayTMIMG,
-              PolygonIMG,
-              ProtoioIMG,
-              RedIMG,
-              ScalerEdgeIMG,
-              SketchIMG,
-              SkillenzaIMG,
-              SkillLyncIMG,
-              SSGIMG,
-              TezosIMG,
-              TIMEIMG,
-              UltratechIMG,
-              YouthIMG
-            ])}
-          </>
-        </div>
-      </Tablet>
+      <div className="flex justify-center pt-3">
+        <span className="animating-event-title">S</span>
+        <span className="animating-event-title">P</span>
+        <span className="animating-event-title">O</span>
+        <span className="animating-event-title">N</span>
+        <span className="animating-event-title">S</span>
+        <span className="animating-event-title">O</span>
+        <span className="animating-event-title">R</span>
+        <span className="animating-event-title">S</span>
+      </div>
+      <div className="flex flex-col items-center px-10 pb-10">
+        <>
+          <DividerLine alignmentCenter={true} text="SPONSORS" />
+          {DisplayCard([DevfolioIMG, FilecoinIMG, PolygonIMG, ReplitIMG, SolanaIMG])}
+        </>
+      </div>
+      <div className="flex flex-col items-center px-10 pb-10">
+        <>
+          <DividerLine alignmentCenter={true} text="PAST SPONSORS" />
+          {DisplayCard([
+            TezosIMG,
+            BalsamiqIMG,
+            BlogaddaIMG,
+            BlueskyIMG,
+            BugseeIMG,
+            BuyTheValueIMG,
+            CeloIMG,
+            CodechefIMG,
+            CodingBlocksIMG,
+            CodingNinjaIMG,
+            CreativeTimIMG,
+            Dare2CompeteIMG,
+            DellIMG,
+            GithubIMG,
+            GrowwIMG,
+            HackerEarthIMG,
+            HindustanTimesIMG,
+            InterviewBuddyIMG,
+            JetBrainsIMG,
+            KwalityWallsIMG,
+            MaticIMG,
+            MHMIMG,
+            MyLocIMG,
+            PayTMIMG,
+            ProtoioIMG,
+            RedIMG,
+            ScalerEdgeIMG,
+            SketchIMG,
+            SkillenzaIMG,
+            SkillLyncIMG,
+            SSGIMG,
+            TIMEIMG,
+            UltratechIMG,
+            YouthIMG
+          ])}
+        </>
+      </div>
     </>
   );
 }

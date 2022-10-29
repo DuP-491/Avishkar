@@ -6,11 +6,17 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typewriter from 'typewriter-effect';
 import { toast } from 'react-toastify';
+import { supabase } from '../game/config';
 
 function Trivia(props: Props) {
-  const { question, answer, onClose } = props;
+  const { onClose, user, userCoinDetails } = props;
   const baseDiv = useRef<HTMLDivElement>(null);
   const textDiv = useRef<HTMLDivElement>(null);
+  const [question, setQuestion] = React.useState('');
+  const [answer, setAnswer] = React.useState('');
+  const [points, setPoints] = React.useState(0);
+  const [userAnswer, setUserAnswer] = React.useState('');
+  const [qid, setQid] = React.useState(-1);
 
   const handleClick = () => {
     if (baseDiv.current) {
@@ -23,16 +29,81 @@ function Trivia(props: Props) {
     }
   };
 
-  const handleSubmit = () => {
-    console.log(answer);
+  const handleSubmit = async () => {
+    // console.log(answer);
+    if (userCoinDetails?.last_qid == qid) {
+      toast.error('You already answered this question!');
+      handleClick();
+      setTimeout(() => {
+        onClose();
+      }, 500);
+      return;
+    }
+    // console.log(userAnswer, answer);
+    if (userAnswer.toLowerCase() === answer.toLowerCase()) {
+      toast.success(`Correct! You have been awarded ${points} points!`);
+      const { data: _data, error } = await supabase
+        .from('leaderboard')
+        .update({ coins: userCoinDetails.coins + points, last_qid: qid })
+        .eq('user_id', user.id);
+      if (error) {
+        toast.error(error.message);
+        handleClick();
+        setTimeout(() => {
+          onClose();
+        }, 500);
+      }
+    } else {
+      toast.error(`Incorrect! Please try again tomorrow!`);
+      const { data: _data, error } = await supabase
+        .from('leaderboard')
+        .update({ last_qid: qid })
+        .eq('user_id', user.id);
+      if (error) {
+        toast.error(error.message);
+        handleClick();
+        setTimeout(() => {
+          onClose();
+        }, 500);
+      }
+    }
+
     // handle given answer here
-    toast.success('Correct! You have been awarded 1000 points!');
     sessionStorage.setItem('dailyTrivia', 'true');
     handleClick();
     setTimeout(() => {
       onClose();
     }, 500);
   };
+
+  useEffect(() => {
+    // Get latest trivia question
+    (async function _() {
+      const { data: question, error } = await supabase
+        .from('trivia')
+        .select('id,question,answer,coins')
+        .order('id', { ascending: false })
+        .limit(1)
+        .single();
+      if (error) {
+        // console.log(error);
+        toast.error('No trivia questions found! Please try again later!');
+        handleClick();
+        setTimeout(() => {
+          onClose();
+        }, 500);
+      }
+      if (question) {
+        // console.log(question);
+        setQid(question.id);
+        setQuestion(question.question);
+        const decrypted = rot13(question.answer);
+        // console.log(decrypted);
+        setAnswer(decrypted);
+        setPoints(question.coins);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -48,6 +119,18 @@ function Trivia(props: Props) {
       }
     }, 500);
   }, [baseDiv]);
+
+  const rot13 = (str: string) => {
+    const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+    let encoded = '';
+    for (let i = 0; i < str.length; i++) {
+      const index = input.indexOf(str[i]);
+      encoded += output[index];
+    }
+
+    return encoded;
+  };
 
   return (
     <>
@@ -78,6 +161,8 @@ function Trivia(props: Props) {
           {/* Input to accept answer */}
           <input
             type="text"
+            value={userAnswer}
+            onChange={(e) => setUserAnswer(e.target.value)}
             className="w-1/2 px-2 py-1 text-black bg-yellow-100 border-2 border-yellow-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent"
           />
           {/* Submit button */}
@@ -87,17 +172,15 @@ function Trivia(props: Props) {
             Submit
           </button>
         </div>
-
-        {/* TODO: toaster for correct / incorrect answer */}
       </div>
     </>
   );
 }
 
 Trivia.propTypes = {
-  question: PropTypes.string.isRequired,
-  answer: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  user: PropTypes.any.isRequired,
+  userCoinDetails: PropTypes.any.isRequired
 };
 
 type Props = PropTypes.InferProps<typeof Trivia.propTypes>;

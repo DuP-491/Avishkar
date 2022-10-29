@@ -1,5 +1,10 @@
 export default {
-  addDepartmentEvent: async function (token: string, name: string, organizer: string) {
+  addDepartmentEvent: async function (
+    token: string,
+    name: string,
+    organizer: string,
+    desc: string
+  ) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/dept-event/`, {
         method: 'POST',
@@ -7,7 +12,7 @@ export default {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ name, organizer })
+        body: JSON.stringify({ name, organizer, desc })
       });
       switch (res.status) {
         case 200:
@@ -84,6 +89,11 @@ export default {
           return {
             success: true,
             message: 'Success'
+          };
+        case 400:
+          return {
+            success: false,
+            message: "User Id doesn't belong to a user!"
           };
         case 401:
           return {

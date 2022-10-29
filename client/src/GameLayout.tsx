@@ -13,7 +13,7 @@ function GameLayout() {
         className="absolute bottom-5 left-5 text-white bg-black bg-opacity-50 backdrop-blur-sm text-sm z-40 p-2"
         onClick={() => {
           sessionStorage.setItem('game', 'false');
-          navigator('/');
+          navigator('/simplistic');
         }}>
         Continue in Simplistic Tablet
       </div>

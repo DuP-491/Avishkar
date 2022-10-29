@@ -8,20 +8,21 @@ function Map(props: Props) {
   const baseDiv = useRef<HTMLDivElement>(null);
   const [showMarks, setShowMarks] = useState(false);
   const eventQuotes = [
-    'A quest for top notch programmers and hackers.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.',
-    'lorem ipsum dolor sit amet.'
+    'Programmers and Hackers put on your hats and dive into the cyber world.',
+    'Does the electronic circuits amaze you? This event is your calling.',
+    'Electrify the environment with the power inside you.',
+    'Get yourself chemically reacting and enjoy the world of chemistry.',
+    'All thermodynamically unstable mechanchies , welcome to this fun event.',
+    'Build to sustain and to inspire.',
+    'Amazing world of biotechnology in front of you.',
+    'See the manager inside you and test your communication and leadership skills.',
+    'A leadership event to test your team leading and strategic skills.',
+    'Robotic geeks build and show your stuffs here and amaze the audience.',
+    'Fly high and look beyond the horizons.',
+    'Lover of the night sky , lets have some contest.',
+    'An event for the gaming maniacs.',
+    'Want to know what you dont know ? Lets get the mind to work.',
+    'Where Actions Speak'
   ];
 
   const handleClick = () => {
@@ -158,6 +159,12 @@ function Map(props: Props) {
               />
             </svg>
             {/* Noticeboard SVG */}
+            <div
+              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-sky-400 animate-ping"
+              style={{
+                top: 41 + '%',
+                left: 31 + '%'
+              }}></div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 150 150"
@@ -311,12 +318,6 @@ function Map(props: Props) {
                 </g>
               </g>
             </svg>
-            <div
-              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-sky-400 animate-ping"
-              style={{
-                top: 41 + '%',
-                left: 31 + '%'
-              }}></div>
             {/* gnoTalks */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -355,6 +356,84 @@ function Map(props: Props) {
                     d="M64.5,72.22656v-1.00781c0,-7.39062 1.67969,-13.4375 5.03906,-18.14062c3.35938,-4.70312 7.72656,-7.05469 13.77344,-7.05469c2.6875,0 5.03906,0.67188 7.05469,1.67969c2.01563,1.34375 3.69531,3.02344 5.03906,5.03906l1.00781,-6.04687h11.08594v47.36719c0,6.04688 -2.01562,11.08594 -6.04687,14.44531c-4.03125,3.35938 -9.74219,5.03906 -16.79687,5.03906c-2.35156,0 -5.03906,-0.33594 -7.72656,-1.00781c-2.6875,-0.67187 -5.03906,-1.67969 -7.39062,-2.6875l2.01563,-9.74219c2.01563,1.00781 4.03125,1.67969 6.04688,2.01563c2.01563,0.33594 4.36719,0.67188 6.71875,0.67188c3.35938,0 6.04688,-0.67187 7.72656,-2.35156c1.67969,-1.34375 2.35156,-3.69531 2.35156,-6.71875v-4.36719c-1.34375,1.67969 -3.02344,3.02344 -5.03906,4.03125c-2.01562,1.00781 -4.03125,1.34375 -6.38281,1.34375c-5.71094,0 -10.41406,-2.01562 -13.77344,-6.38281c-3.35937,-4.36719 -5.03906,-10.07812 -5.03906,-17.13281zM77.26563,72.22656c0,4.03125 0.67188,7.39063 2.01563,9.74219c1.34375,2.35156 3.69531,3.69531 6.71875,3.69531c2.01563,0 3.69531,-0.33594 5.03906,-1.00781c1.34375,-0.67187 2.35156,-1.67969 3.35938,-3.02344v-20.82812c-0.67187,-1.34375 -2.01562,-2.6875 -3.35937,-3.35937c-1.34375,-0.67187 -3.02344,-1.34375 -5.03906,-1.34375c-3.02344,0 -5.375,1.34375 -6.71875,4.03125c-1.34375,2.6875 -2.01562,6.38281 -2.01562,11.08594z"
                     fill="#e74c3c"
                     fillRule="nonzero"></path>
+                </g>
+              </g>
+            </svg>
+            {/* Sponsors */}
+            <div
+              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
+              style={{
+                top: 44 + '%',
+                left: 7 + '%'
+              }}></div>
+            <img
+              src={require('../images/sponser.png')}
+              className="absolute w-4 h-4 cursor-pointer text-amber-400"
+              style={{
+                top: 44 + '%',
+                left: 7 + '%'
+              }}
+              onClick={() => teleport(TELEPORT_LOCATIONS.sponser)}
+            />
+            {/* Trivia */}
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 172 172"
+              className="absolute w-4 h-4 cursor-pointer animate-pulse text-amber-400"
+              style={{
+                top: 38 + '%',
+                left: 9 + '%'
+              }}
+              onClick={() => teleport(TELEPORT_LOCATIONS.trivia)}>
+              <g
+                fill="none"
+                fillRule="nonzero"
+                stroke="none"
+                strokeWidth="1"
+                strokeLinecap="butt"
+                strokeLinejoin="miter"
+                strokeMiterlimit="10"
+                strokeDasharray=""
+                strokeDashoffset="0"
+                fontFamily="none"
+                fontWeight="none"
+                fontSize="none"
+                textAnchor="none">
+                <path d="M0,172v-172h172v172z" fill="none"></path>
+                <g>
+                  <rect
+                    x="165.873"
+                    y="0"
+                    transform="scale(0.42574,0.42574)"
+                    width="74.393"
+                    height="94.093"
+                    fill="#e74c3c"></rect>
+                  <path
+                    d="M57.8201,48.16298l-22.39576,22.34595l-23.23788,-23.18637l22.39576,-22.34595z"
+                    fill="#e74c3c"></path>
+                  <path
+                    d="M114.1799,48.16298l22.39576,22.34595l23.23788,-23.18637l-22.39576,-22.34595z"
+                    fill="#e74c3c"></path>
+                  <ellipse
+                    cx="201.745"
+                    cy="233.341"
+                    transform="scale(0.42574,0.42574)"
+                    rx="155.003"
+                    ry="154.659"
+                    fill="#ffffff"></ellipse>
+                  <path
+                    d="M108.09434,147.42614c-36.44612,0 -65.99138,-29.47969 -65.99138,-65.84492c0,-15.64178 5.46994,-30.00719 14.60084,-41.30299c-21.80441,10.74787 -36.80332,33.15683 -36.80332,59.06497c-0.00043,36.36523 29.54483,65.84492 65.99095,65.84492c20.76943,0 39.29391,-9.57623 51.39053,-24.54193c-8.80052,4.33832 -18.70755,6.77995 -29.18763,6.77995z"
+                    fill="#e6e7e8"></path>
+                  <path
+                    d="M85.89144,172c-40.14412,0 -72.80326,-32.59357 -72.80326,-72.6568c0,-40.06323 32.65956,-72.65638 72.80326,-72.65638c40.14369,0 72.80326,32.59357 72.80326,72.6568c0,40.06323 -32.65914,72.65638 -72.80326,72.65638zM85.89144,40.31058c-32.63189,0 -59.1795,26.48204 -59.1795,59.03304c0,32.551 26.5476,59.03261 59.1795,59.03261c32.63189,0 59.1795,-26.48204 59.1795,-59.03304c0,-32.551 -26.5476,-59.03261 -59.1795,-59.03261z"
+                    fill="#3e4d6c"></path>
+                  <path
+                    d="M85.15362,65.26974c-5.43418,0 -10.96841,1.58121 -15.29395,4.91605l3.73249,9.77462c2.71368,-2.44249 6.2367,-4.03902 9.92661,-4.03945c4.21059,0.06684 6.34569,1.91712 6.34569,5.49889c0,3.39317 -2.09636,6.52025 -5.72922,10.79002c-4.54054,5.43588 -6.61434,11.28346 -5.99956,16.9122l0.32697,4.2404h11.13359l-0.17583,-4.56396c-0.2414,-4.08755 1.08181,-7.43091 4.5695,-11.54358c4.6176,-5.47079 8.14956,-10.18249 8.14956,-16.81087c0.00043,-7.5531 -5.25153,-15.17432 -16.98585,-15.17432z"
+                    fill="#e74c3c"></path>
+                  <path
+                    d="M83.8202,118.0631c-4.32938,0 -7.47178,3.24756 -7.47178,7.72169c0,4.35109 3.17391,7.63229 7.38238,7.63229c4.3298,0 7.47221,-3.2101 7.47221,-7.63229c0,-4.47455 -3.10494,-7.72169 -7.3828,-7.72169z"
+                    fill="#e74c3c"></path>
                 </g>
               </g>
             </svg>
@@ -461,8 +540,8 @@ function Map(props: Props) {
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
-                      left: 61.089999999999996 + '%',
-                      top: 26.67 + '%'
+                      left: 60 + '%',
+                      top: 36 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
@@ -470,6 +549,25 @@ function Map(props: Props) {
                   <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
                     <div className="">NIRMAAN</div>
                     <div className="text-blue-900">{eventQuotes[5]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
+                </Tooltip.Content>
+              </Tooltip.Root>
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
+                    style={{
+                      left: 64 + '%',
+                      top: 36 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ROBOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[9]}</div>
                   </div>
                   {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
@@ -545,7 +643,7 @@ function Map(props: Props) {
                 <Tooltip.Content>
                   <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
                     <div className="">GNOTALKS</div>
-                    <div className="text-blue-900">{eventQuotes[9]}</div>
+                    <div className="text-blue-900">{eventQuotes[14]}</div>
                   </div>
                   {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>

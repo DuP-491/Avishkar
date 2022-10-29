@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import tabletBg from '../../../images/tablet_bg.png';
 import AuthService from '../../services/AuthService';
-
+import Logo from '../../Assets/logo.png';
 const ResetPassword = () => {
   const key = useParams().token;
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const ResetPassword = () => {
       .then((data) => {
         if (data['success']) {
           console.log('Success');
-          navigate('/game');
+          navigate('/');
         } else if (data['message'] === 'Invalid token!') {
           // Invalid Token
         } else console.log(data['message']); // Replace with Toast/Alert
@@ -40,19 +41,12 @@ const ResetPassword = () => {
   return (
     <div
       className="flex items-center justify-center w-full h-screen"
-      style={{
-        background:
-          'url(https://assets.nflxext.com/ffe/siteui/vlv3/79fe83d4-7ef6-4181-9439-46db72599559/bd05b4ed-7e37-4be9-85c8-078f067bd150/IN-en-20221017-popsignuptwoweeks-perspective_alpha_website_large.jpg)'
-      }}>
+      style={{ background: `url(${tabletBg})` }}>
       <div className="flex flex-col items-center justify-center w-full px-6 py-8 lg:py-0">
         <a
           href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img
-            className="w-8 h-8 mr-2"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-            alt="logo"
-          />
+          className="flex items-center mb-6 text-4xl font-semibold text-gray-900 dark:text-white">
+          <img className="w-16 h-16 mr-2" src={Logo} alt="logo" />
           Avishkar
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

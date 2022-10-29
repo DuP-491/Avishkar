@@ -21,6 +21,11 @@ import ResetPassword from './simplistic/components/Authentication/ResetPassword'
 import ForgotPassword from './simplistic/components/Authentication/ForgotPassword';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import TeamAvishkar from './simplistic/components/TeamAvishkar';
+import ResponsiveNav from './simplistic/components/Common/ResponsiveNav';
+import Footer from './simplistic/components/Common/Footer';
+import NavWrapper from './NavFooterWrapper';
+import Schedule from './simplistic/components/Common/Schedule';
 /* eslint-enable */
 
 function App() {
@@ -28,42 +33,46 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          <Route index element={<Simplistic />} />
+          <Route path="simplistic" element={<Simplistic />} />
           <Route path="reset-password" element={<Simplistic />} />
-          <Route path="game" element={<GameLayout />} />
+          <Route index element={<GameLayout />} />
           <Route
             path="tab"
             element={
-              <NewTablet is_profile={false} logout={() => {}} closePopup={() => {}} deptId="" />
+              <NewTablet currTab="Departments" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
-          <Route
+          {/* <Route
             path="profile"
             element={
-              <NewTablet is_profile={true} logout={() => {}} closePopup={() => {}} deptId="" />
+              <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
-          />
+          /> */}
         </Route>
-        <Route path="/faq" element={<FaqPage />} />
-        <Route path="/team" element={<TeamPage />} />
-        <Route path="/sponsors" element={<SponsorPage />} />
-        {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
-        <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
-        <Route path="/tbtm" element={<TabletTeam onCrossPress={() => {}} />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/reset/:token" element={<ResetPassword />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/department">
-          <Route index element={<DepartmentList />} />
-          <Route path=":dept">
-            <Route index element={<EventList />} />
-            <Route path=":event" element={<EventPage />} />
+        <Route element={<NavWrapper />}>
+          <Route path="/faq" element={<FaqPage />} />
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/sponsors" element={<SponsorPage />} />
+          {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
+          {/* <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
+        <Route path="/tbtm" element={<TabletTeam onCrossPress={() => {}} />} /> */}
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/reset/:token" element={<ResetPassword />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/profile" element={<UserProfile logout={() => {}} />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/department">
+            <Route index element={<DepartmentList />} />
+            <Route path=":dept">
+              <Route index element={<EventList />} />
+              <Route path=":event" element={<EventPage />} />
+            </Route>
           </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
       <ToastContainer />
     </Router>
   );

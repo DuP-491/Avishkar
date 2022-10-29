@@ -51,7 +51,7 @@ export class LoadingScene extends Scene {
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', function (value: number) {
-      console.log(value);
+      // console.log(value);
       progressBar.clear();
       progressBar.setDepth(50);
       progressBar.fillStyle(0xffffff, 1);
@@ -60,11 +60,11 @@ export class LoadingScene extends Scene {
     });
 
     this.load.on('fileprogress', function (file: { src: string }) {
-      console.log(file.src);
+      // console.log(file.src);
       assetText.setText('Loading asset: ' + file.src);
     });
     this.load.on('complete', function () {
-      console.log('complete');
+      // console.log('loaded');
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
@@ -109,6 +109,10 @@ export class LoadingScene extends Scene {
     this.load.image({
       key: 'tileBigTreeChan',
       url: 'tilemaps/tiles/BigTreeChan.png'
+    });
+    this.load.image({
+      key: 'tilelogo',
+      url: 'tilemaps/tiles/logo.png'
     });
     // this.load.image({
     //   key: 'tileUI',

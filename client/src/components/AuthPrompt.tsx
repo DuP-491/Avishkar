@@ -2,26 +2,29 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import LoginBox from '../simplistic/components/Authentication/LoginBox';
 import SignupBox from '../simplistic/components/Authentication/SignupBox';
+import ForgotPasswordBox from '../simplistic/components/Authentication/ForgotPasswordBox';
 function AuthPrompt(props: Props) {
   const { closePopup, authSuccessCallback, signUpSuccessCallback } = props;
-  const [showSignup, setShowSignup] = useState(false);
+  const [currentPromt, setCurrentPromt] = useState('Login');
 
   return (
-    <div className="z-40 flex justify-center items-center w-full h-full backdrop-blur-sm">
-      {!showSignup && (
+    <div className="z-40 flex items-center justify-center w-full h-full backdrop-blur-sm">
+      {currentPromt === 'Login' && (
         <LoginBox
+          onForgotPassword={() => setCurrentPromt('ForgotPassword')}
           onCrossPress={closePopup}
           onLogin={authSuccessCallback}
-          onToggle={() => setShowSignup(true)}
+          onToggle={() => setCurrentPromt('Signup')}
         />
       )}
-      {showSignup && (
+      {currentPromt === 'Signup' && (
         <SignupBox
           onCrossPress={closePopup}
           onSignup={signUpSuccessCallback}
-          onToggle={() => setShowSignup(false)}
+          onToggle={() => setCurrentPromt('Login')}
         />
       )}
+      {currentPromt === 'ForgotPassword' && <ForgotPasswordBox onCrossPress={closePopup} />}
     </div>
   );
 }
