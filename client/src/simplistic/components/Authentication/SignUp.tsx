@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
@@ -8,12 +8,13 @@ import Cookies from 'js-cookie';
 
 const SignUp = () => {
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (Cookies.get('token')) navigate('/profile');
   }, []);
   function LoggingIn(e: any) {
     e.preventDefault();
+    setIsLoading(true);
     const name = NameRef.current.value;
     const email = EmailRef.current.value;
     const collegeName = CollegeNameRef.current.value;
@@ -23,12 +24,14 @@ const SignUp = () => {
       .then((data) => {
         if (data['success']) {
           console.log('Success');
+          setIsLoading(false);
           toast.success('A verification mail has been sent!');
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
         toast.error('Please try again later!');
       });
+    setIsLoading(false);
   }
 
   const NameRef = useRef(document.createElement('input'));
@@ -53,7 +56,7 @@ const SignUp = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
             </h1>
-            <div className="mt-4 text-white text-center w-full">
+            <div className="w-full mt-4 text-center text-white">
               MNNIT students must use their college GSuite ID
             </div>
             <form className="space-y-4 md:space-y-6" onSubmit={LoggingIn} method="POST">
@@ -146,7 +149,7 @@ const SignUp = () => {
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Create Account
+                {isLoading ? 'creating....' : 'Create Account'}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{' '}

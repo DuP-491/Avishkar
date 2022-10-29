@@ -34,7 +34,7 @@ const index = () => {
         Events
       </h2>
       {/* <div className="flex flex-col mt-10 space-x-4 overflow-auto md:flex-row snap-x snap-mandatory scroll-pl-px hide-scrollbar scroll-smooth justify-evenly flex-nowrap"> */}
-      <div className="flex flex-col space-y-10 overflow-auto snap-x snap-mandatory scroll-pl-px scroll-smooth flex-nowrap md:space-x-10 md:block hide-scrollbar whitespace-nowrap">
+      <div className="flex flex-col items-stretch space-y-8 overflow-auto md:space-y-0 snap-x snap-mandatory scroll-pl-px scroll-smooth flex-nowrap md:space-x-10 md:block hide-scrollbar whitespace-nowrap">
         {Object.keys(departments).map((dept_id) => (
           <DepartmentCard
             key={dept_id}
@@ -43,6 +43,7 @@ const index = () => {
             redirectTo={dept_id}
           />
         ))}
+        {/* {Object.keys(departments).length === 0 && <h2 className="">loading....</h2>} */}
       </div>
     </div>
   );
