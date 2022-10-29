@@ -29,7 +29,8 @@ export enum TELEPORT_LOCATIONS {
   boysHostel = 'boysHostel',
   sponser = 'sponser',
   trivia = 'trivia',
-  quickCafe = 'quickCafe'
+  quickCafe = 'quickCafe',
+  gnotalks = 'gnotalks'
 }
 
 export const TELEPORT_LOCATIONS_DATA: {
@@ -74,6 +75,10 @@ export const TELEPORT_LOCATIONS_DATA: {
   quickCafe: {
     x: 4400,
     y: 3320
+  },
+  gnotalks: {
+    x: 5000,
+    y: 4000
   }
 };
 

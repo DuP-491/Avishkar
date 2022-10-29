@@ -178,6 +178,7 @@ function GameComponent(props: Props) {
           setShowLeaderboard(false);
           setShowNotice(false);
           setShowTrivia(false);
+          setShowQuickNav(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           // console.log('logout');

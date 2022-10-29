@@ -54,15 +54,27 @@ function QuickNav(props: Props) {
             className="items-center w-1/2 h-0 overflow-auto whitespace-pre-line transition-all duration-500 noscroll ">
             <p className="text-2xl font-bold text-center">Quick Navigation Menu</p>
             {/* <p className="text-xs font-bold text-center">(Avishkar 2022)</p> */}
-            <br />
-            Want to create teams?{' '}
-            <span
-              className="underline cursor-pointer"
-              onClick={() => teleport(TELEPORT_LOCATIONS.quickCafe)}>
-              Visit cafe
-            </span>
-            <br />
-            Want to take a break? <span className="underline cursor-pointer">Log out</span>
+            <ul>
+              <li>
+                Want to create teams?{' '}
+                <span
+                  className="underline cursor-pointer"
+                  onClick={() => teleport(TELEPORT_LOCATIONS.quickCafe)}>
+                  Visit cafe
+                </span>
+              </li>
+              <li>
+                Checkout what{`'`}s going on at GnoTalks.
+                <span
+                  className="underline cursor-pointer"
+                  onClick={() => teleport(TELEPORT_LOCATIONS.gnotalks)}>
+                  Visit Mp Hall
+                </span>
+              </li>
+              <li>
+                Want to take a break? <span className="underline cursor-pointer">Log out</span>
+              </li>
+            </ul>
             <p className="mt-8 text-xs font-bold text-center">
               (NOTE: You must be logged in before you can access most of the features of Quick
               Navigation Facility.)
