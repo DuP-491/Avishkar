@@ -38,12 +38,12 @@ function App() {
               <NewTablet currTab="Departments" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
-          <Route
+          {/* <Route
             path="profile"
             element={
               <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
-          />
+          /> */}
         </Route>
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/team" element={<TeamPage />} />

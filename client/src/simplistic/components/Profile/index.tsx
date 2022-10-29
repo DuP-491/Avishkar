@@ -30,8 +30,6 @@ const index = (props: Props) => {
   });
 
   const [teams, setTeams] = useState([]);
-  const [teamMembers, setTeamMembers] = useState({});
-  console.log(teams, teamMembers);
 
   useEffect(() => {
     fetchUserDetails();
@@ -97,9 +95,6 @@ const index = (props: Props) => {
       .then((data) => {
         if (data['success']) {
           setTeams(data['teams']);
-          setTeamMembers(
-            Object.fromEntries(data['teams'].map((team: any) => [team['teamId'], []]))
-          );
         } else if (data['message'] === 'Invalid token!') {
           logout();
         } else logout();
@@ -108,120 +103,66 @@ const index = (props: Props) => {
         logout();
       });
   };
-
-  const fetchTeamMembers = (teamId: number) => {
+  const handleCreateTeam = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
       logout();
       return;
     }
-    UserService.getTeamMembers(token, teamId)
+    UserService.createTeam(token)
       .then((data) => {
         if (data['success']) {
-          setTeamMembers({ ...teamMembers, [teamId]: data['members'] });
-        } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+          fetchTeamInvites();
+          toast.success('New team created successfully.');
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
       })
       .catch(() => {
-        logout();
+        // logout();
       });
   };
 
-  // const handleCreateTeam = () => {
-  //   const token = Cookies.get('token');
-  //   if (token === undefined) {
-  //     logout();
-  //     return;
-  //   }
-  //   UserService.createTeam(token)
-  //     .then((data) => {
-  //       if (data['success']) {
-  //         fetchTeamInvites();
-  //       } else if (data['message'] === 'Invalid token!') {
-  //         logout();
-  //       } else logout();
-  //     })
-  //     .catch(() => {
-  //       logout();
-  //     });
-  // };
+  const handleDeleteTeam = (teamId: number) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    UserService.removeTeam(token, teamId)
+      .then((data) => {
+        if (data['success']) {
+          fetchTeamInvites();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
+      })
+      .catch(() => {
+        // logout();
+      });
+  };
 
-  // const handleDeleteTeam = (teamId: number) => {
-  //   const token = Cookies.get('token');
-  //   if (token === undefined) {
-  //     logout();
-  //     return;
-  //   }
-  //   UserService.removeTeam(token, teamId)
-  //     .then((data) => {
-  //       if (data['success']) {
-  //         fetchTeamInvites();
-  //       } else if (data['message'] === 'Invalid token!') {
-  //         logout();
-  //       } else logout();
-  //     })
-  //     .catch(() => {
-  //       logout();
-  //     });
-  // };
-
-  // const handleRespondTeamInvite = (teamId: number, status: string) => {
-  //   const token = Cookies.get('token');
-  //   if (token === undefined) {
-  //     logout();
-  //     return;
-  //   }
-  //   UserService.responseToTeamInvite(token, teamId, status)
-  //     .then((data) => {
-  //       if (data['success']) {
-  //         fetchTeamInvites();
-  //       } else if (data['message'] === 'Invalid token!') {
-  //         logout();
-  //       } else logout();
-  //     })
-  //     .catch(() => {
-  //       logout();
-  //     });
-  // };
-
-  // const handleRemoveMember = (teamId: number, userId: string) => {
-  //   const token = Cookies.get('token');
-  //   if (token === undefined) {
-  //     logout();
-  //     return;
-  //   }
-  //   UserService.deleteMember(token, teamId, userId)
-  //     .then((data) => {
-  //       if (data['success']) {
-  //         fetchTeamInvites();
-  //       } else if (data['message'] === 'Invalid token!') {
-  //         logout();
-  //       } else logout();
-  //     })
-  //     .catch(() => {
-  //       logout();
-  //     });
-  // };
-
-  // const handleParticipate = (teamId: number, eventId: string) => {
-  //   const token = Cookies.get('token');
-  //   if (token === undefined) {
-  //     logout();
-  //     return;
-  //   }
-  //   UserService.eventParticipate(token, teamId, eventId)
-  //     .then((data) => {
-  //       if (data['success']) {
-  //       } else if (data['message'] === 'Invalid token!') {
-  //         logout();
-  //       } else logout();
-  //     })
-  //     .catch(() => {
-  //       logout();
-  //     });
-  // };
-
+  const handleRespondTeamInvite = (teamId: number, status: string) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    UserService.responseToTeamInvite(token, teamId, status)
+      .then((data) => {
+        if (data['success']) {
+          fetchTeamInvites();
+        }
+        //  else if (data['message'] === 'Invalid token!') {
+        //   logout();
+        // } else logout();
+      })
+      .catch(() => {
+        // logout();
+      });
+  };
   return (
     <div className="relative flex flex-col min-h-screen gap-3 p-2 text-white bg-gray-900 md:flex-row">
       <div className="top-0 w-full p-4 overflow-auto bg-gray-800 md:h-screen md:sticky">
@@ -339,20 +280,59 @@ const index = (props: Props) => {
         <div>
           <DividerLine text="manage invite" />
           <div className="p-2 mt-2 bg-gray-800 roudned-sm">
-            <p>no team invite</p>
+            {teams.filter((team) => team['status'] !== 'ACCEPTED').length === 0 && (
+              <p>You do not have any invitations!</p>
+            )}
           </div>
-          <Invite />
+          {teams.filter((team) => team['status'] !== 'ACCEPTED').length !== 0 && (
+            <div className="overflow-y-auto">
+              {teams
+                .filter((team) => team['status'] !== 'ACCEPTED')
+                .map((team) => (
+                  <Invite
+                    key={team['team']['id']}
+                    name={team['team']['name']}
+                    team={team}
+                    handleRespondTeamInvite={handleRespondTeamInvite}
+                  />
+                ))}
+            </div>
+          )}
         </div>
         {/* teams */}
         <div>
           <DividerLine text="teams" />
-          <button className="p-2 mt-2 bg-gray-800 roudned-sm hover:bg-gray-500">
+          <button
+            className="p-2 mt-2 bg-gray-800 roudned-sm hover:bg-gray-500"
+            onClick={handleCreateTeam}>
             create new team
           </button>
-
-          <Team />
-          <Team />
-          <Team />
+          {teams.filter((team) => team['status'] === 'ACCEPTED').length === 0 && (
+            <div>
+              <p className="text-3xl text-center mt-[45vh] translate-y-[-50%]">
+                You are not part of any team!
+              </p>
+            </div>
+          )}
+          {teams.filter((team) => team['status'] === 'ACCEPTED').length !== 0 && (
+            <div className="overflow-y-auto">
+              {teams
+                .filter((team) => team['status'] === 'ACCEPTED')
+                .map((team) => {
+                  return (
+                    <Team
+                      key={team['team']['id']}
+                      name={team['team']['name']}
+                      team={team}
+                      handleDeleteTeam={() => {
+                        handleDeleteTeam(team['team']['id']);
+                        toast.success(team['team']['name'] + ' removed successfully!');
+                      }}
+                    />
+                  );
+                })}
+            </div>
+          )}
         </div>
       </div>
     </div>
