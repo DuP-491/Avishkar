@@ -15,7 +15,6 @@ function EventDetails({ event }: EventDetailPropType) {
   const [coordies, setCoordies] = useState([]);
   const [currTeam, setCurrTeam] = useState('');
   const [teams, setTeams] = useState([]);
-  console.log(teams);
 
   const Details = {
     Name: event['name'],

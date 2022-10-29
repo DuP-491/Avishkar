@@ -17,6 +17,7 @@ function DepartmentCard(props: Props) {
           <hr className="border-dotted" />
           <Link
             to={`${redirectTo}`}
+            state={deptName}
             className="block px-2 py-4 mt-2 capitalize border-2 group-hover:font-semibold group-hover:bg-white group-hover:text-gray-900">
             Explore
           </Link>
