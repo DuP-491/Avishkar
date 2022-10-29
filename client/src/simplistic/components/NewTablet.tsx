@@ -264,6 +264,7 @@ function NewTablet(props: Props) {
   const [inviteUsernames, setInviteUsernames] = useState({});
   const [showUpdateTeamnames, setShowUpdateTeamnames] = useState({});
   const [updateTeamnames, setUpdateTeamnames] = useState({});
+  const [currDCIndex, setCurrDCIndex] = useState(0);
 
   useEffect(() => {
     fetchDepartmentEvents();
@@ -397,6 +398,7 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setDeptCoordies(data['deptEventCoordies']);
+          setCurrDCIndex(0);
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -1106,6 +1108,41 @@ function NewTablet(props: Props) {
       });
   };
 
+  const handleGetParticipationList = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    AdminService.getParticipationList(token, events[selectedEventID]['id'])
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Downloaded List of Participating Teams Successfully');
+
+          let arr = data['participation'];
+          arr = [Object.keys(arr[0])].concat(arr);
+
+          const csv = arr
+            .map((it: any) => {
+              return Object.values(it).toString();
+            })
+            .join('\n');
+
+          let el = document.createElement('a');
+          el.download = `${events[selectedEventID]['name']}_teams.csv`;
+          el.href = URL.createObjectURL(new Blob([csv]));
+          el.click();
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
   const handleSelectDept = (i: any) => {
     setTab('Events');
     setSelectedDeptID(i);
@@ -1207,28 +1244,77 @@ function NewTablet(props: Props) {
                     </button>
                   ))}
                 </div>
-                <div className="flex flex-nowrap rounded-xl justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
-                  {deptCoordies.map((deptCoordie, i) => (
+                {deptCoordies.length !== 0 && (
+                  <div className="relative flex flex-nowrap flex-col rounded-xl items-center justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
+                    <h2 className="my-1 text-xl font-bold">Department Coordinators</h2>
                     <div
-                      key={deptCoordie['user']['id']}
-                      className={`flex-none w-1/3 text-sm text-gray-200 rounded-lg bg-zinc-800/[0.8] mx-4${
-                        i == 0 ? '' : ' ml-3'
-                      }`}>
+                      key={deptCoordies[currDCIndex]['user']['id']}
+                      className="flex-none w-1/3 text-sm text-gray-200 rounded-lg bg-zinc-800/[0.8] mx-4 mb-1">
                       <p className="flex justify-between px-2 py-2 border-gray-500">
                         <span>Name</span>
-                        <span>{deptCoordie['user']['name']}</span>
+                        <span>{deptCoordies[currDCIndex]['user']['name']}</span>
                       </p>
                       <p className="flex justify-between px-2 py-2 border-zinc-800/[0.8]">
                         <span>Email</span>
-                        <span>{deptCoordie['user']['email']}</span>
+                        <span>{deptCoordies[currDCIndex]['user']['email']}</span>
                       </p>
                       <p className="flex justify-between px-2 py-2 border-zinc-800/[0.8]">
                         <span>Mobile</span>
-                        <span>{deptCoordie['user']['mobile']}</span>
+                        <span>{deptCoordies[currDCIndex]['user']['mobile']}</span>
                       </p>
                     </div>
-                  ))}
-                </div>
+                    {deptCoordies.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                          onClick={() =>
+                            setCurrDCIndex(
+                              (currDCIndex - 1 + deptCoordies.length) % deptCoordies.length
+                            )
+                          }>
+                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg
+                              aria-hidden="true"
+                              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            <span className="sr-only">Previous</span>
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                          onClick={() => setCurrDCIndex((currDCIndex + 1) % deptCoordies.length)}>
+                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg
+                              aria-hidden="true"
+                              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 5l7 7-7 7"></path>
+                            </svg>
+                            <span className="sr-only">Next</span>
+                          </span>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
             )}
             {tab === 'Event' && selectedEventID !== -1 && (
@@ -1321,6 +1407,16 @@ function NewTablet(props: Props) {
                       className="apply-button h-[44px] w-[312px] mx-auto my-5"
                       data-hackathon-slug="CyberQuest"
                       data-button-theme="light"></div>
+                  )}
+                  {userDetails['role'] !== 'USER' && (
+                    <>
+                      <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Admin</p>
+                      <p
+                        className="px-5 py-1 text-2xl text-gray-200 bg-blue-900 cursor-pointer"
+                        onClick={() => handleGetParticipationList()}>
+                        Get Participation List
+                      </p>
+                    </>
                   )}
                 </div>
                 <div className="relative flex flex-col w-2/3 bg-black rounded-r-md">

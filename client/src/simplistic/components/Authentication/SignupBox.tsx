@@ -59,6 +59,9 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
               />
               <h2 className="text-2xl font-bold tracking-tight text-center text-white">Sign Up</h2>
             </div>
+            <div className="mt-4 text-white text-center w-full">
+              MNNIT students must use their college GSuite ID
+            </div>
             <form className="mt-6 space-y-6" onSubmit={LoggingIn} method="POST">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-50">
