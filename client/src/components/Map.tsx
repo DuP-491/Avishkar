@@ -437,6 +437,22 @@ function Map(props: Props) {
                 </g>
               </g>
             </svg>
+            {/* Team Page */}
+            <div
+              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
+              style={{
+                top: 27 + '%',
+                left: 23 + '%'
+              }}></div>
+            <img
+              src={require('../images/team.png')}
+              className="absolute w-4 h-4 cursor-pointer text-amber-400"
+              style={{
+                top: 27 + '%',
+                left: 23 + '%'
+              }}
+              onClick={() => teleport(TELEPORT_LOCATIONS.team)}
+            />
 
             <Tooltip.Provider delayDuration={500} skipDelayDuration={400}>
               <Tooltip.Root>
