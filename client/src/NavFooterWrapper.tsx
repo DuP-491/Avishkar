@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import Footer from './simplistic/components/Common/Footer';
 import ResponsiveNav from './simplistic/components/Common/ResponsiveNav';
 
 const NavWrapper = () => {
@@ -7,6 +8,7 @@ const NavWrapper = () => {
     <>
       <ResponsiveNav />
       <Outlet />
+      <Footer />
     </>
   );
 };

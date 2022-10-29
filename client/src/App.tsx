@@ -33,8 +33,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          <Route path="simplistic" element={<Simplistic />} />
-          <Route path="reset-password" element={<Simplistic />} />
           <Route index element={<GameLayout />} />
           <Route
             path="tab"
@@ -53,6 +51,8 @@ function App() {
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/sponsors" element={<SponsorPage />} />
+          <Route path="simplistic" element={<Simplistic />} />
+          <Route path="reset-password" element={<Simplistic />} />
           {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
           {/* <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
         <Route path="/tbtm" element={<TabletTeam onCrossPress={() => {}} />} /> */}
@@ -72,7 +72,6 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
       <ToastContainer />
     </Router>
   );
