@@ -30,7 +30,8 @@ export enum TELEPORT_LOCATIONS {
   sponser = 'sponser',
   trivia = 'trivia',
   quickCafe = 'quickCafe',
-  gnotalks = 'gnotalks'
+  gnotalks = 'gnotalks',
+  team = 'team'
 }
 
 export const TELEPORT_LOCATIONS_DATA: {
@@ -79,6 +80,10 @@ export const TELEPORT_LOCATIONS_DATA: {
   gnotalks: {
     x: 5000,
     y: 4000
+  },
+  team: {
+    x: 1700,
+    y: 1720
   }
 };
 
