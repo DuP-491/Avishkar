@@ -13,9 +13,9 @@ const ResponsiveNav = () => {
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <img src={Logo} className="h-12 mr-3 sm:h-10" alt="aviskar Logo" />
-          {/* <span className="self-center text-xl font-semibold text-white whitespace-nowrap">
+          <span className="self-center text-xl font-semibold text-white whitespace-nowrap">
             Avishkar
-          </span> */}
+          </span>
         </Link>
         <button
           data-collapse-toggle="navbar-solid-bg"
@@ -79,19 +79,19 @@ const ResponsiveNav = () => {
             {Cookies.get('token') ? (
               <li>
                 <Link
-                  to="/login"
+                  to="/profile"
                   onClick={() => setIsMobileNavOpen(false)}
                   className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
-                  Login
+                  Profile
                 </Link>
               </li>
             ) : (
               <li>
                 <Link
-                  to="/profile"
+                  to="/login"
                   onClick={() => setIsMobileNavOpen(false)}
                   className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
-                  Profile
+                  Login
                 </Link>
               </li>
             )}

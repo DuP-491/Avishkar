@@ -5,12 +5,18 @@ import UserService from '../../services/UserService';
 import TeamMember from './TeamMember';
 
 const Team = (props: any) => {
-  const { name, team, handleDeleteTeam } = props;
+  const { name_ip, team, handleDeleteTeam } = props;
+  const [name, setName] = useState(name_ip);
+
   const teamId = team['team']['id'];
   const [teamMembers, setTeamMembers] = useState([]);
+  const [editTeamSwitch, setEditTeamSwitch] = useState(false);
+  const [newTeamName, setNewTeamName] = useState(name);
   const [inviteUsernames, setInviteUsernames] = useState<{
     [key: string]: any;
   }>({});
+  const UNEXPECTED_ERROR_MSG = 'Please try again later!';
+  const LOGIN_AGAIN_PROMPT = 'Please login again!';
   const getTeamMembers = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
@@ -48,14 +54,55 @@ const Team = (props: any) => {
         toast.error('Please try again later!');
       });
   };
+
+  const handleUpdateTeam = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      return;
+    }
+    UserService.updateTeam(token, teamId, newTeamName)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Changed Team Name Successfully!');
+          setName(newTeamName);
+          setNewTeamName(newTeamName);
+          setEditTeamSwitch((s) => !s);
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
   return (
     <div className="relative mt-2 shadow-md sm:rounded-lg">
-      <div className="w-full text-sm text-left text-gray-400">
+      <div className="w-full text-sm text-left text-white-400">
         {/* team card header--> name and action */}
-        <div className="flex items-center p-2 text-gray-400 uppercase bg-gray-700 text-md">
-          <h2>{name}</h2>
+        <div className="flex items-center p-2 text-white-400 uppercase bg-gray-700 text-md">
+          {editTeamSwitch ? (
+            <div>
+              <input
+                className="bg-white-400 text-gray-700"
+                value={newTeamName}
+                onChange={(e) => {
+                  setNewTeamName(e.target.value);
+                }}
+              />
+              <button onClick={handleUpdateTeam}>Save</button>
+            </div>
+          ) : (
+            <h2>{name}</h2>
+          )}
           <div className="ml-auto space-x-2">
-            <button className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800">edit</button>
+            <button
+              className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+              onClick={() => {
+                setEditTeamSwitch((s) => !s);
+              }}>
+              edit
+            </button>
             <button
               className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
               onClick={handleDeleteTeam}>

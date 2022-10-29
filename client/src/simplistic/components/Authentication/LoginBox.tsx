@@ -48,7 +48,8 @@ function LoginBox({ onCrossPress, onLogin, onToggle, onForgotPassword }: LoginBo
             <div className="flex items-center justify-center space-x-4 sm:mx-auto sm:w-full sm:max-w-md">
               <img
                 className="w-auto h-12"
-                src="https://i.imgur.com/cHH4xIh.png"
+                // eslint-disable-next-line no-undef
+                src={require('../../Assets/logo.png')}
                 alt="Avishkar Logo"
               />
               <h2 className="text-2xl font-bold tracking-tight text-center text-white">Login</h2>
