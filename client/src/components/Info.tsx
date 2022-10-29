@@ -9,6 +9,8 @@ function Info(props: Props) {
   const howTOPlay = [
     'You can use space key to attack.',
     'You can use E key to interact with interactable NPCs.',
+    'You can press M key to open Map.',
+    'You can press ESC key to close various prompts.',
     'You can visit cafe 96 for team creation.'
   ];
   const events = [
