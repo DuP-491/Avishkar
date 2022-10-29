@@ -327,8 +327,12 @@ export const npcData: {
     type: 'text',
     character: 'SSD',
     text: `Hi! I'm SSD.~I know! I know! I'm kinda famous around here.~I'm just waiting here for my friends. They were so busy making this website that i though i would just hang out here by myself.~ What do you mean this is girls hostel side and I'm not allowed here?~Shh.. Go away.`
+  },
+  'campus-101': {
+    name: 'Random guy',
+    location: 'map bottom',
+    type: 'text',
+    character: 'Random guy',
+    text: `All my friends have girlfriends.~And I'm so lonely. I wish I had a girlfriend.`
   }
 };
-
-// all my friends have gf.
-// quick navigation
