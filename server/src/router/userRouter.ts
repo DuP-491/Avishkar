@@ -13,6 +13,7 @@ import {
     getTeamInvite,
     getTeamMembers,
     eventParticipatingTeam,
+    eventsCoordinatedByUser,
 } from "../controller/userController";
 import { checkUserAuthorization } from "../middleware/authHandler";
 
@@ -50,5 +51,7 @@ router
     .delete(checkUserAuthorization, eventUnparticipate);
 
 router.route("/participate/:id").get(checkUserAuthorization, eventParticipatingTeam);
+
+router.route("/coordie-event").get(checkUserAuthorization, eventsCoordinatedByUser);
 
 export default router;

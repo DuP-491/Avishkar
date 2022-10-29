@@ -82,7 +82,7 @@
    **API Method :** POST
 
     > REQUEST BODY &nbsp;&nbsp;:
-    > { name (string), email (string), collegeName (string), gender ({"Male", "Female", "None"}), mobile (string) }
+    > { name (string), email (string), collegeName (string), gender ({"male", "female", "none"}), mobile (string) }
 
     > RESPONSE BODY :
     > { message, success } - OK response
@@ -210,7 +210,7 @@
     > { }
 
     > RESPONSE BODY :
-    > { members, success } - OK response
+    > { teams, success } - OK response
     > { error, message, success } - ERROR response
 
     ***
@@ -313,7 +313,21 @@
     > {  }
 
     > RESPONSE BODY :
-    > { message, success } - OK response
+    > { participatingTeam, success } - OK response
+    > { error, message, success } - ERROR response
+
+    ***
+
+14. **Get Events For The Coordinator**
+    **API Path :** /coordie-event
+    **API Method :** GET
+    **API Extras :** for the user gets the event he / she is coordinator of
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > {  }
+
+    > RESPONSE BODY :
+    > { coordieEvent, success } - OK response
     > { error, message, success } - ERROR response
 
 ---

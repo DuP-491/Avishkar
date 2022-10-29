@@ -20,14 +20,23 @@ const userSignup = async (req: Request, res: Response, next) => {
     const token = generateVerifyToken(48);
 
     try {
-        await prisma.user.create({
-            data: { name, email, collegeName, gender, mobile, username, salt, token },
-        });
-        // send verification email to the client
-        await sendUserVerificationMail(email, token);
+        const emailUser = await prisma.user.findFirst({ where: { email } });
+        const mobileUser = await prisma.user.findFirst({ where: { mobile } });
+        if (emailUser || mobileUser) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "email / mobile already in use!", success: false });
+        } else {
+            let isFeePaid = false;
+            if (email.endsWith("@mnnit.ac.in")) isFeePaid = true;
+            await prisma.user.create({
+                data: { name, email, collegeName, gender, mobile, isFeePaid, username, salt, token },
+            });
+            // send verification email to the client
+            await sendUserVerificationMail(email, token);
 
-        res.statusCode = 200;
-        res.json({ message: "user registration successful!", success: true });
+            res.statusCode = 200;
+            res.json({ message: "user registration successful!", success: true });
+        }
     } catch (error) {
         console.log("error occured in the userSignup() controller!");
         next(error);
