@@ -11,21 +11,19 @@ export const npcData: {
     failure?: any;
   };
 } = {
-  'cafe96-2': {
-    name: 'Mitsuka',
-    location: 'cafe-top-right',
-    type: 'text',
-    character: 'boy',
-    text: "Hey, I'm Mitsuka. I'm a software engineer and I love to code."
-  },
+  // 'cafe96-2': {
+  //   name: 'Mitsuka',
+  //   location: 'cafe-top-right',
+  //   type: 'text',
+  //   character: 'boy',
+  //   text: "Hey, I'm Mitsuka. I'm a software engineer and I love to code."
+  // },
   'cafe96-3': {
     name: 'Denji',
     location: 'cafe-top-left',
-    type: 'ask',
+    type: 'text',
     character: 'boy',
-    text: 'Are you sure you want to register?',
-    success: 'Function will be imported in this file and called',
-    failure: 'Function will be imported in this file and called'
+    text: 'Click on the computer to know more about your teams'
   },
   'campus-34': {
     name: 'Mitsuka',
@@ -249,7 +247,7 @@ export const npcData: {
     location: 'Inside TPO office',
     type: 'text',
     character: 'Training and Placement Representative',
-    text: `Hi! I'm Vayirp. I'm a representative of Training and Placement office of MNNIT Allahabad. I'm here to help you out.~Our students are the tresure of our college. Please extend them with your job offers and they will be the best asset for your company as well.`
+    text: `Hi! I'm Vayirp. I'm a representative of Training and Placement office of MNNIT Allahabad. I'm here to help you out.~Our students are the treasure of our college. Please extend them with your job offers and they will be the best asset for your company as well.`
   },
   'campus-87': {
     name: 'QuizMaster',
