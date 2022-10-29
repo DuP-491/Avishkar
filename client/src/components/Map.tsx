@@ -21,7 +21,8 @@ function Map(props: Props) {
     'Fly high and look beyond the horizons.',
     'Lover of the night sky , lets have some contest.',
     'An event for the gaming maniacs.',
-    'Want to know what you dont know ? Lets get the mind to work.'
+    'Want to know what you dont know ? Lets get the mind to work.',
+    'Where Actions Speak'
   ];
 
   const handleClick = () => {
@@ -362,15 +363,15 @@ function Map(props: Props) {
             <div
               className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
               style={{
-                top: 42 + '%',
-                left: 5 + '%'
+                top: 44 + '%',
+                left: 7 + '%'
               }}></div>
             <img
               src={require('../images/sponser.png')}
               className="absolute w-4 h-4 cursor-pointer text-amber-400"
               style={{
-                top: 42 + '%',
-                left: 5 + '%'
+                top: 44 + '%',
+                left: 7 + '%'
               }}
               onClick={() => teleport(TELEPORT_LOCATIONS.sponser)}
             />
@@ -539,8 +540,8 @@ function Map(props: Props) {
                     src={require('../images/tablet-icon.png')}
                     className="absolute w-4 h-4 cursor-help animate-bounce"
                     style={{
-                      left: 61.089999999999996 + '%',
-                      top: 26.67 + '%'
+                      left: 60 + '%',
+                      top: 36 + '%'
                     }}
                   />
                 </Tooltip.Trigger>
@@ -548,6 +549,25 @@ function Map(props: Props) {
                   <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
                     <div className="">NIRMAAN</div>
                     <div className="text-blue-900">{eventQuotes[5]}</div>
+                  </div>
+                  {/* <Tooltip.Arrow height={6} width={10} /> */}
+                </Tooltip.Content>
+              </Tooltip.Root>
+              <Tooltip.Root>
+                <Tooltip.Trigger>
+                  <img
+                    src={require('../images/tablet-icon.png')}
+                    className="absolute w-4 h-4 cursor-help animate-bounce"
+                    style={{
+                      left: 64 + '%',
+                      top: 36 + '%'
+                    }}
+                  />
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
+                    <div className="">ROBOMANIA</div>
+                    <div className="text-blue-900">{eventQuotes[9]}</div>
                   </div>
                   {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>
@@ -623,7 +643,7 @@ function Map(props: Props) {
                 <Tooltip.Content>
                   <div className="bg-blue-200 p-2 text-center border-blue-200 rounded border-[1px] font-serif">
                     <div className="">GNOTALKS</div>
-                    <div className="text-blue-900">{eventQuotes[9]}</div>
+                    <div className="text-blue-900">{eventQuotes[14]}</div>
                   </div>
                   {/* <Tooltip.Arrow height={6} width={10} /> */}
                 </Tooltip.Content>

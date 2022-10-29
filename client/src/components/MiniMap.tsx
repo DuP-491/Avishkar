@@ -306,15 +306,15 @@ function MiniMap(props: Props) {
       <div
         className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
         style={{
-          top: 40 + '%',
-          left: 3 + '%'
+          top: 43 + '%',
+          left: 5 + '%'
         }}></div>
       <img
         src={require('../images/sponser.png')}
         className="absolute w-4 h-4 cursor-pointer text-amber-400"
         style={{
-          top: 40 + '%',
-          left: 3 + '%'
+          top: 43 + '%',
+          left: 5 + '%'
         }}
         onClick={() => teleport(TELEPORT_LOCATIONS.sponser)}
       />
