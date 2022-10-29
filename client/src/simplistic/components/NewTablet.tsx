@@ -294,37 +294,37 @@ function NewTablet(props: Props) {
   }, [selectedDeptID]);
 
   useEffect(() => {
-    if (delDeptCoordie !== '') {
+    if (delDeptCoordie !== '' && tab === 'Profile') {
       fetchDepartmentCoordies(delDeptCoordie);
     }
   }, [delDeptCoordie]);
 
   useEffect(() => {
-    if (currEUDDept !== '') {
+    if (currEUDDept !== '' && tab === 'Profile') {
       fetchEvents(currEUDDept);
     }
   }, [currEUDDept]);
 
   useEffect(() => {
-    if (currECUD['deptEventId'] !== '') {
+    if (currECUD['deptEventId'] !== '' && tab === 'Profile') {
       fetchEvents(currECUD['deptEventId']);
     }
   }, [currECUD['deptEventId']]);
 
   useEffect(() => {
-    if (currECUD['eventId'] !== '') {
+    if (currECUD['eventId'] !== '' && tab === 'Profile') {
       fetchEventCoordies(currECUD['eventId']);
     }
   }, [currECUD['eventId']]);
 
   useEffect(() => {
-    if (currSponsorAUD['deptEventId'] !== '') {
+    if (currSponsorAUD['deptEventId'] !== '' && tab === 'Profile') {
       fetchEvents(currSponsorAUD['deptEventId']);
     }
   }, [currSponsorAUD['deptEventId']]);
 
   useEffect(() => {
-    if (currSponsorAUD['eventId'] !== '') {
+    if (currSponsorAUD['eventId'] !== '' && tab === 'Profile') {
       fetchEventSponsors(currSponsorAUD['eventId']);
     }
   }, [currSponsorAUD['eventId']]);
@@ -1127,14 +1127,14 @@ function NewTablet(props: Props) {
     <>
       {loading && <div className="flex items-center justify-center">Loading...</div>}
       {!loading && (
-        <div className="absolute top-0 left-0 w-screen h-screen bg-black rounded-3xl">
+        <div className="absolute top-0 left-0 w-screen h-screen scale-95 bg-zinc-900 rounded-3xl">
           {/* Front Camera */}
           <div className="absolute top-[50vh] left-[2.5%] rounded-full bg-zinc-800 w-3 h-3" />
           <div className="absolute top-[50.5vh] left-[2.7%] rounded-full bg-blue-900 w-1 h-1" />
 
           {/* Home Button */}
           <div
-            className="absolute top-[48.5vh] right-[1.5%] cursor-pointer rounded-full bg-zinc-900 w-10 h-10"
+            className="absolute top-[48.5vh] right-[1.5%] cursor-pointer rounded-full bg-zinc-800 w-10 h-10"
             onClick={handleGoBack}
           />
           <div
@@ -1150,10 +1150,7 @@ function NewTablet(props: Props) {
             />
           )}
 
-          <div
-            className={`absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-gray-200 rounded-md border-zinc-800${
-              tab === 'Departments' || tab === 'Events' ? '' : ' border-2'
-            }`}>
+          <div className="absolute top-[5vh] left-[5%] w-[90%] bg-cover bg-no-repeat bg-center h-[90vh] text-[50px] text-gray-200 rounded-md border-zinc-900">
             {tab === 'Team' && (
               <div className="h-full overflow-scroll no-scroll">
                 <TeamAvishkar />
@@ -1166,23 +1163,23 @@ function NewTablet(props: Props) {
             )}
             {tab === 'Departments' && (
               <div className="flex flex-col h-full">
-                <h1 className="mt-10 text-3xl text-center">Departments</h1>
+                <h1 className="mt-10 mb-3 text-3xl text-center">Departments</h1>
                 <div className="flex flex-wrap items-center justify-center flex-1">
                   {Object.keys(departments).map((department, i) => (
                     <button
                       key={department}
-                      className="flex flex-col items-center m-2 w-36 h-1/3"
+                      className="flex flex-col items-center m-2 mx-6 cursor-default w-36 h-1/3"
                       onClick={() => handleSelectDept(department)}>
-                      <div className="flex flex-wrap justify-around w-32 h-32 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
+                      <div className="flex flex-wrap justify-around w-40 h-40 rounded-xl pt-2 bg-zinc-800/[0.4] shadow-md">
                         {[0, 1, 2, 3].map((j) => (
                           <img
                             key={`${department}-${j}`}
-                            className="m-1 w-11 h-11 rounded-xl shrink-0"
+                            className="w-16 h-16 m-1 cursor-pointer rounded-xl shrink-0"
                             src={`/event-icons/${APP_ICONS[(i * 4 + j) % APP_ICONS.length]}`}
                           />
                         ))}
                       </div>
-                      <span className="text-sm font-bold">{departments[department]['name']}</span>
+                      <span className="text-lg font-bold">{departments[department]['name']}</span>
                     </button>
                   ))}
                 </div>
@@ -1366,19 +1363,28 @@ function NewTablet(props: Props) {
                   )}
                   {eventSection === 4 &&
                     participatingTeam === null &&
-                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length ===
-                      0 && (
+                    teams.filter(
+                      (team) =>
+                        team['team']['leader'] === userDetails['id'] &&
+                        events[selectedEventID]['minTeamSize'] <= team['team']['size'] &&
+                        team['team']['size'] <= events[selectedEventID]['maxTeamSize']
+                    ).length === 0 && (
                       <div>
                         <p className="text-3xl text-center mt-[45vh] translate-y-[-50%] px-4">
-                          To register for the event, either create a team and register for the event
-                          or join a team and tell the leader to register for the event
+                          To register for the event, either create a team, invite members (within
+                          team size constraints) and register for the event or join a team and tell
+                          the leader to register for the event
                         </p>
                       </div>
                     )}
                   {eventSection === 4 &&
                     participatingTeam === null &&
-                    teams.filter((team) => team['team']['leader'] === userDetails['id']).length !==
-                      0 && (
+                    teams.filter(
+                      (team) =>
+                        team['team']['leader'] === userDetails['id'] &&
+                        events[selectedEventID]['minTeamSize'] <= team['team']['size'] &&
+                        team['team']['size'] <= events[selectedEventID]['maxTeamSize']
+                    ).length !== 0 && (
                       <div className="mt-[15vh] overflow-y-auto">
                         {teams
                           .filter((team) => team['team']['leader'] === userDetails['id'])
