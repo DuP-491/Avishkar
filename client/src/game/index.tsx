@@ -170,6 +170,12 @@ function GameComponent(props: Props) {
         });
         game.instance?.events.on(EVENTS_NAME.closeMap, () => {
           setShowMap(false);
+          setShowInfoPrompt(false);
+          setShowAuthPrompt(false);
+          setShowInfo(false);
+          setShowLeaderboard(false);
+          setShowNotice(false);
+          setShowTrivia(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
           // console.log('logout');
