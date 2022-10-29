@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './../../Assets/logo.png';
 import Cookies from 'js-cookie';
+import AuthService from '../../services/AuthService';
 
 const ResponsiveNav = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -77,14 +78,23 @@ const ResponsiveNav = () => {
               </Link>
             </li>
             {Cookies.get('token') ? (
-              <li>
-                <Link
-                  to="/profile"
-                  onClick={() => setIsMobileNavOpen(false)}
-                  className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
-                  Profile
-                </Link>
-              </li>
+              <>
+                <li>
+                  <Link
+                    to="/profile"
+                    onClick={() => setIsMobileNavOpen(false)}
+                    className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={AuthService.logOut}
+                    className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
+                    Logout
+                  </button>
+                </li>
+              </>
             ) : (
               <li>
                 <Link

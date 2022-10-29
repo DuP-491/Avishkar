@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
@@ -9,6 +9,11 @@ import bgImage from '../../Assets/collage.jpg';
 const LogIn = () => {
   const EmailRef = useRef(document.createElement('input'));
   const PasswordRef = useRef(document.createElement('input'));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Cookies.get('token')) navigate('/profile');
+  }, []);
 
   function LoggingIn(e: any) {
     e.preventDefault();
@@ -19,7 +24,7 @@ const LogIn = () => {
         if (data['success']) {
           Cookies.set('token', data['token']);
           toast.success('Logged in successfully!');
-          console.log('success');
+          navigate('/profile');
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {

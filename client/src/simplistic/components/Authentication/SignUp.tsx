@@ -1,11 +1,17 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
 import bgImage from '../../Assets/collage.jpg';
+import Cookies from 'js-cookie';
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Cookies.get('token')) navigate('/profile');
+  }, []);
   function LoggingIn(e: any) {
     e.preventDefault();
     const name = NameRef.current.value;
@@ -17,7 +23,7 @@ const SignUp = () => {
       .then((data) => {
         if (data['success']) {
           console.log('Success');
-          toast.success('Please verify you mail id to continue!');
+          toast.success('A verification mail has been sent!');
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {

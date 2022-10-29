@@ -1,4 +1,9 @@
+import Cookies from 'js-cookie';
+
 export default {
+  logOut: async function () {
+    Cookies.remove('token');
+  },
   logIn: async function (name: string, password: string) {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/signin`, {

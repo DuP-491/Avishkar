@@ -42,7 +42,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
                 Avishkar
               </h1>
               <span className="block font-extrabold text-white text-md ">
-                10<sup>th</sup> November - 23<sup>th</sup> November 2021
+                10<sup>th</sup> November - 13<sup>th</sup> November 2021
               </span>
               <a href="/game" className="uppercase retro-btn">
                 enter game
@@ -85,7 +85,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
         </div>
 
         {/* events display */}
-        <div className="pt-12 text-center bg-gray-900 hero-grid-container">
+        <div className="pt-12 text-center bg-gray-900 ">
           <h1 className="text-2xl font-semibold text-gray-400 capitalize md:text-4xl lg:text-6xl">
             test your{' '}
             <span className="leading-8 tracking-tight text-white uppercase title rotate">
@@ -104,55 +104,103 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
           <div className="">
             <div className="grid w-[150%] grid-cols-4 gap-2 md:grid-cols-6  -ml-[20%] md:-ml-[10%]">
               {/* will be hidden in mobile view */}
-              <div className="hidden shadow-sm md:block col col-1">
+              <div className="hidden space-y-2 shadow-sm md:block col col-1">
                 <div className="hero-card hero-card-12">
-                  <img src={eventImage} alt="" className="object-cover" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
                 <div className="hero-card hero-card-10">
-                  <img src={eventImage} alt="" className="object-cover" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
               </div>
-              <div className="shadow-sm  translate-y-[15%] col col-2">
+              <div className="shadow-sm  translate-y-[15%] col col-2 space-y-2">
                 <div className="hero-card hero-card-11">
-                  <img src={eventImage} alt="" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
                 <div className="hero-card hero-card-7">
-                  <img src={eventImage} alt="" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
               </div>
-              <div className="shadow-sm col col-3 translate-y-1/3">
+              <div className="space-y-2 shadow-sm col col-3 translate-y-1/3">
                 <div className="h-full hero-card ">
-                  <img src={eventImage} alt="" className="object-cover h-full" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] h-full rounded-md shadow-lg"
+                  />
                 </div>
               </div>
-              <div className="translate-y-1/2 shadow-sm col col-4">
+              <div className="space-y-2 translate-y-1/2 shadow-sm col col-4">
                 <div className="hero-card hero-card-6">
-                  <img src={eventImage} alt="" className="object-cover" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-2 hero-subgrid">
+                <div className="grid grid-cols-2 gap-2 ">
                   <div className="hero-card hero-card-8">
-                    <img src={eventImage} alt="" className="object-cover" />
+                    <img
+                      src={eventImage}
+                      alt=""
+                      className="object-cover blur-[1px] rounded-md shadow-lg"
+                    />
                   </div>
                   <div className="hero-card hero-card-9">
-                    <img src={eventImage} alt="" className="object-cover" />
+                    <img
+                      src={eventImage}
+                      alt=""
+                      className="object-cover blur-[1px] rounded-md shadow-lg"
+                    />
                   </div>
                 </div>
               </div>
-              <div className="translate-y-[15%] shadow-sm col col-5">
+              <div className="translate-y-[15%] shadow-sm col col-5 space-y-2">
                 <div className="hero-card hero-card-3">
-                  <img src={eventImage} alt="" className="object-cover" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
                 <div className="hero-card hero-card-4">
-                  <img src={eventImage} alt="" className="object-cover" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
               </div>
               {/* will be hidden in mobile view */}
-              <div className="hidden shadow-sm md:block col col-6">
+              <div className="hidden space-y-2 shadow-sm md:block col col-6">
                 <div className="hero-card hero-card-5">
-                  <img src={eventImage} alt="" className="object-cover" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
                 <div className="hero-card hero-card-2">
-                  <img src={eventImage} alt="" className="object-cover" />
+                  <img
+                    src={eventImage}
+                    alt=""
+                    className="object-cover blur-[1px] rounded-md shadow-lg"
+                  />
                 </div>
               </div>
             </div>

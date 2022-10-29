@@ -1,13 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
 import bgImage from '../../Assets/collage.jpg';
+import Cookies from 'js-cookie';
 const ResetPassword = () => {
   const key = useParams().token;
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (Cookies.get('token')) navigate('/profile');
+  }, []);
   function PasswordReset(e: any) {
     e.preventDefault();
     const password = PasswordRef.current.value;
@@ -25,14 +29,14 @@ const ResetPassword = () => {
     AuthService.resetPassword(password, token)
       .then((data) => {
         if (data['success']) {
-          console.log('Success');
+          toast.success('Password changed successfully!');
           navigate('/');
         } else if (data['message'] === 'Invalid token!') {
-          // Invalid Token
-        } else console.log(data['message']); // Replace with Toast/Alert
+          toast.error('invalid or expired token! please generate new token');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   }
   const PasswordRef = useRef(document.createElement('input'));
