@@ -41,7 +41,7 @@ const ResetPassword = () => {
   return (
     <div
       className="flex items-center justify-center w-full h-screen"
-      style={{background:`url(${tabletBg})`}}>
+      style={{ background: `url(${tabletBg})` }}>
       <div className="flex flex-col items-center justify-center w-full px-6 py-8 lg:py-0">
         <a
           href="#"
