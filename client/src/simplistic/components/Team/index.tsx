@@ -35,6 +35,7 @@ import GnosomaniaVanshAmbashtaIMG from './Assets/GnosomaniaVanshAmbashta.jpg';
 
 import PRAashirwadSharmaIMG from './Assets/PRAashirwadSharma.jpg';
 import PRAdityaGuptaIMG from './Assets/PRAdityaGupta.jpeg';
+import PRDevashishSinghTomarIMG from './Assets/PRDevashishSinghTomar.jpeg';
 import PRGaurikaSharmaIMG from './Assets/PRGaurikaSharma.jpg';
 import PRHimanshuGoyalIMG from './Assets/PRHimanshuGoyal.jpg';
 import PRPrakharJainIMG from './Assets/PRPrakharJain.jpg';
@@ -237,7 +238,7 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={PRDevashishSinghTomarIMG}
                 name="Devashish Singh Tomar"
                 designation=""
                 facebook=""
@@ -451,6 +452,14 @@ const index = () => {
           <div className="container px-6 py-6 mx-auto">
             <DividerLine alignmentCenter={true} text="Photos and Videos" />
             <div className="flex flex-wrap justify-around">
+              <Card
+                imgsrc={PRAdityaGuptaIMG}
+                name="Aditya Gupta"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
               <Card
                 imgsrc={PVSumitYadavIMG}
                 name="Sumit Yadav"

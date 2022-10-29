@@ -1,16 +1,66 @@
-import React from 'react';
+import Cookies from 'js-cookie';
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import UserService from '../../services/UserService';
 import TeamMember from './TeamMember';
 
-const Team = () => {
+const Team = (props: any) => {
+  const { name, team, handleDeleteTeam } = props;
+  const teamId = team['team']['id'];
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [inviteUsernames, setInviteUsernames] = useState<{
+    [key: string]: any;
+  }>({});
+  const getTeamMembers = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      return;
+    }
+    UserService.getTeamMembers(token, teamId)
+      .then((data) => {
+        if (data['success']) {
+          console.log(data);
+          setTeamMembers(data['members']);
+        }
+      })
+      .catch(() => {
+        // logout();
+      });
+  };
+  useEffect(() => {
+    getTeamMembers();
+  }, []);
+
+  const handleInviteUser = (teamId: number) => {
+    const token = Cookies.get('token');
+    if (token === undefined) return;
+    UserService.inviteUser(token, teamId, (inviteUsernames as { [key: string]: string })[teamId])
+      .then((data) => {
+        if (data['success']) {
+          toast.success('User Invited Successfully!');
+          setInviteUsernames({ ...inviteUsernames, [teamId]: '' });
+          getTeamMembers();
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error('Please login again!');
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Please try again later!');
+      });
+  };
   return (
     <div className="relative mt-2 shadow-md sm:rounded-lg">
       <div className="w-full text-sm text-left text-gray-400">
         {/* team card header--> name and action */}
         <div className="flex items-center p-2 text-gray-400 uppercase bg-gray-700 text-md">
-          <h2>team name</h2>
+          <h2>{name}</h2>
           <div className="ml-auto space-x-2">
             <button className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800">edit</button>
-            <button className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800">delete</button>
+            <button
+              className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+              onClick={handleDeleteTeam}>
+              delete
+            </button>
           </div>
         </div>
         <div>
@@ -30,17 +80,36 @@ const Team = () => {
               className=" border mr-2   sm:text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
               placeholder="enter username to invite"
               required={true}
+              value={inviteUsernames[team['team']['id']]}
+              onChange={(e) =>
+                setInviteUsernames({
+                  ...inviteUsernames,
+                  [team['team']['id']]: e.target.value
+                })
+              }
             />
             <div className="text-right capitalize ">
-              <button className="inline-block font-medium text-blue-500 hover:underline">
+              <button
+                className="inline-block font-medium text-blue-500 hover:underline"
+                onClick={() => handleInviteUser(team['team']['id'])}>
                 invite
               </button>
             </div>
           </div>
           {/* team members */}
           <div>
-            <TeamMember />
-            <TeamMember />
+            {teamMembers?.map((teamMember: any, i: number) => (
+              <TeamMember
+                key={teamMember['userId']}
+                name={`${i + 1} ${teamMember['user']['name']} ${
+                  teamMember['user']['id'] === team['team']['leader']
+                    ? '(Leader)'
+                    : teamMember['status'] === 'ACCEPTED'
+                    ? ''
+                    : '(Invitation Pending)'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>

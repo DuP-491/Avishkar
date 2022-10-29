@@ -33,8 +33,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          <Route path="simplistic" element={<Simplistic />} />
-          <Route path="reset-password" element={<Simplistic />} />
           <Route index element={<GameLayout />} />
           <Route
             path="tab"
@@ -42,17 +40,19 @@ function App() {
               <NewTablet currTab="Departments" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           />
-          <Route
+          {/* <Route
             path="profile"
             element={
               <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
-          />
+          /> */}
         </Route>
         <Route element={<NavWrapper />}>
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/sponsors" element={<SponsorPage />} />
+          <Route path="simplistic" element={<Simplistic />} />
+          <Route path="reset-password" element={<Simplistic />} />
           {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
           {/* <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
         <Route path="/tbtm" element={<TabletTeam onCrossPress={() => {}} />} /> */}
@@ -60,7 +60,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile" element={<UserProfile logout={() => {}} />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/department">
             <Route index element={<DepartmentList />} />
@@ -72,7 +72,6 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
       <ToastContainer />
     </Router>
   );

@@ -428,6 +428,24 @@ const eventParticipatingTeam = async (req: Request, res: Response, next) => {
     }
 };
 
+const eventsCoordinatedByUser = async (req: Request, res: Response, next) => {
+    const userId = req.app.locals.id;
+
+    try {
+        const coordieEvent = await prisma.eventCoordinator.findMany({
+            where: { userId },
+            include: { event: true }
+        });
+
+        res.statusCode = 200;
+        res.json({ coordieEvent, success: true });
+    }
+    catch (error) {
+        console.log("error occured in the eventsCoordinatedByUser() controller!");
+        next(error);
+    }
+}
+
 export {
     getUserDetails,
     updateUserDetails,
@@ -441,5 +459,6 @@ export {
     deleteUserTeamInvite,
     eventParticipate,
     eventUnparticipate,
-    eventParticipatingTeam
+    eventParticipatingTeam,
+    eventsCoordinatedByUser
 };

@@ -26,6 +26,7 @@ import GnosomaniaShristiSinghIMG from '../Team/Assets/GnosomaniaShristiSingh.jpg
 import GnosomaniaVanshAmbashtaIMG from '../Team/Assets/GnosomaniaVanshAmbashta.jpg';
 import PRAashirwadSharmaIMG from '../Team/Assets/PRAashirwadSharma.jpg';
 import PRAdityaGuptaIMG from '../Team/Assets/PRAdityaGupta.jpeg';
+import PRDevashishSinghTomarIMG from '../Team/Assets/PRDevashishSinghTomar.jpeg';
 import PRGaurikaSharmaIMG from '../Team/Assets/PRGaurikaSharma.jpg';
 import PRHimanshuGoyalIMG from '../Team/Assets/PRHimanshuGoyal.jpg';
 import PRPrakharJainIMG from '../Team/Assets/PRPrakharJain.jpg';
@@ -157,7 +158,7 @@ function TeamAvishkar() {
         {DisplayCard([
           [PRAashirwadSharmaIMG, 'Aashirwad Sharma', ''],
           [PRAdityaGuptaIMG, 'Aditya Gupta', ''],
-          [PlaceholderIMG, 'Devashish Singh Tomar', ''],
+          [PRDevashishSinghTomarIMG, 'Devashish Singh Tomar', ''],
           [PRGaurikaSharmaIMG, 'Gaurika Sharma', ''],
           [PRHimanshuGoyalIMG, 'Himanshu Goyal', ''],
           [PRPrakharJainIMG, 'Prakhar Jain', ''],
@@ -187,6 +188,7 @@ function TeamAvishkar() {
         ])}
         <DividerLine alignmentCenter={true} text="Photos and Videos" />
         {DisplayCard([
+          [PRAdityaGuptaIMG, 'Aditya Gupta', ''],
           [PVSumitYadavIMG, 'Sumit Yadav', '', '', '', ''],
           [PVVarunKumarIMG, 'Varun Kumar', '', '', '', '']
         ])}

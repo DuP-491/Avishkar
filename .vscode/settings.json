@@ -1,8 +1,0 @@
-{
-	"files.autoSave": "onWindowChange",
-	"editor.formatOnSave": true,
-	"todo-tree.tree.showBadges": true,
-	"todo-tree.tree.showCountsInTree": true,
-	"python.formatting.provider": "black",
-	"editor.formatOnSaveMode": "modifications"
-}
