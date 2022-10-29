@@ -34,6 +34,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="px-4 py-8 bg-gray-900 bg-opacity-50 shadow backdrop-blur-sm sm:rounded-lg sm:px-10">
             <img
+              // eslint-disable-next-line no-undef
               src={require('../../../images/cross-icon.png')}
               className="absolute cursor-pointer right-4 top-4 invert"
               onClick={onCrossPress}
@@ -41,7 +42,8 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
             <div className="flex items-center justify-center space-x-4 sm:mx-auto sm:w-full sm:max-w-md">
               <img
                 className="w-auto h-12"
-                src="https://i.imgur.com/cHH4xIh.png"
+                // eslint-disable-next-line no-undef
+                src={require('../../Assets/logo.png')}
                 alt="Avishkar Logo"
               />
               <h2 className="text-2xl font-bold tracking-tight text-center text-white">

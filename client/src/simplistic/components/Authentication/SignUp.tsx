@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
+import bgImage from '../../Assets/collage.jpg';
 
 const SignUp = () => {
   function LoggingIn(e: any) {
@@ -33,13 +34,10 @@ const SignUp = () => {
   return (
     <div
       className="flex items-center justify-center w-full min-h-screen"
-      style={{
-        background:
-          'url(https://assets.nflxext.com/ffe/siteui/vlv3/79fe83d4-7ef6-4181-9439-46db72599559/bd05b4ed-7e37-4be9-85c8-078f067bd150/IN-en-20221017-popsignuptwoweeks-perspective_alpha_website_large.jpg)'
-      }}>
+      style={{ background: `url(${bgImage})` }}>
       <div className="flex flex-col items-center justify-center w-full px-6 py-8 lg:py-0">
         <a
-          href="#"
+          href="/"
           className="flex items-center mb-6 text-4xl font-semibold text-gray-900 dark:text-white">
           <img className="w-16 h-16 mr-2" src={Logo} alt="logo" />
           Avishkar
