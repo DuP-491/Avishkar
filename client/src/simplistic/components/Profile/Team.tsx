@@ -25,7 +25,6 @@ const Team = (props: any) => {
     UserService.getTeamMembers(token, teamId)
       .then((data) => {
         if (data['success']) {
-          console.log(data);
           setTeamMembers(data['members']);
         }
       })
