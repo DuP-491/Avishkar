@@ -35,6 +35,7 @@ import GnosomaniaVanshAmbashtaIMG from './Assets/GnosomaniaVanshAmbashta.jpg';
 
 import PRAashirwadSharmaIMG from './Assets/PRAashirwadSharma.jpg';
 import PRAdityaGuptaIMG from './Assets/PRAdityaGupta.jpeg';
+import PRDevashishSinghTomarIMG from './Assets/PRDevashishSinghTomar.jpeg';
 import PRGaurikaSharmaIMG from './Assets/PRGaurikaSharma.jpg';
 import PRHimanshuGoyalIMG from './Assets/PRHimanshuGoyal.jpg';
 import PRPrakharJainIMG from './Assets/PRPrakharJain.jpg';
@@ -49,6 +50,8 @@ import TechHiteshMitrukaIMG from './Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
 import TechParthMittalIMG from './Assets/TechParthMittal.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
+import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.png';
+import TechLovedeepSinghIMG from './Assets/TechLovedeepSingh.jpeg';
 
 import PVSumitYadavIMG from './Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from './Assets/PVVarunKumar.jpg';
@@ -235,7 +238,7 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={PRDevashishSinghTomarIMG}
                 name="Devashish Singh Tomar"
                 designation=""
                 facebook=""
@@ -359,7 +362,7 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={TechLovedeepSinghIMG}
                 name="Lovedeep Singh Kamal"
                 designation=""
                 facebook=""
@@ -383,7 +386,7 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
+                imgsrc={TechPriyavKaneriaIMG}
                 name="Priyav K Kaneria"
                 designation=""
                 facebook=""
@@ -447,7 +450,7 @@ const index = () => {
             </div>
           </div>
           <div className="container px-6 py-6 mx-auto">
-            <DividerLine alignmentCenter={true} text="Tech Team" />
+            <DividerLine alignmentCenter={true} text="Photos and Videos" />
             <div className="flex flex-wrap justify-around">
               <Card
                 imgsrc={PRAdityaGuptaIMG}

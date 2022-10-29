@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import Trivia from '../components/Trivia';
 import NoticeBoard from '../components/NoticeBoard';
 import UserService from '../simplistic/services/UserService';
+import Leaderboard from '../components/Leaderboard';
 
 function debounce(fn: Function, ms: number) {
   let timer: any;
@@ -69,6 +70,7 @@ function GameComponent(props: Props) {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0, rot: 0 });
   const [showTrivia, setShowTrivia] = useState(false);
   const [showNotice, setShowNotice] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [triviaFunction, setTriviaFunction] = useState(() => () => {});
 
   const [userDetails, setUserDetails] = useState({
@@ -112,11 +114,11 @@ function GameComponent(props: Props) {
           // console.log(gameObject.name);
           const key = scene + '-' + gameObject.name;
           // GET NPC DATA
-          console.log(key);
+          // console.log(key);
           /* NICE 😈🥵6️⃣9️⃣ */
           const data = npcData[key];
           if (!data) {
-            console.log('No data found for ' + key);
+            // console.log('No data found for ' + key);
             return;
           }
           setInfoPromptText(data.text);
@@ -157,7 +159,7 @@ function GameComponent(props: Props) {
         game.instance?.events.on(
           EVENTS_NAME.openComputer,
           (department_: string, computerType_: string) => {
-            console.log(department_);
+            // console.log(department_);
             setDepartment(department_);
             setComputerType(computerType_);
             setShowComputer(true);
@@ -168,9 +170,15 @@ function GameComponent(props: Props) {
         });
         game.instance?.events.on(EVENTS_NAME.closeMap, () => {
           setShowMap(false);
+          setShowInfoPrompt(false);
+          setShowAuthPrompt(false);
+          setShowInfo(false);
+          setShowLeaderboard(false);
+          setShowNotice(false);
+          setShowTrivia(false);
         });
         game.instance?.events.on(EVENTS_NAME.logout, () => {
-          console.log('logout');
+          // console.log('logout');
           Cookies.remove('token');
         });
         game.instance?.events.on(EVENTS_NAME.showAuth, () => {
@@ -272,7 +280,7 @@ function GameComponent(props: Props) {
         }
       })
       .catch(() => {
-        console.log("Unable to fetch user's details");
+        // console.log("Unable to fetch user's details");
       });
   };
 
@@ -290,18 +298,13 @@ function GameComponent(props: Props) {
       .eq('user_id', userId)
       .limit(1)
       .single();
-    if (error) {
-      console.log(error);
-      toast.error('Unable to fetch user score');
-      return;
-    }
-    if (!userCoins) {
+    if (!userCoins || error) {
       let { data: newuserCoins, error } = await supabase
         .from('leaderboard')
         .insert([{ user_id: userId, name: userDetails.username, coins: 0, last_qid: -1 }])
         .single();
       if (error || !newuserCoins) {
-        console.log(error);
+        // console.log(error);
         toast.error('Unable to fetch user score');
         return;
       }
@@ -330,7 +333,7 @@ function GameComponent(props: Props) {
       game.instance?.scene.resume('campus');
       if (game?.instance) game.instance.input.keyboard.enabled = true;
       game.instance?.events.emit(EVENTS_NAME.logout);
-      console.log('logout');
+      // console.log('logout');
       setTimeout(() => {
         setShowAuthPrompt(false);
         setShowComputer(false);
@@ -385,6 +388,7 @@ function GameComponent(props: Props) {
   };
 
   const openSponsor = () => {
+    setDepartment('');
     setComputerType('Sponsors');
     setShowComputer(true);
   };
@@ -397,11 +401,19 @@ function GameComponent(props: Props) {
     setShowNotice(false);
   };
 
+  const closeLeaderboard = () => {
+    setShowLeaderboard(false);
+  };
+
   const handleOnMapIconClick = () => {
     setShowMap(true);
   };
   const handleOnInfoIconClick = () => {
     setShowInfo(true);
+  };
+
+  const handleLeaderboardClick = () => {
+    setShowLeaderboard(true);
   };
 
   return (
@@ -466,9 +478,12 @@ function GameComponent(props: Props) {
       <div className="absolute top-0 left-0 z-10 px-2 py-1 m-5 text-xl tracking-wide bg-gray-400 rounded shadow-lg opacity-90 slashed-zero tabular-nums">
         Score: {!userCoinDetails ? 'N/A' : userCoinDetails.coins}
       </div>
-      <div className="absolute w-full h-full top-0 pt-[7%]">
-        {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
-      </div>
+      {showNotice && <NoticeBoard onCloseNotice={closeNotice}></NoticeBoard>}
+      {showLeaderboard && (
+        <Leaderboard closePopup={closeLeaderboard} user={userDetails}></Leaderboard>
+      )}
+      {/* <div className="absolute w-full h-full top-0 pt-[7%]">
+      </div> */}
       <div className="absolute bottom-0 z-10 w-full">
         {showInfoPrompt && (
           <InfoPrompt
@@ -496,6 +511,15 @@ function GameComponent(props: Props) {
             }`}
             width={64}
             onClick={handleOnInfoIconClick}
+          />
+          <img
+            // eslint-disable-next-line no-undef
+            src={require('../images/leaderboard-icon.png')}
+            className={`absolute z-10 hover:scale-90 duration-200 transition ease-in-out right-[148px] bottom-[17.5rem] ${
+              !showMap ? `cursor-zoom-in` : `cursor-zoom-out`
+            }`}
+            width={64}
+            onClick={handleLeaderboardClick}
           />
         </div>
       </div>

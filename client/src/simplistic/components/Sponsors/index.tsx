@@ -27,10 +27,12 @@ import PayTMIMG from '../Sponsor/Assets/PayTM.png';
 import PolygonIMG from '../Sponsor/Assets/Polygon.png';
 import ProtoioIMG from '../Sponsor/Assets/Protoio.png';
 import RedIMG from '../Sponsor/Assets/Red.png';
+import ReplitIMG from '../Sponsor/Assets/Replit.png';
 import ScalerEdgeIMG from '../Sponsor/Assets/ScalerEdge.png';
 import SketchIMG from '../Sponsor/Assets/Sketch.png';
 import SkillenzaIMG from '../Sponsor/Assets/Skillenza.png';
 import SkillLyncIMG from '../Sponsor/Assets/SkillLync.png';
+import SolanaIMG from '../Sponsor/Assets/Solana.png';
 import SSGIMG from '../Sponsor/Assets/SSG.png';
 import TezosIMG from '../Sponsor/Assets/Tezos.png';
 import TIMEIMG from '../Sponsor/Assets/TIME.png';
@@ -71,13 +73,14 @@ function Sponsors() {
       <div className="flex flex-col items-center px-10 pb-10">
         <>
           <DividerLine alignmentCenter={true} text="SPONSORS" />
-          {DisplayCard([DevfolioIMG, FilecoinIMG, TezosIMG, PolygonIMG])}
+          {DisplayCard([DevfolioIMG, FilecoinIMG, PolygonIMG, ReplitIMG, SolanaIMG])}
         </>
       </div>
       <div className="flex flex-col items-center px-10 pb-10">
         <>
           <DividerLine alignmentCenter={true} text="PAST SPONSORS" />
           {DisplayCard([
+            TezosIMG,
             BalsamiqIMG,
             BlogaddaIMG,
             BlueskyIMG,

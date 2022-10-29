@@ -39,7 +39,7 @@ export const npcData: {
     location: 'boys hostel area entry point',
     type: 'text',
     character: 'Guard',
-    text: 'Man this job is boring.~I wish I could do something more interesting. Like coding!'
+    text: 'This is the boys hostel area. You will find a lot of lively chaotic creaatures here.~Everything beyond this point can be referred to as a "man-cave".~So girls, turn around while you still can.'
   },
   'campus-56': {
     name: 'Mr. Sanjeev',
@@ -67,7 +67,7 @@ export const npcData: {
     location: 'outside Academic Building | ELECTROMANIA | POWERSURGE | RASAYANS',
     type: 'text',
     character: 'Guard | Building NPC',
-    text: `This place is of paramount importance. It is the main hub of MNNIT and houses various classrooms, staff rooms, labs, halls and much more. You can find all core departments here and it also connects to the library.~Even a student of MNNIT is likely to get lost here but don't worry we have signs everywhere!`
+    text: `This place is of paramount importance. It is the main hub of MNNIT and houses various classrooms, staff rooms, labs, halls and much more.~You can find all core departments here and it also connects to the library.~Even a student of MNNIT is likely to get lost here but don't worry we have signs everywhere!`
   },
   'campus-60': {
     name: 'Mr. Sanjay',
@@ -102,14 +102,14 @@ export const npcData: {
     location: 'outside MP HALL | GNOTALKS',
     type: 'text',
     character: 'Guard | Building NPC',
-    text: `Welcome to Multipurpose Hall! This hall does not only host some of the biggest events in the college but is the Art Committees' favorite place to decorate.~The stairs, stage and the whole hall is a brilliant sight to look at during any event.`
+    text: `Welcome to Multipurpose Hall!~This hall does not only host some of the biggest events in the college but is the Art Committees' favorite place to decorate.~The stairs, stage and the whole hall is a brilliant sight to look at during any event.`
   },
   'campus-66': {
     name: 'Mr. Ratanlal',
     location: 'Bascket Ball Court Beside Tunnel | AERODYNAMICS',
     type: 'text',
     character: 'Guard | Building NPC',
-    text: `A professional court for some professional players. Everyday from 6 pm you will find the boys and girls basketball team practicing here. Doesn't this look like the perfect place for the ASTROWING department?`
+    text: `A professional court for some professional players. Everyday from 6 pm you will find the boys and girls basketball team practicing here.~Doesn't this look like the perfect place for the ASTROWING department?`
   },
   'campus-67': {
     name: 'Mr. Raman Singh',
@@ -123,7 +123,7 @@ export const npcData: {
     location: 'Seminar Hall | GNOSOMANIA',
     type: 'text',
     character: 'Guard | Building NPC',
-    text: `Another hall for many fun events. It is not as big as MP Hall but here is where we have guest lectures, dramatics club events as well as TedX events. GNOSOMNIA is conducted in this theater-like hall.`
+    text: `Another hall for many fun events. It is not as big as MP Hall but here is where we have guest lectures, dramatics club events as well as TedX events.~GNOSOMNIA is conducted in this theater-like hall.`
   },
   'campus-69': {
     name: 'Mr. Sanjeev',
@@ -186,7 +186,7 @@ export const npcData: {
     location: 'Tennis Court',
     type: 'text',
     character: 'Guard | Building NPC',
-    text: `This is Tennis Court of MNNIT Allahabd.`
+    text: `Get your rackets and get playing, the tennis court is popular amongst students as well as professors.`
   },
   'campus-78': {
     name: 'Mr. Radhe Shyam',
@@ -262,7 +262,14 @@ export const npcData: {
     name: 'Notice Board',
     location: 'Near Dean Academics',
     type: 'notice',
-    character: 'QuizMaster',
+    character: 'Notice Board guy',
     text: `Want to know what is going on in Avishkar. Click Ok to know more`
+  },
+  'campus-90': {
+    name: 'Mr. RajaRam Sindhiya',
+    location: 'Inside Library | Building NPC',
+    type: 'text',
+    character: 'Librarian',
+    text: `Shhh.. There are people studying.~You weren't here earlier and library has been closed since morning. How did you event geet here?~Anyways... Welcome to the library, explore the infinite books available and sit and study in the study rooms.~Bring in your laptops and notebooks and sit with friends to learn about anything you like.`
   }
 };

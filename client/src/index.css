@@ -11,6 +11,45 @@ body {
   user-select: none;
 }
 
+@font-face {
+  font-family: 'avishkar';
+  src: local('avishkar'), url(./fonts/PixelCards.woff) format('woff');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+@font-face {
+  font-family: 'pacman';
+  src: local('pacman'), url(./fonts/PAC-FONT.TTF) format('truetype') ;
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+.font-avishkar{
+  font-family: 'pacman','sans';
+}
+/* retro game btn */
+.retro-btn{
+  text-align: center;
+display: inline-block;
+margin:5px;
+  font-weight: bold;
+  padding: 10px;
+  background-color: lightgray;
+  text-shadow: -1px -1px black, 1px 1px white;
+  color: gray;
+  -webkit-border-radius: 7px;
+-moz-border-radius: 7px;
+-o-border-radius: 7px;
+border-radius: 7px;
+  box-shadow: 0 .2em gray; 
+  cursor: pointer;
+
+}
+.retro-btn:active {
+box-shadow: none;
+position: relative;
+top: .2em;
+}
+
 /* classes for the stroke text on homepage */
 .stroke-text{
   -webkit-text-stroke:5px white;
@@ -75,4 +114,10 @@ canvas,
 .noscroll {
   -ms-overflow-style: 10px;
   scrollbar-width: 10px;
+}
+
+@media only screen and (max-width: 600px) { 
+  .animate-marquee-rtl,.animate-marquee-ltr{
+    animation-duration:10s;
+  }
 }

@@ -22,7 +22,7 @@ function Simplistic() {
 
   // eslint-disable-next-line default-case
   function onRedirectPress(event: any) {
-    console.log(event);
+    // console.log(event);
     setWhatToDisplay(event.target.id);
   }
 
