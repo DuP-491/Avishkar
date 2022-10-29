@@ -1106,6 +1106,41 @@ function NewTablet(props: Props) {
       });
   };
 
+  const handleGetParticipationList = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    AdminService.getParticipationList(token, events[selectedEventID]['id'])
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Downloaded List of Participating Teams Successfully');
+
+          let arr = data['participation'];
+          arr = [Object.keys(arr[0])].concat(arr);
+
+          const csv = arr
+            .map((it: any) => {
+              return Object.values(it).toString();
+            })
+            .join('\n');
+
+          let el = document.createElement('a');
+          el.download = `${events[selectedEventID]['name']}_teams.csv`;
+          el.href = URL.createObjectURL(new Blob([csv]));
+          el.click();
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
   const handleSelectDept = (i: any) => {
     setTab('Events');
     setSelectedDeptID(i);
@@ -1321,6 +1356,16 @@ function NewTablet(props: Props) {
                       className="apply-button h-[44px] w-[312px] mx-auto my-5"
                       data-hackathon-slug="CyberQuest"
                       data-button-theme="light"></div>
+                  )}
+                  {userDetails['role'] !== 'USER' && (
+                    <>
+                      <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Admin</p>
+                      <p
+                        className="px-5 py-1 text-2xl text-gray-200 bg-blue-900 cursor-pointer"
+                        onClick={() => handleGetParticipationList()}>
+                        Get Participation List
+                      </p>
+                    </>
                   )}
                 </div>
                 <div className="relative flex flex-col w-2/3 bg-black rounded-r-md">
