@@ -47,6 +47,9 @@ const SignUp = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
             </h1>
+            <div className="mt-4 text-white text-center w-full">
+              MNNIT students must use their college GSuite ID
+            </div>
             <form className="space-y-4 md:space-y-6" onSubmit={LoggingIn} method="POST">
               <div>
                 <label
