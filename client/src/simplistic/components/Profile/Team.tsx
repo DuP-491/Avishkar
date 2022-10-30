@@ -5,7 +5,7 @@ import UserService from '../../services/UserService';
 import TeamMember from './TeamMember';
 
 const Team = (props: any) => {
-  const { name_ip, team, handleDeleteTeam } = props;
+  const { name_ip, team, handleDeleteTeam, userId, handleRemoveMember } = props;
   const [name, setName] = useState(name_ip);
 
   const teamId = team['team']['id'];
@@ -89,25 +89,49 @@ const Team = (props: any) => {
                   setNewTeamName(e.target.value);
                 }}
               />
-              <button onClick={handleUpdateTeam}>Save</button>
             </div>
           ) : (
             <h2>{name}</h2>
           )}
-          <div className="ml-auto space-x-2">
-            <button
-              className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
-              onClick={() => {
-                setEditTeamSwitch((s) => !s);
-              }}>
-              edit
-            </button>
-            <button
-              className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
-              onClick={handleDeleteTeam}>
-              delete
-            </button>
-          </div>
+          {team['team']['leader'] == userId ? (
+            <>
+              {editTeamSwitch ? (
+                <div className='ml-auto space-x-2"'>
+                  <div className="ml-auto space-x-2">
+                    <button
+                      className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                      onClick={handleUpdateTeam}>
+                      save
+                    </button>
+                    <button
+                      className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                      onClick={() => {
+                        setEditTeamSwitch((s) => !s);
+                      }}>
+                      cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="ml-auto space-x-2">
+                  <button
+                    className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                    onClick={() => {
+                      setEditTeamSwitch((s) => !s);
+                    }}>
+                    edit
+                  </button>
+                  <button
+                    className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                    onClick={handleDeleteTeam}>
+                    delete
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div>
           {/* events participated by the team */}
@@ -117,37 +141,46 @@ const Team = (props: any) => {
             <p className="inline-block p-1 mx-1 text-white bg-gray-900 rounded-lg">insomnia</p>
           </div> */}
           {/* send invite of this team */}
-
-          <div className="flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-gray-700 md:flex-row hover:bg-gray-600">
-            <input
-              type="text"
-              name="username"
-              id="username"
-              className=" border mr-2   sm:text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-              placeholder="enter username to invite"
-              required={true}
-              value={inviteUsernames[team['team']['id']]}
-              onChange={(e) =>
-                setInviteUsernames({
-                  ...inviteUsernames,
-                  [team['team']['id']]: e.target.value
-                })
-              }
-            />
-            <div className="text-right capitalize ">
-              <button
-                className="inline-block font-medium text-blue-500 hover:underline"
-                onClick={() => handleInviteUser(team['team']['id'])}>
-                invite
-              </button>
+          {team['team']['leader'] == userId ? (
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-gray-700 md:flex-row hover:bg-gray-600">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                className=" border mr-2   sm:text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                placeholder="enter username to invite"
+                required={true}
+                value={inviteUsernames[team['team']['id']]}
+                onChange={(e) =>
+                  setInviteUsernames({
+                    ...inviteUsernames,
+                    [team['team']['id']]: e.target.value
+                  })
+                }
+              />
+              <div className="text-right capitalize ">
+                <button
+                  className="inline-block font-medium text-blue-500 hover:underline"
+                  onClick={() => handleInviteUser(team['team']['id'])}>
+                  invite
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
           {/* team members */}
           <div>
             {teamMembers?.map((teamMember: any, i: number) => (
               <TeamMember
+                removeMember={(teamId: any, userId: any) => {
+                  handleRemoveMember(teamId, userId, getTeamMembers);
+                }}
+                teamId={teamId}
+                userId={teamMember['userId']}
                 key={teamMember['userId']}
                 leader={teamMember['user']['id'] === team['team']['leader']}
+                removeAllowed={team['team']['leader'] == userId}
                 name={`${i + 1} ${teamMember['user']['name']} ${
                   teamMember['user']['id'] === team['team']['leader']
                     ? '(Leader)'
