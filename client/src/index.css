@@ -126,3 +126,21 @@ canvas,
     animation-duration: 10s;
   }
 }
+
+/* Tablet Scrollbar Styles */
+.tablet__scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tablet__scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tablet__scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 25px;
+  background: rgb(39 39 42 / 0.8);
+}
+
+.tablet__scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(39 39 42);
+}

@@ -1230,7 +1230,7 @@ function NewTablet(props: Props) {
                 <p className="mt-3 text-xl italic text-center">
                   {departments[selectedDeptID]['desc']}
                 </p>
-                <div className="flex flex-wrap items-center justify-center flex-1 my-4 overflow-y-auto">
+                <div className="flex flex-wrap items-center justify-center flex-1 my-4 overflow-y-auto tablet__scrollbar">
                   {events.map((event, i) => (
                     <button
                       key={event['id']}
@@ -1434,7 +1434,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 1 && (
-                    <div className="mt-[15vh] overflow-y-auto">
+                    <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                       <p
                         className="m-5 text-3xl"
                         dangerouslySetInnerHTML={{ __html: events[selectedEventID]['details'] }}
@@ -1442,7 +1442,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 2 && (
-                    <div className="mt-[15vh] overflow-y-auto">
+                    <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                       <p
                         className="m-5 text-3xl"
                         dangerouslySetInnerHTML={{ __html: events[selectedEventID]['criteria'] }}
@@ -1450,7 +1450,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 3 && (
-                    <div className="mt-[15vh] overflow-y-auto">
+                    <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                       <p
                         className="m-5 text-3xl"
                         dangerouslySetInnerHTML={{ __html: events[selectedEventID]['rules'] }}
@@ -1481,7 +1481,7 @@ function NewTablet(props: Props) {
                         events[selectedEventID]['minTeamSize'] <= team['team']['size'] &&
                         team['team']['size'] <= events[selectedEventID]['maxTeamSize']
                     ).length !== 0 && (
-                      <div className="mt-[15vh] overflow-y-auto">
+                      <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                         {teams
                           .filter((team) => team['team']['leader'] === userDetails['id'])
                           .map((team) => (
@@ -1544,7 +1544,7 @@ function NewTablet(props: Props) {
                   {eventSection === 4 &&
                     participatingTeam !== null &&
                     participatingTeam['leader'] === userDetails['id'] && (
-                      <div className="mt-[15vh] overflow-y-auto">
+                      <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                         {
                           <div
                             key={participatingTeam['id']}
@@ -1605,7 +1605,7 @@ function NewTablet(props: Props) {
                   {eventSection === 4 &&
                     participatingTeam !== null &&
                     participatingTeam['leader'] !== userDetails['id'] && (
-                      <div className="mt-[15vh] overflow-y-auto">
+                      <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                         {
                           <div
                             key={participatingTeam['id']}
@@ -1654,7 +1654,7 @@ function NewTablet(props: Props) {
                       </div>
                     )}
                   {eventSection === 5 && (
-                    <div className="overflow-y-auto mt-[15vh]">
+                    <div className="tablet__scrollbar overflow-y-auto mt-[15vh]">
                       {eventCoordies.map((eventCoordie) => (
                         <div
                           key={eventCoordie['user']['id']}
@@ -1676,7 +1676,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 6 && (
-                    <div className="overflow-y-auto mt-[15vh]">
+                    <div className="tablet__scrollbar overflow-y-auto mt-[15vh]">
                       {sponsors.filter((sponsor) => sponsor['title']).length !== 0 && (
                         <div className="my-5 text-3xl font-bold text-center">Title Sponsors</div>
                       )}
@@ -1724,7 +1724,7 @@ function NewTablet(props: Props) {
                       </div>
                     </div>
                   </div>
-                  <div className="overflow-y-auto h-[70vh] mt-4">
+                  <div className="tablet__scrollbar overflow-y-auto h-[70vh] mt-4">
                     <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Details</p>
                     <p
                       className={
@@ -2016,7 +2016,7 @@ function NewTablet(props: Props) {
                     )}
                   {profileSection === 2 &&
                     teams.filter((team) => team['status'] === 'ACCEPTED').length !== 0 && (
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {teams
                           .filter((team) => team['status'] === 'ACCEPTED')
                           .map((team) => (
@@ -2065,7 +2065,7 @@ function NewTablet(props: Props) {
                       </div>
                     )}
                   {profileSection === 3 && (
-                    <div className="overflow-y-auto">
+                    <div className="overflow-y-auto tablet__scrollbar">
                       {teams
                         .filter((team) => team['team']['leader'] === userDetails['id'])
                         .map((team) => (
@@ -2188,7 +2188,7 @@ function NewTablet(props: Props) {
                     )}
                   {profileSection === 4 &&
                     teams.filter((team) => team['status'] !== 'ACCEPTED').length !== 0 && (
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {teams
                           .filter((team) => team['status'] !== 'ACCEPTED')
                           .map((team) => (
@@ -2301,7 +2301,7 @@ function NewTablet(props: Props) {
                     </>
                   )}
                   {profileSection === 6 && (
-                    <div className="overflow-y-auto">
+                    <div className="overflow-y-auto tablet__scrollbar">
                       {Object.keys(departments).map((department) => (
                         <div
                           key={department}
@@ -2380,7 +2380,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {deptCoordies.map((deptCoordie) => (
                           <div
                             key={deptCoordie['user']['id']}
@@ -2406,7 +2406,7 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 9 && (
                     <>
-                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg tablet__scrollbar border-zinc-800 bg-zinc-900">
                         <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Name</span>
                           <input
@@ -2530,7 +2530,7 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 10 && newUpdateEvent['id'] !== '' && (
                     <>
-                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg tablet__scrollbar border-zinc-800 bg-zinc-900">
                         <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Name</span>
                           <input
@@ -2681,7 +2681,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {events.map((event) => (
                           <div
                             key={event['id']}
@@ -2717,7 +2717,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {events.map((event) => (
                           <div
                             key={event['id']}
@@ -2820,7 +2820,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {eventCoordies.map((eventCoordie) => (
                           <div
                             key={eventCoordie['user']['id']}
@@ -3015,7 +3015,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {sponsors.map((sponsor) => (
                           <div
                             key={sponsor['id']}
@@ -3076,7 +3076,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {sponsors.map((sponsor) => (
                           <div
                             key={sponsor['id']}
