@@ -345,6 +345,6 @@ export const npcData: {
     location: 'near saraswati gate',
     type: 'text',
     character: 'Vanshika',
-    text: ``
+    text: `Hi! I'm Vanshika. You must be familier with my voice from the Demo video.~I'm just waiting here for Sanskar. He said wants some help with content for the website.`
   }
 };
