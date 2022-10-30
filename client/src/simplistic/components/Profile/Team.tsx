@@ -111,11 +111,11 @@ const Team = (props: any) => {
         </div>
         <div>
           {/* events participated by the team */}
-          <div className="p-2 bg-gray-800 border-b border-gray-700 ">
+          {/* <div className="p-2 bg-gray-800 border-b border-gray-700 ">
             <p className="inline-block p-1 mx-1 text-white bg-gray-900 rounded-lg">webster</p>
             <p className="inline-block p-1 mx-1 text-white bg-gray-900 rounded-lg">softablitz</p>
             <p className="inline-block p-1 mx-1 text-white bg-gray-900 rounded-lg">insomnia</p>
-          </div>
+          </div> */}
           {/* send invite of this team */}
 
           <div className="flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-gray-700 md:flex-row hover:bg-gray-600">
@@ -147,6 +147,7 @@ const Team = (props: any) => {
             {teamMembers?.map((teamMember: any, i: number) => (
               <TeamMember
                 key={teamMember['userId']}
+                leader={teamMember['user']['id'] === team['team']['leader']}
                 name={`${i + 1} ${teamMember['user']['name']} ${
                   teamMember['user']['id'] === team['team']['leader']
                     ? '(Leader)'
