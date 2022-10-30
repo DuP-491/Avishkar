@@ -110,7 +110,7 @@ const EventPage = () => {
         <div className="flex flex-wrap items-stretch gap-3 py-4">
           {eventCoordies.map((c, i) => {
             console.log(c);
-            return <CoordinatorInfo key={i} />;
+            return <CoordinatorInfo key={i} cord={c} />;
           })}
         </div>
       </div>
