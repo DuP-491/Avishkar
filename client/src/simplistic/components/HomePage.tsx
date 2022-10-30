@@ -48,7 +48,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
                 Avishkar
               </h1>
               <span className="block font-extrabold text-white text-md ">
-                10<sup>th</sup> November - 13<sup>th</sup> November 2021
+                10<sup>th</sup> November - 13<sup>th</sup> November 2022
               </span>
               <a href="/game" className="uppercase retro-btn">
                 enter game
