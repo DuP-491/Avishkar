@@ -35,9 +35,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          <Route index element={<Simplistic />} />
+          {/* <Route index element={<Simplistic />} /> */}
 
-          {/* <Route index element={<GameLayout />} /> */}
+          <Route index element={<GameLayout />} />
           <Route
             path="tab"
             element={
