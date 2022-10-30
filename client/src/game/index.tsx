@@ -162,6 +162,7 @@ function GameComponent(props: Props) {
           EVENTS_NAME.openComputer,
           (department_: string, computerType_: string) => {
             // console.log(department_);
+            if (game.instance) game.instance.input.keyboard.enabled = false;
             setDepartment(department_);
             setComputerType(computerType_);
             setShowComputer(true);
@@ -353,6 +354,7 @@ function GameComponent(props: Props) {
   };
 
   const closeComputer = () => {
+    if (game?.instance) game.instance.input.keyboard.enabled = true;
     setShowComputer(false);
   };
 
