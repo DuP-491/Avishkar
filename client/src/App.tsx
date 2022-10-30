@@ -35,9 +35,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          {/* <Route index element={<Simplistic />} /> */}
-
-          <Route index element={<GameLayout />} />
+          <Route index element={<Simplistic />} />
+          <Route path="game" element={<GameLayout />} />
           <Route
             path="tab"
             element={
@@ -55,7 +54,7 @@ function App() {
               <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           /> */}
-          <Route path="simplistic" element={<Simplistic />} />
+          {/* <Route path="simplistic" element={<Simplistic />} /> */}
         </Route>
         <Route element={<NavWrapper />}>
           <Route path="/faq" element={<FaqPage />} />

@@ -246,7 +246,7 @@ function GameComponent(props: Props) {
     gameConfig.scale!.width = window.innerWidth;
     gameConfig.scale!.height = window.innerHeight;
     if (dimensions.width < 768) {
-      navigator('/simplistic');
+      navigator('/');
     }
     setInitialize(true);
   }, [dimensions]);
@@ -327,7 +327,7 @@ function GameComponent(props: Props) {
   const signUpSuccessCallback = () => {
     // TOAST: Please check your email to verify your account
     toast.warning('Please check your email to verify your account');
-    navigator('/simplistic');
+    navigator('/');
   };
 
   const onAuthFailure = () => {
