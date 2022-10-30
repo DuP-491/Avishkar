@@ -89,26 +89,46 @@ const Team = (props: any) => {
                   setNewTeamName(e.target.value);
                 }}
               />
-              <button onClick={handleUpdateTeam}>Save</button>
             </div>
           ) : (
             <h2>{name}</h2>
           )}
           {team['team']['leader'] == userId ? (
-            <div className="ml-auto space-x-2">
-              <button
-                className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
-                onClick={() => {
-                  setEditTeamSwitch((s) => !s);
-                }}>
-                edit
-              </button>
-              <button
-                className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
-                onClick={handleDeleteTeam}>
-                delete
-              </button>
-            </div>
+            <>
+              {editTeamSwitch ? (
+                <div className='ml-auto space-x-2"'>
+                  <div className="ml-auto space-x-2">
+                    <button
+                      className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                      onClick={handleUpdateTeam}>
+                      save
+                    </button>
+                    <button
+                      className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                      onClick={() => {
+                        setEditTeamSwitch((s) => !s);
+                      }}>
+                      cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="ml-auto space-x-2">
+                  <button
+                    className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                    onClick={() => {
+                      setEditTeamSwitch((s) => !s);
+                    }}>
+                    edit
+                  </button>
+                  <button
+                    className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                    onClick={handleDeleteTeam}>
+                    delete
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <></>
           )}
