@@ -11,11 +11,11 @@ const Nav = () => {
             Event
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/schedule" className="hover:font-bold">
             Schedule
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/team" className="hover:font-bold">
             team
@@ -33,11 +33,11 @@ const Nav = () => {
             Sponsors
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/faq" className="hover:font-bold">
             faq
           </Link>
-        </li>
+        </li> */}
 
         {Cookies.get('token') ? (
           <li>
