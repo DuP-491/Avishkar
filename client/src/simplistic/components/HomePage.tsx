@@ -48,7 +48,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
                 Avishkar
               </h1>
               <span className="block font-extrabold text-white text-md ">
-                10<sup>th</sup> November - 13<sup>th</sup> November 2021
+                10<sup>th</sup> November - 13<sup>th</sup> November 2022
               </span>
               <a href="/game" className="uppercase retro-btn">
                 enter game
@@ -181,8 +181,8 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
 
           <NewEvent
             dept="cyberqest"
-            eventName="event<br/>name"
-            desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
+            eventName="CSS<br/>Battle"
+            desc="The new way to test your design skills while having fun with code to prove you are the battle God. Let wake up the designer in you"
           />
 
           <p className="hidden md:block xs:row-start-2 xs:col-start-2 xs:self-center md:col-start-1 md:col-span-2 md:pr-12 md:text-lg">
@@ -190,24 +190,35 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
           </p>
           <NewEvent
             dept="cyberqest"
-            eventName="event<br/>name"
-            desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
+            eventName="Design<br/>Rush"
+            desc="Now get rid of the fear of System Design rounds, we are introducing DesignRush - Simulation of Machine Coding and System Design rounds."
           />
           <NewEvent
-            dept="cyberqest"
-            eventName="event<br/>name"
-            desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
+            dept="Mechrocosm"
+            eventName="Crack <br/> the Case"
+            desc="Feel the thrill of solving cases, test your analytical skills and much more. So just rack your brain to crack the case!"
           />
 
           <div className="md:col-start-2">
             <NewEvent
-              dept="cyberqest"
-              eventName="event<br/>name"
-              desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
+              dept="Mechrocosm"
+              eventName="Conquer<br/>the Chain"
+              desc="If you have the ability to control the cause, it's you who own the effect. So come and master the art of Contraption."
             />
           </div>
 
           <NewEvent
+            dept="Mechrocosm"
+            eventName="Industrial<br/> Monopoly"
+            desc="Set you bet, establish your product and enjoy the monopoly."
+          />
+          <NewEvent
+            dept="Nirmaan(CED)"
+            eventName="Just<br/>in Case"
+            desc="Ever thought of joining top consultancy firms and face mission critical challenges. 
+            So put Sherlock's hat on yourself for the first ever Consultancy Event in Avishkar."
+          />
+          {/* <NewEvent
             dept="cyberqest"
             eventName="event<br/>name"
             desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
@@ -216,21 +227,11 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
             dept="cyberqest"
             eventName="event<br/>name"
             desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
-          />
-          <NewEvent
-            dept="cyberqest"
-            eventName="event<br/>name"
-            desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
-          />
-          <NewEvent
-            dept="cyberqest"
-            eventName="event<br/>name"
-            desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
-          />
+          /> */}
 
-          <p className="self-center mx-auto uppercase md:text-lg md:col-span-2 md:text-center md:px-4">
+          {/* <p className="self-center mx-auto uppercase md:text-lg md:col-span-2 md:text-center md:px-4">
             ideate &#8226; innovate &#8226; create
-          </p>
+          </p> */}
         </div>
         {/*  */}
       </div>

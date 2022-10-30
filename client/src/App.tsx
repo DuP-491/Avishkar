@@ -28,6 +28,7 @@ import NavWrapper from './NavFooterWrapper';
 import Schedule from './simplistic/components/Common/Schedule';
 import ProtectedRoute from './simplistic/ProtectedRoute';
 import AuthService from './simplistic/services/AuthService';
+import Redirect from './simplistic/components/Redirect';
 /* eslint-enable */
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/">
           <Route index element={<Simplistic />} />
           <Route path="game" element={<GameLayout />} />
+          <Route path="redirect" element={<Redirect />} />
           <Route
             path="tab"
             element={

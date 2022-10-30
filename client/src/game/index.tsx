@@ -246,7 +246,7 @@ function GameComponent(props: Props) {
     gameConfig.scale!.width = window.innerWidth;
     gameConfig.scale!.height = window.innerHeight;
     if (dimensions.width < 768) {
-      navigator('/');
+      navigator('/redirect');
     }
     setInitialize(true);
   }, [dimensions]);
