@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import AuthService from '../../services/AuthService';
 
@@ -10,11 +10,12 @@ interface ResetPasswordBoxPropType {
 /* eslint-enable */
 
 function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxPropType) {
+  const [isLoading, setIsLoading] = useState(false);
   const { key } = Object.fromEntries(new URLSearchParams(location.search));
 
   function handleResetPassword(e: any) {
     const password = PasswordRef.current.value;
-
+    setIsLoading(true);
     let token = '';
     if (key === undefined) {
       onCrossPress(e);
@@ -23,6 +24,7 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
     } else token = key;
     AuthService.resetPassword(password, token)
       .then((data) => {
+        setIsLoading(false);
         if (data['success']) {
           Cookies.set('token', token);
           onCrossPress(e);
@@ -34,13 +36,14 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
       .catch(() => {
         console.log('Please try again later!');
       });
+    setIsLoading(false);
   }
   const PasswordRef = useRef(document.createElement('input'));
 
   return (
     <>
       <div className="w-2/3 max-w-xl bg-gray-900/[0.5] h-3/5 rounded-lg flex flex-col p-10">
-        <button className="text-white self-end" onClick={onCrossPress}>
+        <button className="self-end text-white" onClick={onCrossPress}>
           X
         </button>
         <img
@@ -51,19 +54,19 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
             width: '4rem'
           }}
         />
-        <span className="text-white m-4 text-xl self-center font-black">RESET PASSWORD</span>
+        <span className="self-center m-4 text-xl font-black text-white">RESET PASSWORD</span>
         <form className="w-full">
-          <div className="md:flex md:items-center mb-6">
+          <div className="mb-6 md:flex md:items-center">
             <div className="md:w-1/3">
               <label
-                className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                className="block pr-4 mb-1 font-bold text-gray-500 md:text-right md:mb-0"
                 htmlFor="inline-password">
                 Password
               </label>
             </div>
             <div className="md:w-2/3">
               <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-password"
                 type="password"
                 placeholder="***********"
@@ -75,7 +78,7 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
             <div className="md:w-1/3"></div>
             <div className="md:w-2/3">
               <button
-                className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-10"
+                className="px-4 py-2 mr-10 font-bold text-white bg-purple-500 rounded shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={handleResetPassword}>
                 Reset Password

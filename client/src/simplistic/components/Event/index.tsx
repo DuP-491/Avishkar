@@ -205,7 +205,8 @@ const index = () => {
         {location.state}
       </h2>
       <hr className="border-4 border-dotted" />
-      <div className="flex flex-wrap items-stretch gap-3 py-4">
+      {/* <div className="flex flex-wrap items-stretch gap-3 py-4"> */}
+      <div className="grid grid-cols-1 gap-3 py-4 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {events.map((e, i) => {
           return (
             <EventCard
@@ -221,7 +222,7 @@ const index = () => {
       </div>
       <div>
         <h2 className="text-3xl text-white md:text-4xl lg:text-5xl">Deparment coordinators</h2>
-        <div className="flex flex-wrap items-stretch gap-3 py-4">
+        <div className="grid grid-cols-1 gap-3 py-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {deptCoordies.map((cord) => {
             return <CoordinatorInfo key={cord['userId']} cord={cord} />;
           })}

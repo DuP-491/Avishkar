@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
@@ -14,13 +14,16 @@ interface LoginBoxPropType {
 
 // eslint-disable-next-line no-unused-vars
 function LoginBox({ onCrossPress, onLogin, onToggle, onForgotPassword }: LoginBoxPropType) {
+  const [isLoading, setIsLoading] = useState(false);
   // eslint-disable-next-line no-unused-vars
   function LoggingIn(e: any) {
     e.preventDefault();
+    setIsLoading(true);
     const name = NameRef.current.value,
       password = PasswordRef.current.value;
     AuthService.logIn(name, password)
       .then((data) => {
+        setIsLoading(false);
         if (data['success']) {
           Cookies.set('token', data['token']);
           onLogin(e);
@@ -30,6 +33,7 @@ function LoginBox({ onCrossPress, onLogin, onToggle, onForgotPassword }: LoginBo
       .catch(() => {
         toast.error('Please try again later!');
       });
+    setIsLoading(false);
   }
   const NameRef = useRef(document.createElement('input'));
   const PasswordRef = useRef(document.createElement('input'));
@@ -103,7 +107,7 @@ function LoginBox({ onCrossPress, onLogin, onToggle, onForgotPassword }: LoginBo
                 <button
                   type="submit"
                   className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-                  Sign in
+                  {isLoading ? 'Signing in..' : 'Sign in'}
                 </button>
                 <button
                   onClick={onToggle}

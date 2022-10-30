@@ -26,6 +26,8 @@ import ResponsiveNav from './simplistic/components/Common/ResponsiveNav';
 import Footer from './simplistic/components/Common/Footer';
 import NavWrapper from './NavFooterWrapper';
 import Schedule from './simplistic/components/Common/Schedule';
+import ProtectedRoute from './simplistic/ProtectedRoute';
+import AuthService from './simplistic/services/AuthService';
 /* eslint-enable */
 
 function App() {
@@ -33,11 +35,17 @@ function App() {
     <Router>
       <Routes>
         <Route path="/">
-          <Route index element={<GameLayout />} />
+          <Route index element={<Simplistic />} />
+          <Route path="game" element={<GameLayout />} />
           <Route
             path="tab"
             element={
-              <NewTablet currTab="Departments" logout={() => {}} closePopup={() => {}} deptId="" />
+              <NewTablet
+                currTab="Departments"
+                logout={AuthService.logOut}
+                closePopup={() => {}}
+                deptId=""
+              />
             }
           />
           {/* <Route
@@ -46,7 +54,7 @@ function App() {
               <NewTablet currTab="Profile" logout={() => {}} closePopup={() => {}} deptId="" />
             }
           /> */}
-          <Route path="simplistic" element={<Simplistic />} />
+          {/* <Route path="simplistic" element={<Simplistic />} /> */}
         </Route>
         <Route element={<NavWrapper />}>
           <Route path="/faq" element={<FaqPage />} />
@@ -56,8 +64,9 @@ function App() {
           {/* THE TWO LINE BELOW IS FOR TESTING PURPOSE ONLY... PLEASE REMOVE IF I FORGET TO REMOVE IT */}
           {/* <Route path="/tbsp" element={<TabletSponsors onCrossPress={() => {}} />} />
         <Route path="/tbtm" element={<TabletTeam onCrossPress={() => {}} />} /> */}
-
-          <Route path="/profile" element={<UserProfile logout={() => {}} />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/profile" element={<UserProfile logout={AuthService.logOut} />} />
+          </Route>
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/department">
             <Route index element={<DepartmentList />} />

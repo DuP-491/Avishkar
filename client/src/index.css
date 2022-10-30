@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+}
+.square {
+  /* aspect-ratio: 1 / 1; */
+  @apply h-16 bg-yellow-600;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
@@ -19,63 +25,61 @@ body {
 }
 @font-face {
   font-family: 'pacman';
-  src: local('pacman'), url(./fonts/PAC-FONT.TTF) format('truetype') ;
+  src: local('pacman'), url(./fonts/PAC-FONT.TTF) format('truetype');
   /* other formats include: 'woff2', 'truetype, 'opentype',
                             'embedded-opentype', and 'svg' */
 }
-.font-avishkar{
-  font-family: 'pacman','sans';
+.font-avishkar {
+  font-family: 'pacman', 'sans';
 }
 /* retro game btn */
-.retro-btn{
+.retro-btn {
   text-align: center;
-display: inline-block;
-margin:5px;
+  display: inline-block;
+  margin: 5px;
   font-weight: bold;
   padding: 10px;
   background-color: lightgray;
   text-shadow: -1px -1px black, 1px 1px white;
   color: gray;
   -webkit-border-radius: 7px;
--moz-border-radius: 7px;
--o-border-radius: 7px;
-border-radius: 7px;
-  box-shadow: 0 .2em gray; 
+  -moz-border-radius: 7px;
+  -o-border-radius: 7px;
+  border-radius: 7px;
+  box-shadow: 0 0.2em gray;
   cursor: pointer;
-
 }
 .retro-btn:active {
-box-shadow: none;
-position: relative;
-top: .2em;
+  box-shadow: none;
+  position: relative;
+  top: 0.2em;
 }
 
 /* classes for the stroke text on homepage */
-.stroke-text{
-  -webkit-text-stroke:5px white;
-  -webkit-text-fill-color:transparent;
+.stroke-text {
+  -webkit-text-stroke: 5px white;
+  -webkit-text-fill-color: transparent;
   transition: all 250ms ease-in-out;
 }
 .marquee:hover {
   animation-play-state: paused;
 }
-.stroke-text:hover{
+.stroke-text:hover {
   color: white;
   -webkit-text-fill-color: white;
 }
 
 /* classes for cards on department page */
-.stack__deco{
+.stack__deco {
   @apply absolute top-0 left-0 w-full h-full bg-current origin-[50%_100%] opacity-0 rotate-0 scale-100 translate-y-0 transition-all duration-300;
 }
-.stack__deco:hover
-{
+.stack__deco:hover {
   scale: 1.05;
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
-.title{
+.title {
   text-shadow: rgb(255 215 77 / 60%) -1px -1px 6px, rgb(124 127 255 / 60%) 1px 1px 6px;
 }
 
@@ -99,12 +103,12 @@ canvas,
 }
 
 @font-face {
-  font-family: "PfefferMediaeval";
-  src: url("../public/PfefferMediaeval.otf");
+  font-family: 'PfefferMediaeval';
+  src: url('../public/PfefferMediaeval.otf');
 }
 
 .font-pfeffer {
-  font-family: "PfefferMediaeval";
+  font-family: 'PfefferMediaeval';
 }
 
 .noscroll::-webkit-scrollbar {
@@ -116,8 +120,9 @@ canvas,
   scrollbar-width: 10px;
 }
 
-@media only screen and (max-width: 600px) { 
-  .animate-marquee-rtl,.animate-marquee-ltr{
-    animation-duration:10s;
+@media only screen and (max-width: 600px) {
+  .animate-marquee-rtl,
+  .animate-marquee-ltr {
+    animation-duration: 10s;
   }
 }

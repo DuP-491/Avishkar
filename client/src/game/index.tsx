@@ -162,6 +162,7 @@ function GameComponent(props: Props) {
           EVENTS_NAME.openComputer,
           (department_: string, computerType_: string) => {
             // console.log(department_);
+            if (game.instance) game.instance.input.keyboard.enabled = false;
             setDepartment(department_);
             setComputerType(computerType_);
             setShowComputer(true);
@@ -245,7 +246,7 @@ function GameComponent(props: Props) {
     gameConfig.scale!.width = window.innerWidth;
     gameConfig.scale!.height = window.innerHeight;
     if (dimensions.width < 768) {
-      navigator('/simplistic');
+      navigator('/');
     }
     setInitialize(true);
   }, [dimensions]);
@@ -326,7 +327,7 @@ function GameComponent(props: Props) {
   const signUpSuccessCallback = () => {
     // TOAST: Please check your email to verify your account
     toast.warning('Please check your email to verify your account');
-    navigator('/simplistic');
+    navigator('/');
   };
 
   const onAuthFailure = () => {
@@ -353,6 +354,7 @@ function GameComponent(props: Props) {
   };
 
   const closeComputer = () => {
+    if (game?.instance) game.instance.input.keyboard.enabled = true;
     setShowComputer(false);
   };
 

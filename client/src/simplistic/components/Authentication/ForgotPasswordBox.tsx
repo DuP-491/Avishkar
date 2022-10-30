@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
 
@@ -10,13 +10,17 @@ interface ForgotPasswordBoxPropType {
 
 // eslint-disable-next-line no-unused-vars
 function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
+  const [isLoading, setIsLoading] = useState(false);
+
   // eslint-disable-next-line no-unused-vars
   function ResetPasswordEmail(e: any) {
     e.preventDefault();
+    setIsLoading(true);
     const email = EmailRef.current.value;
     console.log(email);
     AuthService.forgotPassword(email).then((data) => {
       if (data['success']) {
+        setIsLoading(false);
         toast('Email Sent Successfully!');
         console.log('Sucessfully Email Sent!');
         onCrossPress(e);
@@ -25,6 +29,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
         console.log(data);
       }
     });
+    setIsLoading(false);
   }
   const EmailRef = useRef(document.createElement('input'));
 
@@ -72,7 +77,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
                 <button
                   type="submit"
                   className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-                  Send Mail
+                  {isLoading ? 'Sending' : 'Send'} Mail
                 </button>
               </div>
             </form>
