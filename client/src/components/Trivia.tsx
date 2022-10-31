@@ -78,6 +78,14 @@ function Trivia(props: Props) {
 
   useEffect(() => {
     // Get latest trivia question
+    if(user.id == '') {
+      toast.warning("Please login to participate in quiz!");
+      handleClick();
+      setTimeout(() => {
+        onClose();
+      }, 500);
+      return;
+    }
     (async function _() {
       const { data: question, error } = await supabase
         .from('trivia')
@@ -101,6 +109,14 @@ function Trivia(props: Props) {
         // console.log(decrypted);
         setAnswer(decrypted);
         setPoints(question.coins);
+        if(question.id === userCoinDetails?.last_qid){
+          toast.warning('You already answered today\'s question!');
+          handleClick();
+          setTimeout(() => {
+            onClose();
+          }, 500);
+          return;
+        }
       }
     })();
   }, []);
