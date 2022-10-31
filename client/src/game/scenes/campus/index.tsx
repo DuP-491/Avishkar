@@ -388,9 +388,9 @@ export class Campus extends Scene {
     );
     this.interactables.push(
       this.physics.add
-        .sprite(guestPoint.x, guestPoint.y, 'tiles_ui', 5)
+        .sprite(guestPoint.x, guestPoint.y, 'tiles_ui', 6)
         .setOrigin(0.5, 0.5)
-        .setScale(1.5)
+        .setScale(1)
         .setInteractive({
           useHandCursor: true
         })
