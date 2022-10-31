@@ -339,5 +339,12 @@ export const npcData: {
     type: 'text',
     character: 'Chirag',
     text: `I tried so hard and got so far~But in the end it doesn't even matter~I had to fall to lose it all~But in the end it doesn't even matter`
+  },
+  'campus-103': {
+    name: 'Vanshika',
+    location: 'near saraswati gate',
+    type: 'text',
+    character: 'Vanshika',
+    text: `Hi! I'm Vanshika. You must be familier with my voice from the Demo video.~I'm just waiting here for Sanskar. He said wants some help with content for the website.`
   }
 };

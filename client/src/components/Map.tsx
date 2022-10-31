@@ -439,7 +439,7 @@ function Map(props: Props) {
             </svg>
             {/* Team Page */}
             <div
-              className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
+              className="absolute w-4 h-4 bg-red-400 rounded-full opacity-50 cursor-pointer animate-ping"
               style={{
                 top: 27 + '%',
                 left: 23 + '%'

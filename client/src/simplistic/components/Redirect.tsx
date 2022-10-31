@@ -16,7 +16,7 @@ function Redirect() {
     }
   }, [timer]);
   return (
-    <div className="flex justify-center items-center bg-gray-900 w-screen h-screen overflow-hidden">
+    <div className="flex flex-col justify-center items-center bg-gray-900 w-screen h-screen overflow-hidden">
       <span className="text-white text-3xl">
         Please open page on desktop for the complete gaming experience
       </span>

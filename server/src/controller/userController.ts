@@ -204,7 +204,7 @@ const getTeamInvite = async (req: Request, res: Response, next) => {
         // all the teams of user with id, including pending, accepted etc.
         const teams = await prisma.teamMember.findMany({
             where: { userId: id },
-            include: { team: true },
+            include: { team: { include: { Participation: { include: { event: { select: { id: true, deptEventId: true, name: true } } } } } } }
         });
         res.statusCode = 200;
         res.json({ teams, success: true });

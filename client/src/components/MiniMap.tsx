@@ -389,7 +389,7 @@ function MiniMap(props: Props) {
         }}></div>
       <img
         src={require('../images/team.png')}
-        className="absolute w-4 h-4 cursor-pointer text-amber-400"
+        className="absolute w-4 h-4 text-red-400 cursor-pointer"
         style={{
           top: 24 + '%',
           left: 21 + '%'
