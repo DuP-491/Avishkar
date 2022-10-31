@@ -180,7 +180,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
           </p>
 
           <NewEvent
-            dept="cyberqest"
+            dept="cyberquest"
             eventName="CSS<br/>Battle"
             desc="The new way to test your design skills while having fun with code to prove you are the battle God. Let wake up the designer in you"
           />
@@ -189,7 +189,7 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
             We have added a whole lot of new events to make this avishkar more fun and enriching.
           </p>
           <NewEvent
-            dept="cyberqest"
+            dept="cyberquest"
             eventName="Design<br/>Rush"
             desc="Now get rid of the fear of System Design rounds, we are introducing DesignRush - Simulation of Machine Coding and System Design rounds."
           />
@@ -219,12 +219,12 @@ function HomePage({ onRedirectPress }: HomePagePropType) {
             So put Sherlock's hat on yourself for the first ever Consultancy Event in Avishkar."
           />
           {/* <NewEvent
-            dept="cyberqest"
+            dept="cyberquest"
             eventName="event<br/>name"
             desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
           />
           <NewEvent
-            dept="cyberqest"
+            dept="cyberquest"
             eventName="event<br/>name"
             desc="Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit. Lorem ipsum dolor sit."
           /> */}
