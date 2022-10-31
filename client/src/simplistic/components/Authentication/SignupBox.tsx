@@ -54,10 +54,13 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
             <div className="flex items-center justify-center space-x-4 sm:mx-auto sm:w-full sm:max-w-md">
               <img
                 className="w-auto h-12"
-                src="https://i.imgur.com/cHH4xIh.png"
+                src={require('../../Assets/logo.png')}
                 alt="Avishkar Logo"
               />
               <h2 className="text-2xl font-bold tracking-tight text-center text-white">Sign Up</h2>
+            </div>
+            <div className="w-full mt-4 text-center text-white">
+              MNNIT students must use their college GSuite ID
             </div>
             <form className="mt-6 space-y-6" onSubmit={LoggingIn} method="POST">
               <div>

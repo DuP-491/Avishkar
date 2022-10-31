@@ -264,6 +264,7 @@ function NewTablet(props: Props) {
   const [inviteUsernames, setInviteUsernames] = useState({});
   const [showUpdateTeamnames, setShowUpdateTeamnames] = useState({});
   const [updateTeamnames, setUpdateTeamnames] = useState({});
+  const [currDCIndex, setCurrDCIndex] = useState(0);
 
   useEffect(() => {
     fetchDepartmentEvents();
@@ -397,6 +398,7 @@ function NewTablet(props: Props) {
       .then((data) => {
         if (data['success']) {
           setDeptCoordies(data['deptEventCoordies']);
+          setCurrDCIndex(0);
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -1106,6 +1108,41 @@ function NewTablet(props: Props) {
       });
   };
 
+  const handleGetParticipationList = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      logout();
+      return;
+    }
+    AdminService.getParticipationList(token, events[selectedEventID]['id'])
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Downloaded List of Participating Teams Successfully');
+
+          let arr = data['participation'];
+          arr = [Object.keys(arr[0])].concat(arr);
+
+          const csv = arr
+            .map((it: any) => {
+              return Object.values(it).toString();
+            })
+            .join('\n');
+
+          let el = document.createElement('a');
+          el.download = `${events[selectedEventID]['name']}_teams.csv`;
+          el.href = URL.createObjectURL(new Blob([csv]));
+          el.click();
+        } else if (data['message'] === 'Invalid token!') {
+          closePopup();
+          logout();
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
   const handleSelectDept = (i: any) => {
     setTab('Events');
     setSelectedDeptID(i);
@@ -1193,7 +1230,7 @@ function NewTablet(props: Props) {
                 <p className="mt-3 text-xl italic text-center">
                   {departments[selectedDeptID]['desc']}
                 </p>
-                <div className="flex flex-wrap items-center justify-center flex-1 my-4 overflow-y-auto">
+                <div className="flex flex-wrap items-center justify-center flex-1 my-4 overflow-y-auto tablet__scrollbar">
                   {events.map((event, i) => (
                     <button
                       key={event['id']}
@@ -1207,28 +1244,77 @@ function NewTablet(props: Props) {
                     </button>
                   ))}
                 </div>
-                <div className="flex flex-nowrap rounded-xl justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
-                  {deptCoordies.map((deptCoordie, i) => (
+                {deptCoordies.length !== 0 && (
+                  <div className="relative flex flex-nowrap flex-col rounded-xl items-center justify-center overflow-x-auto bg-zinc-800/[0.4] w-[90%] p-1 mx-auto">
+                    <h2 className="my-1 text-xl font-bold">Department Coordinators</h2>
                     <div
-                      key={deptCoordie['user']['id']}
-                      className={`flex-none w-1/3 text-sm text-gray-200 rounded-lg bg-zinc-800/[0.8] mx-4${
-                        i == 0 ? '' : ' ml-3'
-                      }`}>
+                      key={deptCoordies[currDCIndex]['user']['id']}
+                      className="flex-none w-1/3 text-sm text-gray-200 rounded-lg bg-zinc-800/[0.8] mx-4 mb-1">
                       <p className="flex justify-between px-2 py-2 border-gray-500">
                         <span>Name</span>
-                        <span>{deptCoordie['user']['name']}</span>
+                        <span>{deptCoordies[currDCIndex]['user']['name']}</span>
                       </p>
                       <p className="flex justify-between px-2 py-2 border-zinc-800/[0.8]">
                         <span>Email</span>
-                        <span>{deptCoordie['user']['email']}</span>
+                        <span>{deptCoordies[currDCIndex]['user']['email']}</span>
                       </p>
                       <p className="flex justify-between px-2 py-2 border-zinc-800/[0.8]">
                         <span>Mobile</span>
-                        <span>{deptCoordie['user']['mobile']}</span>
+                        <span>{deptCoordies[currDCIndex]['user']['mobile']}</span>
                       </p>
                     </div>
-                  ))}
-                </div>
+                    {deptCoordies.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                          onClick={() =>
+                            setCurrDCIndex(
+                              (currDCIndex - 1 + deptCoordies.length) % deptCoordies.length
+                            )
+                          }>
+                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg
+                              aria-hidden="true"
+                              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            <span className="sr-only">Previous</span>
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                          onClick={() => setCurrDCIndex((currDCIndex + 1) % deptCoordies.length)}>
+                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg
+                              aria-hidden="true"
+                              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 5l7 7-7 7"></path>
+                            </svg>
+                            <span className="sr-only">Next</span>
+                          </span>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
             )}
             {tab === 'Event' && selectedEventID !== -1 && (
@@ -1322,6 +1408,16 @@ function NewTablet(props: Props) {
                       data-hackathon-slug="CyberQuest"
                       data-button-theme="light"></div>
                   )}
+                  {userDetails['role'] !== 'USER' && (
+                    <>
+                      <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Admin</p>
+                      <p
+                        className="px-5 py-1 text-2xl text-gray-200 bg-blue-900 cursor-pointer"
+                        onClick={() => handleGetParticipationList()}>
+                        Get Participation List
+                      </p>
+                    </>
+                  )}
                 </div>
                 <div className="relative flex flex-col w-2/3 bg-black rounded-r-md">
                   <div className="absolute top-0 left-0 flex flex-col w-full border-b-2 bg-zinc-900 border-zinc-900 h-1/6 ">
@@ -1338,7 +1434,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 1 && (
-                    <div className="mt-[15vh] overflow-y-auto">
+                    <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                       <p
                         className="m-5 text-3xl"
                         dangerouslySetInnerHTML={{ __html: events[selectedEventID]['details'] }}
@@ -1346,7 +1442,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 2 && (
-                    <div className="mt-[15vh] overflow-y-auto">
+                    <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                       <p
                         className="m-5 text-3xl"
                         dangerouslySetInnerHTML={{ __html: events[selectedEventID]['criteria'] }}
@@ -1354,7 +1450,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 3 && (
-                    <div className="mt-[15vh] overflow-y-auto">
+                    <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                       <p
                         className="m-5 text-3xl"
                         dangerouslySetInnerHTML={{ __html: events[selectedEventID]['rules'] }}
@@ -1385,7 +1481,7 @@ function NewTablet(props: Props) {
                         events[selectedEventID]['minTeamSize'] <= team['team']['size'] &&
                         team['team']['size'] <= events[selectedEventID]['maxTeamSize']
                     ).length !== 0 && (
-                      <div className="mt-[15vh] overflow-y-auto">
+                      <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                         {teams
                           .filter((team) => team['team']['leader'] === userDetails['id'])
                           .map((team) => (
@@ -1448,7 +1544,7 @@ function NewTablet(props: Props) {
                   {eventSection === 4 &&
                     participatingTeam !== null &&
                     participatingTeam['leader'] === userDetails['id'] && (
-                      <div className="mt-[15vh] overflow-y-auto">
+                      <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                         {
                           <div
                             key={participatingTeam['id']}
@@ -1509,7 +1605,7 @@ function NewTablet(props: Props) {
                   {eventSection === 4 &&
                     participatingTeam !== null &&
                     participatingTeam['leader'] !== userDetails['id'] && (
-                      <div className="mt-[15vh] overflow-y-auto">
+                      <div className="mt-[15vh] tablet__scrollbar overflow-y-auto">
                         {
                           <div
                             key={participatingTeam['id']}
@@ -1558,7 +1654,7 @@ function NewTablet(props: Props) {
                       </div>
                     )}
                   {eventSection === 5 && (
-                    <div className="overflow-y-auto mt-[15vh]">
+                    <div className="tablet__scrollbar overflow-y-auto mt-[15vh]">
                       {eventCoordies.map((eventCoordie) => (
                         <div
                           key={eventCoordie['user']['id']}
@@ -1580,7 +1676,7 @@ function NewTablet(props: Props) {
                     </div>
                   )}
                   {eventSection === 6 && (
-                    <div className="overflow-y-auto mt-[15vh]">
+                    <div className="tablet__scrollbar overflow-y-auto mt-[15vh]">
                       {sponsors.filter((sponsor) => sponsor['title']).length !== 0 && (
                         <div className="my-5 text-3xl font-bold text-center">Title Sponsors</div>
                       )}
@@ -1628,7 +1724,7 @@ function NewTablet(props: Props) {
                       </div>
                     </div>
                   </div>
-                  <div className="overflow-y-auto h-[70vh] mt-4">
+                  <div className="tablet__scrollbar overflow-y-auto h-[70vh] mt-4">
                     <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Details</p>
                     <p
                       className={
@@ -1920,7 +2016,7 @@ function NewTablet(props: Props) {
                     )}
                   {profileSection === 2 &&
                     teams.filter((team) => team['status'] === 'ACCEPTED').length !== 0 && (
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {teams
                           .filter((team) => team['status'] === 'ACCEPTED')
                           .map((team) => (
@@ -1969,7 +2065,7 @@ function NewTablet(props: Props) {
                       </div>
                     )}
                   {profileSection === 3 && (
-                    <div className="overflow-y-auto">
+                    <div className="overflow-y-auto tablet__scrollbar">
                       {teams
                         .filter((team) => team['team']['leader'] === userDetails['id'])
                         .map((team) => (
@@ -2092,7 +2188,7 @@ function NewTablet(props: Props) {
                     )}
                   {profileSection === 4 &&
                     teams.filter((team) => team['status'] !== 'ACCEPTED').length !== 0 && (
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {teams
                           .filter((team) => team['status'] !== 'ACCEPTED')
                           .map((team) => (
@@ -2205,7 +2301,7 @@ function NewTablet(props: Props) {
                     </>
                   )}
                   {profileSection === 6 && (
-                    <div className="overflow-y-auto">
+                    <div className="overflow-y-auto tablet__scrollbar">
                       {Object.keys(departments).map((department) => (
                         <div
                           key={department}
@@ -2284,7 +2380,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {deptCoordies.map((deptCoordie) => (
                           <div
                             key={deptCoordie['user']['id']}
@@ -2310,7 +2406,7 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 9 && (
                     <>
-                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg tablet__scrollbar border-zinc-800 bg-zinc-900">
                         <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Name</span>
                           <input
@@ -2434,7 +2530,7 @@ function NewTablet(props: Props) {
                   )}
                   {profileSection === 10 && newUpdateEvent['id'] !== '' && (
                     <>
-                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg border-zinc-800 bg-zinc-900">
+                      <div className="m-5 overflow-y-auto text-sm text-gray-200 rounded-lg tablet__scrollbar border-zinc-800 bg-zinc-900">
                         <p className="flex justify-between px-2 py-2 border-zinc-800">
                           <span>Name</span>
                           <input
@@ -2585,7 +2681,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {events.map((event) => (
                           <div
                             key={event['id']}
@@ -2621,7 +2717,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {events.map((event) => (
                           <div
                             key={event['id']}
@@ -2724,7 +2820,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {eventCoordies.map((eventCoordie) => (
                           <div
                             key={eventCoordie['user']['id']}
@@ -2919,7 +3015,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {sponsors.map((sponsor) => (
                           <div
                             key={sponsor['id']}
@@ -2980,7 +3076,7 @@ function NewTablet(props: Props) {
                           </select>
                         </p>
                       </div>
-                      <div className="overflow-y-auto">
+                      <div className="overflow-y-auto tablet__scrollbar">
                         {sponsors.map((sponsor) => (
                           <div
                             key={sponsor['id']}

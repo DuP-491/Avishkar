@@ -5,12 +5,18 @@ import UserService from '../../services/UserService';
 import TeamMember from './TeamMember';
 
 const Team = (props: any) => {
-  const { name, team, handleDeleteTeam } = props;
+  const { name_ip, team, handleDeleteTeam, userId, handleRemoveMember } = props;
+  const [name, setName] = useState(name_ip);
+
   const teamId = team['team']['id'];
   const [teamMembers, setTeamMembers] = useState([]);
+  const [editTeamSwitch, setEditTeamSwitch] = useState(false);
+  const [newTeamName, setNewTeamName] = useState(name);
   const [inviteUsernames, setInviteUsernames] = useState<{
     [key: string]: any;
   }>({});
+  const UNEXPECTED_ERROR_MSG = 'Please try again later!';
+  const LOGIN_AGAIN_PROMPT = 'Please login again!';
   const getTeamMembers = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
@@ -19,7 +25,6 @@ const Team = (props: any) => {
     UserService.getTeamMembers(token, teamId)
       .then((data) => {
         if (data['success']) {
-          console.log(data);
           setTeamMembers(data['members']);
         }
       })
@@ -48,59 +53,134 @@ const Team = (props: any) => {
         toast.error('Please try again later!');
       });
   };
+
+  const handleUpdateTeam = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      return;
+    }
+    UserService.updateTeam(token, teamId, newTeamName)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Changed Team Name Successfully!');
+          setName(newTeamName);
+          setNewTeamName(newTeamName);
+          setEditTeamSwitch((s) => !s);
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error(LOGIN_AGAIN_PROMPT);
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
   return (
     <div className="relative mt-2 shadow-md sm:rounded-lg">
-      <div className="w-full text-sm text-left text-gray-400">
+      <div className="w-full text-sm text-left text-white-400">
         {/* team card header--> name and action */}
-        <div className="flex items-center p-2 text-gray-400 uppercase bg-gray-700 text-md">
-          <h2>{name}</h2>
-          <div className="ml-auto space-x-2">
-            <button className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800">edit</button>
-            <button
-              className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
-              onClick={handleDeleteTeam}>
-              delete
-            </button>
-          </div>
+        <div className="flex items-center p-2 text-white-400 uppercase bg-gray-700 text-md">
+          {editTeamSwitch ? (
+            <div>
+              <input
+                className="bg-white-400 text-gray-700"
+                value={newTeamName}
+                onChange={(e) => {
+                  setNewTeamName(e.target.value);
+                }}
+              />
+            </div>
+          ) : (
+            <h2>{name}</h2>
+          )}
+          {team['team']['leader'] == userId ? (
+            <>
+              {editTeamSwitch ? (
+                <div className='ml-auto space-x-2"'>
+                  <div className="ml-auto space-x-2">
+                    <button
+                      className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                      onClick={handleUpdateTeam}>
+                      save
+                    </button>
+                    <button
+                      className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                      onClick={() => {
+                        setEditTeamSwitch((s) => !s);
+                      }}>
+                      cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="ml-auto space-x-2">
+                  <button
+                    className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                    onClick={() => {
+                      setEditTeamSwitch((s) => !s);
+                    }}>
+                    edit
+                  </button>
+                  <button
+                    className="p-1 bg-gray-900 rounded-sm hover:bg-gray-800"
+                    onClick={handleDeleteTeam}>
+                    delete
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div>
           {/* events participated by the team */}
-          <div className="p-2 bg-gray-800 border-b border-gray-700 ">
+          {/* <div className="p-2 bg-gray-800 border-b border-gray-700 ">
             <p className="inline-block p-1 mx-1 text-white bg-gray-900 rounded-lg">webster</p>
             <p className="inline-block p-1 mx-1 text-white bg-gray-900 rounded-lg">softablitz</p>
             <p className="inline-block p-1 mx-1 text-white bg-gray-900 rounded-lg">insomnia</p>
-          </div>
+          </div> */}
           {/* send invite of this team */}
-
-          <div className="flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-gray-700 md:flex-row hover:bg-gray-600">
-            <input
-              type="text"
-              name="username"
-              id="username"
-              className=" border mr-2   sm:text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-              placeholder="enter username to invite"
-              required={true}
-              value={inviteUsernames[team['team']['id']]}
-              onChange={(e) =>
-                setInviteUsernames({
-                  ...inviteUsernames,
-                  [team['team']['id']]: e.target.value
-                })
-              }
-            />
-            <div className="text-right capitalize ">
-              <button
-                className="inline-block font-medium text-blue-500 hover:underline"
-                onClick={() => handleInviteUser(team['team']['id'])}>
-                invite
-              </button>
+          {team['team']['leader'] == userId ? (
+            <div className="flex items-center justify-between px-6 py-4 bg-gray-800 border-b border-gray-700 md:flex-row hover:bg-gray-600">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                className=" border mr-2   sm:text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                placeholder="enter username to invite"
+                required={true}
+                value={inviteUsernames[team['team']['id']]}
+                onChange={(e) =>
+                  setInviteUsernames({
+                    ...inviteUsernames,
+                    [team['team']['id']]: e.target.value
+                  })
+                }
+              />
+              <div className="text-right capitalize ">
+                <button
+                  className="inline-block font-medium text-blue-500 hover:underline"
+                  onClick={() => handleInviteUser(team['team']['id'])}>
+                  invite
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
           {/* team members */}
           <div>
             {teamMembers?.map((teamMember: any, i: number) => (
               <TeamMember
+                removeMember={(teamId: any, userId: any) => {
+                  handleRemoveMember(teamId, userId, getTeamMembers);
+                }}
+                teamId={teamId}
+                userId={teamMember['userId']}
                 key={teamMember['userId']}
+                leader={teamMember['user']['id'] === team['team']['leader']}
+                removeAllowed={team['team']['leader'] == userId}
                 name={`${i + 1} ${teamMember['user']['name']} ${
                   teamMember['user']['id'] === team['team']['leader']
                     ? '(Leader)'

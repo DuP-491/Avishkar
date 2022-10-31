@@ -1,15 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import tabletBg from '../../../images/tablet_bg.png';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
+import bgImage from '../../Assets/collage.jpg';
+import Cookies from 'js-cookie';
 const ResetPassword = () => {
   const key = useParams().token;
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if (Cookies.get('token')) navigate('/profile');
+  }, []);
   function PasswordReset(e: any) {
     e.preventDefault();
+    setIsLoading(true);
     const password = PasswordRef.current.value;
     const confirmpassword = ConfirmPasswordRef.current.value;
     if (confirmpassword != password) {
@@ -24,16 +29,18 @@ const ResetPassword = () => {
     } else token = key;
     AuthService.resetPassword(password, token)
       .then((data) => {
+        setIsLoading(false);
         if (data['success']) {
-          console.log('Success');
+          toast.success('Password changed successfully!');
           navigate('/');
         } else if (data['message'] === 'Invalid token!') {
-          // Invalid Token
-        } else console.log(data['message']); // Replace with Toast/Alert
+          toast.error('invalid or expired token! please generate new token');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
+    setIsLoading(false);
   }
   const PasswordRef = useRef(document.createElement('input'));
   const ConfirmPasswordRef = useRef(document.createElement('input'));
@@ -41,7 +48,7 @@ const ResetPassword = () => {
   return (
     <div
       className="flex items-center justify-center w-full h-screen"
-      style={{ background: `url(${tabletBg})` }}>
+      style={{ background: `url(${bgImage})` }}>
       <div className="flex flex-col items-center justify-center w-full px-6 py-8 lg:py-0">
         <a
           href="#"
@@ -91,7 +98,7 @@ const ResetPassword = () => {
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Reset
+                {isLoading ? 'Reseting....' : 'Reset'}
               </button>
             </form>
           </div>

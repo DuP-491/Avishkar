@@ -1,31 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
+import bgImage from '../../Assets/collage.jpg';
 const ForgotPassword = () => {
+  const [isLoading, setIsLoading] = useState(false);
   function ResetPasswordEmail(e: any) {
+    setIsLoading(true);
     e.preventDefault();
     const email = EmailRef.current.value;
     console.log(email);
     AuthService.forgotPassword(email).then((data) => {
+      setIsLoading(false);
       if (data['success']) {
         console.log('Sucessfully Email Sent!');
       } else {
         console.log(data);
       }
     });
+    setIsLoading(false);
   }
   const EmailRef = useRef(document.createElement('input'));
 
   return (
     <div
       className="flex items-center justify-center w-full h-screen"
-      style={{
-        background:
-          'url(https://assets.nflxext.com/ffe/siteui/vlv3/79fe83d4-7ef6-4181-9439-46db72599559/bd05b4ed-7e37-4be9-85c8-078f067bd150/IN-en-20221017-popsignuptwoweeks-perspective_alpha_website_large.jpg)'
-      }}>
+      style={{ background: `url(${bgImage})` }}>
       <div className="flex flex-col items-center justify-center w-full px-6 py-8 lg:py-0">
         <a
-          href="#"
+          href="/"
           className="flex items-center mb-6 text-4xl font-semibold text-gray-900 dark:text-white">
           <img className="w-16 h-16 mr-2" src={Logo} alt="logo" />
           Avishkar
@@ -56,7 +58,7 @@ const ForgotPassword = () => {
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Send Reset Mail
+                {isLoading ? 'Sending' : 'Send'} Reset Mail
               </button>
             </form>
           </div>

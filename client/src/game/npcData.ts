@@ -11,21 +11,19 @@ export const npcData: {
     failure?: any;
   };
 } = {
-  'cafe96-2': {
-    name: 'Mitsuka',
-    location: 'cafe-top-right',
-    type: 'text',
-    character: 'boy',
-    text: "Hey, I'm Mitsuka. I'm a software engineer and I love to code."
-  },
+  // 'cafe96-2': {
+  //   name: 'Mitsuka',
+  //   location: 'cafe-top-right',
+  //   type: 'text',
+  //   character: 'boy',
+  //   text: "Hey, I'm Mitsuka. I'm a software engineer and I love to code."
+  // },
   'cafe96-3': {
     name: 'Denji',
     location: 'cafe-top-left',
-    type: 'ask',
+    type: 'text',
     character: 'boy',
-    text: 'Are you sure you want to register?',
-    success: 'Function will be imported in this file and called',
-    failure: 'Function will be imported in this file and called'
+    text: 'Click on the computer to know more about your teams'
   },
   'campus-34': {
     name: 'Mitsuka',
@@ -53,7 +51,7 @@ export const npcData: {
     location: 'outside csed',
     type: 'text',
     character: 'Guard',
-    text: `I am tired of telling students not to park their bycles here. Oh God! How many times will I have to tell them?`
+    text: `I am tired of telling students not to park their bicycles here. Oh God! How many times will I have to tell them?`
   },
   'campus-58': {
     name: 'Mr. Ratanlal',
@@ -245,11 +243,11 @@ export const npcData: {
     text: `Hi! I'm Samantha Jones. I'm a recruiter with company xyz.~I am here to find the treasure of MNNIT Allahabad.~I have heard that there is a treasure hidden in the campus.~Can you please help me find it?`
   },
   'campus-86': {
-    name: 'Vayirp',
+    name: 'Priyav',
     location: 'Inside TPO office',
     type: 'text',
     character: 'Training and Placement Representative',
-    text: `Hi! I'm Vayirp. I'm a representative of Training and Placement office of MNNIT Allahabad. I'm here to help you out.~Our students are the tresure of our college. Please extend them with your job offers and they will be the best asset for your company as well.`
+    text: `Hi! I'm Vayirp. I'm a representative of Training and Placement office of MNNIT Allahabad. I'm here to help you out.~Our students are the treasure of our college. Please extend them with your job offers and they will be the best asset for your company as well.`
   },
   'campus-87': {
     name: 'QuizMaster',
@@ -271,5 +269,82 @@ export const npcData: {
     type: 'text',
     character: 'Librarian',
     text: `Shhh.. There are people studying.~You weren't here earlier and library has been closed since morning. How did you event geet here?~Anyways... Welcome to the library, explore the infinite books available and sit and study in the study rooms.~Bring in your laptops and notebooks and sit with friends to learn about anything you like.`
+  },
+  'campus-91': {
+    name: 'Mr. Swaroop Singh',
+    location: 'Underpass Tunnel',
+    type: 'text',
+    character: 'Guard',
+    text: `HOLD UP BRO!! You can't go beyond this point.~This is the underpass tunnel that connects the campus to the dispensary, EDC Guest House, faculty quarters and girls hostels.~Only girls and staff are allowed beyond this point.~If you are feeling sick, an ambulance is always avaliable to take you to the dispensary.~But you dont seem to be sick, so please go back.`
+  },
+  'campus-92': {
+    name: 'Bunty',
+    location: 'Near left corner of map',
+    type: 'text',
+    character: 'Bunty',
+    text: `Sometimes, time alone is all you need. Away from the hustle and bustle.~I wish I had friends.`
+  },
+  'campus-94': {
+    name: 'Dennis and Parth',
+    location: 'Near cafe 96',
+    type: 'text',
+    character: 'Dennis and Parth',
+    text: `Parth: Hey Dennis!~Dennis: Oh Hi Parth!~Parth: Did you integrated the APIs already for auth?~Dennis: Yeah, I finished my work yestday itself. But i think i forgot to push. I will do it now.~Dennis: We are going to the cafe to have some coffee. Do you want to join us?~Parth: No, I think I will go watch some anime. Besides, I don't wanna be a spoilsport for you guys XD.~Dennis: Haha! No problem. See you later. Bye!~Parth: Bye!`
+  },
+  'campus-95': {
+    name: 'Ishan Gupta',
+    location: 'Inside Dean Academics',
+    type: 'text',
+    character: 'Ishan Gupta',
+    text: `Hi I'm Ishan! I'm a part of Dean Academic Web Team along with Anurag, Shubham and Mayank.~We are responsible for managing the website and web server of MNNIT, Allahabad.~Only the best people make it to team Dean Academics. Oh! That reminds me of Sanskar and Priyav.~They are also a part of this team. But I'm surprised they forgot to make a server room in this game.~Where am i gonna work from now?`
+  },
+  'campus-97': {
+    name: 'Lovedeep',
+    location: 'NLHC',
+    type: 'text',
+    character: 'Lovedeep',
+    text: `Lovedeep: Where are the second years? It's almost time for their CC Class for NodeJs.~Mohit: Don't worry. There's still time. I think Divyansh's class for Django is still going on.~Lovedeep: Oh! I forgot about that. Let's wait for another 10 minutes then.~Mohit: Yeah. By the way, Did Sanskar implemented the minimap on the website?~Lovedeep: I don't think so. I think he is still working on it.~Mohit: Oh! I see. And I forgot to tell you, third years are done with E-Cell's webTeam recruitment.~Lovedeep: Oh! That's great. I think I will go and congratulate them.~Mohit: Yeah. I will also go.`
+  },
+  'campus-98': {
+    name: 'Divyansh',
+    location: 'CSED',
+    type: 'text',
+    character: 'Divyansh',
+    text: `Hi I'm Divyansh! I'm head of computer coding club.~I'm here to help you.~I hope you are enjoying Avishkar. All of us festival secretaries are working hard to make this event a success.~I'm sure you will have a great time here.`
+  },
+  'campus-99': {
+    name: 'Sanskar',
+    location: 'map bottom right',
+    type: 'text',
+    character: 'Sanskar',
+    text: `Hey! Lost in the woods?~I'm Sanskar Omar, one of the developers for this website.~I literally ran out of ideas to put for my NPC.~Just go and google me. I'm sure you will find something interesting.~And yes this is Anya lying down beside me.`
+  },
+  'campus-100': {
+    name: 'SSD',
+    location: 'map bottom right',
+    type: 'text',
+    character: 'SSD',
+    text: `Hi! I'm SSD.~I know! I know! I'm kinda famous around here.~I'm just waiting here for my friends. They were so busy making this website that i though i would just hang out here by myself.~ What do you mean this is girls hostel side and I'm not allowed here?~Shh.. Go away.`
+  },
+  'campus-101': {
+    name: 'Random guy',
+    location: 'map bottom',
+    type: 'text',
+    character: 'Random guy',
+    text: `All my friends have girlfriends.~And I'm so lonely. I wish I had a girlfriend.`
+  },
+  'campus-102': {
+    name: 'Chirag',
+    location: 'map bottom',
+    type: 'text',
+    character: 'Chirag',
+    text: `I tried so hard and got so far~But in the end it doesn't even matter~I had to fall to lose it all~But in the end it doesn't even matter`
+  },
+  'campus-103': {
+    name: 'Vanshika',
+    location: 'near saraswati gate',
+    type: 'text',
+    character: 'Vanshika',
+    text: `Hi! I'm Vanshika. You must be familier with my voice from the Demo video.~I'm just waiting here for Sanskar. He said wants some help with content for the website.`
   }
 };

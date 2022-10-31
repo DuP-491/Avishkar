@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './../../Assets/logo.png';
 import Cookies from 'js-cookie';
+import AuthService from '../../services/AuthService';
 
 const ResponsiveNav = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -13,9 +14,9 @@ const ResponsiveNav = () => {
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link to="/" className="flex items-center">
           <img src={Logo} className="h-12 mr-3 sm:h-10" alt="aviskar Logo" />
-          {/* <span className="self-center text-xl font-semibold text-white whitespace-nowrap">
+          <span className="self-center text-xl font-semibold text-white whitespace-nowrap">
             Avishkar
-          </span> */}
+          </span>
         </Link>
         <button
           data-collapse-toggle="navbar-solid-bg"
@@ -68,30 +69,39 @@ const ResponsiveNav = () => {
                 Team
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/faq"
                 onClick={() => setIsMobileNavOpen(false)}
                 className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
                 FAQ
               </Link>
-            </li>
+            </li> */}
             {Cookies.get('token') ? (
+              <>
+                <li>
+                  <Link
+                    to="/profile"
+                    onClick={() => setIsMobileNavOpen(false)}
+                    className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={AuthService.logOut}
+                    className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
               <li>
                 <Link
                   to="/login"
                   onClick={() => setIsMobileNavOpen(false)}
                   className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
                   Login
-                </Link>
-              </li>
-            ) : (
-              <li>
-                <Link
-                  to="/profile"
-                  onClick={() => setIsMobileNavOpen(false)}
-                  className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
-                  Profile
                 </Link>
               </li>
             )}

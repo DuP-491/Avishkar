@@ -163,11 +163,30 @@ const index = (props: Props) => {
         // logout();
       });
   };
+  const handleRemoveMember = (teamId: number, userId: string, cb: any) => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      return;
+    }
+    UserService.deleteMember(token, teamId, userId)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Removed Member Successfully!');
+          fetchTeamInvites();
+          cb();
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error('Login again');
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error('Some error occured');
+      });
+  };
   return (
     <div className="relative flex flex-col min-h-screen gap-3 p-2 text-white bg-gray-900 md:flex-row">
       <div className="top-0 w-full p-4 overflow-auto bg-gray-800 md:h-screen md:sticky">
         <h2 className="text-3xl font-semibold capitalize title">hi</h2>
-        <h2 className="text-3xl font-semibold capitalize title">Lovedeep</h2>
+        <h2 className="text-3xl font-semibold capitalize title">{userDetails.name}</h2>
         <p className="py-2">
           <strong>NOTE:</strong>you can only update resume link
         </p>
@@ -321,9 +340,11 @@ const index = (props: Props) => {
                 .map((team) => {
                   return (
                     <Team
+                      handleRemoveMember={handleRemoveMember}
                       key={team['team']['id']}
-                      name={team['team']['name']}
+                      name_ip={team['team']['name']}
                       team={team}
+                      userId={userDetails.id}
                       handleDeleteTeam={() => {
                         handleDeleteTeam(team['team']['id']);
                         toast.success(team['team']['name'] + ' removed successfully!');

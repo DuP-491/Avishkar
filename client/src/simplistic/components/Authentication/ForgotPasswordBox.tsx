@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
 
@@ -10,13 +10,17 @@ interface ForgotPasswordBoxPropType {
 
 // eslint-disable-next-line no-unused-vars
 function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
+  const [isLoading, setIsLoading] = useState(false);
+
   // eslint-disable-next-line no-unused-vars
   function ResetPasswordEmail(e: any) {
     e.preventDefault();
+    setIsLoading(true);
     const email = EmailRef.current.value;
     console.log(email);
     AuthService.forgotPassword(email).then((data) => {
       if (data['success']) {
+        setIsLoading(false);
         toast('Email Sent Successfully!');
         console.log('Sucessfully Email Sent!');
         onCrossPress(e);
@@ -25,6 +29,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
         console.log(data);
       }
     });
+    setIsLoading(false);
   }
   const EmailRef = useRef(document.createElement('input'));
 
@@ -34,6 +39,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="px-4 py-8 bg-gray-900 bg-opacity-50 shadow backdrop-blur-sm sm:rounded-lg sm:px-10">
             <img
+              // eslint-disable-next-line no-undef
               src={require('../../../images/cross-icon.png')}
               className="absolute cursor-pointer right-4 top-4 invert"
               onClick={onCrossPress}
@@ -41,7 +47,8 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
             <div className="flex items-center justify-center space-x-4 sm:mx-auto sm:w-full sm:max-w-md">
               <img
                 className="w-auto h-12"
-                src="https://i.imgur.com/cHH4xIh.png"
+                // eslint-disable-next-line no-undef
+                src={require('../../Assets/logo.png')}
                 alt="Avishkar Logo"
               />
               <h2 className="text-2xl font-bold tracking-tight text-center text-white">
@@ -70,7 +77,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
                 <button
                   type="submit"
                   className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-                  Send Mail
+                  {isLoading ? 'Sending' : 'Send'} Mail
                 </button>
               </div>
             </form>

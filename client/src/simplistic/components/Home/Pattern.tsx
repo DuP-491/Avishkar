@@ -17,7 +17,7 @@ const Pattern = () => {
       </div>
 
       {/* right pattern */}
-      <div className="absolute right-0 hidden rotate-45 md:block w-100 h-100 top-1/2">
+      <div className="absolute right-0 hidden rotate-45 w-100 h-100 lg:block top-1/2">
         <span className="w-12 h-12 border-[20px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  border-white">
           &nbsp;
         </span>

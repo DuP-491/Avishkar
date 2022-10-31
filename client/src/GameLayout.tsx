@@ -10,10 +10,10 @@ function GameLayout() {
         <GameComponent viewport="desktop" />
       </div>
       <div
-        className="absolute bottom-5 left-5 text-white bg-black bg-opacity-50 backdrop-blur-sm text-sm z-40 p-2"
+        className="absolute z-40 p-2 text-sm text-white bg-black bg-opacity-50 bottom-5 left-5 backdrop-blur-sm"
         onClick={() => {
           sessionStorage.setItem('game', 'false');
-          navigator('/simplistic');
+          navigator('/');
         }}>
         Continue in Simplistic Tablet
       </div>

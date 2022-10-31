@@ -380,6 +380,22 @@ function MiniMap(props: Props) {
           </g>
         </g>
       </svg>
+      {/* Team Page */}
+      <div
+        className="absolute w-4 h-4 rounded-full opacity-50 cursor-pointer bg-amber-400 animate-ping"
+        style={{
+          top: 24 + '%',
+          left: 21 + '%'
+        }}></div>
+      <img
+        src={require('../images/team.png')}
+        className="absolute w-4 h-4 text-red-400 cursor-pointer"
+        style={{
+          top: 24 + '%',
+          left: 21 + '%'
+        }}
+        onClick={() => teleport(TELEPORT_LOCATIONS.team)}
+      />
       <img src={require('../images/try5.png')} width={300} />
     </div>
   );
