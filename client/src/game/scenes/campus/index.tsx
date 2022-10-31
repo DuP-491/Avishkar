@@ -344,8 +344,11 @@ export class Campus extends Scene {
     const authGanga = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'auth')
     );
-    const authYamuna = gameObjectToObjectPoint(
-      this.map.findObject('Interactables', (obj) => obj.name === 'auth2')
+    // const authYamuna = gameObjectToObjectPoint(
+    //   this.map.findObject('Interactables', (obj) => obj.name === 'auth2')
+    // );
+    const guestPoint = gameObjectToObjectPoint(
+      this.map.findObject('Interactables', (obj) => obj.name === 'guest')
     );
     const enterPoint = gameObjectToObjectPoint(
       this.map.findObject('Interactables', (obj) => obj.name === 'cafe')
@@ -381,6 +384,19 @@ export class Campus extends Scene {
             // LOGOUT
             this.game.events.emit(EVENTS_NAME.logout);
           }
+        })
+    );
+    this.interactables.push(
+      this.physics.add
+        .sprite(guestPoint.x, guestPoint.y, 'tiles_ui', 5)
+        .setOrigin(0.5, 0.5)
+        .setScale(1.5)
+        .setInteractive({
+          useHandCursor: true
+        })
+        .on('pointerdown', (e: any) => {
+          this.player.x = 712;
+          this.player.y = 2629;
         })
     );
     // this.interactables.push(
