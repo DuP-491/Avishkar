@@ -63,11 +63,11 @@ const index = () => {
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="SPONSORS" />
             <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="white" />
-              <Card imgsrc={PolygonIMG} name="Polygon" bgc="white" />
-              <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="white" />
-              <Card imgsrc={ReplitIMG} name="Repl.it" bgc="white" />
-              <Card imgsrc={SolanaIMG} name="Solana" bgc="white" />
+              <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="" />
+              <Card imgsrc={PolygonIMG} name="Polygon" bgc="" />
+              <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="" />
+              <Card imgsrc={ReplitIMG} name="Repl.it" bgc="" />
+              <Card imgsrc={SolanaIMG} name="Solana" bgc="" />
             </div>
           </div>
 
