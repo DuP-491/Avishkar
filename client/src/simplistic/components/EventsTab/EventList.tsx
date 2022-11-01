@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import EventCard from './EventCard';
 import './../common.css';
 import MainService from '../../services/MainService';
+import { toast } from 'react-toastify';
 
 /* eslint-disable */
 interface EventListPropType {
@@ -30,10 +31,10 @@ function EventList({ Department, onEventSelect }: EventListPropType) {
       .then((data) => {
         if (data['success']) {
           setEvents(data['events']);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
