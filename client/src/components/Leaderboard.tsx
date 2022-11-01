@@ -34,7 +34,8 @@ function Leaderboard(props: Props) {
       const { data: fetchRankList, error } = await supabase
         .from('leaderboard')
         .select('*')
-        .order('coins', { ascending: false });
+        .order('coins', { ascending: false })
+        .order('time', { ascending: true });
       if (error) {
         // console.log(error);
         toast.error('Could not load leaderboard');
