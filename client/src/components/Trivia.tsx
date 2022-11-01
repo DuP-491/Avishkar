@@ -14,6 +14,7 @@ function Trivia(props: Props) {
   const textDiv = useRef<HTMLDivElement>(null);
   const [question, setQuestion] = React.useState('');
   const [answer, setAnswer] = React.useState('');
+  const [hint, setHint] = React.useState('');
   const [points, setPoints] = React.useState(0);
   const [userAnswer, setUserAnswer] = React.useState('');
   const [qid, setQid] = React.useState(-1);
@@ -78,8 +79,8 @@ function Trivia(props: Props) {
 
   useEffect(() => {
     // Get latest trivia question
-    if(user.id == '') {
-      toast.warning("Please login to participate in quiz!");
+    if (user.id == '') {
+      toast.warning('Please login to participate in quiz!');
       handleClick();
       setTimeout(() => {
         onClose();
@@ -89,7 +90,7 @@ function Trivia(props: Props) {
     (async function _() {
       const { data: question, error } = await supabase
         .from('trivia')
-        .select('id,question,answer,coins')
+        .select('id,question,answer,coins,hint')
         .order('id', { ascending: false })
         .limit(1)
         .single();
@@ -109,8 +110,9 @@ function Trivia(props: Props) {
         // console.log(decrypted);
         setAnswer(decrypted);
         setPoints(question.coins);
-        if(question.id === userCoinDetails?.last_qid){
-          toast.warning('You already answered today\'s question!');
+        setHint(question.hint);
+        if (question.id === userCoinDetails?.last_qid) {
+          toast.warning("You already answered today's question!");
           handleClick();
           setTimeout(() => {
             onClose();
@@ -188,6 +190,7 @@ function Trivia(props: Props) {
             Submit
           </button>
         </div>
+        <p className="mt-4 text-xs text-green-900">Hint : {hint}</p>
       </div>
     </>
   );
