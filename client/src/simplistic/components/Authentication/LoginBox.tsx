@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
+import Spinner from '../Common/Spinner';
 
 /* eslint-disable */
 interface LoginBoxPropType {
@@ -26,14 +27,16 @@ function LoginBox({ onCrossPress, onLogin, onToggle, onForgotPassword }: LoginBo
         setIsLoading(false);
         if (data['success']) {
           Cookies.set('token', data['token']);
+          toast.success('Logged in successfully!');
+
           onLogin(e);
           onCrossPress(e);
         } else toast.error(data['message']);
       })
       .catch(() => {
+        setIsLoading(false);
         toast.error('Please try again later!');
       });
-    setIsLoading(false);
   }
   const NameRef = useRef(document.createElement('input'));
   const PasswordRef = useRef(document.createElement('input'));
@@ -107,7 +110,7 @@ function LoginBox({ onCrossPress, onLogin, onToggle, onForgotPassword }: LoginBo
                 <button
                   type="submit"
                   className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-                  {isLoading ? 'Signing in..' : 'Sign in'}
+                  {isLoading ? <Spinner displayTxt="checking credentials.." /> : 'Log In'}
                 </button>
                 <button
                   onClick={onToggle}

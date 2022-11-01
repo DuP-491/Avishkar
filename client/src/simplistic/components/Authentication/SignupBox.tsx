@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
+import Spinner from '../Common/Spinner';
 
 /* eslint-disable */
 interface SignupBoxPropType {
@@ -11,20 +12,25 @@ interface SignupBoxPropType {
 /* eslint-enable */
 
 function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
+  const [isLoading, setIsLoading] = useState(false);
   function LoggingIn(e: any) {
     e.preventDefault();
+    setIsLoading(true);
     const name = NameRef.current.value;
     const email = EmailRef.current.value;
     const gender = GenderRef.current.value;
     const mobile = MobileRef.current.value;
     AuthService.signIn(name, email, collegeName, gender, mobile)
       .then((data) => {
+        setIsLoading(false);
         if (data['success']) {
+          toast.success('A verification mail has been sent!');
           onSignup(e);
           onCrossPress(e);
         } else toast.error(data['message']);
       })
       .catch(() => {
+        setIsLoading(false);
         toast.error('Please try again later!');
       });
   }
@@ -157,7 +163,7 @@ function SignupBox({ onCrossPress, onSignup, onToggle }: SignupBoxPropType) {
                 <button
                   type="submit"
                   className="flex justify-center px-4 py-2 mt-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-                  Sign up
+                  {isLoading ? <Spinner displayTxt="Creating Account.." /> : 'Create Account'}
                 </button>
                 <button
                   onClick={onToggle}
