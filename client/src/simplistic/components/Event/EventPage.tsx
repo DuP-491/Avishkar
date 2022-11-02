@@ -199,11 +199,13 @@ const EventPage = () => {
         {event.name}
       </h2>
       <p className="my-4">{parse(event.tagline)}</p>
-      {event.name === 'Webster' && (
-        <div
-          className="apply-button h-[44px] w-[312px] mx-auto my-5"
-          data-hackathon-slug="cyberquest"
-          data-button-theme="light"></div>
+      {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(event.name) && (
+        <div className="inline-flex justify-center w-full mb-3 sm:justify-start">
+          <div
+            className="apply-button h-[44px] w-[312px] mx-auto my-5"
+            data-hackathon-slug="cyberquest"
+            data-button-theme="dark-inverted"></div>
+        </div>
       )}
       {Cookies.get('token') ? (
         participatingTeam ? (

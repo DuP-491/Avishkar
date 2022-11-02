@@ -1412,12 +1412,17 @@ function NewTablet(props: Props) {
                       {participatingTeam === null ? 'Register' : 'Registered'}
                     </p>
                   )}
-                  {events[selectedEventID]['name'] === 'Webster' && (
-                    <div
-                      className="apply-button h-[44px] w-[312px] mx-auto my-5"
-                      data-hackathon-slug="CyberQuest"
-                      data-button-theme="light"></div>
+                  {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(
+                    events[selectedEventID]['name']
+                  ) && (
+                    <div className="inline-flex justify-center w-full mb-3 sm:justify-start">
+                      <div
+                        className="apply-button h-[44px] w-[312px] mx-auto my-5"
+                        data-hackathon-slug="cyberquest"
+                        data-button-theme="dark-inverted"></div>
+                    </div>
                   )}
+
                   {userDetails['role'] !== 'USER' && (
                     <>
                       <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Admin</p>
