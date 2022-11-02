@@ -266,6 +266,8 @@ function NewTablet(props: Props) {
   const [updateTeamnames, setUpdateTeamnames] = useState({});
   const [currDCIndex, setCurrDCIndex] = useState(0);
 
+  const [devfolioLoaded, setDevfolioLoaded] = useState(false);
+
   useEffect(() => {
     fetchDepartmentEvents();
     fetchUserDetails();
@@ -275,16 +277,22 @@ function NewTablet(props: Props) {
       setProfileSection(0);
     }
   }, []);
+
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://apply.devfolio.co/v2/sdk.js';
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+    if (tab === 'Event') {
+      const devfolioScript = document.createElement('script');
+      devfolioScript.id = 'devfolio-script';
+      devfolioScript.src = 'https://apply.devfolio.co/v2/sdk.js';
+      devfolioScript.async = true;
+      devfolioScript.defer = true;
+      document.body.appendChild(devfolioScript);
+      setDevfolioLoaded(true);
+    } else if (devfolioLoaded) {
+      document.querySelector('#devfolio-script')?.remove();
+      document.querySelector('#devfolio-overlay-container')?.remove();
+      setDevfolioLoaded(false);
+    }
+  }, [tab]);
 
   useEffect(() => {
     if (Object.keys(departments).length > 0 && deptId) {
@@ -1391,7 +1399,9 @@ function NewTablet(props: Props) {
                       </p>
                     )}
                     {(events[selectedEventID]['psLink'] !== '#' ||
-                      events[selectedEventID]['name'] === 'Webster' ||
+                      ['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(
+                        events[selectedEventID]['name']
+                      ) ||
                       Cookies.get('token') !== undefined) && (
                       <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Participate</p>
                     )}
@@ -1416,9 +1426,9 @@ function NewTablet(props: Props) {
                     {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(
                       events[selectedEventID]['name']
                     ) && (
-                      <div className="inline-flex justify-center w-full mb-3 sm:justify-start">
+                      <div className="inline-flex items-center justify-center w-full">
                         <div
-                          className="apply-button h-[44px] w-[312px] mx-auto my-5"
+                          className="apply-button h-[44px] w-[312px]"
                           data-hackathon-slug="cyberquest"
                           data-button-theme="dark-inverted"></div>
                       </div>
