@@ -26,8 +26,8 @@ const userSignup = async (req: Request, res: Response, next) => {
             res.statusCode = 400;
             res.json({ error: "bad request", message: "email / mobile already in use!", success: false });
         } else {
-            let isFeePaid = false;
-            if (email.endsWith("@mnnit.ac.in")) isFeePaid = true;
+            const isFeePaid = true;
+            // if (email.endsWith("@mnnit.ac.in")) isFeePaid = true;
             await prisma.user.create({
                 data: { name, email, collegeName, gender, mobile, isFeePaid, username, salt, token },
             });
