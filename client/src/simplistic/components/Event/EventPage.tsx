@@ -8,12 +8,17 @@ import Cookies from 'js-cookie';
 import UserService from '../../services/UserService';
 import AdminService from '../../services/AdminService';
 const EventPage = () => {
+  const location = useLocation();
+
+  const event = location.state;
+
   const UNEXPECTED_ERROR_MSG = 'Please try again later!';
   const LOGIN_AGAIN_PROMPT = 'Please login again!';
   const [eventCoordies, setEventCoordies] = useState([]);
   const [participatingTeam, setParticipatingTeam] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState('-1');
   const [teams, setTeams] = useState([]);
+  const [isEventOpen, setIsEventOpen] = useState(event.isOpen);
   const [userDetails, setUserDetails] = useState({
     id: '',
     name: '',
@@ -27,9 +32,7 @@ const EventPage = () => {
     resumeLink: '',
     isFeePaid: false
   });
-  const location = useLocation();
   const navigate = useNavigate();
-  const event = location.state;
   useEffect(() => {
     fetchTeamInvites();
     fetchEventCoordies(event.id);
@@ -58,6 +61,27 @@ const EventPage = () => {
           setTeams(data['teams']);
         } else if (data['message'] === 'Invalid token!') {
           toast.error('Login again');
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
+  const toggleEventStatus = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      toast.error('unauthorised!');
+      return;
+    }
+    AdminService.toggleEventStatus(token, event.id)
+      .then((data) => {
+        if (data['success']) {
+          toast.success(data['message']);
+          setIsEventOpen(!isEventOpen);
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error(LOGIN_AGAIN_PROMPT);
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -198,7 +222,12 @@ const EventPage = () => {
       <h2 className="text-4xl font-semibold tracking-widest uppercase md:text-5xl lg:text-6xl title">
         {event.name}
       </h2>
-      <span>Registration {event.isOpen ? 'open' : 'closed'}</span>
+      <span
+        className={`italic rounded-lg p-1 uppercase text-xs font-semibold text-white ${
+          isEventOpen ? 'bg-green-500 ' : 'bg-red-500'
+        }`}>
+        Registrations {isEventOpen ? 'open' : 'closed'}
+      </span>
       <p className="my-4">{parse(event.tagline)}</p>
       {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(event.name) && (
         <div className="inline-flex justify-center w-full mb-3 sm:justify-start">
@@ -306,6 +335,13 @@ const EventPage = () => {
           onClick={handleGetParticipationList}
           className="inline-block w-full px-2 py-4 mt-3 text-center uppercase border-2 md:mx-2 md:w-max text-md group-hover:font-semibold hover:bg-white hover:text-gray-900">
           download Participant list
+        </button>
+      )}
+      {userDetails.role && userDetails.role !== 'USER' && (
+        <button
+          onClick={toggleEventStatus}
+          className="inline-block w-full px-2 py-4 mt-3 text-center uppercase capitalize border-2 md:mx-2 md:w-max text-md group-hover:font-semibold hover:bg-white hover:text-gray-900">
+          {isEventOpen ? 'close' : 'open'} registrations
         </button>
       )}
 
