@@ -355,14 +355,6 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
-                name="Ishan Gupta"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
-              <Card
                 imgsrc={TechLovedeepSinghIMG}
                 name="Lovedeep Singh Kamal"
                 designation=""
