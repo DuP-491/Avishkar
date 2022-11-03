@@ -25,6 +25,9 @@ const userSignup = async (req: Request, res: Response, next) => {
         if (emailUser || mobileUser) {
             res.statusCode = 400;
             res.json({ error: "bad request", message: "email / mobile already in use!", success: false });
+        } else if (gender !== "male" && gender !== "female" && gender !== "none") {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "invalid gender!", success: false });
         } else {
             const isFeePaid = true;
             // if (email.endsWith("@mnnit.ac.in")) isFeePaid = true;

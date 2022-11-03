@@ -241,6 +241,30 @@ const getParticipationInEvent = async (req: Request, res: Response, next) => {
     }
 };
 
+const updateEventStatus = async (req: Request, res: Response, next) => {
+    const eventId = req.params.eventId;
+    try {
+        const event = await prisma.event.findFirst({ where: { id: eventId } });
+        
+        if(event === null) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "event cannot be found!", success: false });
+        } else {
+            const newStatus = !event.isOpen;
+            await prisma.event.update({
+                where: { id: eventId },
+                data: { isOpen: newStatus },
+            });
+            
+            res.statusCode = 200;
+            res.json({ message: "event status updated!", success: true });
+        }
+    } catch (error) {
+        console.log("error occured in the updateEventSponsor() controller!");
+        next(error);
+    }
+};
+
 export {
     addDepartmentEvent,
     removeDepartmentEvent,
@@ -255,4 +279,5 @@ export {
     updateEventSponsor,
     removeEventSponsor,
     getParticipationInEvent,
+    updateEventStatus
 };

@@ -66,20 +66,21 @@ model DepartmentCoordinator {
 }
 
 model Event {
-  id               String             @id @default(uuid())
-  deptEvent        DepartmentEvent    @relation(fields: [deptEventId], references: [id])
+  id               String                 @id @default(uuid())
+  deptEvent        DepartmentEvent        @relation(fields: [deptEventId], references: [id])
   deptEventId      String
-  name             String             @unique
+  name             String                 @unique
   tagline          String  @db.LongText
   details          String  @db.LongText
   criteria         String  @db.LongText
   rules            String  @db.LongText
   psLink           String  @db.LongText
   poster           String? @db.LongText
-  maxTeamSize      Int                @default(1)
-  minTeamSize      Int                @default(1)
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  maxTeamSize      Int                    @default(1)
+  minTeamSize      Int                    @default(1)
+  isOpen           Boolean                @default(true)
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
   EventCoordinator EventCoordinator[]
   Participation    Participation[]
   EventSponsor     EventSponsor[]
