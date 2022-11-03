@@ -42,16 +42,18 @@ import DividerLine from '../Common/DividerLine';
 
 /* eslint-disable */
 function Sponsors() {
-  function DisplayCard(prop: Array<string>) {
+  function DisplayCard(prop: Array<Array<string>>) {
     return (
       <div className="flex flex-wrap justify-around mt-10">
         {prop.map((p) => {
           return (
-            <div
-              style={{ width: '20vw', minWidth: '200px' }}
-              className="justify-center p-1 text-white transition-all duration-500 rounded-md rounded-lg height-fit">
-              <img src={p} className="object-contain p-2 rounded-xl aspect-square" />
-            </div>
+            <a href={p[1]} target="_blank" rel="noreferrer">
+              <div
+                style={{ width: '20vw', minWidth: '200px' }}
+                className="justify-center p-1 text-white transition-all duration-500 rounded-md rounded-lg height-fit">
+                <img src={p[0]} className="object-contain p-2 rounded-xl aspect-square" />
+              </div>
+            </a>
           );
         })}
       </div>
@@ -73,47 +75,53 @@ function Sponsors() {
       <div className="flex flex-col items-center px-10 pb-10">
         <>
           <DividerLine alignmentCenter={true} text="SPONSORS" />
-          {DisplayCard([DevfolioIMG, FilecoinIMG, PolygonIMG, ReplitIMG, SolanaIMG])}
+          {DisplayCard([
+            [DevfolioIMG, 'https://devfolio.co'],
+            [FilecoinIMG, 'https://filecoin.io'],
+            [PolygonIMG, 'https://polygon.technology/'],
+            [ReplitIMG, 'https://replit.com'],
+            [SolanaIMG, 'https://solana.com']
+          ])}
         </>
       </div>
       <div className="flex flex-col items-center px-10 pb-10">
         <>
           <DividerLine alignmentCenter={true} text="PAST SPONSORS" />
           {DisplayCard([
-            TezosIMG,
-            BalsamiqIMG,
-            BlogaddaIMG,
-            BlueskyIMG,
-            BugseeIMG,
-            BuyTheValueIMG,
-            CeloIMG,
-            CodechefIMG,
-            CodingBlocksIMG,
-            CodingNinjaIMG,
-            CreativeTimIMG,
-            Dare2CompeteIMG,
-            DellIMG,
-            GithubIMG,
-            GrowwIMG,
-            HackerEarthIMG,
-            HindustanTimesIMG,
-            InterviewBuddyIMG,
-            JetBrainsIMG,
-            KwalityWallsIMG,
-            MaticIMG,
-            MHMIMG,
-            MyLocIMG,
-            PayTMIMG,
-            ProtoioIMG,
-            RedIMG,
-            ScalerEdgeIMG,
-            SketchIMG,
-            SkillenzaIMG,
-            SkillLyncIMG,
-            SSGIMG,
-            TIMEIMG,
-            UltratechIMG,
-            YouthIMG
+            [TezosIMG, 'javascript:void(0)'],
+            [BalsamiqIMG, 'javascript:void(0)'],
+            [BlogaddaIMG, 'javascript:void(0)'],
+            [BlueskyIMG, 'javascript:void(0)'],
+            [BugseeIMG, 'javascript:void(0)'],
+            [BuyTheValueIMG, 'javascript:void(0)'],
+            [CeloIMG, 'javascript:void(0)'],
+            [CodechefIMG, 'javascript:void(0)'],
+            [CodingBlocksIMG, 'javascript:void(0)'],
+            [CodingNinjaIMG, 'javascript:void(0)'],
+            [CreativeTimIMG, 'javascript:void(0)'],
+            [Dare2CompeteIMG, 'javascript:void(0)'],
+            [DellIMG, 'javascript:void(0)'],
+            [GithubIMG, 'javascript:void(0)'],
+            [GrowwIMG, 'javascript:void(0)'],
+            [HackerEarthIMG, 'javascript:void(0)'],
+            [HindustanTimesIMG, 'javascript:void(0)'],
+            [InterviewBuddyIMG, 'javascript:void(0)'],
+            [JetBrainsIMG, 'javascript:void(0)'],
+            [KwalityWallsIMG, 'javascript:void(0)'],
+            [MaticIMG, 'javascript:void(0)'],
+            [MHMIMG, 'javascript:void(0)'],
+            [MyLocIMG, 'javascript:void(0)'],
+            [PayTMIMG, 'javascript:void(0)'],
+            [ProtoioIMG, 'javascript:void(0)'],
+            [RedIMG, 'javascript:void(0)'],
+            [ScalerEdgeIMG, 'javascript:void(0)'],
+            [SketchIMG, 'javascript:void(0)'],
+            [SkillenzaIMG, 'javascript:void(0)'],
+            [SkillLyncIMG, 'javascript:void(0)'],
+            [SSGIMG, 'javascript:void(0)'],
+            [TIMEIMG, 'javascript:void(0)'],
+            [UltratechIMG, 'javascript:void(0)'],
+            [YouthIMG, 'javascript:void(0)']
           ])}
         </>
       </div>
