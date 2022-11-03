@@ -198,6 +198,7 @@ const EventPage = () => {
       <h2 className="text-4xl font-semibold tracking-widest uppercase md:text-5xl lg:text-6xl title">
         {event.name}
       </h2>
+      <span>Registration {event.isOpen ? 'open' : 'closed'}</span>
       <p className="my-4">{parse(event.tagline)}</p>
       {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(event.name) && (
         <div className="inline-flex justify-center w-full mb-3 sm:justify-start">

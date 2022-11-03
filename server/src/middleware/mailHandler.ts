@@ -56,7 +56,7 @@ const client = mailgun.client({username: 'api', key: process.env.MG_API_KEY});
 
   try {
     const res = await client.messages.create(process.env.MG_DOMAIN_NAME, messageData)
-    console.log("mail sent")
+    console.log(`mail sent ${email}`)
     return true;
   } catch (error) {
       console.log("error occured in the mailSender() function!",error);
