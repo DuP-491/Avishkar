@@ -215,6 +215,8 @@ function Profile({ onInvalidToken }: ProfileProps) {
       onInvalidToken();
       return;
     }
+    if (!username) return;
+
     UserService.inviteUser(token, teamId, username)
       .then((data) => {
         if (data['success']) {

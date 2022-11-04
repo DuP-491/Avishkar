@@ -193,5 +193,42 @@ export default {
         message: 'Please try again later!'
       };
     }
+  },
+  toggleEventStatus: async function (token: string, eventId: string) {
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/admin/event-status/${eventId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      await res.json();
+      switch (res.status) {
+        case 200:
+          return {
+            success: true,
+            message: 'Registration status updated'
+          };
+        case 401:
+          return {
+            success: false,
+            message: 'Invalid token!'
+          };
+        default:
+          return {
+            success: false,
+            message: 'Please try again later!'
+          };
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Please try again later!'
+      };
+    }
   }
 };
