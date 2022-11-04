@@ -225,14 +225,26 @@ const removeEventSponsor = async (req: Request, res: Response, next) => {
 const getParticipationInEvent = async (req: Request, res: Response, next) => {
     const eventId = req.params.eventId;
     try {
-        const participation = await prisma.$queryRaw`
-            SELECT T.id, T.name, T.size, U.id AS leaderId, U.name AS leaderName, U.email AS leaderEmail, U.mobile AS leaderMobile FROM Participation AS P
-            INNER JOIN Team AS T ON P.teamId = T.id
-            INNER JOIN User AS U ON T.leader = U.id
-            WHERE P.eventId = ${eventId}
-
-        `;
-
+        const participants = await prisma.$queryRaw`
+                SELECT U.id, U.name, U.email, U.mobile, T.id AS teamId, T.name AS teamName, T.leader AS FROM Participation AS P
+                INNER JOIN Team AS T ON P.teamId = T.id AND P.eventId = ${eventId}
+                INNER JOIN TeamMember AS TM ON TM.teamId = T.id
+                INNER JOIN User AS U ON TM.userId = U.id
+                ORDER BY teamId
+            `;
+        let participation = [], i = 0;
+        // @ts-ignore
+        while(i < participants.length) {
+            let currentTeamId = participants[i].teamId, currentTeamName = participants[i].teamName;
+            let members = [];
+            // @ts-ignore
+            while(i < participants.length && participants[i].teamId === currentTeamId) {
+                members.push({ name: participants[i].name, email: participants[i].email, mobile: participants[i].mobile });
+                ++i;
+            }
+            participation.push({ teamId: currentTeamId, teamName: currentTeamName, members });
+        }
+        
         res.statusCode = 200;
         res.json({ participation, success: true });
     } catch (error) {
