@@ -1862,15 +1862,18 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(10)}>
                           Update Event
                         </p>
-                        <p
-                          className={
-                            profileSection === 11
-                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                          }
-                          onClick={() => setProfileSection(11)}>
-                          Delete Event
-                        </p>
+                        {/* event can only be deleted  by a admin */}
+                        {userDetails['role'] === 'ADMIN' && (
+                          <p
+                            className={
+                              profileSection === 11
+                                ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                                : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                            }
+                            onClick={() => setProfileSection(11)}>
+                            Delete Event
+                          </p>
+                        )}
                         <p
                           className={
                             profileSection === 12
@@ -1907,15 +1910,17 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(15)}>
                           Update Event Sponsor
                         </p>
-                        <p
-                          className={
-                            profileSection === 16
-                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                          }
-                          onClick={() => setProfileSection(16)}>
-                          Delete Event Sponsor
-                        </p>
+                        {userDetails['role'] === 'ADMIN' && (
+                          <p
+                            className={
+                              profileSection === 16
+                                ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                                : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                            }
+                            onClick={() => setProfileSection(16)}>
+                            Delete Event Sponsor
+                          </p>
+                        )}
                       </>
                     )}
                   </div>
