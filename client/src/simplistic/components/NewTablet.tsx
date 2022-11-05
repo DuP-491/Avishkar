@@ -1399,7 +1399,7 @@ function NewTablet(props: Props) {
                       </p>
                     )}
                     {(events[selectedEventID]['psLink'] !== '#' ||
-                      ['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(
+                      ['Webster', 'Logical Rhythm', 'Softablitz', 'Droidrush'].includes(
                         events[selectedEventID]['name']
                       ) ||
                       Cookies.get('token') !== undefined) && (
@@ -1423,7 +1423,7 @@ function NewTablet(props: Props) {
                         {participatingTeam === null ? 'Register' : 'Registered'}
                       </p>
                     )}
-                    {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(
+                    {['Webster', 'Logical Rhythm', 'Softablitz', 'Droidrush'].includes(
                       events[selectedEventID]['name']
                     ) && (
                       <div className="inline-flex items-center justify-center w-full">

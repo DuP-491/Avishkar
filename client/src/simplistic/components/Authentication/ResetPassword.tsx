@@ -25,7 +25,7 @@ const ResetPassword = () => {
     }
     let token;
     if (key === undefined) {
-      console.log('key===undefined');
+      //console.log('key===undefined');
       setIsLoading(false);
       return;
     } else token = key;

@@ -28,7 +28,8 @@ function EventDetails({ event }: EventDetailPropType) {
   const fetchTeamInvites = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      console.log('Please login again and retry!');
+      toast.error('Please login again and retry!');
+      //console.log('Please login again and retry!');
       return;
     }
     UserService.getTeamInvites(token)
@@ -37,7 +38,8 @@ function EventDetails({ event }: EventDetailPropType) {
           setTeams(data['teams']);
           if (data['teams'].length) setCurrTeam(data['teams'][0]['teamId']);
         } else if (data['message'] === 'Invalid token!') {
-          console.log('Please login again and retry!');
+          toast.error('Please login again and retry!');
+          //console.log('Please login again and retry!');
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {

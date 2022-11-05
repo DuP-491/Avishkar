@@ -226,7 +226,7 @@ const getParticipationInEvent = async (req: Request, res: Response, next) => {
     const eventId = req.params.eventId;
     try {
         const participants = await prisma.$queryRaw`
-                SELECT U.id, U.name, U.email, U.mobile, T.id AS teamId, T.name AS teamName, T.leader AS FROM Participation AS P
+                SELECT U.id, U.name, U.email, U.mobile, T.id AS teamId, T.name AS teamName FROM Participation AS P
                 INNER JOIN Team AS T ON P.teamId = T.id AND P.eventId = ${eventId}
                 INNER JOIN TeamMember AS TM ON TM.teamId = T.id
                 INNER JOIN User AS U ON TM.userId = U.id

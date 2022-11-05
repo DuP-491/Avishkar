@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CoordinatorInfo = (props: any) => {
-  console.log(props);
+  //console.log(props);
 
   const { name, email, mobile } = props.cord.user;
   return (
