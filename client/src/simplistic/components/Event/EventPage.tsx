@@ -229,14 +229,15 @@ const EventPage = () => {
         Registrations {isEventOpen ? 'open' : 'closed'}
       </span>
       <p className="my-4">{parse(event.tagline)}</p>
-      {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(event.name) && (
-        <div className="inline-flex justify-center w-full mb-3 sm:justify-start">
-          <div
-            className="apply-button h-[44px] w-[312px] mx-auto my-5"
-            data-hackathon-slug="cyberquest"
-            data-button-theme="dark-inverted"></div>
-        </div>
-      )}
+      {Cookies.get('token') &&
+        ['Webster', 'Logical Rhythm', 'Softablitz', 'Droidrush'].includes(event.name) && (
+          <div className="inline-flex justify-center w-full mb-3 sm:justify-start">
+            <div
+              className="apply-button h-[44px] w-[312px] mx-auto my-5"
+              data-hackathon-slug="cyberquest"
+              data-button-theme="dark-inverted"></div>
+          </div>
+        )}
       {Cookies.get('token') ? (
         participatingTeam ? (
           <div>
@@ -319,7 +320,9 @@ const EventPage = () => {
           </div>
         )
       ) : (
-        ''
+        <p className="px-4 text-sm text-center text-capitalize md:text-xl center 2xl:text-2xl">
+          please login to register
+        </p>
       )}
 
       {event.psLink && event.psLink !== '#' && (
