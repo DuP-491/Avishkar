@@ -38,6 +38,7 @@ import TechDennisThomasIMG from '../Team/Assets/TechDennisThomas.jpg';
 import TechHiteshMitrukaIMG from '../Team/Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from '../Team/Assets/TechMohitPandey.jpg';
 import TechParthMittalIMG from '../Team/Assets/TechParthMittal.jpg';
+import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.png';
 import TechSanskarOmarIMG from '../Team/Assets/TechSanskarOmar.jpg';
 import PVSumitYadavIMG from '../Team/Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from '../Team/Assets/PVVarunKumar.jpg';
@@ -175,7 +176,7 @@ function TeamAvishkar() {
           [PlaceholderIMG, 'Lovedeep Singh Kamal', '', '', '', ''],
           [TechMohitPandeyIMG, 'Mohit Pandey', '', '', '', ''],
           [TechParthMittalIMG, 'Parth Mittal', '', '', '', ''],
-          [PlaceholderIMG, 'Priyav K Kaneria', '', '', '', ''],
+          [TechPriyavKaneriaIMG, 'Priyav K Kaneria', '', '', '', ''],
           [TechSanskarOmarIMG, 'Sanskar Omar', '', '', '', '']
         ])}
         <DividerLine alignmentCenter={true} text="Design Team" />

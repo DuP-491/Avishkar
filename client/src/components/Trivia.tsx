@@ -45,7 +45,7 @@ function Trivia(props: Props) {
       toast.success(`Correct! You have been awarded ${points} points!`);
       const { data: _data, error } = await supabase
         .from('leaderboard')
-        .update({ coins: userCoinDetails.coins + points, last_qid: qid })
+        .update({ coins: userCoinDetails.coins + points, last_qid: qid, time: new Date() })
         .eq('user_id', user.id);
       if (error) {
         toast.error(error.message);
