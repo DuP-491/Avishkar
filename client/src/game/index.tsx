@@ -127,18 +127,19 @@ function GameComponent(props: Props) {
           setInfoPromptType(gameObject.npcType);
           setShowInfoPrompt(true);
 
-          if (gameObject.npcType == 'trivia') {
-            if (
-              sessionStorage.getItem('dailyTrivia') == null ||
-              sessionStorage.getItem('dailyTrivia') == 'false'
-            ) {
-              setTriviaFunction(() => openTrivia);
-            } else {
-              setTriviaFunction(() => () => {
-                toast.error('You have already attempted the trivia for today!');
-              });
-            }
-          } else if (gameObject.npcType == 'notice') {
+          // if (gameObject.npcType == 'trivia') {
+          // if (
+          //   sessionStorage.getItem('dailyTrivia') == null ||
+          //   sessionStorage.getItem('dailyTrivia') == 'false'
+          // ) {
+          //   setTriviaFunction(() => openTrivia);
+          // } else {
+          //   setTriviaFunction(() => () => {
+          //     toast.error('You have already attempted the trivia for today!');
+          //   });
+          // }
+          // } else
+          if (gameObject.npcType == 'notice') {
             setTriviaFunction(() => openNotice);
           } else if (gameObject.npcType == 'sponsor') {
             setTriviaFunction(() => openSponsor);

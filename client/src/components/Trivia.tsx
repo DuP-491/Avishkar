@@ -70,7 +70,7 @@ function Trivia(props: Props) {
     }
 
     // handle given answer here
-    sessionStorage.setItem('dailyTrivia', 'true');
+    // sessionStorage.setItem('dailyTrivia', 'true');
     handleClick();
     setTimeout(() => {
       onClose();
