@@ -84,16 +84,17 @@ export default {
         },
         body: JSON.stringify({ userId, deptEventId })
       });
+      const data = await res.json();
       switch (res.status) {
         case 200:
           return {
             success: true,
-            message: 'Success'
+            message: data['message'] ?? 'Success'
           };
         case 400:
           return {
             success: false,
-            message: "User Id doesn't belong to a user!"
+            message: data['message'] ?? "User Id doesn't belong to a user!"
           };
         case 401:
           return {
@@ -103,7 +104,7 @@ export default {
         case 409:
           return {
             success: false,
-            message: 'User is already coordinator of department!'
+            message: data['message'] ?? 'User is already coordinator of department!'
           };
         default:
           return {
