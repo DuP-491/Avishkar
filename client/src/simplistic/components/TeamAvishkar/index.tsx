@@ -38,7 +38,7 @@ import TechDennisThomasIMG from '../Team/Assets/TechDennisThomas.jpg';
 import TechHiteshMitrukaIMG from '../Team/Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from '../Team/Assets/TechMohitPandey.jpg';
 import TechParthMittalIMG from '../Team/Assets/TechParthMittal.jpg';
-import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.png';
+import TechPriyavKaneriaIMG from './Team/Assets/TechPriyavKaneria.png';
 import TechSanskarOmarIMG from '../Team/Assets/TechSanskarOmar.jpg';
 import PVSumitYadavIMG from '../Team/Assets/PVSumitYadav.jpg';
 import PVVarunKumarIMG from '../Team/Assets/PVVarunKumar.jpg';
