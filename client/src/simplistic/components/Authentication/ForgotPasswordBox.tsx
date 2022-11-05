@@ -17,7 +17,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
   function ResetPasswordEmail(e: any) {
     e.preventDefault();
     setIsLoading(true);
-    console.log('started');
+    //console.log('started');
     const email = EmailRef.current.value;
     AuthService.forgotPassword(email)
       .then((data) => {
@@ -33,7 +33,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
         setIsLoading(false);
         toast.error('Please try again later!');
       });
-    console.log('end');
+    //console.log('end');
   }
   const EmailRef = useRef(document.createElement('input'));
 

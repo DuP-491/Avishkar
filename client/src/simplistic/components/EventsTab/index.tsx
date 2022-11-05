@@ -42,7 +42,7 @@ function EventsTab({ onCrossPress, defaultDepartment }: EventTabPropType) {
     setDisplay('Event');
     setBGIMG(EventDisplayBGIMG);
     setEventDisplayValue(event);
-    console.log(event);
+    //console.log(event);
   }
   function onBackPress() {
     if (Display == 'Event') {
