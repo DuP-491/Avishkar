@@ -1137,10 +1137,33 @@ function NewTablet(props: Props) {
         if (data['success']) {
           toast.success('Downloaded List of Participating Teams Successfully');
 
-          let arr = data['participation'];
-          arr = [Object.keys(arr[0])].concat(arr);
+          const aoa = [['Team ID', 'Team Name']];
+          for (let i = 1; i <= events[selectedEventID]['maxTeamSize']; ++i) {
+            aoa[0].push(`Member ${i} Name`);
+            aoa[0].push(`Member ${i} Email`);
+            aoa[0].push(`Member ${i} Mobile`);
+          }
 
-          const csv = arr
+          data['participation'].forEach((team: any) => {
+            const team_array = [team['teamId'], team['teamName']];
+            team['members'].forEach((member: any) => {
+              team_array.push(member['name']);
+              team_array.push(member['email']);
+              team_array.push(member['mobile']);
+            });
+            for (
+              let i = 0;
+              i < events[selectedEventID]['maxTeamSize'] - team['members'].length;
+              ++i
+            ) {
+              team_array.push('');
+              team_array.push('');
+              team_array.push('');
+            }
+            aoa.push(team_array);
+          });
+
+          const csv = aoa
             .map((it: any) => {
               return Object.values(it).toString();
             })
