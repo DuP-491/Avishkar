@@ -502,4 +502,21 @@
     > { message, success } - OK response
     > { error, message, success } - ERROR response
 
+        ***
+
+13. **Update Event Status**
+   **API Path :** /event-status/:eventId
+   **API Method :** GET
+   **API Extras :** only department coordinator can delete them
+
+    > REQUEST BODY &nbsp;&nbsp;:
+    > {  }
+
+    > REQUEST QUERY PARAMS &nbsp;&nbsp;:
+    > { eventId (string) }
+
+    > RESPONSE BODY :
+    > { message, success } - OK response
+    > { error, message, success } - ERROR response
+
 ---

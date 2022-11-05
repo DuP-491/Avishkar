@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
 import bgImage from '../../Assets/collage.jpg';
+import Spinner from '../Common/Spinner';
 
 const LogIn = () => {
   const EmailRef = useRef(document.createElement('input'));
@@ -32,9 +33,9 @@ const LogIn = () => {
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
+        setIsLoading(false);
         toast.error('Please try again later!');
       });
-    setIsLoading(false);
   }
 
   return (
@@ -95,7 +96,7 @@ const LogIn = () => {
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                {isLoading ? 'logging....' : 'Log In'}
+                {isLoading ? <Spinner displayTxt="checking credentials.." /> : 'Log In'}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 not having an account?{' '}

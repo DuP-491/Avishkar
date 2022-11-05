@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AdminService from '../../services/AdminService';
 import CoordieService from '../../services/CoordieService';
 import MainService from '../../services/MainService';
@@ -63,10 +64,10 @@ function Profile({ onInvalidToken }: ProfileProps) {
           setNewUserDetails(data['details']);
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -88,10 +89,10 @@ function Profile({ onInvalidToken }: ProfileProps) {
           );
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -102,10 +103,10 @@ function Profile({ onInvalidToken }: ProfileProps) {
           setDepartmentEvents(data['departmentEvents']);
           if (data['departmentEvents'].length)
             setCoordieCurrEvent(data['departmentEvents'][0]['id']);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -114,10 +115,10 @@ function Profile({ onInvalidToken }: ProfileProps) {
       .then((data) => {
         if (data['success']) {
           setEvents(data['events']);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -141,10 +142,10 @@ function Profile({ onInvalidToken }: ProfileProps) {
           fetchUserDetails();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -157,14 +158,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     UserService.createTeam(token)
       .then((data) => {
         if (data['success']) {
-          console.log('Created Team Successfully');
+          toast.success('Created Team Successfully');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -177,14 +178,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     UserService.removeTeam(token, teamId)
       .then((data) => {
         if (data['success']) {
-          console.log('Deleted Team Successfully');
+          toast.success('Deleted Team Successfully');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -197,14 +198,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     UserService.responseToTeamInvite(token, teamId, status)
       .then((data) => {
         if (data['success']) {
-          console.log('Responded to Team Invite Successfully');
+          toast.success('Responded to Team Invite Successfully');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -214,17 +215,19 @@ function Profile({ onInvalidToken }: ProfileProps) {
       onInvalidToken();
       return;
     }
+    if (!username) return;
+
     UserService.inviteUser(token, teamId, username)
       .then((data) => {
         if (data['success']) {
-          console.log('Invited User Successfully');
+          toast.success('Invited User Successfully');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -237,14 +240,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     UserService.deleteMember(token, teamId, userId)
       .then((data) => {
         if (data['success']) {
-          console.log('Removed Member Successfully');
+          toast.success('Removed Member Successfully');
           handleGetMembers(teamId);
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -260,10 +263,10 @@ function Profile({ onInvalidToken }: ProfileProps) {
           setTeamMembers({ ...teamMembers, [teamId]: data['members'] });
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -276,14 +279,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     AdminService.addDepartmentEvent(token, name, organizer, '')
       .then((data) => {
         if (data['success']) {
-          console.log('Created Department Event Successfully');
+          toast.success('Created Department Event Successfully');
           fetchDepartmentEvents();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -296,14 +299,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     AdminService.removeDepartmentEvent(token, id)
       .then((data) => {
         if (data['success']) {
-          console.log('Deleted Department Event Successfully');
+          toast.success('Deleted Department Event Successfully');
           fetchDepartmentEvents();
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -316,13 +319,13 @@ function Profile({ onInvalidToken }: ProfileProps) {
     AdminService.addDepartmentCoordie(token, userId, deptEventId)
       .then((data) => {
         if (data['success']) {
-          console.log('Created Department Event Coordie Successfully');
+          toast.success('Created Department Event Coordie Successfully');
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -335,13 +338,13 @@ function Profile({ onInvalidToken }: ProfileProps) {
     AdminService.removeDepartmentCoordie(token, userId, deptEventId)
       .then((data) => {
         if (data['success']) {
-          console.log('Deleted Department Event Coordie Successfully');
+          toast.success('Deleted Department Event Coordie Successfully');
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -354,13 +357,13 @@ function Profile({ onInvalidToken }: ProfileProps) {
     CoordieService.addEventCoordie(token, userId, eventId)
       .then((data) => {
         if (data['success']) {
-          console.log('Created Event Coordie Successfully');
+          toast.success('Created Event Coordie Successfully');
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -373,13 +376,13 @@ function Profile({ onInvalidToken }: ProfileProps) {
     CoordieService.removeEventCoordie(token, userId, eventId)
       .then((data) => {
         if (data['success']) {
-          console.log('Deleted Event Coordie Successfully');
+          toast.success('Deleted Event Coordie Successfully');
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -392,14 +395,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     CoordieService.removeEvent(token, id)
       .then((data) => {
         if (data['success']) {
-          console.log('Deleted Event Successfully');
+          toast.success('Deleted Event Successfully');
           fetchEvents(coordieCurrEvent);
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -480,14 +483,14 @@ function Profile({ onInvalidToken }: ProfileProps) {
     )
       .then((data) => {
         if (data['success']) {
-          console.log('Added Event Successfully');
+          toast.success('Added Event Successfully');
           fetchEvents(coordieCurrEvent);
         } else if (data['message'] === 'Invalid token!') {
           onInvalidToken();
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 

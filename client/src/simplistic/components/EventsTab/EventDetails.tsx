@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import MainService from '../../services/MainService';
 import UserService from '../../services/UserService';
 import './../common.css';
@@ -37,10 +38,10 @@ function EventDetails({ event }: EventDetailPropType) {
           if (data['teams'].length) setCurrTeam(data['teams'][0]['teamId']);
         } else if (data['message'] === 'Invalid token!') {
           console.log('Please login again and retry!');
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -49,30 +50,30 @@ function EventDetails({ event }: EventDetailPropType) {
       .then((data) => {
         if (data['success']) {
           setCoordies(data['eventCoordies']);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
   const handleParticipate = (teamId: number, eventId: string) => {
     const token = Cookies.get('token');
     if (token === undefined) {
-      console.log('Please login again and retry!');
+      toast.error('Please login again and retry!');
       return;
     }
     UserService.eventParticipate(token, teamId, eventId)
       .then((data) => {
         if (data['success']) {
-          console.log('Participated for event Successfully');
+          toast.success('Participated for event Successfully');
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
-          console.log('Please login again and retry!');
-        } else console.log(data['message']); // Replace with Toast/Alert
+          toast.error('Please login again and retry!');
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 
@@ -89,21 +90,21 @@ function EventDetails({ event }: EventDetailPropType) {
             onClick={() => {
               setSelectedTab(1);
             }}
-            className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
+            className="w-1/2 pt-5 pb-5 text-center bg-gray-900 rounded-t-full">
             Event Details
           </div>
           <div
             onClick={() => {
               setSelectedTab(2);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/2 pt-5 pb-5 text-center">
             Participation Criteria
           </div>
           <div
             onClick={() => {
               setSelectedTab(3);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/2 pt-5 pb-5 text-center">
             Coordinators
           </div>
         </>
@@ -115,21 +116,21 @@ function EventDetails({ event }: EventDetailPropType) {
             onClick={() => {
               setSelectedTab(1);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/2 pt-5 pb-5 text-center">
             Event Details
           </div>
           <div
             onClick={() => {
               setSelectedTab(2);
             }}
-            className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
+            className="w-1/2 pt-5 pb-5 text-center bg-gray-900 rounded-t-full">
             Participation Criteria
           </div>
           <div
             onClick={() => {
               setSelectedTab(3);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/2 pt-5 pb-5 text-center">
             Coordinators
           </div>
         </>
@@ -141,21 +142,21 @@ function EventDetails({ event }: EventDetailPropType) {
             onClick={() => {
               setSelectedTab(1);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/2 pt-5 pb-5 text-center">
             Event Details
           </div>
           <div
             onClick={() => {
               setSelectedTab(2);
             }}
-            className="w-1/2 text-center pt-5 pb-5">
+            className="w-1/2 pt-5 pb-5 text-center">
             Participation Criteria
           </div>
           <div
             onClick={() => {
               setSelectedTab(3);
             }}
-            className="w-1/2 text-center pt-5 pb-5 bg-gray-900 rounded-t-full">
+            className="w-1/2 pt-5 pb-5 text-center bg-gray-900 rounded-t-full">
             Coordinators
           </div>
         </>
@@ -200,13 +201,13 @@ function EventDetails({ event }: EventDetailPropType) {
   }
   return (
     <div>
-      <div className="text-neutral-400 text-3xl font-bold pl-10 font-mono mb-3">{Details.Name}</div>
+      <div className="pl-10 mb-3 font-mono text-3xl font-bold text-neutral-400">{Details.Name}</div>
       <div className="flex w-full">{Tabrender()}</div>
-      <div className="bg-gray-900 p-10" style={{ height: '80vh' }}>
+      <div className="p-10 bg-gray-900" style={{ height: '80vh' }}>
         {bodyRender()}
       </div>
       <select
-        className="ml-4 text-black fixed z-90 bottom-40 right-9"
+        className="fixed ml-4 text-black z-90 bottom-40 right-9"
         value={currTeam}
         onChange={(e) => setCurrTeam(e.target.value)}>
         {teams
@@ -219,7 +220,7 @@ function EventDetails({ event }: EventDetailPropType) {
       </select>
       <button
         onClick={() => handleParticipate(parseInt(currTeam), event['id'])}
-        className="fixed z-90 bottom-20 md:bottom-10 right-8 bg-blue-600 w-32 h-10 rounded-full drop-shadow-lg flex justify-center items-center text-white text-xl hover:bg-blue-700 hover:drop-shadow-2xl participate-btn">
+        className="fixed flex items-center justify-center w-32 h-10 text-xl text-white bg-blue-600 rounded-full z-90 bottom-20 md:bottom-10 right-8 drop-shadow-lg hover:bg-blue-700 hover:drop-shadow-2xl participate-btn">
         Participate
       </button>
     </div>

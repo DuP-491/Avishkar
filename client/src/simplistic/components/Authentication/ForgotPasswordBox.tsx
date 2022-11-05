@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
+import Spinner from '../Common/Spinner';
 
 /* eslint-disable */
 interface ForgotPasswordBoxPropType {
@@ -16,20 +17,23 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
   function ResetPasswordEmail(e: any) {
     e.preventDefault();
     setIsLoading(true);
+    console.log('started');
     const email = EmailRef.current.value;
-    console.log(email);
-    AuthService.forgotPassword(email).then((data) => {
-      if (data['success']) {
+    AuthService.forgotPassword(email)
+      .then((data) => {
+        if (data['success']) {
+          setIsLoading(false);
+          toast.success('Reset Link sent to your Email');
+          onCrossPress(e);
+        } else {
+          toast.error(data['message']);
+        }
+      })
+      .catch(() => {
         setIsLoading(false);
-        toast('Email Sent Successfully!');
-        console.log('Sucessfully Email Sent!');
-        onCrossPress(e);
-      } else {
-        // dsfsfrsecfzdfsfc
-        console.log(data);
-      }
-    });
-    setIsLoading(false);
+        toast.error('Please try again later!');
+      });
+    console.log('end');
   }
   const EmailRef = useRef(document.createElement('input'));
 
@@ -77,7 +81,7 @@ function ForgotPasswordBox({ onCrossPress }: ForgotPasswordBoxPropType) {
                 <button
                   type="submit"
                   className="flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm w-fit bg-slate-500 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
-                  {isLoading ? 'Sending' : 'Send'} Mail
+                  {isLoading ? <Spinner displayTxt="sending Mail" /> : 'Send Mail'}
                 </button>
               </div>
             </form>

@@ -25,17 +25,28 @@ const userSignup = async (req: Request, res: Response, next) => {
         if (emailUser || mobileUser) {
             res.statusCode = 400;
             res.json({ error: "bad request", message: "email / mobile already in use!", success: false });
+        } else if (gender !== "male" && gender !== "female" && gender !== "none") {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "invalid gender!", success: false });
         } else {
-            let isFeePaid = false;
-            if (email.endsWith("@mnnit.ac.in")) isFeePaid = true;
+            const isFeePaid = true;
+            // if (email.endsWith("@mnnit.ac.in")) isFeePaid = true;
             await prisma.user.create({
                 data: { name, email, collegeName, gender, mobile, isFeePaid, username, salt, token },
             });
             // send verification email to the client
-            await sendUserVerificationMail(email, token);
-
-            res.statusCode = 200;
-            res.json({ message: "user registration successful!", success: true });
+            const mailSent = await sendUserVerificationMail(email, token);
+            if(!mailSent)
+            {
+                res.statusCode=500;
+                res.json({message:"failed to send email,please try again!",success:false})
+            }
+            else{
+    
+                res.statusCode = 200;
+                res.json({ message: "user registration successful!", success: true });
+            }
+          
         }
     } catch (error) {
         console.log("error occured in the userSignup() controller!");
@@ -112,10 +123,17 @@ const userResetEmail = async (req: Request, res: Response, next) => {
             data: { token }
         });
         // send verification email to the client
-        await sendUserVerificationMail(email, token);
+        const mailSent = await sendUserVerificationMail(email, token);
+        if(!mailSent)
+        {
+            res.statusCode=500;
+            res.json({message:"failed to send email,please try again!",success:false})
+        }
+        else{
 
-        res.statusCode = 200;
-        res.json({ message: "reset email sent successfully!", success: true });
+            res.statusCode = 200;
+            res.json({ message: "reset email sent successfully!", success: true });
+        }
     }
     catch (error) {
         console.log("error occured in the userResetEmail() controller!");

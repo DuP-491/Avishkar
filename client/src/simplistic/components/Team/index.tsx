@@ -48,6 +48,7 @@ import TechAmitKumarIMG from './Assets/TechAmitKumar.jpg';
 import TechDennisThomasIMG from './Assets/TechDennisThomas.jpg';
 import TechHiteshMitrukaIMG from './Assets/TechHiteshMitruka.jpg';
 import TechMohitPandeyIMG from './Assets/TechMohitPandey.jpg';
+import TechIshanGuptaIMG from './Assets/TechIshanGupta.jpg';
 import TechParthMittalIMG from './Assets/TechParthMittal.jpg';
 import TechSanskarOmarIMG from './Assets/TechSanskarOmar.jpg';
 import TechPriyavKaneriaIMG from './Assets/TechPriyavKaneria.png';
@@ -354,14 +355,6 @@ const index = () => {
                 linkedin=""
               />
               <Card
-                imgsrc={PlaceholderIMG}
-                name="Ishan Gupta"
-                designation=""
-                facebook=""
-                instagram=""
-                linkedin=""
-              />
-              <Card
                 imgsrc={TechLovedeepSinghIMG}
                 name="Lovedeep Singh Kamal"
                 designation=""
@@ -372,6 +365,14 @@ const index = () => {
               <Card
                 imgsrc={TechMohitPandeyIMG}
                 name="Mohit Pandey"
+                designation=""
+                facebook=""
+                instagram=""
+                linkedin=""
+              />
+              <Card
+                imgsrc={TechIshanGuptaIMG}
+                name="Ishan Gupta"
                 designation=""
                 facebook=""
                 instagram=""

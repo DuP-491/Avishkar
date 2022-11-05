@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import MainService from '../../services/MainService';
 import CoordinatorInfo from '../Common/CoordinatorInfo';
 import parse from 'html-react-parser';
 import Cookies from 'js-cookie';
 import UserService from '../../services/UserService';
+import AdminService from '../../services/AdminService';
 const EventPage = () => {
+  const location = useLocation();
+
+  const event = location.state;
+
   const UNEXPECTED_ERROR_MSG = 'Please try again later!';
+  const LOGIN_AGAIN_PROMPT = 'Please login again!';
   const [eventCoordies, setEventCoordies] = useState([]);
   const [participatingTeam, setParticipatingTeam] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState('-1');
   const [teams, setTeams] = useState([]);
+  const [isEventOpen, setIsEventOpen] = useState(event.isOpen);
   const [userDetails, setUserDetails] = useState({
     id: '',
     name: '',
@@ -25,13 +32,23 @@ const EventPage = () => {
     resumeLink: '',
     isFeePaid: false
   });
-  const location = useLocation();
-  const event = location.state;
+  const navigate = useNavigate();
   useEffect(() => {
     fetchTeamInvites();
     fetchEventCoordies(event.id);
     fetchUserDetails();
     fetchParticipation(event.id);
+  }, []);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://apply.devfolio.co/v2/sdk.js';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
   const fetchTeamInvites = () => {
     const token = Cookies.get('token');
@@ -44,6 +61,27 @@ const EventPage = () => {
           setTeams(data['teams']);
         } else if (data['message'] === 'Invalid token!') {
           toast.error('Login again');
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
+  const toggleEventStatus = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      toast.error('unauthorised!');
+      return;
+    }
+    AdminService.toggleEventStatus(token, event.id)
+      .then((data) => {
+        if (data['success']) {
+          toast.success(data['message']);
+          setIsEventOpen(!isEventOpen);
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error(LOGIN_AGAIN_PROMPT);
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -142,6 +180,40 @@ const EventPage = () => {
     handleParticipate(parseInt(selectedEvent), event['id']);
   };
 
+  const handleGetParticipationList = () => {
+    const token = Cookies.get('token');
+    if (token === undefined) {
+      toast.error('unauthorised!');
+      return;
+    }
+    AdminService.getParticipationList(token, event.id)
+      .then((data) => {
+        if (data['success']) {
+          toast.success('Downloaded List of Participating Teams Successfully');
+
+          let arr = data['participation'];
+          arr = [Object.keys(arr[0])].concat(arr);
+
+          const csv = arr
+            .map((it: any) => {
+              return Object.values(it).toString();
+            })
+            .join('\n');
+
+          let el = document.createElement('a');
+          el.download = `${event.name}_teams.csv`;
+          el.href = URL.createObjectURL(new Blob([csv]));
+          el.click();
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error(LOGIN_AGAIN_PROMPT);
+          navigate('/login');
+        } else toast.error(data['message']);
+      })
+      .catch(() => {
+        toast.error(UNEXPECTED_ERROR_MSG);
+      });
+  };
+
   const unRegisterTeam = () => {
     if (participatingTeam) handleUnparticipate(participatingTeam['id'], event['id']);
   };
@@ -150,7 +222,21 @@ const EventPage = () => {
       <h2 className="text-4xl font-semibold tracking-widest uppercase md:text-5xl lg:text-6xl title">
         {event.name}
       </h2>
+      <span
+        className={`italic rounded-lg p-1 uppercase text-xs font-semibold text-white ${
+          isEventOpen ? 'bg-green-500 ' : 'bg-red-500'
+        }`}>
+        Registrations {isEventOpen ? 'open' : 'closed'}
+      </span>
       <p className="my-4">{parse(event.tagline)}</p>
+      {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(event.name) && (
+        <div className="inline-flex justify-center w-full mb-3 sm:justify-start">
+          <div
+            className="apply-button h-[44px] w-[312px] mx-auto my-5"
+            data-hackathon-slug="cyberquest"
+            data-button-theme="dark-inverted"></div>
+        </div>
+      )}
       {Cookies.get('token') ? (
         participatingTeam ? (
           <div>
@@ -237,21 +323,29 @@ const EventPage = () => {
       )}
 
       {event.psLink && event.psLink !== '#' && (
-        <div>
-          <a
-            href={event.psLink}
-            className="inline-block w-full px-2 py-4 my-3 text-center uppercase border-2 md:w-max text-md group-hover:font-semibold hover:bg-white hover:text-gray-900">
-            view ps
-          </a>
-        </div>
+        <a
+          href={event.psLink}
+          className="inline-block w-full px-2 py-4 mt-3 text-center uppercase border-2 md:w-max text-md group-hover:font-semibold hover:bg-white hover:text-gray-900">
+          view ps
+        </a>
       )}
-      {/* // TODO:button for admins to download the list */}
-      {/* <button
-          type="submit"
-          className="inline-block w-full p-1 font-semibold text-center text-gray-900 uppercase bg-white border-2 md:w-max text-md">
-          unregister
-        </button> */}
-      <hr className="mt-2 border-4 border-dotted" />
+
+      {userDetails.role && userDetails.role !== 'USER' && (
+        <button
+          onClick={handleGetParticipationList}
+          className="inline-block w-full px-2 py-4 mt-3 text-center uppercase border-2 md:mx-2 md:w-max text-md group-hover:font-semibold hover:bg-white hover:text-gray-900">
+          download Participant list
+        </button>
+      )}
+      {userDetails.role && userDetails.role !== 'USER' && (
+        <button
+          onClick={toggleEventStatus}
+          className="inline-block w-full px-2 py-4 mt-3 text-center uppercase capitalize border-2 md:mx-2 md:w-max text-md group-hover:font-semibold hover:bg-white hover:text-gray-900">
+          {isEventOpen ? 'close' : 'open'} registrations
+        </button>
+      )}
+
+      <hr className="mt-4 border-4 border-dotted" />
       {/* section  */}
 
       {/* section  */}
@@ -259,21 +353,21 @@ const EventPage = () => {
         <h2 className="text-3xl tracking-wider uppercase transition-all duration-200 group-hover:underline stroke-text">
           about
         </h2>
-        <p className="">{parse(event.details)}</p>
+        <p className="mt-4">{parse(event.details)}</p>
       </div>
       {/* section */}
       <div className="px-2 py-4 mt-2 bg-gray-800 roundefirst-letter:d-sm hover:bg-gray-700 hover:shadow-md group">
         <h2 className="text-3xl tracking-wider uppercase transition-all duration-200 group-hover:underline stroke-text">
           Rules
         </h2>
-        <p className="">{parse(event.rules)}</p>
+        <p className="mt-4">{parse(event.rules)}</p>
       </div>
       {/* section */}
       <div className="px-2 py-4 mt-2 bg-gray-800 roundefirst-letter:d-sm hover:bg-gray-700 hover:shadow-md group">
         <h2 className="text-3xl tracking-wider uppercase transition-all duration-200 group-hover:underline stroke-text">
           Criteria
         </h2>
-        <p className="">{parse(event.criteria)}</p>
+        <p className="mt-4">{parse(event.criteria)}</p>
       </div>
 
       <div>

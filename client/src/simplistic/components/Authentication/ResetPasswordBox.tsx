@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import AuthService from '../../services/AuthService';
+import { toast } from 'react-toastify';
+import Spinner from '../Common/Spinner';
 
 /* eslint-disable */
 interface ResetPasswordBoxPropType {
@@ -27,16 +29,19 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
         setIsLoading(false);
         if (data['success']) {
           Cookies.set('token', token);
+          toast.success('Password reset successfully!');
           onCrossPress(e);
         } else if (data['message'] === 'Invalid token!') {
+          toast.error('invalid or expired token! please generate new token');
+
           onCrossPress(e);
           onInvalidToken(e);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        setIsLoading(false);
+        toast.error('Please try again later!');
       });
-    setIsLoading(false);
   }
   const PasswordRef = useRef(document.createElement('input'));
 
@@ -78,10 +83,14 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
             <div className="md:w-1/3"></div>
             <div className="md:w-2/3">
               <button
-                className="px-4 py-2 mr-10 font-bold text-white bg-purple-500 rounded shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none"
+                className="px-4 py-2 mr-10 font-bold text-white capitalize bg-purple-500 rounded shadow hover:bg-purple-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={handleResetPassword}>
-                Reset Password
+                {isLoading ? (
+                  <Spinner displayTxt="Sending Password Reset Mail" />
+                ) : (
+                  'Send Password Reset Mail'
+                )}
               </button>
             </div>
           </div>

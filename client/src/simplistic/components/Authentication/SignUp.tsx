@@ -5,40 +5,50 @@ import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
 import bgImage from '../../Assets/collage.jpg';
 import Cookies from 'js-cookie';
+import Spinner from '../Common/Spinner';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+
   useEffect(() => {
     if (Cookies.get('token')) navigate('/profile');
   }, []);
+
   function LoggingIn(e: any) {
     e.preventDefault();
     setIsLoading(true);
     const name = NameRef.current.value;
-    const email = EmailRef.current.value;
+    // const email = EmailRef.current.value;
     const collegeName = CollegeNameRef.current.value;
     const gender = GenderRef.current.value;
     const mobile = MobileRef.current.value;
     AuthService.signIn(name, email, collegeName, gender, mobile)
       .then((data) => {
         if (data['success']) {
-          console.log('Success');
           setIsLoading(false);
           toast.success('A verification mail has been sent!');
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
+        setIsLoading(false);
         toast.error('Please try again later!');
       });
-    setIsLoading(false);
   }
 
   const NameRef = useRef(document.createElement('input'));
-  const EmailRef = useRef(document.createElement('input'));
+  // const EmailRef = useRef(document.createElement('input'));
   const CollegeNameRef = useRef(document.createElement('input'));
   const GenderRef = useRef(document.createElement('select'));
   const MobileRef = useRef(document.createElement('input'));
+
+  const handleEmail = (e: any) => {
+    e.preventDefault();
+    const value = e.target.value;
+    if (value.endsWith('@mnnit.ac.in')) CollegeNameRef.current.value = 'MNNIT';
+    setEmail(value);
+  };
 
   return (
     <div
@@ -86,7 +96,8 @@ const SignUp = () => {
                   type="email"
                   name="email"
                   id="email"
-                  ref={EmailRef}
+                  value={email}
+                  onChange={handleEmail}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required={true}
@@ -103,7 +114,10 @@ const SignUp = () => {
                   name="college"
                   id="college"
                   ref={CollegeNameRef}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  disabled={email.endsWith('@mnnit.ac.in')}
+                  className={`${
+                    email.endsWith('@mnnit.ac.in') ? 'cursor-not-allowed ' : ''
+                  } bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                   placeholder="your college name"
                   required={true}
                 />
@@ -149,7 +163,7 @@ const SignUp = () => {
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                {isLoading ? 'creating....' : 'Create Account'}
+                {isLoading ? <Spinner displayTxt="Creating Account.." /> : 'Create Account'}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{' '}

@@ -266,6 +266,8 @@ function NewTablet(props: Props) {
   const [updateTeamnames, setUpdateTeamnames] = useState({});
   const [currDCIndex, setCurrDCIndex] = useState(0);
 
+  const [devfolioLoaded, setDevfolioLoaded] = useState(false);
+
   useEffect(() => {
     fetchDepartmentEvents();
     fetchUserDetails();
@@ -275,6 +277,22 @@ function NewTablet(props: Props) {
       setProfileSection(0);
     }
   }, []);
+
+  useEffect(() => {
+    if (tab === 'Event') {
+      const devfolioScript = document.createElement('script');
+      devfolioScript.id = 'devfolio-script';
+      devfolioScript.src = 'https://apply.devfolio.co/v2/sdk.js';
+      devfolioScript.async = true;
+      devfolioScript.defer = true;
+      document.body.appendChild(devfolioScript);
+      setDevfolioLoaded(true);
+    } else if (devfolioLoaded) {
+      document.querySelector('#devfolio-script')?.remove();
+      document.querySelector('#devfolio-overlay-container')?.remove();
+      setDevfolioLoaded(false);
+    }
+  }, [tab]);
 
   useEffect(() => {
     if (Object.keys(departments).length > 0 && deptId) {
@@ -1321,103 +1339,112 @@ function NewTablet(props: Props) {
               <div className="flex h-full text-gray-200">
                 <div className="w-1/3 bg-black border-r-2 border-zinc-900 rounded-l-md">
                   <h1 className="pl-5 mt-5 font-bold">{events[selectedEventID]['name']}</h1>
-                  <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Details</p>
-                  <p
-                    className={
-                      eventSection === 0
-                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                    }
-                    onClick={() => setEventSection(0)}>
-                    Home
-                  </p>
-                  <p
-                    className={
-                      eventSection === 1
-                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                    }
-                    onClick={() => setEventSection(1)}>
-                    About
-                  </p>
-                  <p
-                    className={
-                      eventSection === 2
-                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                    }
-                    onClick={() => setEventSection(2)}>
-                    Participation Criteria
-                  </p>
-                  <p
-                    className={
-                      eventSection === 3
-                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                    }
-                    onClick={() => setEventSection(3)}>
-                    Rules
-                  </p>
-                  <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Organisers</p>
-                  <p
-                    className={
-                      eventSection === 5
-                        ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                        : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                    }
-                    onClick={() => setEventSection(5)}>
-                    Event Coordinators
-                  </p>
-                  {sponsors.length !== 0 && (
+                  <div className="tablet__scrollbar overflow-y-auto h-[70vh] mt-4">
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Details</p>
                     <p
                       className={
-                        eventSection === 6
+                        eventSection === 0
                           ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
-                      onClick={() => setEventSection(6)}>
-                      Event Sponsors
+                      onClick={() => setEventSection(0)}>
+                      Home
                     </p>
-                  )}
-                  {(events[selectedEventID]['psLink'] !== '#' ||
-                    events[selectedEventID]['name'] === 'Webster' ||
-                    Cookies.get('token') !== undefined) && (
-                    <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Participate</p>
-                  )}
-                  {events[selectedEventID]['psLink'] !== '#' && (
-                    <p
-                      className="px-5 py-1 text-2xl text-gray-200 bg-blue-900 cursor-pointer"
-                      onClick={() => window.open(events[selectedEventID]['psLink'], '_blank')}>
-                      Problem Statement
-                    </p>
-                  )}
-                  {Cookies.get('token') !== undefined && (
                     <p
                       className={
-                        eventSection === 4
+                        eventSection === 1
                           ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
                           : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
                       }
-                      onClick={() => setEventSection(4)}>
-                      {participatingTeam === null ? 'Register' : 'Registered'}
+                      onClick={() => setEventSection(1)}>
+                      About
                     </p>
-                  )}
-                  {events[selectedEventID]['name'] === 'Webster' && (
-                    <div
-                      className="apply-button h-[44px] w-[312px] mx-auto my-5"
-                      data-hackathon-slug="CyberQuest"
-                      data-button-theme="light"></div>
-                  )}
-                  {userDetails['role'] !== 'USER' && (
-                    <>
-                      <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Admin</p>
+                    <p
+                      className={
+                        eventSection === 2
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setEventSection(2)}>
+                      Participation Criteria
+                    </p>
+                    <p
+                      className={
+                        eventSection === 3
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setEventSection(3)}>
+                      Rules
+                    </p>
+                    <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Organisers</p>
+                    <p
+                      className={
+                        eventSection === 5
+                          ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                          : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                      }
+                      onClick={() => setEventSection(5)}>
+                      Event Coordinators
+                    </p>
+                    {sponsors.length !== 0 && (
+                      <p
+                        className={
+                          eventSection === 6
+                            ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setEventSection(6)}>
+                        Event Sponsors
+                      </p>
+                    )}
+                    {(events[selectedEventID]['psLink'] !== '#' ||
+                      ['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(
+                        events[selectedEventID]['name']
+                      ) ||
+                      Cookies.get('token') !== undefined) && (
+                      <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Participate</p>
+                    )}
+                    {events[selectedEventID]['psLink'] !== '#' && (
                       <p
                         className="px-5 py-1 text-2xl text-gray-200 bg-blue-900 cursor-pointer"
-                        onClick={() => handleGetParticipationList()}>
-                        Get Participation List
+                        onClick={() => window.open(events[selectedEventID]['psLink'], '_blank')}>
+                        Problem Statement
                       </p>
-                    </>
-                  )}
+                    )}
+                    {Cookies.get('token') !== undefined && (
+                      <p
+                        className={
+                          eventSection === 4
+                            ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                            : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                        }
+                        onClick={() => setEventSection(4)}>
+                        {participatingTeam === null ? 'Register' : 'Registered'}
+                      </p>
+                    )}
+                    {['Webster', 'Logical Rhythm', 'Softablitz', 'Softathalon'].includes(
+                      events[selectedEventID]['name']
+                    ) && (
+                      <div className="inline-flex items-center justify-center w-full">
+                        <div
+                          className="apply-button h-[44px] w-[312px]"
+                          data-hackathon-slug="cyberquest"
+                          data-button-theme="dark-inverted"></div>
+                      </div>
+                    )}
+
+                    {userDetails['role'] !== 'USER' && (
+                      <>
+                        <p className="px-5 py-1 mt-5 text-2xl font-bold uppercase">Admin</p>
+                        <p
+                          className="px-5 py-1 text-2xl text-gray-200 bg-blue-900 cursor-pointer"
+                          onClick={() => handleGetParticipationList()}>
+                          Get Participation List
+                        </p>
+                      </>
+                    )}
+                  </div>
                 </div>
                 <div className="relative flex flex-col w-2/3 bg-black rounded-r-md">
                   <div className="absolute top-0 left-0 flex flex-col w-full border-b-2 bg-zinc-900 border-zinc-900 h-1/6 ">

@@ -2,22 +2,27 @@ import React, { useRef, useState } from 'react';
 import AuthService from '../../services/AuthService';
 import Logo from '../../Assets/logo.png';
 import bgImage from '../../Assets/collage.jpg';
+import { toast } from 'react-toastify';
+import Spinner from '../Common/Spinner';
 const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   function ResetPasswordEmail(e: any) {
     setIsLoading(true);
     e.preventDefault();
     const email = EmailRef.current.value;
-    console.log(email);
-    AuthService.forgotPassword(email).then((data) => {
-      setIsLoading(false);
-      if (data['success']) {
-        console.log('Sucessfully Email Sent!');
-      } else {
-        console.log(data);
-      }
-    });
-    setIsLoading(false);
+    AuthService.forgotPassword(email)
+      .then((data) => {
+        setIsLoading(false);
+        if (data['success']) {
+          toast.success('Reset Link sent to your Email');
+        } else {
+          toast.error(data['message']);
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+        toast.error('Please try again later!');
+      });
   }
   const EmailRef = useRef(document.createElement('input'));
 
@@ -58,7 +63,7 @@ const ForgotPassword = () => {
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                {isLoading ? 'Sending' : 'Send'} Reset Mail
+                {isLoading ? <Spinner displayTxt="sending Mail" /> : 'Send Mail'}
               </button>
             </form>
           </div>

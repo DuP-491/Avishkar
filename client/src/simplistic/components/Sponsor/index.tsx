@@ -63,11 +63,16 @@ const index = () => {
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="SPONSORS" />
             <div className="grid items-center grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="" />
-              <Card imgsrc={PolygonIMG} name="Polygon" bgc="" />
-              <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="" />
-              <Card imgsrc={ReplitIMG} name="Repl.it" bgc="" />
-              <Card imgsrc={SolanaIMG} name="Solana" bgc="" />
+              <Card imgsrc={DevfolioIMG} name="Devfolio" bgc="" sponsorURL="https://devfolio.co" />
+              <Card
+                imgsrc={PolygonIMG}
+                name="Polygon"
+                bgc=""
+                sponsorURL="https://polygon.technology/"
+              />
+              <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="" sponsorURL="https://filecoin.io" />
+              <Card imgsrc={ReplitIMG} name="Repl.it" bgc="" sponsorURL="https://replit.com" />
+              <Card imgsrc={SolanaIMG} name="Solana" bgc="" sponsorURL="https://solana.com" />
             </div>
           </div>
 
@@ -99,40 +104,145 @@ const index = () => {
           <div className="container px-6 py-10 mx-auto">
             <DividerLine alignmentCenter={true} text="past sponsors" />
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-3">
-              <Card imgsrc={TezosIMG} name="Tezos" bgc="white" />
-              <Card imgsrc={CeloIMG} name="Celo" bgc="white" />
-              <Card imgsrc={CodechefIMG} name="Codechef" bgc="white" />
-              <Card imgsrc={BuyTheValueIMG} name="BuyTheValue" bgc="white" />
-              <Card imgsrc={MHMIMG} name="Media House MNNIT" bgc="black" />
-              <Card imgsrc={UltratechIMG} name="Ultratech" bgc="#f9ef2b" />
-              <Card imgsrc={TIMEIMG} name="TIME" bgc="white" />
-              <Card imgsrc={BlueskyIMG} name="Bluesky" bgc="white" />
-              <Card imgsrc={GrowwIMG} name="Groww" bgc="white" />
-              <Card imgsrc={RedIMG} name="Red FM 93.5" bgc="black" />
-              <Card imgsrc={BlogaddaIMG} name="Blogadda" bgc="white" />
-              <Card imgsrc={YouthIMG} name="Youth" bgc="white" />
-              <Card imgsrc={MyLocIMG} name="MyLoc" bgc="white" />
-              <Card imgsrc={SkillLyncIMG} name="Skill Lync" bgc="white" />
-              <Card imgsrc={MaticIMG} name="Matic" bgc="white" />
-              <Card imgsrc={GithubIMG} name="Github" bgc="white" />
-              <Card imgsrc={SkillenzaIMG} name="Skillenza" bgc="#3088f4" />
-              <Card imgsrc={SSGIMG} name="SSG" bgc="" />
-              <Card imgsrc={ScalerEdgeIMG} name="Scaler Edge" bgc="white" />
-              <Card imgsrc={HackerEarthIMG} name="HackerEarth" bgc="white" />
-              <Card imgsrc={CodingBlocksIMG} name="Coding Blocks" bgc="white" />
-              <Card imgsrc={PayTMIMG} name="PayTM" bgc="white" />
-              <Card imgsrc={CodingNinjaIMG} name="Coding Ninja" bgc="white" />
-              <Card imgsrc={SketchIMG} name="Sketch" bgc="white" />
-              <Card imgsrc={InterviewBuddyIMG} name="Interview Buddy" bgc="white" />
-              <Card imgsrc={BalsamiqIMG} name="Balsamiq" bgc="white" />
-              <Card imgsrc={JetBrainsIMG} name="JetBrains" bgc="white" />
-              <Card imgsrc={CreativeTimIMG} name="Creative Tim" bgc="white" />
-              <Card imgsrc={BugseeIMG} name="Bugsee" bgc="" />
-              <Card imgsrc={ProtoioIMG} name="Proto.io" bgc="white" />
-              <Card imgsrc={Dare2CompeteIMG} name="Dare2Compete" bgc="white" />
-              <Card imgsrc={KwalityWallsIMG} name="Kwality Walls" bgc="white" />
-              <Card imgsrc={DellIMG} name="Dell" bgc="white" />
-              <Card imgsrc={HindustanTimesIMG} name="Hindustan Times" bgc="white" />
+              <Card imgsrc={TezosIMG} name="Tezos" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card imgsrc={CeloIMG} name="Celo" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={CodechefIMG}
+                name="Codechef"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={BuyTheValueIMG}
+                name="BuyTheValue"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={MHMIMG}
+                name="Media House MNNIT"
+                bgc="black"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={UltratechIMG}
+                name="Ultratech"
+                bgc="#f9ef2b"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={TIMEIMG} name="TIME" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={BlueskyIMG}
+                name="Bluesky"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={GrowwIMG} name="Groww" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={RedIMG}
+                name="Red FM 93.5"
+                bgc="black"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={BlogaddaIMG}
+                name="Blogadda"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={YouthIMG} name="Youth" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card imgsrc={MyLocIMG} name="MyLoc" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={SkillLyncIMG}
+                name="Skill Lync"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={MaticIMG} name="Matic" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card imgsrc={GithubIMG} name="Github" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={SkillenzaIMG}
+                name="Skillenza"
+                bgc="#3088f4"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={SSGIMG} name="SSG" bgc="" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={ScalerEdgeIMG}
+                name="Scaler Edge"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={HackerEarthIMG}
+                name="HackerEarth"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={CodingBlocksIMG}
+                name="Coding Blocks"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={PayTMIMG} name="PayTM" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={CodingNinjaIMG}
+                name="Coding Ninja"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={SketchIMG} name="Sketch" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={InterviewBuddyIMG}
+                name="Interview Buddy"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={BalsamiqIMG}
+                name="Balsamiq"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={JetBrainsIMG}
+                name="JetBrains"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={CreativeTimIMG}
+                name="Creative Tim"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={BugseeIMG} name="Bugsee" bgc="" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={ProtoioIMG}
+                name="Proto.io"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={Dare2CompeteIMG}
+                name="Dare2Compete"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card
+                imgsrc={KwalityWallsIMG}
+                name="Kwality Walls"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
+              <Card imgsrc={DellIMG} name="Dell" bgc="white" sponsorURL="javascript:void(0)" />
+              <Card
+                imgsrc={HindustanTimesIMG}
+                name="Hindustan Times"
+                bgc="white"
+                sponsorURL="javascript:void(0)"
+              />
             </div>
           </div>
         </div>

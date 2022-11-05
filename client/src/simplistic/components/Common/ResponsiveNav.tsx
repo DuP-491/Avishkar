@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from './../../Assets/logo.png';
 import Cookies from 'js-cookie';
 import AuthService from '../../services/AuthService';
@@ -8,6 +8,7 @@ const ResponsiveNav = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const hiddenNavClass = 'hidden w-full md:block md:w-auto';
   const visibleNavClass = 'block w-full md:block md:w-auto';
+  const navigate = useNavigate();
 
   return (
     <nav className="p-3 bg-gray-800 border-gray-700">
@@ -89,7 +90,10 @@ const ResponsiveNav = () => {
                 </li>
                 <li>
                   <button
-                    onClick={AuthService.logOut}
+                    onClick={() => {
+                      AuthService.logOut();
+                      navigate('/login');
+                    }}
                     className="block py-2 pl-3 pr-4 text-gray-400 rounded md:border-0 md:p-0 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent">
                     Logout
                   </button>

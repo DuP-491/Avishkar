@@ -22,7 +22,7 @@ const getUserDetails = async (req: Request, res: Response, next) => {
 };
 
 const updateUserDetails = async (req: Request, res: Response, next) => {
-    const { name, username, collegeName, mobile, resumeLink } = req.body;
+    const { username, collegeName, resumeLink } = req.body;
     const id = req.app.locals.id;
 
     try {
@@ -52,7 +52,7 @@ const updateUserDetails = async (req: Request, res: Response, next) => {
             // updating the sent details
             await prisma.user.update({
                 where: { id },
-                data: { name, username, collegeName, mobile, resumeLink },
+                data: { username, collegeName, resumeLink },
             });
 
             res.statusCode = 200;
@@ -356,6 +356,9 @@ const eventParticipate = async (req: Request, res: Response, next) => {
             // case when team or event doesn't exist
             res.statusCode = 404;
             res.json({ error: "not found", message: "team / event not found!", success: false });
+        } else if (!event.isOpen) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "registrations for the event has been closed!", success: false });
         } else if (team.leader !== id) {
             // check if the request was made by person other than the leader
             res.statusCode = 401;
@@ -384,12 +387,17 @@ const eventUnparticipate = async (req: Request, res: Response, next) => {
     const { id } = req.app.locals;
     try {
         const team = await prisma.team.findFirst({ where: { id: teamId } });
+        const event = await prisma.event.findFirst({ where: { id: eventId } });
 
-        if (team === null) {
+        if (team === null || event === null) {
             // case when team doesn't exist
             res.statusCode = 404;
-            res.json({ error: "not found", message: "team not found!", success: false });
-        } else if (team.leader !== id) {
+            res.json({ error: "not found", message: "team / event not found!", success: false });
+        } else if (!event.isOpen) {
+            res.statusCode = 400;
+            res.json({ error: "bad request", message: "registrations for the event has been closed!", success: false });
+        }
+         else if (team.leader !== id) {
             // check if the request was made by person other than the leader
             res.statusCode = 401;
             res.json({ error: "unauthorized", message: "only team leader can add participation!", success: false });

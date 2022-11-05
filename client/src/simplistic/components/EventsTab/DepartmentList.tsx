@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DepartmentCard from './DepartmentCard';
 import '../common.css';
 import MainService from '../../services/MainService';
+import { toast } from 'react-toastify';
 
 /* eslint-disable */
 interface DepartmentSelectPropType {
@@ -16,10 +17,10 @@ function Dept({ onDepartmentSelect }: DepartmentSelectPropType) {
       .then((data) => {
         if (data['success']) {
           setDepartments(data['departmentEvents']);
-        } else console.log(data['message']); // Replace with Toast/Alert
+        } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
-        console.log('Please try again later!');
+        toast.error('Please try again later!');
       });
   };
 

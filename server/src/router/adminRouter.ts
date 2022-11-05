@@ -13,6 +13,7 @@ import {
     addEventSponsor,
     removeEventSponsor,
     updateEventSponsor,
+    updateEventStatus,
 } from "../controller/adminController";
 import { checkAdminAuthorization, checkCoordieAuthrorization, checkUserAuthorization } from "../middleware/authHandler";
 
@@ -43,6 +44,10 @@ router
 router
     .route("/event/:eventId")
     .get(checkUserAuthorization, checkCoordieAuthrorization, getParticipationInEvent);
+    
+router
+    .route("/event-status/:eventId")
+    .get(checkUserAuthorization, checkCoordieAuthrorization, updateEventStatus);
 
 router
     .route("/event-coordie")
