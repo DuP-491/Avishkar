@@ -7,6 +7,7 @@ import parse from 'html-react-parser';
 import Cookies from 'js-cookie';
 import UserService from '../../services/UserService';
 import AdminService from '../../services/AdminService';
+import AuthService from '../../services/AuthService';
 const EventPage = () => {
   const location = useLocation();
 
@@ -60,7 +61,9 @@ const EventPage = () => {
         if (data['success']) {
           setTeams(data['teams']);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -81,6 +84,7 @@ const EventPage = () => {
           setIsEventOpen(!isEventOpen);
         } else if (data['message'] === 'Invalid token!') {
           toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
           navigate('/login');
         } else toast.error(data['message']);
       })
@@ -112,7 +116,9 @@ const EventPage = () => {
             setParticipatingTeam(data['participatingTeam'][0]);
           else setParticipatingTeam(null);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Please login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -131,8 +137,10 @@ const EventPage = () => {
           if (data['details']['resumeLink'] === null) data['details']['resumeLink'] = '';
           setUserDetails(data['details']);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Login again');
-        }
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
         toast.error(UNEXPECTED_ERROR_MSG);
@@ -150,7 +158,9 @@ const EventPage = () => {
           fetchParticipation(event['id']);
           toast.success('Registered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -169,7 +179,9 @@ const EventPage = () => {
           fetchParticipation(event['id']);
           toast.success('Unregistered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -225,6 +237,7 @@ const EventPage = () => {
           el.click();
         } else if (data['message'] === 'Invalid token!') {
           toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
           navigate('/login');
         } else toast.error(data['message']);
       })

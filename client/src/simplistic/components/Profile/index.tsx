@@ -6,6 +6,8 @@ import Team from './Team';
 import PropTypes from 'prop-types';
 import UserService from '../../services/UserService';
 import { toast } from 'react-toastify';
+import AuthService from '../../services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 const index = (props: Props) => {
   const { logout } = props;
@@ -36,6 +38,7 @@ const index = (props: Props) => {
     fetchTeamInvites();
   }, []);
 
+  const navigate = useNavigate();
   const fetchUserDetails = () => {
     const token = Cookies.get('token');
     if (token === undefined) {
@@ -49,11 +52,13 @@ const index = (props: Props) => {
           setUserDetails(data['details']);
           setNewUserDetails(data['details']);
         } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+          toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        logout();
+        toast.error('Some error occured please try again');
       });
   };
 
@@ -76,12 +81,13 @@ const index = (props: Props) => {
           fetchUserDetails();
           toast.success('Resume Updated successfully');
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Logging Out');
-          logout();
-        } else logout();
+          toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        logout();
+        toast.error('Some error occured please try again');
       });
   };
 
@@ -96,11 +102,13 @@ const index = (props: Props) => {
         if (data['success']) {
           setTeams(data['teams']);
         } else if (data['message'] === 'Invalid token!') {
-          logout();
-        } else logout();
+          toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        logout();
+        toast.error('Some error occured please try again');
       });
   };
   const handleCreateTeam = () => {
@@ -114,13 +122,14 @@ const index = (props: Props) => {
         if (data['success']) {
           fetchTeamInvites();
           toast.success('New team created successfully.');
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error('Some error occured please try again');
       });
   };
 
@@ -134,13 +143,14 @@ const index = (props: Props) => {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error('Some error occured please try again');
       });
   };
 
@@ -154,13 +164,14 @@ const index = (props: Props) => {
       .then((data) => {
         if (data['success']) {
           fetchTeamInvites();
-        }
-        //  else if (data['message'] === 'Invalid token!') {
-        //   logout();
-        // } else logout();
+        } else if (data['message'] === 'Invalid token!') {
+          toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
-        // logout();
+        toast.error('Some error occured please try again');
       });
   };
   const handleRemoveMember = (teamId: number, userId: string, cb: any) => {
@@ -175,11 +186,13 @@ const index = (props: Props) => {
           fetchTeamInvites();
           cb();
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Login again');
+          toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
-        toast.error('Some error occured');
+        toast.error('Some error occured please try again');
       });
   };
   return (
