@@ -285,21 +285,38 @@ const EventPage = () => {
           </div>
         ) : (
           <div>
-            {participatingTeam === null &&
-              teams.filter(
-                (team) =>
-                  team['team']['leader'] === userDetails['id'] &&
-                  event['minTeamSize'] <= team['team']['size'] &&
-                  team['team']['size'] <= event['maxTeamSize']
-              ).length === 0 && (
-                <div>
-                  <p className="px-4 text-sm text-center md:text-xl center 2xl:text-2xl">
-                    To register for the event, either create a team, invite members (within team
-                    size constraints) and register for the event or join a team and tell the leader
-                    to register for the event
-                  </p>
-                </div>
-              )}
+            {participatingTeam === null && (
+              <>
+                {/* no team */}
+                {teams.length === 0 && (
+                  <div>
+                    <p className="px-4 my-2 text-sm text-center capitalize md:text-xl center 2xl:text-2xl">
+                      To register for the event, either create a team, invite members (within team
+                      size constraints) and register for the event or join a team and tell the
+                      leader to register for the event
+                    </p>
+                  </div>
+                )}
+                {/* teams are there but not fullfil participation criteria or not a leader */}
+                {teams.length &&
+                  teams.filter(
+                    (team) =>
+                      team['team']['leader'] === userDetails['id'] &&
+                      event['minTeamSize'] <= team['team']['size'] &&
+                      team['team']['size'] <= event['maxTeamSize']
+                  ).length === 0 && (
+                    <div>
+                      <p className="px-4 my-2 text-sm text-center capitalize md:text-xl center 2xl:text-2xl">
+                        your current teams do not fullfill the participation criteria(team size) for
+                        this event
+                        <br />
+                        OR
+                        <br /> you are not a leader of the eligible teams.
+                      </p>
+                    </div>
+                  )}
+              </>
+            )}
             {participatingTeam === null &&
               teams.filter(
                 (team) =>

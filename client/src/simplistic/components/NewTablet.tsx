@@ -1507,8 +1507,18 @@ function NewTablet(props: Props) {
                       />
                     </div>
                   )}
+                  {eventSection === 4 && participatingTeam === null && (
+                    <div>
+                      <p className="text-3xl text-center mt-[45vh] translate-y-[-50%] px-4">
+                        To register for the event, either create a team, invite members (within team
+                        size constraints) and register for the event or join a team and tell the
+                        leader to register for the event
+                      </p>
+                    </div>
+                  )}
                   {eventSection === 4 &&
                     participatingTeam === null &&
+                    teams.length !== 0 &&
                     teams.filter(
                       (team) =>
                         team['team']['leader'] === userDetails['id'] &&
@@ -1517,9 +1527,11 @@ function NewTablet(props: Props) {
                     ).length === 0 && (
                       <div>
                         <p className="text-3xl text-center mt-[45vh] translate-y-[-50%] px-4">
-                          To register for the event, either create a team, invite members (within
-                          team size constraints) and register for the event or join a team and tell
-                          the leader to register for the event
+                          your current teams do not fullfill the participation criteria(team size)
+                          for this event
+                          <br />
+                          OR
+                          <br /> you are not a leader of the eligible teams.
                         </p>
                       </div>
                     )}
