@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import ViewSDKClient from './AdobePdfSdkClient';
+import Spinner from './Spinner';
 
 const Schedule = () => {
   useEffect(() => {
@@ -16,7 +17,7 @@ const Schedule = () => {
     const viewSDKClient = new ViewSDKClient();
     viewSDKClient.ready().then(() => {
       // not my id , found it on documentation
-      viewSDKClient.previewFile('pdf-div', {}, '8c0cd670273d451cbc9b351b11d22318');
+      viewSDKClient.previewFile('pdf-div', {}, process.env.REACT_APP_ADOBE_PDF_KEY);
     });
   }, []);
 
@@ -29,7 +30,9 @@ const Schedule = () => {
         width="640"
         height="718"></iframe> */}
 
-      <div id="pdf-div" className="full-window-div"></div>
+      <div id="pdf-div" className="full-window-div">
+        <Spinner displayTxt="loading.." />
+      </div>
     </div>
   );
 };
