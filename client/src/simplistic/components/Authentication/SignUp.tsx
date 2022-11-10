@@ -27,9 +27,9 @@ const SignUp = () => {
     AuthService.signIn(name, email, collegeName, gender, mobile)
       .then((data) => {
         if (data['success']) {
-          setIsLoading(false);
           toast.success('A verification mail has been sent!');
         } else toast.error(data['message']); // Replace with Toast/Alert
+        setIsLoading(false);
       })
       .catch(() => {
         setIsLoading(false);

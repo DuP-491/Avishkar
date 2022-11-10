@@ -7,6 +7,7 @@ import parse from 'html-react-parser';
 import Cookies from 'js-cookie';
 import UserService from '../../services/UserService';
 import AdminService from '../../services/AdminService';
+import AuthService from '../../services/AuthService';
 const EventPage = () => {
   const location = useLocation();
 
@@ -60,7 +61,9 @@ const EventPage = () => {
         if (data['success']) {
           setTeams(data['teams']);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -81,6 +84,7 @@ const EventPage = () => {
           setIsEventOpen(!isEventOpen);
         } else if (data['message'] === 'Invalid token!') {
           toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
           navigate('/login');
         } else toast.error(data['message']);
       })
@@ -112,7 +116,9 @@ const EventPage = () => {
             setParticipatingTeam(data['participatingTeam'][0]);
           else setParticipatingTeam(null);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Please login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -131,8 +137,10 @@ const EventPage = () => {
           if (data['details']['resumeLink'] === null) data['details']['resumeLink'] = '';
           setUserDetails(data['details']);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Login again');
-        }
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
+        } else toast.error(data['message']);
       })
       .catch(() => {
         toast.error(UNEXPECTED_ERROR_MSG);
@@ -150,7 +158,9 @@ const EventPage = () => {
           fetchParticipation(event['id']);
           toast.success('Registered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -169,7 +179,9 @@ const EventPage = () => {
           fetchParticipation(event['id']);
           toast.success('Unregistered for Event Successfully!');
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('Login again');
+          toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']);
       })
       .catch(() => {
@@ -191,10 +203,29 @@ const EventPage = () => {
         if (data['success']) {
           toast.success('Downloaded List of Participating Teams Successfully');
 
-          let arr = data['participation'];
-          arr = [Object.keys(arr[0])].concat(arr);
+          const aoa = [['Team ID', 'Team Name']];
+          for (let i = 1; i <= event.maxTeamSize; ++i) {
+            aoa[0].push(`Member ${i} Name`);
+            aoa[0].push(`Member ${i} Email`);
+            aoa[0].push(`Member ${i} Mobile`);
+          }
 
-          const csv = arr
+          data['participation'].forEach((team: any) => {
+            const team_array = [team['teamId'], team['teamName']];
+            team['members'].forEach((member: any) => {
+              team_array.push(member['name']);
+              team_array.push(member['email']);
+              team_array.push(member['mobile']);
+            });
+            for (let i = 0; i < event.maxTeamSize - team['members'].length; ++i) {
+              team_array.push('');
+              team_array.push('');
+              team_array.push('');
+            }
+            aoa.push(team_array);
+          });
+
+          const csv = aoa
             .map((it: any) => {
               return Object.values(it).toString();
             })
@@ -206,6 +237,7 @@ const EventPage = () => {
           el.click();
         } else if (data['message'] === 'Invalid token!') {
           toast.error(LOGIN_AGAIN_PROMPT);
+          AuthService.logOut();
           navigate('/login');
         } else toast.error(data['message']);
       })
@@ -253,21 +285,38 @@ const EventPage = () => {
           </div>
         ) : (
           <div>
-            {participatingTeam === null &&
-              teams.filter(
-                (team) =>
-                  team['team']['leader'] === userDetails['id'] &&
-                  event['minTeamSize'] <= team['team']['size'] &&
-                  team['team']['size'] <= event['maxTeamSize']
-              ).length === 0 && (
-                <div>
-                  <p className="px-4 text-sm text-center md:text-xl center 2xl:text-2xl">
-                    To register for the event, either create a team, invite members (within team
-                    size constraints) and register for the event or join a team and tell the leader
-                    to register for the event
-                  </p>
-                </div>
-              )}
+            {participatingTeam === null && (
+              <>
+                {/* no team */}
+                {teams.length === 0 && (
+                  <div>
+                    <p className="px-4 my-2 text-sm text-center capitalize md:text-xl center 2xl:text-2xl">
+                      To register for the event, either create a team, invite members (within team
+                      size constraints) and register for the event or join a team and tell the
+                      leader to register for the event
+                    </p>
+                  </div>
+                )}
+                {/* teams are there but not fullfil participation criteria or not a leader */}
+                {teams.length &&
+                  teams.filter(
+                    (team) =>
+                      team['team']['leader'] === userDetails['id'] &&
+                      event['minTeamSize'] <= team['team']['size'] &&
+                      team['team']['size'] <= event['maxTeamSize']
+                  ).length === 0 && (
+                    <div>
+                      <p className="px-4 my-2 text-sm text-center capitalize md:text-xl center 2xl:text-2xl">
+                        your current teams do not fullfill the participation criteria(team size) for
+                        this event
+                        <br />
+                        OR
+                        <br /> you are not a leader of the eligible teams.
+                      </p>
+                    </div>
+                  )}
+              </>
+            )}
             {participatingTeam === null &&
               teams.filter(
                 (team) =>

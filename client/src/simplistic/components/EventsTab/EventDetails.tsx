@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import AuthService from '../../services/AuthService';
 import MainService from '../../services/MainService';
 import UserService from '../../services/UserService';
 import './../common.css';
@@ -17,6 +19,7 @@ function EventDetails({ event }: EventDetailPropType) {
   const [currTeam, setCurrTeam] = useState('');
   const [teams, setTeams] = useState([]);
 
+  const navigate = useNavigate();
   const Details = {
     Name: event['name'],
     Quote: event['tagline'],
@@ -39,7 +42,8 @@ function EventDetails({ event }: EventDetailPropType) {
           if (data['teams'].length) setCurrTeam(data['teams'][0]['teamId']);
         } else if (data['message'] === 'Invalid token!') {
           toast.error('Please login again and retry!');
-          //console.log('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {
@@ -72,6 +76,8 @@ function EventDetails({ event }: EventDetailPropType) {
           fetchTeamInvites();
         } else if (data['message'] === 'Invalid token!') {
           toast.error('Please login again and retry!');
+          AuthService.logOut();
+          navigate('/login');
         } else toast.error(data['message']); // Replace with Toast/Alert
       })
       .catch(() => {

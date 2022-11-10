@@ -32,7 +32,9 @@ function ResetPasswordBox({ onCrossPress, onInvalidToken }: ResetPasswordBoxProp
           toast.success('Password reset successfully!');
           onCrossPress(e);
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('invalid or expired token! please generate new token');
+          toast.error(
+            'invalid or expired token! please generate new token by clicking forgot password again'
+          );
 
           onCrossPress(e);
           onInvalidToken(e);

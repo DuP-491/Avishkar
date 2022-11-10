@@ -1137,10 +1137,33 @@ function NewTablet(props: Props) {
         if (data['success']) {
           toast.success('Downloaded List of Participating Teams Successfully');
 
-          let arr = data['participation'];
-          arr = [Object.keys(arr[0])].concat(arr);
+          const aoa = [['Team ID', 'Team Name']];
+          for (let i = 1; i <= events[selectedEventID]['maxTeamSize']; ++i) {
+            aoa[0].push(`Member ${i} Name`);
+            aoa[0].push(`Member ${i} Email`);
+            aoa[0].push(`Member ${i} Mobile`);
+          }
 
-          const csv = arr
+          data['participation'].forEach((team: any) => {
+            const team_array = [team['teamId'], team['teamName']];
+            team['members'].forEach((member: any) => {
+              team_array.push(member['name']);
+              team_array.push(member['email']);
+              team_array.push(member['mobile']);
+            });
+            for (
+              let i = 0;
+              i < events[selectedEventID]['maxTeamSize'] - team['members'].length;
+              ++i
+            ) {
+              team_array.push('');
+              team_array.push('');
+              team_array.push('');
+            }
+            aoa.push(team_array);
+          });
+
+          const csv = aoa
             .map((it: any) => {
               return Object.values(it).toString();
             })
@@ -1484,8 +1507,18 @@ function NewTablet(props: Props) {
                       />
                     </div>
                   )}
+                  {eventSection === 4 && participatingTeam === null && (
+                    <div>
+                      <p className="text-3xl text-center mt-[45vh] translate-y-[-50%] px-4">
+                        To register for the event, either create a team, invite members (within team
+                        size constraints) and register for the event or join a team and tell the
+                        leader to register for the event
+                      </p>
+                    </div>
+                  )}
                   {eventSection === 4 &&
                     participatingTeam === null &&
+                    teams.length !== 0 &&
                     teams.filter(
                       (team) =>
                         team['team']['leader'] === userDetails['id'] &&
@@ -1494,9 +1527,11 @@ function NewTablet(props: Props) {
                     ).length === 0 && (
                       <div>
                         <p className="text-3xl text-center mt-[45vh] translate-y-[-50%] px-4">
-                          To register for the event, either create a team, invite members (within
-                          team size constraints) and register for the event or join a team and tell
-                          the leader to register for the event
+                          your current teams do not fullfill the participation criteria(team size)
+                          for this event
+                          <br />
+                          OR
+                          <br /> you are not a leader of the eligible teams.
                         </p>
                       </div>
                     )}
@@ -1862,15 +1897,18 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(10)}>
                           Update Event
                         </p>
-                        <p
-                          className={
-                            profileSection === 11
-                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                          }
-                          onClick={() => setProfileSection(11)}>
-                          Delete Event
-                        </p>
+                        {/* event can only be deleted  by a admin */}
+                        {userDetails['role'] === 'ADMIN' && (
+                          <p
+                            className={
+                              profileSection === 11
+                                ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                                : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                            }
+                            onClick={() => setProfileSection(11)}>
+                            Delete Event
+                          </p>
+                        )}
                         <p
                           className={
                             profileSection === 12
@@ -1907,15 +1945,17 @@ function NewTablet(props: Props) {
                           onClick={() => setProfileSection(15)}>
                           Update Event Sponsor
                         </p>
-                        <p
-                          className={
-                            profileSection === 16
-                              ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
-                              : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
-                          }
-                          onClick={() => setProfileSection(16)}>
-                          Delete Event Sponsor
-                        </p>
+                        {userDetails['role'] === 'ADMIN' && (
+                          <p
+                            className={
+                              profileSection === 16
+                                ? 'text-gray-200 bg-blue-900 cursor-pointer px-5 py-1 text-2xl'
+                                : 'px-5 py-1 text-2xl w-[95%] cursor-pointer'
+                            }
+                            onClick={() => setProfileSection(16)}>
+                            Delete Event Sponsor
+                          </p>
+                        )}
                       </>
                     )}
                   </div>

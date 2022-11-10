@@ -36,7 +36,9 @@ const ResetPassword = () => {
           toast.success('Password changed successfully!');
           navigate('/');
         } else if (data['message'] === 'Invalid token!') {
-          toast.error('invalid or expired token! please generate new token');
+          toast.error(
+            'invalid or expired token! please generate new token by clicking forgot password again'
+          );
         } else toast.error(data['message']);
       })
       .catch(() => {

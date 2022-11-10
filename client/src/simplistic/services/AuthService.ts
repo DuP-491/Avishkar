@@ -23,7 +23,7 @@ export default {
           return {
             token: data['token'],
             success: true,
-            message: 'Success'
+            message: data['message'] ?? 'Success'
           };
         case 401:
           return {
@@ -33,13 +33,13 @@ export default {
         case 404:
           return {
             success: false,
-            message: 'User with email/username not found!'
+            message: data['message'] ?? 'User with email/username not found!'
           };
-        case 409:
-          return {
-            success: false,
-            message: 'User with these details already exists!'
-          };
+        // case 409:
+        //   return {
+        //     success: false,
+        //     message: 'User with these details already exists!'
+        //   };
         default:
           return {
             success: false,
@@ -84,7 +84,12 @@ export default {
         case 409:
           return {
             success: false,
-            message: 'User with these details already exists!'
+            message: data['message'] ?? 'User with these details already exists!'
+          };
+        case 500:
+          return {
+            success: false,
+            message: data['message'] ?? 'User with these details already exists!'
           };
         default:
           return {
@@ -114,7 +119,7 @@ export default {
         case 200:
           return {
             success: true,
-            message: 'Success'
+            message: data['message'] ?? 'Success'
           };
         case 400:
           return {
@@ -124,7 +129,7 @@ export default {
         case 404:
           return {
             success: false,
-            message: 'Invalid token!'
+            message: data['message'] ?? 'Invalid token!'
           };
         default:
           return {
@@ -164,7 +169,12 @@ export default {
         case 404:
           return {
             success: false,
-            message: 'Invalid token!'
+            message: data['message'] ?? 'Invalid token!'
+          };
+        case 500:
+          return {
+            success: false,
+            message: data['message'] ?? 'User with these details already exists!'
           };
         default:
           return {
