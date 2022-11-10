@@ -42,7 +42,7 @@ import TezosIMG from './Assets/Tezos.png';
 import TIMEIMG from './Assets/TIME.png';
 import UltratechIMG from './Assets/Ultratech.png';
 import YouthIMG from './Assets/Youth.png';
-import StockGrow from './Assets/StockGrow.jpeg';
+import StockGrow from './Assets/StockGrow.png';
 /* eslint-enable */
 
 const index = () => {
