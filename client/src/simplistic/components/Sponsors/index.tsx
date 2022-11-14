@@ -39,7 +39,7 @@ import TIMEIMG from '../Sponsor/Assets/TIME.png';
 import UltratechIMG from '../Sponsor/Assets/Ultratech.png';
 import YouthIMG from '../Sponsor/Assets/Youth.png';
 import DividerLine from '../Common/DividerLine';
-import StockGrow from '../Sponsor/Assets/StockGrow.png';
+import StockGro from '../Sponsor/Assets/StockGro.png';
 
 /* eslint-disable */
 function Sponsors() {
@@ -82,7 +82,7 @@ function Sponsors() {
             [PolygonIMG, 'https://polygon.technology/'],
             [ReplitIMG, 'https://replit.com'],
             [SolanaIMG, 'https://solana.com'],
-            [StockGrow, 'https://stockgro.club/']
+            [StockGro, 'https://stockgro.club/']
           ])}
         </>
       </div>

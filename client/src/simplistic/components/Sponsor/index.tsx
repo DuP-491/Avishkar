@@ -42,7 +42,7 @@ import TezosIMG from './Assets/Tezos.png';
 import TIMEIMG from './Assets/TIME.png';
 import UltratechIMG from './Assets/Ultratech.png';
 import YouthIMG from './Assets/Youth.png';
-import StockGrow from './Assets/StockGrow.png';
+import StockGro from './Assets/StockGro.png';
 /* eslint-enable */
 
 const index = () => {
@@ -74,12 +74,7 @@ const index = () => {
               <Card imgsrc={FilecoinIMG} name="Filecoin" bgc="" sponsorURL="https://filecoin.io" />
               <Card imgsrc={ReplitIMG} name="Repl.it" bgc="" sponsorURL="https://replit.com" />
               <Card imgsrc={SolanaIMG} name="Solana" bgc="" sponsorURL="https://solana.com" />
-              <Card
-                imgsrc={StockGrow}
-                name="StockGrow"
-                bgc=""
-                sponsorURL="https://stockgro.club/"
-              />
+              <Card imgsrc={StockGro} name="StockGro" bgc="" sponsorURL="https://stockgro.club/" />
             </div>
           </div>
 
