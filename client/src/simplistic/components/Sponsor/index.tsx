@@ -33,6 +33,7 @@ import ProtoioIMG from './Assets/Protoio.png';
 import RedIMG from './Assets/Red.png';
 import ReplitIMG from './Assets/Replit.png';
 import ScalerEdgeIMG from './Assets/ScalerEdge.png';
+import ShringSolutionsIMG from './Assets/ShringSolutions.png';
 import SketchIMG from './Assets/Sketch.png';
 import SkillenzaIMG from './Assets/Skillenza.png';
 import SkillLyncIMG from './Assets/SkillLync.png';
@@ -75,6 +76,12 @@ const index = () => {
               <Card imgsrc={ReplitIMG} name="Repl.it" bgc="" sponsorURL="https://replit.com" />
               <Card imgsrc={SolanaIMG} name="Solana" bgc="" sponsorURL="https://solana.com" />
               <Card imgsrc={StockGro} name="StockGro" bgc="" sponsorURL="https://stockgro.club/" />
+              <Card
+                imgsrc={ShringSolutionsIMG}
+                name="Shring Solutions"
+                bgc=""
+                sponsorURL="javascript:void(0)"
+              />
             </div>
           </div>
 

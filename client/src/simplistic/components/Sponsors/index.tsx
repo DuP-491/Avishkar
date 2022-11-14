@@ -29,6 +29,7 @@ import ProtoioIMG from '../Sponsor/Assets/Protoio.png';
 import RedIMG from '../Sponsor/Assets/Red.png';
 import ReplitIMG from '../Sponsor/Assets/Replit.png';
 import ScalerEdgeIMG from '../Sponsor/Assets/ScalerEdge.png';
+import ShringSolutionsIMG from '../Sponsor/Assets/ShringSolutions.png';
 import SketchIMG from '../Sponsor/Assets/Sketch.png';
 import SkillenzaIMG from '../Sponsor/Assets/Skillenza.png';
 import SkillLyncIMG from '../Sponsor/Assets/SkillLync.png';
@@ -82,7 +83,8 @@ function Sponsors() {
             [PolygonIMG, 'https://polygon.technology/'],
             [ReplitIMG, 'https://replit.com'],
             [SolanaIMG, 'https://solana.com'],
-            [StockGro, 'https://stockgro.club/']
+            [StockGro, 'https://stockgro.club/'],
+            [ShringSolutionsIMG, 'javascript:void(0)']
           ])}
         </>
       </div>
